@@ -1,4 +1,4 @@
-# WooCommerce - MercadoPago Module (v1.0.0 - first release)
+# WooCommerce - Mercado Pago Module (v2.1.x to 2.5.x)
 ---
 
 * [Features](#features)
@@ -30,7 +30,7 @@ payment method exclusion setup, and sandbox/debug options.
   <tbody>
     <tr>
       <td>v1.0.0</td>
-      <td>Actual (Stable)</td>
+      <td>Stable (Current version)</td>
       <td>WooCommerce 2.1.x - 2.5.x</td>
     </tr>
   </tbody>
