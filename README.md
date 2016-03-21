@@ -1,5 +1,4 @@
 # WooCommerce - Mercado Pago Module (v2.1.x to 2.5.x)
----
 
 * [Features](#features)
 * [Available versions](#available_versions)
@@ -24,12 +23,12 @@ payment method exclusion setup, and sandbox/debug options.
     <tr>
       <th>Plugin Version</th>
       <th>Status</th>
-      <th>Compatible Versions</th>
+      <th>WooCommerce Compatible Versions</th>
     </tr>
   <thead>
   <tbody>
     <tr>
-      <td>v1.0.0</td>
+      <td>v1.0.0</a></td>
       <td>Stable (Current version)</td>
       <td>WooCommerce 2.1.x - 2.5.x</td>
     </tr>
@@ -41,7 +40,7 @@ payment method exclusion setup, and sandbox/debug options.
 
 1. Copy **cart-woocommerce/mercadopago** folder to **[WordPressRootDirectory]/wp-content/plugins/** folder.
 
-2. On your store administration, go to **Plugins** item in sidebar.
+2. On your store administration, go to **Plugins** option in sidebar.
 
 3. Search by **WooCommerce Mercado Pago** and click enable. <br />
 You will receive the following message: "Plugin enabled." as a notice in your WordPress.
@@ -49,9 +48,12 @@ You will receive the following message: "Plugin enabled." as a notice in your Wo
 <a name="configuration"></a>
 ##Configuration##
 
-1. Go to **WooCommerce > Configuration > Checkout Tab > Mercado Pago**.
-
-2. Set your **Client_id**, **Client_secret** accordingly to your country:
+1. Go to **WooCommerce > Configuration > Checkout Tab > Mercado Pago**. <br />
+Fist of all, you need to configure your client credentials. To make it, fill your **Client_id**, **Client_secret** in Mercado Pago Credentials section.
+	
+	![Installation Instructions](/README.img/wc_setup_credentials.png) <br />
+	
+	You can obtain your **Client_id** and **Client_secret**, accordingly to your country, in the following links:
 
 	* Argentina: https://www.mercadopago.com/mla/herramientas/aplicaciones
 	* Brazil: https://www.mercadopago.com/mlb/ferramentas/aplicacoes
@@ -60,17 +62,26 @@ You will receive the following message: "Plugin enabled." as a notice in your Wo
 	* Mexico: https://www.mercadopago.com/mlm/herramientas/aplicaciones
 	* Venezuela: https://www.mercadopago.com/mlv/herramientas/aplicaciones
 
-2. Other general configurations:<br />
-	* **Instant Payment Notification (IPN) URL**: The highlighted URL is where you will get notified about payment updates;
-	* **Title**: This is the title of the payment option that will be shown to your customers;
-	* **Description**: This is the description of the payment option that will be shown to your customers;
-	* **Store Category**: Sets up the category of the store;
-	* **Store Identificator**: A prefix to identify your store, when you have multiple stores for only one Mercado Pago account;
-	* **Integration Method**: How your customers will interact with Mercado Pago to pay their orders;
-	* **iFrame Width**: The width, in pixels, of the iFrame (used only with iFrame Integration Method);
-	* **iFrame Height**: The height, in pixels, of the iFrame (used only with iFrame Integration Method);
-	* **Auto Return**: If set, the platform will return to your store when the payment is approved;
-	* **Max Installments**: The maximum installments allowed for your customers;
-	* **Exclude Payment Methods**: Select the payment methods that you want to not work with Mercado Pago;
-	* **Mercado Pago Sandbox**: Test your payments in Mercado Pago sandbox environment;
-	* **Debug and Log**: Enables/disables system logs.
+2. Other general configurations. <br />
+	* **Instant Payment Notification (IPN) URL**
+	![Installation Instructions](/README.img/wc_setup_ipn.png) <br />
+	The highlighted URL is where you will get notified about payment updates.<br /><br />
+	* **Checkout Options**
+	![Installation Instructions](/README.img/wc_setup_checkout.png) <br />
+	**Title**: This is the title of the payment option that will be shown to your customers;<br />
+	**Description**: This is the description of the payment option that will be shown to your customers;<br />
+	**Store Category**: Sets up the category of the store;<br />
+	**Store Identificator**: A prefix to identify your store, when you have multiple stores for only one Mercado Pago account;<br />
+	**Integration Method**: How your customers will interact with Mercado Pago to pay their orders;<br />
+	**iFrame Width**: The width, in pixels, of the iFrame (used only with iFrame Integration Method);<br />
+	**iFrame Height**: The height, in pixels, of the iFrame (used only with iFrame Integration Method);<br />
+	**Auto Return**: If set, the platform will return to your store when the payment is approved.<br /><br />
+	* **Payment Options**
+	![Installation Instructions](/README.img/wc_setup_payment.png) <br />
+	**Max Installments**: The maximum installments allowed for your customers;<br />
+	**Exclude Payment Methods**: Select the payment methods that you want to not work with Mercado Pago.<br /><br />
+	* **Test and Debug Options**
+	![Installation Instructions](/README.img/wc_setup_testdebug.png) <br />
+	**Mercado Pago Sandboxs**: Test your payments in Mercado Pago sandbox environment;<br />
+	**Debug and Log**: Enables/disables system logs.<br />
+	
