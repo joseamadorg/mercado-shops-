@@ -45,8 +45,8 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
     
     // Sponsor ID array by country
     private $sponsor_id = array(
-    	"MLA" => '208686191',
-    	"MLB" => '208682286',
+    	"MLA" => '208682286',
+    	"MLB" => '208686191',
     	"MCO" => '208687643',
     	"MLC" => '208690789',
     	"MLV" => '208692735',
