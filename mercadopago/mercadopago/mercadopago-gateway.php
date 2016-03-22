@@ -123,10 +123,9 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		);
 		
 		// Verify if client_id or client_secret is empty.
-		/* TODO: properly implement and enable this action to notify user
-		if (!$this->validate_credentials()) {
+		if (!$this->validateCredentials()) {
 			add_action('admin_notices', array($this, 'clientIdOrSecretMissingMessage'));
-		}*/
+		}
 		
 		// Verify if currency is supported.
 		if (!$this->isSupportedCurrency()) {
@@ -465,10 +464,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 	public function buildPaymentPreference($order) {
 	
 		// Here we build the array that contains ordered itens, from customer cart
-		// UPDATE: because [shipment cost] is only available for custom checkout, our
-		// 		   preference need to be build with all items grouped in one or the
-		//         ship cost will not be added to the total amount paid.
-		/*$items = array();
+		$items = array();
 		if (sizeof($order->get_items()) > 0) {
 			foreach ($order->get_items() as $item) {
 				if ($item['qty']) {
@@ -485,51 +481,21 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 						'picture_url' => $product->get_image(),
 						'category_id' => $this->store_categories_id[$this->category_id],
 						'quantity' => 1,
-						'unit_price' => (float)$item['line_subtotal'],
+						'unit_price' => (float)$item['line_total'],
 						'currency_id' => get_woocommerce_currency()
 					));
 				}
 			}
-		}*/
-		
-		// Here we build the array that contains ordered itens, from customer cart
-		$items = array(
-			array(
+			// shipment cost as an item (if we enable it in custom, we loss the 2 cards feature)
+			array_push($items, array(
+				'title' => $order->get_shipping_to_display(),
+				'description' => $order->get_shipping_to_display(),
+				'category_id' => $this->store_categories_id[$this->category_id],
 				'quantity' => 1,
-				'unit_price' => (float)$order->order_total,
+				'unit_price' => (float)$order->get_total_shipping(),
 				'currency_id' => get_woocommerce_currency()
-			)
-		);
-		$item_ids = array();
-		$item_names = array();
-		$item_descriptions = array();
-		$item_picture_url = array();
-		if (sizeof($order->get_items()) > 0) {
-			foreach ($order->get_items() as $item) {
-				if ($item['qty']) {
-					$product = new WC_product($item['product_id']);
-					$item_ids[] = $item['product_id'];
-					$item_names[] = $item['name'] . ' x ' . $item['qty'];
-					$item_descriptions[] = (
-						// This handles description width limit of Mercado Pago.
-						strlen($product->post->post_content) > 50 ?
-						substr($product->post->post_content, 0, 50) . "..." :
-						$product->post->post_content
-					);
-					$item_picture_url[] = $product->get_image();
-				}
-			}
+			));
 		}
-		$items[0]['id'] = implode('; ', $item_ids);
-		$items[0]['title'] = implode('; ', $item_names);
-		$items[0]['description'] = (
-			// This handles description width limit of Mercado Pago.
-			strlen(implode('; ', $item_descriptions)) > 230 ?
-			substr(implode('; ', $item_descriptions), 0, 230) . "..." :
-			implode('; ', $item_descriptions)
-		);
-		$items[0]['picture_url'] = implode('; ', $item_picture_url);
-		$items[0]['category_id'] = $this->store_categories_id[$this->category_id];
 		
 		// Find excluded payment methods. If 'n/d' is in array index, we should
 		// disconsider the remaining values.
@@ -583,6 +549,8 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			//'marketplace' => $this->site_id,
             //'marketplace_fee' =>
             'shipments' => array(
+            	//'cost' => (float)$order->get_total_shipping(),
+            	//'mode' => 'custom',
             	'receiver_address' => array(
             		'zip_code' => $order->shipping_postcode,
             		//'street_number' =>
@@ -798,25 +766,25 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				$merchant_order_info = $mp->get("/merchant_orders/" . $payment_info["response"]["collection"]["merchant_order_id"], $params, false);
 			} else if ($data["topic"] == 'merchant_order') {
 				$merchant_order_info = $mp->get("/merchant_orders/" . $_GET["id"], $params, false);
-			}
-			// If the payment's transaction amount is equal (or bigger) than the merchant order's amount you can release your items 
-			if (!is_wp_error($merchant_order_info) && ($merchant_order_info["status"] == 200)) {
-				$payments = $merchant_order_info["response"]["payments"];
-			   	// check if we have more than one payment method
-			   	if (sizeof($payments) == 2) {
-			   		if (strcasecmp($payments[0]['status'], $payments[1]['status']) != 0) {
-			   			if ('yes' == $this->debug) {
-							$this->log->add($this->id, $this->id . ': @[check_ipn_request_is_valid] - two payments with status not equal');
+				// If the payment's transaction amount is equal (or bigger) than the merchant order's amount you can release your items 
+				if (!is_wp_error($merchant_order_info) && ($merchant_order_info["status"] == 200)) {
+					$payments = $merchant_order_info["response"]["payments"];
+				   	// check if we have more than one payment method
+			   		if (sizeof($payments) == 2) {
+				   		if (strcasecmp($payments[0]['status'], $payments[1]['status']) != 0) {
+				   			if ('yes' == $this->debug) {
+								$this->log->add($this->id, $this->id . ': @[check_ipn_request_is_valid] - two payments with status not equal');
+							}
+						} else {
+							return $merchant_order_info["response"];
 						}
-					} else {
-						return $merchant_order_info["response"];
+				   	} else { // If we have only one payment, we can go on its status
+			   			return $merchant_order_info['response'];
+				   	}
+				} else {
+					if ('yes' == $this->debug) {
+						$this->log->add($this->id, $this->id . ': @[check_ipn_request_is_valid] - got status not equal 200 or some error');
 					}
-			   	} else { // If we have only one payment, we can go on its status
-			   		return $merchant_order_info['response'];
-			   	}
-			} else {
-				if ('yes' == $this->debug) {
-					$this->log->add($this->id, $this->id . ': @[check_ipn_request_is_valid] - got status not equal 200 or some error');
 				}
 			}
 		} catch (MercadoPagoException $e) {
@@ -841,30 +809,43 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				if ( 'yes' == $this->debug ) {
 					$this->log->add($this->id, $this->id . ': @[successful_request] - got order with ID ' . $order->id . ' and status ' . $data['payments'][0]['status']);
 				}
+				// Order details.
+				if (!empty($data['id'])) {
+					update_post_meta(
+						$order_id,
+						__('Mercado Pago Transaction ID', 'woocommerce-mercadopago-module'),
+						$data['id']
+					);
+				}
+				if (!empty($data['payer']['email'])) {
+					update_post_meta(
+						$order_id,
+						__('Payer email', 'woocommerce-mercadopago-module'),
+						$data['payer']['email']
+					);
+				}
+				if (!empty($data['payment_type'])) {
+					update_post_meta(
+						$order_id,
+						__('Payment type', 'woocommerce-mercadopago-module'),
+						$data['payment_type']
+					);
+				}
+				if (!empty($data['payments'])) {
+					$payment_ids = array();
+					foreach ($data['payments'] as $payment) {
+						$payment_ids[] = $payment['id'];
+					}
+					if (sizeof($payment_ids) > 0) {
+						update_post_meta(
+							$order_id,
+							__('Mercado Pago Payment ID', 'woocommerce-mercadopago-module'),
+							implode(', ', $payment_ids)
+						);
+					}
+				}
 				switch ($data['payments'][0]['status']) {
 					case 'approved':
-						// Order details.
-						if (!empty($data['id'])) {
-							update_post_meta(
-								$order_id,
-								__('Mercado Pago Transaction ID', 'woocommerce-mercadopago-module'),
-								$data['id']
-							);
-						}
-						if (!empty($data['payer']['email'])) {
-							update_post_meta(
-								$order_id,
-								__('Payer email', 'woocommerce-mercadopago-module'),
-								$data['payer']['email']
-							);
-						}
-						if (!empty($data['payment_type'])) {
-							update_post_meta(
-								$order_id,
-								__('Payment type', 'woocommerce-mercadopago-module'),
-								$data['payment_type']
-							);
-						}
 						$order->add_order_note(
 							'Mercado Pago: ' . __('Payment approved.', 'woocommerce-mercadopago-module')
 						);

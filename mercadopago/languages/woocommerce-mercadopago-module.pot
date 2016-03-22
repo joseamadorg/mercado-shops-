@@ -515,6 +515,10 @@ msgid ""
 msgstr ""
 
 #: mercadopago/mercadopago-gateway.php:843
+msgid "Mercado Pago Payment ID"
+msgstr ""
+
+#: mercadopago/mercadopago-gateway.php:843
 #: mercadopago/mercadopago-gateway.php:848
 msgid ""
 "The payment is under "

@@ -401,6 +401,10 @@ msgid "The payment was cancelled."
 msgstr "El pago fue cancelado."
 
 #: mercadopago/mercadopago-gateway.php:843
+msgid "Mercado Pago Payment ID"
+msgstr "Pago ID del Mercado Pago"
+
+#: mercadopago/mercadopago-gateway.php:843
 #: mercadopago/mercadopago-gateway.php:848
 msgid "The payment is under mediation or it was charged-back."
 msgstr "El pago esta en mediación o la compra fue desconocida por el cliente."
