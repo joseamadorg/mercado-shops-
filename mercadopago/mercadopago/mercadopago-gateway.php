@@ -123,7 +123,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		);
 		
 		// Verify if client_id or client_secret is empty.
-		if (!$this->validateCredentials()) {
+		if (empty($this->client_id) || empty($this->client_secret)) {
 			add_action('admin_notices', array($this, 'clientIdOrSecretMissingMessage'));
 		}
 		
