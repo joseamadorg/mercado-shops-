@@ -30,10 +30,10 @@ msgstr "Este é o módulo <strong>oficial</strong> do Mercado Pago para o plugin
 #: mercadopago-module.php:66
 #, php-format
 msgid ""
-"WooCommerce Mercado Pago depends on the last version of %s to "
+"Woo Mercado Pago Module depends on the last version of %s to "
 "execute!"
 msgstr ""
-"O WooCommerce Mercado Pago depende da última versão do %s para "
+"O Woo Mercado Pago Module depende da última versão do %s para "
 "executar!"
 
 #: mercadopago/mercadopago-gateway.php:63
@@ -400,6 +400,10 @@ msgstr "O pagamento foi estornado ao cliente."
 #: mercadopago/mercadopago-gateway.php:838
 msgid "The payment was cancelled."
 msgstr "O pagamento foi cancelado."
+
+#: mercadopago/mercadopago-gateway.php:843
+msgid "Mercado Pago Payment ID"
+msgstr "ID de Pagamento do Mercado Pago"
 
 #: mercadopago/mercadopago-gateway.php:843
 #: mercadopago/mercadopago-gateway.php:848

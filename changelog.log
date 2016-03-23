@@ -7,3 +7,10 @@ v1.0.0 (16/03/2016)
 	- Integrations via iframe, modal, and redirection, with configurable auto-returning;
 	- Max installments and payment method exclusion setup;
 	- Sandbox and debug options.
+
+v1.0.1 (23/03/2016)
+-> Improvements
+	- Added payment ID in order custom fields information;
+	- Removed some unused files/code;
+	- Redesign of the logic of preferences when creating cart, separating items;
+	- Proper information of shipment cost

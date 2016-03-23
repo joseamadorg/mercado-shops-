@@ -58,8 +58,8 @@ msgstr ""
 #: mercadopago-module.php:66
 #, php-format
 msgid ""
-"WooCommerce Mercado Pago "
-"Oficial depends on the "
+"Woo Mercado Pago Module "
+"depends on the "
 "last version of %s to "
 "execute!"
 msgstr ""
@@ -512,6 +512,10 @@ msgstr ""
 msgid ""
 "The payment was "
 "cancelled."
+msgstr ""
+
+#: mercadopago/mercadopago-gateway.php:843
+msgid "Mercado Pago Payment ID"
 msgstr ""
 
 #: mercadopago/mercadopago-gateway.php:843
