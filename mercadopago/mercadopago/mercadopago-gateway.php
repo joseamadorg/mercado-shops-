@@ -7,7 +7,7 @@
  * Author URI: https://www.mercadopago.com.br/developers/
  * Developer: Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
  * Copyright: Copyright(c) MercadoPago [http://www.mercadopago.com]
- * Version: 1.0.2
+ * Version: 1.0.3
  * License: http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: woocommerce-mercadopago-module
  * Domain Path: /languages/
@@ -767,38 +767,37 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		}
 		try { // Get the merchant_order reported by the IPN. Glossary of attributes response in https://developers.mercadopago.com
 			$params = array("access_token" => $mp->get_access_token());
-			if ($data["topic"] == 'payment') {
-				$payment_info = $mp->get("/collections/notifications/" . $_GET["id"], $params, false);
-				$merchant_order_info = $mp->get("/merchant_orders/" . $payment_info["response"]["collection"]["merchant_order_id"], $params, false);
-			} else if ($data["topic"] == 'merchant_order') {
+			if ($data["topic"] == 'merchant_order') {
 				$merchant_order_info = $mp->get("/merchant_orders/" . $_GET["id"], $params, false);
-			}
-			// If the payment's transaction amount is equal (or bigger) than the merchant order's amount you can release your items 
-			if (!is_wp_error($merchant_order_info) && ($merchant_order_info["status"] == 200)) {
-				$payments = $merchant_order_info["response"]["payments"];
-			   	// check if we have more than one payment method
+				// If the payment's transaction amount is equal (or bigger) than the merchant order's amount you can release your items 
+				if (!is_wp_error($merchant_order_info) && ($merchant_order_info["status"] == 200)) {
+					$payments = $merchant_order_info["response"]["payments"];
+				   	// check if we have more than one payment method
 			  		if (sizeof($payments) == 2) {
-			   		if (strcasecmp($payments[0]['status'], $payments[1]['status']) != 0) {
-			   			if ('yes' == $this->debug) {
-							$this->log->add($this->id, $this->id . ': @[check_ipn_request_is_valid] - two payments with status not equal');
+			   			if (strcasecmp($payments[0]['status'], $payments[1]['status']) != 0) {
+			   				if ('yes' == $this->debug) {
+								$this->log->add($this->id, $this->id . ': @[check_ipn_request_is_valid] - two payments with status not equal');
+							}
+						} else {
+							return $merchant_order_info["response"];
 						}
-					} else {
-						return $merchant_order_info["response"];
+				   	} else { // If we have only one payment, we can go on its status
+				  			return $merchant_order_info['response'];
+				   	}
+				} else {
+					if ('yes' == $this->debug) {
+						$this->log->add($this->id, $this->id . ': @[check_ipn_request_is_valid] - got status not equal 200 or some error');
 					}
-			   	} else { // If we have only one payment, we can go on its status
-			  			return $merchant_order_info['response'];
-			   	}
-			} else {
-				if ('yes' == $this->debug) {
-					$this->log->add($this->id, $this->id . ': @[check_ipn_request_is_valid] - got status not equal 200 or some error');
+					return false;
 				}
 			}
 		} catch (MercadoPagoException $e) {
 			if ('yes' == $this->debug) {
 				$this->log->add($this->id, $this->id . ': @[check_ipn_request_is_valid] - GOT EXCEPTION: ' . $e->getMessage());
 			}
+			return false;
 		}
-		return false;
+		return true;
 	}
 	
 	// Properly handles each case of notification, based in payment status.

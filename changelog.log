@@ -18,3 +18,7 @@ v1.0.1 (23/03/2016)
 v1.0.2 (23/03/2016)
 -> Bug Fix
 	- IPN URL wasn’t triggered when topic=payment
+
+v1.0.3 (23/03/2016)
+-> Improvement
+	- Improving algorithm when processing IPN
