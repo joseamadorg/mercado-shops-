@@ -487,14 +487,14 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				}
 			}
 			// shipment cost as an item (if we enable it in custom, we loss the 2 cards feature)
-			array_push($items, array(
+			/*array_push($items, array(
 				'title' => $order->get_shipping_to_display(),
 				'description' => $order->get_shipping_to_display(),
 				'category_id' => $this->store_categories_id[$this->category_id],
 				'quantity' => 1,
 				'unit_price' => (float)$order->get_total_shipping(),
 				'currency_id' => get_woocommerce_currency()
-			));
+			));*/
 		}
 		
 		// Find excluded payment methods. If 'n/d' is in array index, we should
@@ -549,8 +549,8 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			//'marketplace' => $this->site_id,
             //'marketplace_fee' =>
             'shipments' => array(
-            	//'cost' => (float)$order->get_total_shipping(),
-            	//'mode' => 'custom',
+            	'cost' => (float)$order->get_total_shipping(),
+            	'mode' => 'custom',
             	'receiver_address' => array(
             		'zip_code' => $order->shipping_postcode,
             		//'street_number' =>
