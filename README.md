@@ -28,7 +28,7 @@ payment method exclusion setup, and sandbox/debug options.
   <thead>
   <tbody>
     <tr>
-      <td>v1.0.1</td>
+      <td>v1.0.2</td>
       <td>Stable (Current version)</td>
       <td>WooCommerce 2.1.x - 2.5.x</td>
     </tr>
