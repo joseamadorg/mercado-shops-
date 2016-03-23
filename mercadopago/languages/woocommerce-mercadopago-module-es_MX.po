@@ -14,9 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Textdomain-Support: yesX-Generator: Poedit 1.6.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;"
-"_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
+"X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Generator: Poedit 1.8.7\n"
 "Last-Translator: \n"
@@ -29,20 +27,12 @@ msgstr "Este es el módulo <strong>oficial</strong> de Mercado Pago para el plug
 
 #: mercadopago-module.php:66
 #, php-format
-msgid ""
-"WooCommerce Mercado Pago depends on the last version of %s to "
-"execute!"
-msgstr ""
-"WooCommerce Mercado Pago depende de la última versión de %s para "
-"ejecutarse!"
+msgid "WooCommerce Mercado Pago depends on the last version of %s to execute!"
+msgstr "WooCommerce Mercado Pago depende de la última versión de %s para ejecutarse!"
 
 #: mercadopago/mercadopago-gateway.php:63
-msgid ""
-"This module enables WooCommerce to use Mercado Pago as payment method for "
-"purchases made in your virtual store."
-msgstr ""
-"Este módulo habilita el uso de Mercado Pago en WooCommerce como método de "
-"pago para compras realizadas en su tienda virtual."
+msgid "This module enables WooCommerce to use Mercado Pago as payment method for purchases made in your virtual store."
+msgstr "Este módulo habilita el uso de Mercado Pago en WooCommerce como método de pago para compras realizadas en su tienda virtual."
 
 #: mercadopago/mercadopago-gateway.php:133
 msgid "Argentine"
@@ -73,50 +63,36 @@ msgid "Venezuela"
 msgstr "Venezuela"
 
 #: mercadopago/mercadopago-gateway.php:154
-msgid ""
-"Select the payment methods that you <strong>don't</strong> want to receive "
-"with Mercado Pago."
-msgstr ""
-"Selecione los medios de pago que <strong>no</strong> desea aceptar con "
-"Mercado Pago."
+msgid "Select the payment methods that you <strong>don't</strong> want to receive with Mercado Pago."
+msgstr "Selecione los medios de pago que <strong>no</strong> desea aceptar con Mercado Pago."
 
 #: mercadopago/mercadopago-gateway.php:157
 msgid "Your credentials are <strong>valid</strong> for"
 msgstr "Sus credenciales <strong>son válidas</strong> para"
 
-#: mercadopago/mercadopago-gateway.php:164
-#: mercadopago/mercadopago-gateway.php:173
-msgid ""
-"Configure your Client_id and Client_secret to have access to more options."
-msgstr ""
-"Configure su Client_id y Client_secret para tener acceso a más opciones."
+#: mercadopago/mercadopago-gateway.php:164 mercadopago/mercadopago-gateway.php:173
+msgid "Configure your Client_id and Client_secret to have access to more options."
+msgstr "Configure su Client_id y Client_secret para tener acceso a más opciones."
 
-#: mercadopago/mercadopago-gateway.php:167
-#: mercadopago/mercadopago-gateway.php:176
+#: mercadopago/mercadopago-gateway.php:167 mercadopago/mercadopago-gateway.php:176
 msgid "Your credentials are <strong>not valid</strong>!"
 msgstr "Sus credenciales <strong>no son válidas</strong>!"
 
-#: mercadopago/mercadopago-gateway.php:190
-#: mercadopago/mercadopago-gateway.php:198
-#: mercadopago/mercadopago-gateway.php:208
+#: mercadopago/mercadopago-gateway.php:190 mercadopago/mercadopago-gateway.php:198 mercadopago/mercadopago-gateway.php:208
 msgid "This field should be an integer."
 msgstr "Este campo debe ser un número."
 
 #: mercadopago/mercadopago-gateway.php:193
-msgid ""
-"If your integration method is iFrame, please inform the payment iFrame width."
+msgid "If your integration method is iFrame, please inform the payment iFrame width."
 msgstr "Si su modo de apertura es iFrame, indique el ancho del iFrame."
 
 #: mercadopago/mercadopago-gateway.php:201
-msgid ""
-"If your integration method is iFrame, please inform the payment iFrame "
-"height."
+msgid "If your integration method is iFrame, please inform the payment iFrame height."
 msgstr "Si su modo de apertura es iFrame, indique el alto del iFrame."
 
 #: mercadopago/mercadopago-gateway.php:211
 msgid "Select the max number of installments for your customers."
-msgstr ""
-"Seleccione el número máximo de mensualidades posibles para sus clientes."
+msgstr "Seleccione el número máximo de mensualidades posibles para sus clientes."
 
 #: mercadopago/mercadopago-gateway.php:217
 msgid "Enable/Disable"
@@ -178,8 +154,7 @@ msgstr "Descripción"
 msgid "Description shown to the client in the checkout."
 msgstr "Descripción mostrada al cliente en el checkout."
 
-#: mercadopago/mercadopago-gateway.php:261
-#: mercadopago/mercadopago-gateway.php:406
+#: mercadopago/mercadopago-gateway.php:261 mercadopago/mercadopago-gateway.php:406
 msgid "Pay with Mercado Pago"
 msgstr "Pagar con Mercado Pago"
 
@@ -200,28 +175,16 @@ msgid "Please, inform a prefix to your store."
 msgstr "Por favor, informe un prefijo para su tienda."
 
 #: mercadopago/mercadopago-gateway.php:272
-msgid ""
-"If you use your Mercado Pago account on multiple stores you should make sure "
-"that this prefix is unique as Mercado Pago will not allow orders with same "
-"identificators."
-msgstr ""
-"Si esta utilizando su cuenta Mercado Pago para múltiples tiendas, asegúrese "
-"que este prefijo sea único para no generar pedidos con el mismo "
-"identificador."
+msgid "If you use your Mercado Pago account on multiple stores you should make sure that this prefix is unique as Mercado Pago will not allow orders with same identificators."
+msgstr "Si esta utilizando su cuenta Mercado Pago para múltiples tiendas, asegúrese que este prefijo sea único para no generar pedidos con el mismo identificador."
 
 #: mercadopago/mercadopago-gateway.php:276
 msgid "Integration Method"
 msgstr "Método de integración"
 
 #: mercadopago/mercadopago-gateway.php:278
-msgid ""
-"Select how your clients should interact with Mercado Pago. Modal Window "
-"(inside your store), Redirect (Client is redirected to Mercado Pago), or "
-"iFrame (an internal window is embedded to the page layout)."
-msgstr ""
-"Ventana Modal (Dentro de su tienda), Redireccionamiento (El cliente es "
-"redireccionado a Mercado Pago), o iFrame (Ventana de pago incorporada a su "
-"página)."
+msgid "Select how your clients should interact with Mercado Pago. Modal Window (inside your store), Redirect (Client is redirected to Mercado Pago), or iFrame (an internal window is embedded to the page layout)."
+msgstr "Ventana Modal (Dentro de su tienda), Redireccionamiento (El cliente es redireccionado a Mercado Pago), o iFrame (Ventana de pago incorporada a su página)."
 
 #: mercadopago/mercadopago-gateway.php:281
 msgid "iFrame"
@@ -281,9 +244,7 @@ msgstr "Habilitar el sandbox de Mercado Pago"
 
 #: mercadopago/mercadopago-gateway.php:333
 msgid "This options allows you to test payments inside a sandbox environment."
-msgstr ""
-"Esta opción permite simular un flujo de pagos completo en nuestro entorno "
-"Sandbox."
+msgstr "Esta opción permite simular un flujo de pagos completo en nuestro entorno Sandbox."
 
 #: mercadopago/mercadopago-gateway.php:336
 msgid "Debug and Log"
@@ -296,53 +257,35 @@ msgstr "Habilitar Log"
 #: mercadopago/mercadopago-gateway.php:340
 #, php-format
 msgid "Register event logs of Mercado Pago, such as API requests, in the file"
-msgstr ""
-"Registrar logs de eventos de Mercado Pago, como llamadas a la API, dentro "
-"del archivo"
+msgstr "Registrar logs de eventos de Mercado Pago, como llamadas a la API, dentro del archivo"
 
 #: mercadopago/mercadopago-gateway.php:402
-msgid ""
-"Thank you for your order. Please, proceed with your payment clicking in the "
-"bellow button."
-msgstr ""
-"Gracias por su compra. Por favor, prosiga a la página de pago haciendo click "
-"en el botón de abajo."
+msgid "Thank you for your order. Please, proceed with your payment clicking in the bellow button."
+msgstr "Gracias por su compra. Por favor, prosiga a la página de pago haciendo click en el botón de abajo."
 
 #: mercadopago/mercadopago-gateway.php:410
 msgid "Cancel order &amp; Clear cart"
 msgstr "Cancelar &amp; Limpiar carrito"
 
 #: mercadopago/mercadopago-gateway.php:420
-msgid ""
-"Thank you for your order. Proceed with your payment completing the following "
-"information."
-msgstr ""
-"Gracias por su compra. Prosiga con su pago completando la información abajo."
+msgid "Thank you for your order. Proceed with your payment completing the following information."
+msgstr "Gracias por su compra. Prosiga con su pago completando la información abajo."
 
 #: mercadopago/mercadopago-gateway.php:431
-msgid ""
-"An error occurred when proccessing your payment. Please try again or contact "
-"us for assistence."
-msgstr ""
-"Un error ocurrió durante el procesamiento de su pago. Por favor intente "
-"nuevamente o contactenos para ayudarlo."
+msgid "An error occurred when proccessing your payment. Please try again or contact us for assistence."
+msgstr "Un error ocurrió durante el procesamiento de su pago. Por favor intente nuevamente o contactenos para ayudarlo."
 
 #: mercadopago/mercadopago-gateway.php:434
 msgid "Click to try again"
 msgstr "Haga click para intentar de nuevo"
 
-#: mercadopago/mercadopago-gateway.php:675
-#: mercadopago/mercadopago-gateway.php:686
+#: mercadopago/mercadopago-gateway.php:675 mercadopago/mercadopago-gateway.php:686
 msgid "Mercado Pago is Inactive"
 msgstr "Mercado Pago Inactivo"
 
 #: mercadopago/mercadopago-gateway.php:678
-msgid ""
-"Your Mercado Pago credentials Client_id/Client_secret appears to be "
-"misconfigured."
-msgstr ""
-"Sus credenciales Client_id/Client_secret de Mercado Pago parecen no estar "
-"debidamente configuradas."
+msgid "Your Mercado Pago credentials Client_id/Client_secret appears to be misconfigured."
+msgstr "Sus credenciales Client_id/Client_secret de Mercado Pago parecen no estar debidamente configuradas."
 
 #: mercadopago/mercadopago-gateway.php:679
 msgid "Click here and configure!"
@@ -353,12 +296,8 @@ msgid "The currency"
 msgstr "La moneda"
 
 #: mercadopago/mercadopago-gateway.php:689
-msgid ""
-"is not supported. Supported currencies are: ARS, BRL, CLP, COP, MXN, USD, "
-"VEF."
-msgstr ""
-"no es soportada. Las monedas soportadas son: ARS, BRL, CLP, COP, MXN, USD, "
-"VEF."
+msgid "is not supported. Supported currencies are: ARS, BRL, CLP, COP, MXN, USD, VEF."
+msgstr "no es soportada. Las monedas soportadas son: ARS, BRL, CLP, COP, MXN, USD, VEF."
 
 #: mercadopago/mercadopago-gateway.php:714
 msgid "Mercado Pago Request Failure"
@@ -402,9 +341,8 @@ msgstr "El pago fue cancelado."
 
 #: mercadopago/mercadopago-gateway.php:843
 msgid "Mercado Pago Payment ID"
-msgstr "Pago ID del Mercado Pago"
+msgstr "ID de pago de Mercado Pago"
 
-#: mercadopago/mercadopago-gateway.php:843
-#: mercadopago/mercadopago-gateway.php:848
+#: mercadopago/mercadopago-gateway.php:843 mercadopago/mercadopago-gateway.php:848
 msgid "The payment is under mediation or it was charged-back."
 msgstr "El pago esta en mediación o la compra fue desconocida por el cliente."

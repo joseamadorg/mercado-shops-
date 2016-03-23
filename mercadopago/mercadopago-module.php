@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: WooCommerce Mercado Pago
+ * Plugin Name: Woo Mercado Pago Module
  * Plugin URI: https://github.com/mercadopago/cart-woocommerce
  * Description: This is the <strong>oficial</strong> module of Mercado Pago for WooCommerce plugin. This module enables WooCommerce to use Mercado Pago as a payment Gateway for purchases made in your e-commerce store.
  * Author: Mercado Pago
