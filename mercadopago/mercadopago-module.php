@@ -66,7 +66,7 @@ class WC_WooMercadoPago_Module {
 		echo
 			'<div class="error"><p>' .
 			sprintf(
-				__('WooCommerce Mercado Pago depends on the last version of %s to execute!', 'woocommerce-mercadopago-module'),
+				__('Woo Mercado Pago Module depends on the last version of %s to execute!', 'woocommerce-mercadopago-module'),
 				'<a href="http://wordpress.org/extend/plugins/woocommerce/">' . 'WooCommerce' . '</a>'
 			) .
 			'</p></div>';

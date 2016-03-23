@@ -58,8 +58,8 @@ msgstr ""
 #: mercadopago-module.php:66
 #, php-format
 msgid ""
-"WooCommerce Mercado Pago "
-"Oficial depends on the "
+"Woo Mercado Pago Module "
+"depends on the "
 "last version of %s to "
 "execute!"
 msgstr ""

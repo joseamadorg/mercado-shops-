@@ -30,10 +30,10 @@ msgstr "Este é o módulo <strong>oficial</strong> do Mercado Pago para o plugin
 #: mercadopago-module.php:66
 #, php-format
 msgid ""
-"WooCommerce Mercado Pago depends on the last version of %s to "
+"Woo Mercado Pago Module depends on the last version of %s to "
 "execute!"
 msgstr ""
-"O WooCommerce Mercado Pago depende da última versão do %s para "
+"O Woo Mercado Pago Module depende da última versão do %s para "
 "executar!"
 
 #: mercadopago/mercadopago-gateway.php:63
