@@ -7,7 +7,7 @@
  * Author URI: https://www.mercadopago.com.br/developers/
  * Developer: Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
  * Copyright: Copyright(c) MercadoPago [http://www.mercadopago.com]
- * Version: 1.0.1
+ * Version: 1.0.2
  * License: http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: woocommerce-mercadopago-module
  * Domain Path: /languages/
@@ -738,6 +738,9 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			}
 			do_action('valid_mercadopago_ipn_request', $data);
 		} else {
+			if ('yes' == $this->debug) {
+				$this->log->add($this->id, $this->id . ': @[check_ipn_response] - Mercado Pago Request Failure: ' . print_r($_GET, true));
+			}
 			wp_die(__('Mercado Pago Request Failure', 'woocommerce-mercadopago-module'));
 		}
 	}
@@ -750,6 +753,9 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			$this->log->add($this->id, $this->id . ': @[check_ipn_request_is_valid] - received ipn message from mercado pago, checking validity with $data containing: ' . print_r($data, true));
 		}
 		if (!isset($data['id'])) {
+			if ('yes' == $this->debug) {
+				$this->log->add($this->id, $this->id . ': @[check_ipn_request_is_valid] - failing due to ID absent');
+			}
 			return false; // No ID? No process!
 		}
 		// Create MP object and setup sandbox mode.
@@ -766,25 +772,25 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				$merchant_order_info = $mp->get("/merchant_orders/" . $payment_info["response"]["collection"]["merchant_order_id"], $params, false);
 			} else if ($data["topic"] == 'merchant_order') {
 				$merchant_order_info = $mp->get("/merchant_orders/" . $_GET["id"], $params, false);
-				// If the payment's transaction amount is equal (or bigger) than the merchant order's amount you can release your items 
-				if (!is_wp_error($merchant_order_info) && ($merchant_order_info["status"] == 200)) {
-					$payments = $merchant_order_info["response"]["payments"];
-				   	// check if we have more than one payment method
-			   		if (sizeof($payments) == 2) {
-				   		if (strcasecmp($payments[0]['status'], $payments[1]['status']) != 0) {
-				   			if ('yes' == $this->debug) {
-								$this->log->add($this->id, $this->id . ': @[check_ipn_request_is_valid] - two payments with status not equal');
-							}
-						} else {
-							return $merchant_order_info["response"];
+			}
+			// If the payment's transaction amount is equal (or bigger) than the merchant order's amount you can release your items 
+			if (!is_wp_error($merchant_order_info) && ($merchant_order_info["status"] == 200)) {
+				$payments = $merchant_order_info["response"]["payments"];
+			   	// check if we have more than one payment method
+			  		if (sizeof($payments) == 2) {
+			   		if (strcasecmp($payments[0]['status'], $payments[1]['status']) != 0) {
+			   			if ('yes' == $this->debug) {
+							$this->log->add($this->id, $this->id . ': @[check_ipn_request_is_valid] - two payments with status not equal');
 						}
-				   	} else { // If we have only one payment, we can go on its status
-			   			return $merchant_order_info['response'];
-				   	}
-				} else {
-					if ('yes' == $this->debug) {
-						$this->log->add($this->id, $this->id . ': @[check_ipn_request_is_valid] - got status not equal 200 or some error');
+					} else {
+						return $merchant_order_info["response"];
 					}
+			   	} else { // If we have only one payment, we can go on its status
+			  			return $merchant_order_info['response'];
+			   	}
+			} else {
+				if ('yes' == $this->debug) {
+					$this->log->add($this->id, $this->id . ': @[check_ipn_request_is_valid] - got status not equal 200 or some error');
 				}
 			}
 		} catch (MercadoPagoException $e) {

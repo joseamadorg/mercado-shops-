@@ -14,3 +14,7 @@ v1.0.1 (23/03/2016)
 	- Removed some unused files/code;
 	- Redesign of the logic of preferences when creating cart, separating items;
 	- Proper information of shipment cost
+
+v1.0.2 (23/03/2016)
+-> Bug Fix
+	- IPN URL wasn’t triggered when topic=payment
