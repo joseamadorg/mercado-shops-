@@ -1,5 +1,5 @@
 === Woo Mercado Pago Module ===
-Contributors: mercadopago, marcelohama
+Contributors: mercadopago, mercadolivre
 Donate link: https://www.mercadopago.com.br/developers/
 Tags: ecommerce, mercadopago
 Requires at least: WooCommerce 2.1.x
@@ -31,12 +31,9 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 
 == Screenshots ==
 
-1. `/assets/wc_mp_settings.png`
+1. `/README.img/wc_mp_settings.png`
 
 == Changelog ==
-
-
-CHANGELOG:
 
 = v1.0.0 (16/03/2016) =
 * LatAm support;
