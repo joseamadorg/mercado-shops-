@@ -30,6 +30,10 @@ msgstr "Este es el módulo <strong>oficial</strong> de Mercado Pago para el plug
 msgid "Woo Mercado Pago Module depends on the last version of %s to execute!"
 msgstr "Woo Mercado Pago Module depende de la última versión de %s para ejecutarse!"
 
+#: mercadopago-module.php:110
+msgid "Settings"
+msgstr "Ajustes"
+
 #: mercadopago/mercadopago-gateway.php:63
 msgid "This module enables WooCommerce to use Mercado Pago as payment method for purchases made in your virtual store."
 msgstr "Este módulo habilita el uso de Mercado Pago en WooCommerce como método de pago para compras realizadas en su tienda virtual."

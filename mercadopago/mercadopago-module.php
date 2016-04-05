@@ -95,15 +95,14 @@ class WC_WooMercadoPago_Module {
 // Inside the plugin, you need to create a class after plugins are loaded
 add_action('plugins_loaded', array('WC_WooMercadoPago_Module', 'initMercadoPagoGatewayClass'), 0);
 
-// Support to previous IPN implementations
-function wcmercadopago_legacy_ipn() {
-	if (isset($_GET['topic']) && !isset($_GET['wc-api'])) {
-		$woocommerce = WC_WooMercadoPago_Module::woocommerceInstance();
-		$woocommerce->payment_gateways();
-		do_action('woocommerce_api_wc_woomercadopago_gateway');
-	}
+// Add settings link on plugin page
+function woomercadopago_settings_link($links) { 
+	$settings_link = '<a href="' . 'admin.php?page=wc-settings&tab=checkout&section=wc_woomercadopago_gateway' . '">' . __('Settings', 'woocommerce-mercadopago-module') . '</a>'; 
+	array_unshift($links, $settings_link); 
+	return $links;
 }
-add_action('init', 'wcmercadopago_legacy_ipn');
+$plugin = plugin_basename(__FILE__); 
+add_filter("plugin_action_links_$plugin", 'woomercadopago_settings_link');
 
 endif;
 

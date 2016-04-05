@@ -64,6 +64,10 @@ msgid ""
 "execute!"
 msgstr ""
 
+#: mercadopago-module.php:110
+msgid "Settings"
+msgstr ""
+
 #: mercadopago/mercadopago-gateway.php:63
 msgid ""
 "This module enables "
