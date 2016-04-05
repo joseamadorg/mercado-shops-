@@ -22,3 +22,7 @@ v1.0.2 (23/03/2016)
 v1.0.3 (23/03/2016)
 -> Improvement
 	- Improving algorithm when processing IPN
+
+v1.0.4 (05/04/2016)
+-> Improvement
+	- Added a link to module settings page in plugin page

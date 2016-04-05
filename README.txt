@@ -4,7 +4,7 @@ Donate link: https://www.mercadopago.com.br/developers/
 Tags: ecommerce, mercadopago
 Requires at least: WooCommerce 2.1.x
 Tested up to: WooCommerce 2.5.x
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,9 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 
 = v1.0.3 (23/03/2016) =
 * Improving algorithm when processing IPN
+
+= v1.0.4 (05/04/2016) =
+* Added a link to module settings page in plugin page
 
 == Upgrade Notice ==
 

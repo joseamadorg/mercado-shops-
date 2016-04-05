@@ -7,7 +7,7 @@
  * Author URI: https://www.mercadopago.com.br/developers/
  * Developer: Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
  * Copyright: Copyright(c) MercadoPago [http://www.mercadopago.com]
- * Version: 1.0.3
+ * Version: 1.0.4
  * License: http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: woocommerce-mercadopago-module
  * Domain Path: /languages/
@@ -95,6 +95,16 @@ class WC_WooMercadoPago_Module {
 // Inside the plugin, you need to create a class after plugins are loaded
 add_action('plugins_loaded', array('WC_WooMercadoPago_Module', 'initMercadoPagoGatewayClass'), 0);
 
+// Support to previous IPN implementations
+function wcmercadopago_legacy_ipn() {
+	if (isset($_GET['topic']) && !isset($_GET['wc-api'])) {
+		$woocommerce = WC_WooMercadoPago_Module::woocommerceInstance();
+		$woocommerce->payment_gateways();
+		do_action('woocommerce_api_wc_woomercadopago_gateway');
+	}
+}
+add_action('init', 'wcmercadopago_legacy_ipn');
+ 
 // Add settings link on plugin page
 function woomercadopago_settings_link($links) { 
 	$settings_link = '<a href="' . 'admin.php?page=wc-settings&tab=checkout&section=wc_woomercadopago_gateway' . '">' . __('Settings', 'woocommerce-mercadopago-module') . '</a>'; 
