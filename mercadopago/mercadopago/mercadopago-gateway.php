@@ -261,13 +261,6 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'default' => '',
 				'required' => true
 			),
-			'enable_custom_checkout' => array(
-				'title' => __('Custom Checkout', 'woocommerce-mercadopago-module'),
-				'type' => 'checkbox',
-				'label' => __('Enable Custom Checkout', 'woocommerce-mercadopago-module'),
-				'default' => 'yes',
-				'description' => __('This option allows your store to present the custom/transparent checkout to your customers.', 'woocommerce-mercadopago-module'),
-			),
 			'ipn_url' => array(
 				'title' => __('Instant Payment Notification (IPN) URL', 'woocommerce-mercadopago-module'),
 				'type' => 'title',
@@ -277,6 +270,13 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'title' => __('Checkout Options', 'woocommerce-mercadopago-module'),
 				'type' => 'title',
 				'description' => ''
+			),
+			'enable_custom_checkout' => array(
+				'title' => __('Custom Checkout', 'woocommerce-mercadopago-module'),
+				'type' => 'checkbox',
+				'label' => __('Enable Custom Checkout', 'woocommerce-mercadopago-module'),
+				'default' => 'yes',
+				'description' => __('This option allows your store to present the custom/transparent checkout to your customers.', 'woocommerce-mercadopago-module'),
 			),
 			'title' => array(
 				'title' => __('Title', 'woocommerce-mercadopago-module'),
