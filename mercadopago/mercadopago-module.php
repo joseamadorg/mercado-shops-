@@ -89,21 +89,15 @@ class WC_WooMercadoPago_Module {
 		load_plugin_textdomain('woocommerce-mercadopago-module', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 	}
 	
+	public static function get_templates_path() {
+		return plugin_dir_path( __FILE__ ) . 'templates/';
+	}
+	
 }
 	
 // Payment gateways should be created as additional plugins that hook into WooCommerce.
 // Inside the plugin, you need to create a class after plugins are loaded
 add_action('plugins_loaded', array('WC_WooMercadoPago_Module', 'initMercadoPagoGatewayClass'), 0);
-
-// Support to previous IPN implementations
-function wcmercadopago_legacy_ipn() {
-	if (isset($_GET['topic']) && !isset($_GET['wc-api'])) {
-		$woocommerce = WC_WooMercadoPago_Module::woocommerceInstance();
-		$woocommerce->payment_gateways();
-		do_action('woocommerce_api_wc_woomercadopago_gateway');
-	}
-}
-add_action('init', 'wcmercadopago_legacy_ipn');
  
 // Add settings link on plugin page
 function woomercadopago_settings_link($links) { 

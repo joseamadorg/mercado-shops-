@@ -84,6 +84,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		// These fields are used in our Mercado Pago Module configuration page.
 		$this->client_id = $this->get_option('client_id');
 		$this->client_secret = $this->get_option('client_secret');
+		$this->enable_custom_checkout = $this->get_option('enable_custom_checkout', true);
 		$this->title = $this->get_option('title');
 		$this->description = $this->get_option('description');
 		$this->category_id = $this->get_option('category_id');
@@ -93,6 +94,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		$this->iframe_height = $this->get_option('iframe_height', 800);
 		$this->auto_return = $this->get_option('auto_return', true);
 		$this->installments = $this->get_option('installments', '24');
+		$this->enable_2cc = $this->get_option('enable_2cc', true);
 		$this->ex_payments = $this->get_option('ex_payments', 'n/d');
 		$this->sandbox = $this->get_option('sandbox', false);
 		$this->debug = $this->get_option('debug');
@@ -259,6 +261,13 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'default' => '',
 				'required' => true
 			),
+			'enable_custom_checkout' => array(
+				'title' => __('Custom Checkout', 'woocommerce-mercadopago-module'),
+				'type' => 'checkbox',
+				'label' => __('Enable Custom Checkout', 'woocommerce-mercadopago-module'),
+				'default' => 'yes',
+				'description' => __('This option allows your store to present the custom/transparent checkout to your customers.', 'woocommerce-mercadopago-module'),
+			),
 			'ipn_url' => array(
 				'title' => __('Instant Payment Notification (IPN) URL', 'woocommerce-mercadopago-module'),
 				'type' => 'title',
@@ -334,6 +343,13 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'description' => $this->installments_desc,
 				'default' => '24'
 			),
+			'enable_2cc' => array(
+				'title' => __('Payment with 2 Credit Card', 'woocommerce-mercadopago-module'),
+				'type' => 'checkbox',
+				'label' => __('Enable payments with 2 credit cards', 'woocommerce-mercadopago-module'),
+				'default' => 'yes',
+				'description' => __('Enable this option to let your customers use 2 credit cards to pay orders.', 'woocommerce-mercadopago-module'),
+			),
 			'ex_payments' => array(
                 'title' => __('Exclude Payment Methods', 'woocommerce-mercadopago-module'),
                 'description' => $this->payment_desc,
@@ -351,7 +367,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'type' => 'checkbox',
 				'label' => __('Enable Mercado Pago Sandbox', 'woocommerce-mercadopago-module'),
 				'default' => 'no',
-				'description' => __('This options allows you to test payments inside a sandbox environment.', 'woocommerce-mercadopago-module'),
+				'description' => __('This option allows you to test payments inside a sandbox environment.', 'woocommerce-mercadopago-module'),
 			),
 			'debug' => array(
 				'title' => __('Debug and Log', 'woocommerce-mercadopago-module'),
@@ -369,7 +385,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 	 * CHECKOUT BUSINESS RULES
 	 * ========================================================================
 	 */
-	 
+	
 	// 1. First step occurs when the customer selects Mercado Pago and proceed to
 	// checkout. This method verify which integration method was selected and
 	// makes the build for the checkout URL.
@@ -405,7 +421,22 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 	// 2. Order page and this generates the form that shows the pay button. This step
 	// generates the form to proceed to checkout.
 	public function receipt_page($order) {
-		echo $this->renderOrderForm($order);
+		if ('yes' == $this->enable_custom_checkout) { // custom checkout
+			$cart_total = $this->get_order_total();
+			wc_get_template(
+				'credit-card/payment-form.php',
+				array(
+					'cart_total'           => $cart_total,
+					'max_installment'      => 24,
+					'smallest_installment' => 1,
+					'installments'         => (is_numeric((int)$this->installments) ? (int)$this->installments : 24),
+				),
+				'woocommerce/mercadopago/',
+				WC_WooMercadoPago_Module::get_templates_path()
+			);
+		} else { // standard checkout
+			echo $this->renderOrderForm($order);
+		}
 	}
 	// --------------------------------------------------
 	public function renderOrderForm($order_id) {
@@ -500,19 +531,21 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		// Find excluded payment methods. If 'n/d' is in array index, we should
 		// disconsider the remaining values.
         $excluded_payment_methods = array();
-        try { // in some PHP versions, $this->ex_payments is interpreted as a not iterable object
-	        foreach ($this->ex_payments as $excluded) {
-				if ($excluded == 0) // if "n/d" is selected, we just not add any items to the array
-          			break;
-        		array_push($excluded_payment_methods, array(
-	        		"id" => $this->payment_methods[$excluded]
-    	    	));
-        	}
-        } catch (MercadoPagoException $e) {
-        	if ('yes' == $this->debug) {
-				$this->log->add($this->id, $this->id . ': @[DEBUG] - excluded payments: exception caught: ' . print_r($e, true));
-			}
-        }
+        if (is_array($this->ex_payments) || is_object($this->ex_payments)) {
+	        try { // in some PHP versions, $this->ex_payments is interpreted as a not iterable object
+		        foreach ($this->ex_payments as $excluded) {
+					if ($excluded == 0) // if "n/d" is selected, we just not add any items to the array
+          				break;
+        			array_push($excluded_payment_methods, array(
+	        			"id" => $this->payment_methods[$excluded]
+	    	    	));
+    	    	}
+        	} catch (MercadoPagoException $e) {
+        		if ('yes' == $this->debug) {
+					$this->log->add($this->id, $this->id . ': @[DEBUG] - excluded payments: exception caught: ' . print_r($e, true));
+				}
+    	    }
+    	}
         $payment_methods = array(
             'installments' => (is_numeric((int)$this->installments) ? (int)$this->installments : 24),
             'default_installments' => 1

@@ -157,6 +157,18 @@ msgstr "Client_secret do Mercado Pago"
 msgid "Insert your Mercado Pago Client_secret."
 msgstr "Insira seu Client_secret do Mercado Pago."
 
+#: mercadopago/mercadopago-gateway.php:265
+msgid "Custom Checkout"
+msgstr "Checkout Transparente"
+
+#: mercadopago/mercadopago-gateway.php:267
+msgid "Enable Custom Checkout"
+msgstr "Habilitar Checkout Transparente"
+
+#: mercadopago/mercadopago-gateway.php:269
+msgid "This option allows your store to present the custom/transparent checkout to your customers."
+msgstr "Esta opção habilita sua loja a apresentar o checkout transparente para seus clientes."
+
 #: mercadopago/mercadopago-gateway.php:242
 msgid "Instant Payment Notification (IPN) URL"
 msgstr "URL de Notificações Instantâneas de Pagamento (IPN)"
@@ -270,6 +282,18 @@ msgstr "Opções de Pagamento"
 msgid "Max installments"
 msgstr "Número Máximo de Parcelamentos"
 
+#: mercadopago/mercadopago-gateway.php:339
+msgid "Payment with 2 Credit Card"
+msgstr "Pagamento com 2 cartões"
+
+#: mercadopago/mercadopago-gateway.php:341
+msgid "Enable payments with 2 credit cards"
+msgstr "Habilitar pagamento com 2 cartões de crédito"
+
+#: mercadopago/mercadopago-gateway.php:343
+msgid "Enable this option to let your customers use 2 credit cards to pay orders."
+msgstr "Habilite esta opção para permitir seus clientes a utilizarem 2 cartões de crédito para pagar pedidos."
+
 #: mercadopago/mercadopago-gateway.php:317
 msgid "Exclude Payment Methods"
 msgstr "Excluir Métodos de Pagamento"
@@ -287,7 +311,7 @@ msgid "Enable Mercado Pago Sandbox"
 msgstr "Habilitar o sandbox do Mercado Pago"
 
 #: mercadopago/mercadopago-gateway.php:333
-msgid "This options allows you to test payments inside a sandbox environment."
+msgid "This option allows you to test payments inside a sandbox environment."
 msgstr "Esta opção permite a você testar pagamentos em um ambiente sandbox."
 
 #: mercadopago/mercadopago-gateway.php:336
