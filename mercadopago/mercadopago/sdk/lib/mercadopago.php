@@ -203,18 +203,21 @@ class MP {
      * @param array $preference
      * @return array(json)
      */
-    public function create_preference($preference) {
-        $request = array(
-            "uri" => "/checkout/preferences",
-            "params" => array(
-                "access_token" => $this->get_access_token()
-            ),
-            "data" => $preference
-        );
+	public function create_preference($preference) {
+       $request = array(
+           "uri" => "/checkout/preferences",
+           "params" => array(
+               "access_token" => $this->get_access_token()
+           ),
+           "headers" => array(
+               "X-Tracking-Id" => "platform:std,type:virtuemart,so:2.0.0"
+           ),
+           "data" => $preference
+       );
 
-        $preference_result = MPRestClient::post($request);
-        return $preference_result;
-    }
+       $preference_result = MPRestClient::post($request);
+       return $preference_result;
+	}
 
     /**
      * Update a checkout preference

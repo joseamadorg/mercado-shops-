@@ -271,13 +271,14 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'type' => 'title',
 				'description' => ''
 			),
+			/*TODO: implement custom checkout
 			'enable_custom_checkout' => array(
 				'title' => __('Custom Checkout', 'woocommerce-mercadopago-module'),
 				'type' => 'checkbox',
 				'label' => __('Enable Custom Checkout', 'woocommerce-mercadopago-module'),
 				'default' => 'yes',
 				'description' => __('This option allows your store to present the custom/transparent checkout to your customers.', 'woocommerce-mercadopago-module'),
-			),
+			),*/
 			'title' => array(
 				'title' => __('Title', 'woocommerce-mercadopago-module'),
 				'type' => 'text',
@@ -421,6 +422,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 	// 2. Order page and this generates the form that shows the pay button. This step
 	// generates the form to proceed to checkout.
 	public function receipt_page($order) {
+		/*TODO: implement custom checkout
 		if ('yes' == $this->enable_custom_checkout) { // custom checkout
 			$cart_total = $this->get_order_total();
 			wc_get_template(
@@ -434,9 +436,9 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'woocommerce/mercadopago/',
 				WC_WooMercadoPago_Module::get_templates_path()
 			);
-		} else { // standard checkout
+		} else { // standard checkout*/
 			echo $this->renderOrderForm($order);
-		}
+		/*}*/
 	}
 	// --------------------------------------------------
 	public function renderOrderForm($order_id) {
@@ -605,7 +607,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		);
 		// Set sponsor ID
 		if (!$this->isTestUser) {
-			$preferences['sponsor_id'] = (int)($sponsor_id[$this->site_id]);
+			$preferences['sponsor_id'] = (int)($this->sponsor_id[$this->site_id]);
 		}
 		// Auto return options.
 		if ('yes' == $this->auto_return) {
