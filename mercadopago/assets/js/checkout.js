@@ -1,4 +1,3 @@
-/* global wcMercadoPagoParams, MercadoPagoCheckout */
 (function( $ ) {
 	'use strict';
 

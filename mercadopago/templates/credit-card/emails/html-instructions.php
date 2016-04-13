@@ -12,6 +12,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<h2><?php _e( 'Payment', 'woocommerce-pagarme' ); ?></h2>
+<h2><?php _e( 'Payment', 'woocommerce-mercadopago-module' ); ?></h2>
 
-<p class="order_details"><?php echo sprintf( __( 'Payment successfully made using %s credit card in %s.', 'woocommerce-pagarme' ), '<strong>' . $card_brand . '</strong>', '<strong>' . $installments . 'x</strong>' ); ?></p>
+<p class="order_details"><?php echo sprintf( __( 'Payment successfully made using %s credit card in %s.', 'woocommerce-mercadopago-module' ), '<strong>' . $card_brand . '</strong>', '<strong>' . $installments . 'x</strong>' ); ?></p>

@@ -1,4 +1,3 @@
-/* global wcPagarmeParams, PagarMe */
 (function( $ ) {
 	'use strict';
 
