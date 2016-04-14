@@ -759,7 +759,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		// these fields comes in the format [2016-04-13T16:08:33.000-04:00]
 		$date_a = substr($payment_a['last_modified'], 0, 10);
 		$time_a = substr($payment_a['last_modified'], 11, 8);
-		$date_b = substr($payment_b['last_modified'], 0, 4);
+		$date_b = substr($payment_b['last_modified'], 0, 10);
 		$time_b = substr($payment_b['last_modified'], 11, 8);
 		$d_a = $date_a . ' ' . $time_a;
 		$d_b = $date_b . ' ' . $time_b;
