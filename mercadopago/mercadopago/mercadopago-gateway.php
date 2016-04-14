@@ -271,7 +271,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'type' => 'title',
 				'description' => ''
 			),
-			/*TODO: implement custom checkout
+			/* TODO: implement custom checkout
 			'enable_custom_checkout' => array(
 				'title' => __('Custom Checkout', 'woocommerce-mercadopago-module'),
 				'type' => 'checkbox',
@@ -344,13 +344,14 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'description' => $this->installments_desc,
 				'default' => '24'
 			),
+			/* TODO: implement 2 cards from configuration via API
 			'enable_2cc' => array(
 				'title' => __('Payment with 2 Credit Card', 'woocommerce-mercadopago-module'),
 				'type' => 'checkbox',
 				'label' => __('Enable payments with 2 credit cards', 'woocommerce-mercadopago-module'),
 				'default' => 'yes',
 				'description' => __('Enable this option to let your customers use 2 credit cards to pay orders.', 'woocommerce-mercadopago-module'),
-			),
+			),*/
 			'ex_payments' => array(
                 'title' => __('Exclude Payment Methods', 'woocommerce-mercadopago-module'),
                 'description' => $this->payment_desc,
@@ -753,6 +754,22 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		}
 	}
 	
+	// Return the payment that haves the most recent modification
+	protected function getLastModifiedPayment($payment_a, $payment_b) {
+		// these fields comes in the format [2016-04-13T16:08:33.000-04:00]
+		$date_a = substr($payment_a['last_modified'], 0, 10);
+		$time_a = substr($payment_a['last_modified'], 11, 8);
+		$date_b = substr($payment_b['last_modified'], 0, 4);
+		$time_b = substr($payment_b['last_modified'], 11, 8);
+		$d_a = $date_a . ' ' . $time_a;
+		$d_b = $date_b . ' ' . $time_b;
+		if (strtotime($d_a) < strtotime($d_b)) {
+			return $d_b;
+		} else {
+			return d_a;
+		}
+	}
+	
 	/*
 	 * ========================================================================
 	 * IPN MECHANICS
@@ -808,17 +825,14 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				if (!is_wp_error($merchant_order_info) && ($merchant_order_info["status"] == 200)) {
 					$payments = $merchant_order_info["response"]["payments"];
 				   	// check if we have more than one payment method
-			  		if (sizeof($payments) == 2) {
-			   			if (strcasecmp($payments[0]['status'], $payments[1]['status']) != 0) {
-			   				if ('yes' == $this->debug) {
-								$this->log->add($this->id, $this->id . ': @[check_ipn_request_is_valid] - two payments with status not equal');
-							}
-						} else {
-							return $merchant_order_info["response"];
+			  		if (sizeof($payments) >= 1) { // We have payments
+				  		return $merchant_order_info['response'];
+				   	} else { // We have no payments?
+						if ('yes' == $this->debug) {
+							$this->log->add($this->id, $this->id . ': @[check_ipn_request_is_valid] - order received but has no payment');
 						}
-				   	} else { // If we have only one payment, we can go on its status
-				  			return $merchant_order_info['response'];
-				   	}
+						return false;
+					}
 				} else {
 					if ('yes' == $this->debug) {
 						$this->log->add($this->id, $this->id . ': @[check_ipn_request_is_valid] - got status not equal 200 or some error');
@@ -884,7 +898,32 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 						);
 					}
 				}
-				switch ($data['payments'][0]['status']) {
+				// Here, we process the status
+				$total_paid = 0.00;
+				$status = 'pending';
+				$most_recent_payment = null;
+				foreach ($data['payments'] as $payment) {
+					if ($payment['status'] === 'approved') {
+						$total_paid = $total_paid + (float)$payment['total_paid_amount'];
+					}
+					if ($most_recent_payment == null) {
+						$most_recent_payment = $payment;
+					} else {
+						$most_recent_payment = $this->getLastModifiedPayment($most_recent_payment, $payment);
+					}
+				}
+				$total = $data['shipping_cost'] + $data['total_amount'];
+				if ($total_paid >= $total) {
+					// At this point, the sum of approved payments are above or equal than the total order amount, so it is approved
+					$status = 'approved';
+				} else {
+					// If payment is not approved, we will take the status of the most recent payment modification
+					if ($most_recent_payment != null) {
+						$status = $most_recent_payment['status'];
+					}
+				}
+				// Switch the status and update in WooCommerce
+				switch ($status) {
 					case 'approved':
 						$order->add_order_note(
 							'Mercado Pago: ' . __('Payment approved.', 'woocommerce-mercadopago-module')
