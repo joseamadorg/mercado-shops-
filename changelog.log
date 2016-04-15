@@ -26,3 +26,5 @@ v1.0.3 (23/03/2016)
 v1.0.4 (05/04/2016)
 -> Improvement
 	- Added a link to module settings page in plugin page
+	- Several bug fixes
+	- Fixed status change when processing with two cards

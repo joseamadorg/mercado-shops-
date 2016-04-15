@@ -271,14 +271,14 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'type' => 'title',
 				'description' => ''
 			),
-			/* TODO: implement custom checkout
+			/* TODO: implement custom checkout */
 			'enable_custom_checkout' => array(
 				'title' => __('Custom Checkout', 'woocommerce-mercadopago-module'),
 				'type' => 'checkbox',
 				'label' => __('Enable Custom Checkout', 'woocommerce-mercadopago-module'),
 				'default' => 'yes',
 				'description' => __('This option allows your store to present the custom/transparent checkout to your customers.', 'woocommerce-mercadopago-module'),
-			),*/
+			),
 			'title' => array(
 				'title' => __('Title', 'woocommerce-mercadopago-module'),
 				'type' => 'text',
@@ -344,14 +344,14 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'description' => $this->installments_desc,
 				'default' => '24'
 			),
-			/* TODO: implement 2 cards from configuration via API
+			/* TODO: implement 2 cards from configuration via API */
 			'enable_2cc' => array(
 				'title' => __('Payment with 2 Credit Card', 'woocommerce-mercadopago-module'),
 				'type' => 'checkbox',
 				'label' => __('Enable payments with 2 credit cards', 'woocommerce-mercadopago-module'),
 				'default' => 'yes',
 				'description' => __('Enable this option to let your customers use 2 credit cards to pay orders.', 'woocommerce-mercadopago-module'),
-			),*/
+			),
 			'ex_payments' => array(
                 'title' => __('Exclude Payment Methods', 'woocommerce-mercadopago-module'),
                 'description' => $this->payment_desc,
@@ -388,6 +388,31 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 	 * ========================================================================
 	 */
 	
+	public function payment_fields() {
+		if ('yes' == $this->enable_custom_checkout) { // custom checkout
+			$cart_total = $this->get_order_total();
+			wc_get_template(
+				'credit-card/payment-form.php',
+				array(
+					// TODO: implement custom checkout fields
+					'cart_total'           => $cart_total,
+					'max_installment'      => 24,
+					'smallest_installment' => 1,
+					'installments'         => (is_numeric((int)$this->installments) ? (int)$this->installments : 24),
+				),
+				'woocommerce/mercadopago/',
+				WC_WooMercadoPago_Module::get_templates_path()
+			);
+		} else { // standard checkout
+			if ($description = $this->get_description()) {
+        	    echo wpautop(wptexturize($description));
+    	    }
+	        if ($this->supports('default_credit_card_form')) {
+            	$this->credit_card_form();
+        	}
+		}
+	}
+	
 	// 1. First step occurs when the customer selects Mercado Pago and proceed to
 	// checkout. This method verify which integration method was selected and
 	// makes the build for the checkout URL.
@@ -423,23 +448,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 	// 2. Order page and this generates the form that shows the pay button. This step
 	// generates the form to proceed to checkout.
 	public function receipt_page($order) {
-		/*TODO: implement custom checkout
-		if ('yes' == $this->enable_custom_checkout) { // custom checkout
-			$cart_total = $this->get_order_total();
-			wc_get_template(
-				'credit-card/payment-form.php',
-				array(
-					'cart_total'           => $cart_total,
-					'max_installment'      => 24,
-					'smallest_installment' => 1,
-					'installments'         => (is_numeric((int)$this->installments) ? (int)$this->installments : 24),
-				),
-				'woocommerce/mercadopago/',
-				WC_WooMercadoPago_Module::get_templates_path()
-			);
-		} else { // standard checkout*/
-			echo $this->renderOrderForm($order);
-		/*}*/
+		echo $this->renderOrderForm($order);
 	}
 	// --------------------------------------------------
 	public function renderOrderForm($order_id) {
@@ -754,22 +763,6 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		}
 	}
 	
-	// Return the payment that haves the most recent modification
-	protected function getLastModifiedPayment($payment_a, $payment_b) {
-		// these fields comes in the format [2016-04-13T16:08:33.000-04:00]
-		$date_a = substr($payment_a['last_modified'], 0, 10);
-		$time_a = substr($payment_a['last_modified'], 11, 8);
-		$date_b = substr($payment_b['last_modified'], 0, 10);
-		$time_b = substr($payment_b['last_modified'], 11, 8);
-		$d_a = $date_a . ' ' . $time_a;
-		$d_b = $date_b . ' ' . $time_b;
-		if (strtotime($d_a) < strtotime($d_b)) {
-			return $d_b;
-		} else {
-			return d_a;
-		}
-	}
-	
 	/*
 	 * ========================================================================
 	 * IPN MECHANICS
@@ -864,13 +857,6 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 					$this->log->add($this->id, $this->id . ': @[successful_request] - got order with ID ' . $order->id . ' and status ' . $data['payments'][0]['status']);
 				}
 				// Order details.
-				if (!empty($data['id'])) {
-					update_post_meta(
-						$order_id,
-						__('Mercado Pago Transaction ID', 'woocommerce-mercadopago-module'),
-						$data['id']
-					);
-				}
 				if (!empty($data['payer']['email'])) {
 					update_post_meta(
 						$order_id,
@@ -901,26 +887,15 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				// Here, we process the status
 				$total_paid = 0.00;
 				$status = 'pending';
-				$most_recent_payment = null;
 				foreach ($data['payments'] as $payment) {
 					if ($payment['status'] === 'approved') {
 						$total_paid = $total_paid + (float)$payment['total_paid_amount'];
-					}
-					if ($most_recent_payment == null) {
-						$most_recent_payment = $payment;
-					} else {
-						$most_recent_payment = $this->getLastModifiedPayment($most_recent_payment, $payment);
 					}
 				}
 				$total = $data['shipping_cost'] + $data['total_amount'];
 				if ($total_paid >= $total) {
 					// At this point, the sum of approved payments are above or equal than the total order amount, so it is approved
 					$status = 'approved';
-				} else {
-					// If payment is not approved, we will take the status of the most recent payment modification
-					if ($most_recent_payment != null) {
-						$status = $most_recent_payment['status'];
-					}
 				}
 				// Switch the status and update in WooCommerce
 				switch ($status) {

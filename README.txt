@@ -56,6 +56,8 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 
 = v1.0.4 (05/04/2016) =
 * Added a link to module settings page in plugin page
+* Several bug fixes
+* Fixed status change when processing with two cards
 
 == Upgrade Notice ==
 
