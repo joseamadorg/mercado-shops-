@@ -884,18 +884,24 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 						);
 					}
 				}
-				// Here, we process the status
-				$total_paid = 0.00;
+				// Here, we process the status...
 				$status = 'pending';
-				foreach ($data['payments'] as $payment) {
-					if ($payment['status'] === 'approved') {
-						$total_paid = $total_paid + (float)$payment['total_paid_amount'];
+				if (sizeof($data['payments']) == 1) {
+					// if there's only one payment, then we get its status
+					$status = $data['payments'][0]['status'];
+				} else if (sizeof($data['payments']) > 1) {
+					// otherwise, we check payment sum
+					$total_paid = 0.00;
+					foreach ($data['payments'] as $payment) {
+						if ($payment['status'] === 'approved') {
+							$total_paid = $total_paid + (float)$payment['total_paid_amount'];
+						}
 					}
-				}
-				$total = $data['shipping_cost'] + $data['total_amount'];
-				if ($total_paid >= $total) {
-					// At this point, the sum of approved payments are above or equal than the total order amount, so it is approved
-					$status = 'approved';
+					$total = $data['shipping_cost'] + $data['total_amount'];
+					if ($total_paid >= $total) {
+						// At this point, the sum of approved payments are above or equal than the total order amount, so it is approved
+						$status = 'approved';
+					}
 				}
 				// Switch the status and update in WooCommerce
 				switch ($status) {
