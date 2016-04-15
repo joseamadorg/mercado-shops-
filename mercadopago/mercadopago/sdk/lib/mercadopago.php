@@ -210,7 +210,7 @@ class MP {
                "access_token" => $this->get_access_token()
            ),
            "headers" => array(
-               "X-Tracking-Id" => "platform:std,type:virtuemart,so:2.0.0"
+               "X-Tracking-Id" => "platform:std,type:woocommerce,so:1.0.0"
            ),
            "data" => $preference
        );

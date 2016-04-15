@@ -271,14 +271,14 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'type' => 'title',
 				'description' => ''
 			),
-			/* TODO: implement custom checkout */
+			/* TODO: implement custom checkout
 			'enable_custom_checkout' => array(
 				'title' => __('Custom Checkout', 'woocommerce-mercadopago-module'),
 				'type' => 'checkbox',
 				'label' => __('Enable Custom Checkout', 'woocommerce-mercadopago-module'),
 				'default' => 'yes',
 				'description' => __('This option allows your store to present the custom/transparent checkout to your customers.', 'woocommerce-mercadopago-module'),
-			),
+			),*/
 			'title' => array(
 				'title' => __('Title', 'woocommerce-mercadopago-module'),
 				'type' => 'text',
@@ -344,14 +344,14 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'description' => $this->installments_desc,
 				'default' => '24'
 			),
-			/* TODO: implement 2 cards from configuration via API */
+			/* TODO: implement 2 cards from configuration via API
 			'enable_2cc' => array(
 				'title' => __('Payment with 2 Credit Card', 'woocommerce-mercadopago-module'),
 				'type' => 'checkbox',
 				'label' => __('Enable payments with 2 credit cards', 'woocommerce-mercadopago-module'),
 				'default' => 'yes',
 				'description' => __('Enable this option to let your customers use 2 credit cards to pay orders.', 'woocommerce-mercadopago-module'),
-			),
+			),*/
 			'ex_payments' => array(
                 'title' => __('Exclude Payment Methods', 'woocommerce-mercadopago-module'),
                 'description' => $this->payment_desc,
@@ -388,7 +388,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 	 * ========================================================================
 	 */
 	
-	public function payment_fields() {
+	/*public function payment_fields() {
 		if ('yes' == $this->enable_custom_checkout) { // custom checkout
 			$cart_total = $this->get_order_total();
 			wc_get_template(
@@ -411,7 +411,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
             	$this->credit_card_form();
         	}
 		}
-	}
+	}*/
 	
 	// 1. First step occurs when the customer selects Mercado Pago and proceed to
 	// checkout. This method verify which integration method was selected and
