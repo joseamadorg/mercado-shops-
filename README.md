@@ -28,12 +28,7 @@ payment method exclusion setup, and sandbox/debug options.
   <thead>
   <tbody>
     <tr>
-      <td>v1.0.3</td>
-      <td>Deprecated</td>
-      <td>WooCommerce 2.1.x - 2.5.x</td>
-	</tr>
-	<tr>
-	  <td>v1.0.4</td>
+      <td>v1.0.4</td>
       <td>Stable (Current version)</td>
       <td>WooCommerce 2.1.x - 2.5.x</td>
     </tr>
