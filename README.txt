@@ -1,47 +1,20 @@
-# WooCommerce - Mercado Pago Module (v2.1.x to 2.5.x)
+=== Woo Mercado Pago Module ===
+Contributors: mercadopago, mercadolivre
+Donate link: https://www.mercadopago.com.br/developers/
+Tags: ecommerce, mercadopago
+Requires at least: WooCommerce 2.1.x
+Tested up to: WooCommerce 2.5.x
+Stable tag: 1.0.4
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-* [Features](#features)
-* [Available versions](#available_versions)
-* [Installation](#installation)
-* [Configuration](#configuration)
+This is the oficial module of Mercado Pago for WooCommerce plugin.
 
-<a name="features"></a>
-##Features##
-**Standard checkout**
+== Description ==
 
-This feature allows merchants to have a standard checkout. It includes features like
-customizations of title, description, category, and external reference, integrations via
-iframe, modal, and redirection, with configurable auto-returning, max installments and
-payment method exclusion setup, and sandbox/debug options.
+This module enables WooCommerce to use Mercado Pago as a payment Gateway for purchases made in your e-commerce store.
 
-*Available for Argentina, Brazil, Chile, Colombia, Mexico and Venezuela*
-
-<a name="available_versions"></a>
-##Available versions##
-<table>
-  <thead>
-    <tr>
-      <th>Plugin Version</th>
-      <th>Status</th>
-      <th>WooCommerce Compatible Versions</th>
-    </tr>
-  <thead>
-  <tbody>
-    <tr>
-      <td>v1.0.3</td>
-      <td>Deprecated</td>
-      <td>WooCommerce 2.1.x - 2.5.x</td>
-	</tr>
-	<tr>
-	  <td>v1.0.4</td>
-      <td>Stable (Current version)</td>
-      <td>WooCommerce 2.1.x - 2.5.x</td>
-    </tr>
-  </tbody>
-</table>
-
-<a name="installation"></a>
-##Installation##
+== Installation ==
 
 1. Copy **cart-woocommerce/mercadopago** folder to **[WordPressRootDirectory]/wp-content/plugins/** folder.
 
@@ -50,8 +23,47 @@ payment method exclusion setup, and sandbox/debug options.
 3. Search by **WooCommerce Mercado Pago** and click enable. <br />
 You will receive the following message: "Plugin enabled." as a notice in your WordPress.
 
-<a name="configuration"></a>
-##Configuration##
+== Frequently Asked Questions ==
+
+= Any questions? =
+
+Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
+
+== Screenshots ==
+
+1. `/README.img/wc_mp_settings.png`
+
+== Changelog ==
+
+= v1.0.0 (16/03/2016) =
+* LatAm support;
+* Title, description, category, and external reference customizations;
+* Integrations via iframe, modal, and redirection, with configurable auto-returning;
+* Max installments and payment method exclusion setup;
+* Sandbox and debug options.
+
+= v1.0.1 (23/03/2016) =
+* Added payment ID in order custom fields information;
+* Removed some unused files/code;
+* Redesign of the logic of preferences when creating cart, separating items;
+* Proper information of shipment cost
+
+= v1.0.2 (23/03/2016) =
+* IPN URL wasn’t triggered when topic=payment
+
+= v1.0.3 (23/03/2016) =
+* Improving algorithm when processing IPN
+
+= v1.0.4 (15/04/2016) =
+* Added a link to module settings page in plugin page
+* Several bug fixes
+* Fixed status change when processing with two cards
+
+== Upgrade Notice ==
+
+Please refer to our github repo.
+
+== Installation ==
 
 1. Go to **WooCommerce > Configuration > Checkout Tab > Mercado Pago**. <br />
 Fist of all, you need to configure your client credentials. To make it, fill your **Client_id**, **Client_secret** in Mercado Pago Credentials section.

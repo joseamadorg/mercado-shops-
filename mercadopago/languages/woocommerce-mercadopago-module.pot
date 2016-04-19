@@ -64,6 +64,10 @@ msgid ""
 "execute!"
 msgstr ""
 
+#: mercadopago-module.php:110
+msgid "Settings"
+msgstr ""
+
 #: mercadopago/mercadopago-gateway.php:63
 msgid ""
 "This module enables "
@@ -210,6 +214,18 @@ msgid ""
 "Client_secret."
 msgstr ""
 
+#: mercadopago/mercadopago-gateway.php:265
+msgid "Custom Checkout"
+msgstr ""
+
+#: mercadopago/mercadopago-gateway.php:267
+msgid "Enable Custom Checkout"
+msgstr ""
+
+#: mercadopago/mercadopago-gateway.php:269
+msgid "This option allows your store to present the custom/transparent checkout to your customers."
+msgstr ""
+
 #: mercadopago/mercadopago-gateway.php:242
 msgid ""
 "Instant Payment "
@@ -348,6 +364,18 @@ msgstr ""
 msgid "Max installments"
 msgstr ""
 
+#: mercadopago/mercadopago-gateway.php:339
+msgid "Payment with 2 Credit Card"
+msgstr ""
+
+#: mercadopago/mercadopago-gateway.php:341
+msgid "Enable payments with 2 credit cards"
+msgstr ""
+
+#: mercadopago/mercadopago-gateway.php:343
+msgid "Enable this option to let your customers use 2 credit cards to pay orders."
+msgstr ""
+
 #: mercadopago/mercadopago-gateway.php:317
 msgid ""
 "Exclude Payment Methods"
@@ -371,7 +399,7 @@ msgstr ""
 
 #: mercadopago/mercadopago-gateway.php:333
 msgid ""
-"This options allows you "
+"This option allows you "
 "to test payments inside "
 "a sandbox environment."
 msgstr ""

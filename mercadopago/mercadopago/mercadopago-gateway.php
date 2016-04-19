@@ -7,7 +7,7 @@
  * Author URI: https://www.mercadopago.com.br/developers/
  * Developer: Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
  * Copyright: Copyright(c) MercadoPago [http://www.mercadopago.com]
- * Version: 1.0.3
+ * Version: 1.0.4
  * License: http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: woocommerce-mercadopago-module
  * Domain Path: /languages/
@@ -84,6 +84,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		// These fields are used in our Mercado Pago Module configuration page.
 		$this->client_id = $this->get_option('client_id');
 		$this->client_secret = $this->get_option('client_secret');
+		$this->enable_custom_checkout = $this->get_option('enable_custom_checkout', true);
 		$this->title = $this->get_option('title');
 		$this->description = $this->get_option('description');
 		$this->category_id = $this->get_option('category_id');
@@ -93,6 +94,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		$this->iframe_height = $this->get_option('iframe_height', 800);
 		$this->auto_return = $this->get_option('auto_return', true);
 		$this->installments = $this->get_option('installments', '24');
+		$this->enable_2cc = $this->get_option('enable_2cc', true);
 		$this->ex_payments = $this->get_option('ex_payments', 'n/d');
 		$this->sandbox = $this->get_option('sandbox', false);
 		$this->debug = $this->get_option('debug');
@@ -269,6 +271,14 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'type' => 'title',
 				'description' => ''
 			),
+			/* TODO: implement custom checkout
+			'enable_custom_checkout' => array(
+				'title' => __('Custom Checkout', 'woocommerce-mercadopago-module'),
+				'type' => 'checkbox',
+				'label' => __('Enable Custom Checkout', 'woocommerce-mercadopago-module'),
+				'default' => 'yes',
+				'description' => __('This option allows your store to present the custom/transparent checkout to your customers.', 'woocommerce-mercadopago-module'),
+			),*/
 			'title' => array(
 				'title' => __('Title', 'woocommerce-mercadopago-module'),
 				'type' => 'text',
@@ -334,6 +344,14 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'description' => $this->installments_desc,
 				'default' => '24'
 			),
+			/* TODO: implement 2 cards from configuration via API
+			'enable_2cc' => array(
+				'title' => __('Payment with 2 Credit Card', 'woocommerce-mercadopago-module'),
+				'type' => 'checkbox',
+				'label' => __('Enable payments with 2 credit cards', 'woocommerce-mercadopago-module'),
+				'default' => 'yes',
+				'description' => __('Enable this option to let your customers use 2 credit cards to pay orders.', 'woocommerce-mercadopago-module'),
+			),*/
 			'ex_payments' => array(
                 'title' => __('Exclude Payment Methods', 'woocommerce-mercadopago-module'),
                 'description' => $this->payment_desc,
@@ -351,7 +369,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'type' => 'checkbox',
 				'label' => __('Enable Mercado Pago Sandbox', 'woocommerce-mercadopago-module'),
 				'default' => 'no',
-				'description' => __('This options allows you to test payments inside a sandbox environment.', 'woocommerce-mercadopago-module'),
+				'description' => __('This option allows you to test payments inside a sandbox environment.', 'woocommerce-mercadopago-module'),
 			),
 			'debug' => array(
 				'title' => __('Debug and Log', 'woocommerce-mercadopago-module'),
@@ -369,7 +387,32 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 	 * CHECKOUT BUSINESS RULES
 	 * ========================================================================
 	 */
-	 
+	
+	/*public function payment_fields() {
+		if ('yes' == $this->enable_custom_checkout) { // custom checkout
+			$cart_total = $this->get_order_total();
+			wc_get_template(
+				'credit-card/payment-form.php',
+				array(
+					// TODO: implement custom checkout fields
+					'cart_total'           => $cart_total,
+					'max_installment'      => 24,
+					'smallest_installment' => 1,
+					'installments'         => (is_numeric((int)$this->installments) ? (int)$this->installments : 24),
+				),
+				'woocommerce/mercadopago/',
+				WC_WooMercadoPago_Module::get_templates_path()
+			);
+		} else { // standard checkout
+			if ($description = $this->get_description()) {
+        	    echo wpautop(wptexturize($description));
+    	    }
+	        if ($this->supports('default_credit_card_form')) {
+            	$this->credit_card_form();
+        	}
+		}
+	}*/
+	
 	// 1. First step occurs when the customer selects Mercado Pago and proceed to
 	// checkout. This method verify which integration method was selected and
 	// makes the build for the checkout URL.
@@ -500,19 +543,21 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		// Find excluded payment methods. If 'n/d' is in array index, we should
 		// disconsider the remaining values.
         $excluded_payment_methods = array();
-        try { // in some PHP versions, $this->ex_payments is interpreted as a not iterable object
-	        foreach ($this->ex_payments as $excluded) {
-				if ($excluded == 0) // if "n/d" is selected, we just not add any items to the array
-          			break;
-        		array_push($excluded_payment_methods, array(
-	        		"id" => $this->payment_methods[$excluded]
-    	    	));
-        	}
-        } catch (MercadoPagoException $e) {
-        	if ('yes' == $this->debug) {
-				$this->log->add($this->id, $this->id . ': @[DEBUG] - excluded payments: exception caught: ' . print_r($e, true));
-			}
-        }
+        if (is_array($this->ex_payments) || is_object($this->ex_payments)) {
+	        try { // in some PHP versions, $this->ex_payments is interpreted as a not iterable object
+		        foreach ($this->ex_payments as $excluded) {
+					if ($excluded == 0) // if "n/d" is selected, we just not add any items to the array
+          				break;
+        			array_push($excluded_payment_methods, array(
+	        			"id" => $this->payment_methods[$excluded]
+	    	    	));
+    	    	}
+        	} catch (MercadoPagoException $e) {
+        		if ('yes' == $this->debug) {
+					$this->log->add($this->id, $this->id . ': @[DEBUG] - excluded payments: exception caught: ' . print_r($e, true));
+				}
+    	    }
+    	}
         $payment_methods = array(
             'installments' => (is_numeric((int)$this->installments) ? (int)$this->installments : 24),
             'default_installments' => 1
@@ -572,7 +617,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		);
 		// Set sponsor ID
 		if (!$this->isTestUser) {
-			$preferences['sponsor_id'] = (int)($sponsor_id[$this->site_id]);
+			$preferences['sponsor_id'] = (int)($this->sponsor_id[$this->site_id]);
 		}
 		// Auto return options.
 		if ('yes' == $this->auto_return) {
@@ -773,17 +818,14 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				if (!is_wp_error($merchant_order_info) && ($merchant_order_info["status"] == 200)) {
 					$payments = $merchant_order_info["response"]["payments"];
 				   	// check if we have more than one payment method
-			  		if (sizeof($payments) == 2) {
-			   			if (strcasecmp($payments[0]['status'], $payments[1]['status']) != 0) {
-			   				if ('yes' == $this->debug) {
-								$this->log->add($this->id, $this->id . ': @[check_ipn_request_is_valid] - two payments with status not equal');
-							}
-						} else {
-							return $merchant_order_info["response"];
+			  		if (sizeof($payments) >= 1) { // We have payments
+				  		return $merchant_order_info['response'];
+				   	} else { // We have no payments?
+						if ('yes' == $this->debug) {
+							$this->log->add($this->id, $this->id . ': @[check_ipn_request_is_valid] - order received but has no payment');
 						}
-				   	} else { // If we have only one payment, we can go on its status
-				  			return $merchant_order_info['response'];
-				   	}
+						return false;
+					}
 				} else {
 					if ('yes' == $this->debug) {
 						$this->log->add($this->id, $this->id . ': @[check_ipn_request_is_valid] - got status not equal 200 or some error');
@@ -815,13 +857,6 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 					$this->log->add($this->id, $this->id . ': @[successful_request] - got order with ID ' . $order->id . ' and status ' . $data['payments'][0]['status']);
 				}
 				// Order details.
-				if (!empty($data['id'])) {
-					update_post_meta(
-						$order_id,
-						__('Mercado Pago Transaction ID', 'woocommerce-mercadopago-module'),
-						$data['id']
-					);
-				}
 				if (!empty($data['payer']['email'])) {
 					update_post_meta(
 						$order_id,
@@ -849,7 +884,27 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 						);
 					}
 				}
-				switch ($data['payments'][0]['status']) {
+				// Here, we process the status...
+				$status = 'pending';
+				if (sizeof($data['payments']) == 1) {
+					// if there's only one payment, then we get its status
+					$status = $data['payments'][0]['status'];
+				} else if (sizeof($data['payments']) > 1) {
+					// otherwise, we check payment sum
+					$total_paid = 0.00;
+					foreach ($data['payments'] as $payment) {
+						if ($payment['status'] === 'approved') {
+							$total_paid = $total_paid + (float)$payment['total_paid_amount'];
+						}
+					}
+					$total = $data['shipping_cost'] + $data['total_amount'];
+					if ($total_paid >= $total) {
+						// At this point, the sum of approved payments are above or equal than the total order amount, so it is approved
+						$status = 'approved';
+					}
+				}
+				// Switch the status and update in WooCommerce
+				switch ($status) {
 					case 'approved':
 						$order->add_order_note(
 							'Mercado Pago: ' . __('Payment approved.', 'woocommerce-mercadopago-module')

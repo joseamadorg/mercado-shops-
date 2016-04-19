@@ -30,6 +30,10 @@ msgstr "Este es el módulo <strong>oficial</strong> de Mercado Pago para el plug
 msgid "Woo Mercado Pago Module depends on the last version of %s to execute!"
 msgstr "Woo Mercado Pago Module depende de la última versión de %s para ejecutarse!"
 
+#: mercadopago-module.php:110
+msgid "Settings"
+msgstr "Ajustes"
+
 #: mercadopago/mercadopago-gateway.php:63
 msgid "This module enables WooCommerce to use Mercado Pago as payment method for purchases made in your virtual store."
 msgstr "Este módulo habilita el uso de Mercado Pago en WooCommerce como método de pago para compras realizadas en su tienda virtual."
@@ -125,6 +129,18 @@ msgstr "Client_secret de Mercado Pago"
 #: mercadopago/mercadopago-gateway.php:237
 msgid "Insert your Mercado Pago Client_secret."
 msgstr "Inserte su Client_secret de Mercado Pago."
+
+#: mercadopago/mercadopago-gateway.php:265
+msgid "Custom Checkout"
+msgstr "Checkout Transparente"
+
+#: mercadopago/mercadopago-gateway.php:267
+msgid "Enable Custom Checkout"
+msgstr "Permitir Checkout Transparente"
+
+#: mercadopago/mercadopago-gateway.php:269
+msgid "This option allows your store to present the custom/transparent checkout to your customers."
+msgstr "Esta opción permite a su tienda presentar el checkout transparente para sus clientes."
 
 #: mercadopago/mercadopago-gateway.php:242
 msgid "Instant Payment Notification (IPN) URL"
@@ -226,6 +242,18 @@ msgstr "Opciones de Pago"
 msgid "Max installments"
 msgstr "Número máximo de mensualidades"
 
+#: mercadopago/mercadopago-gateway.php:339
+msgid "Payment with 2 Credit Card"
+msgstr "Pago con 2 tarjeta de crédito"
+
+#: mercadopago/mercadopago-gateway.php:341
+msgid "Enable payments with 2 credit cards"
+msgstr "Permitir los pagos con 2 tarjetas de crédito"
+
+#: mercadopago/mercadopago-gateway.php:343
+msgid "Enable this option to let your customers use 2 credit cards to pay orders."
+msgstr "Habilita esta opción para permitir a sus clientes usar 2 tarjetas de crédito para pagar los pedidos."
+
 #: mercadopago/mercadopago-gateway.php:317
 msgid "Exclude Payment Methods"
 msgstr "Excluir métodos de pago"
@@ -243,7 +271,7 @@ msgid "Enable Mercado Pago Sandbox"
 msgstr "Habilitar el sandbox de Mercado Pago"
 
 #: mercadopago/mercadopago-gateway.php:333
-msgid "This options allows you to test payments inside a sandbox environment."
+msgid "This option allows you to test payments inside a sandbox environment."
 msgstr "Esta opción permite simular un flujo de pagos completo en nuestro entorno Sandbox."
 
 #: mercadopago/mercadopago-gateway.php:336
