@@ -7,7 +7,7 @@
  * Author URI: https://www.mercadopago.com.br/developers/
  * Developer: Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
  * Copyright: Copyright(c) MercadoPago [http://www.mercadopago.com]
- * Version: 1.0.4
+ * Version: 1.0.5
  * License: http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: woocommerce-mercadopago-module
  * Domain Path: /languages/
@@ -376,10 +376,33 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'type' => 'checkbox',
 				'label' => __('Enable log', 'woocommerce-mercadopago-module'),
 				'default' => 'no',
-				'description' => sprintf(__('Register event logs of Mercado Pago, such as API requests, in the file', 'woocommerce-mercadopago-module') . ' %s.', '<code>wordpress/wp-content/uploads/wc-logs/' . $this->id . '-' . sanitize_file_name(wp_hash($this->id)) . '.txt</code>')
+				'description' => sprintf(__('Register event logs of Mercado Pago, such as API requests, in the file', 'woocommerce-mercadopago-module') .
+					' %s.', $this->buildLogPathString() . '.<br>' . __('File location: ', 'woocommerce-mercadopago-module') .
+					'<code>wordpress/wp-content/uploads/wc-logs/' . $this->id . '-' . sanitize_file_name(wp_hash($this->id)) . '.log</code>')
 			)
 		);
 		
+	}
+	
+	public function admin_options() {
+		$this->validate_settings_fields();
+		if (count($this->errors) > 0) {
+			$this->display_errors();
+			return false;
+		} else {
+			update_option($this->plugin_id . $this->id . '_settings', apply_filters('woocommerce_settings_api_sanitized_fields_' . $this->id, $this->sanitized_fields));
+			$this->init_settings();
+			echo wpautop($this->method_description);
+			?>
+				<p><a href="https://wordpress.org/support/view/plugin-reviews/woo-mercado-pago-module?filter=5#postform" target="_blank" class="button button-primary">
+					<?php esc_html_e(sprintf(__('Please, rate us %s on WordPress.org and give your feedback to help improve this module!', 'woocommerce-mercadopago-module'), '&#9733;&#9733;&#9733;&#9733;&#9733;')); ?>
+				</a></p>
+				<table class="form-table">
+					<?php $this->generate_settings_html(); ?>
+				</table>
+			<?php
+			return true;
+		}
 	}
 	
 	/*
@@ -529,15 +552,17 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 					));
 				}
 			}
-			// shipment cost as an item (if we enable it in custom, we loss the 2 cards feature)
-			/*array_push($items, array(
+			/*
+				shipment cost as an item (workaround to prevent API showing shipment setup again)
+			*/
+			array_push($items, array(
 				'title' => $order->get_shipping_to_display(),
 				'description' => $order->get_shipping_to_display(),
 				'category_id' => $this->store_categories_id[$this->category_id],
 				'quantity' => 1,
 				'unit_price' => (float)$order->get_total_shipping(),
 				'currency_id' => get_woocommerce_currency()
-			));*/
+			));
 		}
 		
 		// Find excluded payment methods. If 'n/d' is in array index, we should
@@ -594,8 +619,12 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			//'marketplace' => $this->site_id,
             //'marketplace_fee' =>
             'shipments' => array(
-            	'cost' => (float)$order->get_total_shipping(),
-            	'mode' => 'custom',
+            	/*
+					shipment mode as custom, because [cost] is only enabled with
+					custom (used to prevent API showing shipment setup again)
+				*/
+            	//'cost' => (float)$order->get_total_shipping(),
+            	//'mode' => 'custom',
             	'receiver_address' => array(
             		'zip_code' => $order->shipping_postcode,
             		//'street_number' =>
@@ -688,6 +717,13 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			}
 		}
 		return false;
+	}
+	
+	// Build the string representing the path to the log file
+	protected function buildLogPathString() {
+		return '<a href="' . esc_url(admin_url('admin.php?page=wc-status&tab=logs&log_file=' .
+			esc_attr($this->id) . '-' . sanitize_file_name(wp_hash($this->id)) . '.log')) . '">' .
+			__('WooCommerce &gt; System Status &gt; Logs', 'woocommerce-mercadopago-module') . '</a>';
 	}
 	
 	// Return boolean indicating if currency is supported.

@@ -287,6 +287,16 @@ msgstr "Habilitar Log"
 msgid "Register event logs of Mercado Pago, such as API requests, in the file"
 msgstr "Registrar logs de eventos de Mercado Pago, como llamadas a la API, dentro del archivo"
 
+#: mercadopago/mercadopago-gateway.php:380
+#, php-format
+msgid "File location: "
+msgstr "Local del archivo: "
+
+#: mercadopago/mercadopago-gateway.php:398
+#, php-format
+msgid "Please, rate us %s on WordPress.org and give your feedback to help improve this module!"
+msgstr "Por favor, da tu evaluación con %s en WordPress.org y dar su feedback para ayudar a mejorar este módulo!"
+
 #: mercadopago/mercadopago-gateway.php:402
 msgid "Thank you for your order. Please, proceed with your payment clicking in the bellow button."
 msgstr "Gracias por su compra. Por favor, prosiga a la página de pago haciendo click en el botón de abajo."
@@ -326,6 +336,10 @@ msgstr "La moneda"
 #: mercadopago/mercadopago-gateway.php:689
 msgid "is not supported. Supported currencies are: ARS, BRL, CLP, COP, MXN, USD, VEF."
 msgstr "no es soportada. Las monedas soportadas son: ARS, BRL, CLP, COP, MXN, USD, VEF."
+
+#: mercadopago/mercadopago-gateway.php:712
+msgid "WooCommerce &gt; System Status &gt; Logs"
+msgstr "WooCommerce &gt; Status del Sistema &gt; Logs"
 
 #: mercadopago/mercadopago-gateway.php:714
 msgid "Mercado Pago Request Failure"

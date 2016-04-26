@@ -13,18 +13,24 @@ v1.0.1 (23/03/2016)
 	- Added payment ID in order custom fields information;
 	- Removed some unused files/code;
 	- Redesign of the logic of preferences when creating cart, separating items;
-	- Proper information of shipment cost
+	- Proper information of shipment cost.
 
 v1.0.2 (23/03/2016)
 -> Bug Fix
-	- IPN URL wasn’t triggered when topic=payment
+	- IPN URL wasn’t triggered when topic=payment.
 
 v1.0.3 (23/03/2016)
 -> Improvement
-	- Improving algorithm when processing IPN
+	- Improving algorithm when processing IPN.
 
 v1.0.4 (15/04/2016)
 -> Improvement
-	- Added a link to module settings page in plugin page
-	- Several bug fixes
-	- Fixed status change when processing with two cards
+	- Added a link to module settings page in plugin page;
+	- Several bug fixes;
+	- Fixed status change when processing with two cards.
+
+v1.0.5 (29/04/2016)
+-> Improvement
+	- Removal of extra shipment setup in checkout view;
+	- Translation to es_ES;
+	- Some bug fixes and code improvements.

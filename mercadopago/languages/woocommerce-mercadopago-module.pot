@@ -421,6 +421,16 @@ msgid ""
 "file"
 msgstr ""
 
+#: mercadopago/mercadopago-gateway.php:380
+#, php-format
+msgid "File location: "
+msgstr ""
+
+#: mercadopago/mercadopago-gateway.php:398
+#, php-format
+msgid "Please, rate us %s on WordPress.org and give your feedback to help improve this module!"
+msgstr ""
+
 #: mercadopago/mercadopago-gateway.php:402
 msgid ""
 "Thank you for your "
@@ -486,6 +496,10 @@ msgid ""
 "Supported currencies "
 "are: ARS, BRL, CLP, COP, "
 "MXN, USD, VEF."
+msgstr ""
+
+#: mercadopago/mercadopago-gateway.php:712
+msgid "WooCommerce &gt; System Status &gt; Logs"
 msgstr ""
 
 #: mercadopago/mercadopago-gateway.php:714
