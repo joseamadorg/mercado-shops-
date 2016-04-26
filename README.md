@@ -48,7 +48,7 @@ payment method exclusion setup, and sandbox/debug options.
 <a name="installation"></a>
 ##Installation##
 
-1. Copy **cart-woocommerce/mercadopago** folder to **[WordPressRootDirectory]/wp-content/plugins/** folder.
+1. Copy **cart-woocommerce/woo-mercado-pago-module** folder to **[WordPressRootDirectory]/wp-content/plugins/** folder.
 
 2. On your store administration, go to **Plugins** option in sidebar.
 
