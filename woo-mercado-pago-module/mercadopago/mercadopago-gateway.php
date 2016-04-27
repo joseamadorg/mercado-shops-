@@ -84,7 +84,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		// These fields are used in our Mercado Pago Module configuration page.
 		$this->client_id = $this->get_option('client_id');
 		$this->client_secret = $this->get_option('client_secret');
-		$this->enable_custom_checkout = $this->get_option('enable_custom_checkout', true);
+		//$this->enable_custom_checkout = $this->get_option('enable_custom_checkout', true);
 		$this->title = $this->get_option('title');
 		$this->description = $this->get_option('description');
 		$this->category_id = $this->get_option('category_id');
@@ -94,7 +94,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		$this->iframe_height = $this->get_option('iframe_height', 800);
 		$this->auto_return = $this->get_option('auto_return', true);
 		$this->installments = $this->get_option('installments', '24');
-		$this->enable_2cc = $this->get_option('enable_2cc', true);
+		//$this->enable_2cc = $this->get_option('enable_2cc', true);
 		$this->ex_payments = $this->get_option('ex_payments', 'n/d');
 		$this->sandbox = $this->get_option('sandbox', false);
 		$this->debug = $this->get_option('debug');
@@ -390,10 +390,9 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			$this->display_errors();
 			return false;
 		} else {
-			update_option($this->plugin_id . $this->id . '_settings', apply_filters('woocommerce_settings_api_sanitized_fields_' . $this->id, $this->sanitized_fields));
-			$this->init_settings();
 			echo wpautop($this->method_description);
 			?>
+				<h2><?php _e('Woo Mercado Pago Module','woocommerce'); ?></h2>
 				<p><a href="https://wordpress.org/support/view/plugin-reviews/woo-mercado-pago-module?filter=5#postform" target="_blank" class="button button-primary">
 					<?php esc_html_e(sprintf(__('Please, rate us %s on WordPress.org and give your feedback to help improve this module!', 'woocommerce-mercadopago-module'), '&#9733;&#9733;&#9733;&#9733;&#9733;')); ?>
 				</a></p>
@@ -554,7 +553,6 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			}
 			/*
 				shipment cost as an item (workaround to prevent API showing shipment setup again)
-			*/
 			array_push($items, array(
 				'title' => $order->get_shipping_to_display(),
 				'description' => $order->get_shipping_to_display(),
@@ -563,6 +561,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'unit_price' => (float)$order->get_total_shipping(),
 				'currency_id' => get_woocommerce_currency()
 			));
+			*/
 		}
 		
 		// Find excluded payment methods. If 'n/d' is in array index, we should
@@ -623,7 +622,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 					shipment mode as custom, because [cost] is only enabled with
 					custom (used to prevent API showing shipment setup again)
 				*/
-            	//'cost' => (float)$order->get_total_shipping(),
+            	'cost' => (float)$order->get_total_shipping(),
             	//'mode' => 'custom',
             	'receiver_address' => array(
             		'zip_code' => $order->shipping_postcode,
