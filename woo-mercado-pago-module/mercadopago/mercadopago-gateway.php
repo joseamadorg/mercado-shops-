@@ -552,7 +552,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				}
 			}
 			/*
-				shipment cost as an item (workaround to prevent API showing shipment setup again)
+			// shipment cost as an item in cart
 			array_push($items, array(
 				'title' => $order->get_shipping_to_display(),
 				'description' => $order->get_shipping_to_display(),
@@ -615,15 +615,11 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'failure' => str_replace('&amp;', '&', $order->get_cancel_order_url()),
 				'pending' => esc_url($this->get_return_url($order))
 			),
-			//'marketplace' => $this->site_id,
+			//'marketplace' =>
             //'marketplace_fee' =>
             'shipments' => array(
-            	/*
-					shipment mode as custom, because [cost] is only enabled with
-					custom (used to prevent API showing shipment setup again)
-				*/
             	'cost' => (float)$order->get_total_shipping(),
-            	//'mode' => 'custom',
+            	//'mode' =>
             	'receiver_address' => array(
             		'zip_code' => $order->shipping_postcode,
             		//'street_number' =>
@@ -638,7 +634,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			'payment_methods' => $payment_methods,
 			'notification_url' => $this->domain . '/' . $this->id . '/?wc-api=WC_WooMercadoPago_Gateway',
 			'external_reference' => $this->invoice_prefix . $order->id
-			//'additional_info' => $order->customer_message
+			//'additional_info' =>
             //'expires' => 
             //'expiration_date_from' => 
             //'expiration_date_to' => 
@@ -793,8 +789,8 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			case 'MLB': return __('Brazil', 'woocommerce-mercadopago-module');
 			case 'MCO': return __('Colombia', 'woocommerce-mercadopago-module');
 			case 'MLC': return __('Chile', 'woocommerce-mercadopago-module');
-			case 'MLV': return __('Mexico', 'woocommerce-mercadopago-module');
-			case 'MLM': return __('Venezuela', 'woocommerce-mercadopago-module');
+			case 'MLM': return __('Mexico', 'woocommerce-mercadopago-module');
+			case 'MLV': return __('Venezuela', 'woocommerce-mercadopago-module');
 		}
 	}
 	
