@@ -59,10 +59,8 @@ Fist of all, you need to configure your client credentials. To make it, fill you
 
 2. Other general configurations. <br />
 	* **Instant Payment Notification (IPN) URL**
-	![Installation Instructions](/README.img/wc_setup_ipn.png) <br />
 	The highlighted URL is where you will get notified about payment updates.<br /><br />
 	* **Checkout Options**
-	![Installation Instructions](/README.img/wc_setup_checkout.png) <br />
 	**Title**: This is the title of the payment option that will be shown to your customers;<br />
 	**Description**: This is the description of the payment option that will be shown to your customers;<br />
 	**Store Category**: Sets up the category of the store;<br />
@@ -72,11 +70,9 @@ Fist of all, you need to configure your client credentials. To make it, fill you
 	**iFrame Height**: The height, in pixels, of the iFrame (used only with iFrame Integration Method);<br />
 	**Auto Return**: If set, the platform will return to your store when the payment is approved.<br /><br />
 	* **Payment Options**
-	![Installation Instructions](/README.img/wc_setup_payment.png) <br />
 	**Max Installments**: The maximum installments allowed for your customers;<br />
 	**Exclude Payment Methods**: Select the payment methods that you want to not work with Mercado Pago.<br /><br />
 	* **Test and Debug Options**
-	![Installation Instructions](/README.img/wc_setup_testdebug.png) <br />
 	**Mercado Pago Sandboxs**: Test your payments in Mercado Pago sandbox environment;<br />
 	**Debug and Log**: Enables/disables system logs.<br />
 
