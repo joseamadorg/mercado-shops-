@@ -27,8 +27,8 @@ payment method exclusion setup, and sandbox/debug options.
     </tr>
   <thead>
   <tbody>
-	<tr>
-	  <td>v1.0.5</td>
+    <tr>
+      <td>v1.0.4</td>
       <td>Stable (Current version)</td>
       <td>WooCommerce 2.1.x - 2.5.x</td>
     </tr>
@@ -38,7 +38,7 @@ payment method exclusion setup, and sandbox/debug options.
 <a name="installation"></a>
 ##Installation##
 
-1. Copy **cart-woocommerce/woo-mercado-pago-module** folder to **[WordPressRootDirectory]/wp-content/plugins/** folder.
+1. Copy **cart-woocommerce/mercadopago** folder to **[WordPressRootDirectory]/wp-content/plugins/** folder.
 
 2. On your store administration, go to **Plugins** option in sidebar.
 
@@ -52,7 +52,7 @@ You will receive the following message: "Plugin enabled." as a notice in your Wo
 Fist of all, you need to configure your client credentials. To make it, fill your **Client_id**, **Client_secret** in Mercado Pago Credentials section.
 	
 	![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/wc_setup_credentials.png) <br />
-
+	
 	You can obtain your **Client_id** and **Client_secret**, accordingly to your country, in the following links:
 
 	* Argentina: https://www.mercadopago.com/mla/herramientas/aplicaciones
