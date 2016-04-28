@@ -390,9 +390,11 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			$this->display_errors();
 			return false;
 		} else {
-			echo wpautop($this->method_description);
 			?>
 				<h2><?php _e('Woo Mercado Pago Module','woocommerce'); ?></h2>
+			<?php
+			echo wpautop($this->method_description);
+			?>
 				<p><a href="https://wordpress.org/support/view/plugin-reviews/woo-mercado-pago-module?filter=5#postform" target="_blank" class="button button-primary">
 					<?php esc_html_e(sprintf(__('Please, rate us %s on WordPress.org and give your feedback to help improve this module!', 'woocommerce-mercadopago-module'), '&#9733;&#9733;&#9733;&#9733;&#9733;')); ?>
 				</a></p>
