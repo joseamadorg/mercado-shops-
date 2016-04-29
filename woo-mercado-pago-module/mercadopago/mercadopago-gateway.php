@@ -7,7 +7,7 @@
  * Author URI: https://www.mercadopago.com.br/developers/
  * Developer: Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
  * Copyright: Copyright(c) MercadoPago [http://www.mercadopago.com]
- * Version: 1.0.4
+ * Version: 1.0.5
  * License: http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: woocommerce-mercadopago-module
  * Domain Path: /languages/
@@ -84,7 +84,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		// These fields are used in our Mercado Pago Module configuration page.
 		$this->client_id = $this->get_option('client_id');
 		$this->client_secret = $this->get_option('client_secret');
-		$this->enable_custom_checkout = $this->get_option('enable_custom_checkout', true);
+		//$this->enable_custom_checkout = $this->get_option('enable_custom_checkout', true);
 		$this->title = $this->get_option('title');
 		$this->description = $this->get_option('description');
 		$this->category_id = $this->get_option('category_id');
@@ -94,7 +94,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		$this->iframe_height = $this->get_option('iframe_height', 800);
 		$this->auto_return = $this->get_option('auto_return', true);
 		$this->installments = $this->get_option('installments', '24');
-		$this->enable_2cc = $this->get_option('enable_2cc', true);
+		//$this->enable_2cc = $this->get_option('enable_2cc', true);
 		$this->ex_payments = $this->get_option('ex_payments', 'n/d');
 		$this->sandbox = $this->get_option('sandbox', false);
 		$this->debug = $this->get_option('debug');
@@ -376,10 +376,34 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'type' => 'checkbox',
 				'label' => __('Enable log', 'woocommerce-mercadopago-module'),
 				'default' => 'no',
-				'description' => sprintf(__('Register event logs of Mercado Pago, such as API requests, in the file', 'woocommerce-mercadopago-module') . ' %s.', '<code>wordpress/wp-content/uploads/wc-logs/' . $this->id . '-' . sanitize_file_name(wp_hash($this->id)) . '.txt</code>')
+				'description' => sprintf(__('Register event logs of Mercado Pago, such as API requests, in the file', 'woocommerce-mercadopago-module') .
+					' %s.', $this->buildLogPathString() . '.<br>' . __('File location: ', 'woocommerce-mercadopago-module') .
+					'<code>wordpress/wp-content/uploads/wc-logs/' . $this->id . '-' . sanitize_file_name(wp_hash($this->id)) . '.log</code>')
 			)
 		);
 		
+	}
+	
+	public function admin_options() {
+		$this->validate_settings_fields();
+		if (count($this->errors) > 0) {
+			$this->display_errors();
+			return false;
+		} else {
+			?>
+				<h2><?php _e('Woo Mercado Pago Module','woocommerce'); ?></h2>
+			<?php
+			echo wpautop($this->method_description);
+			?>
+				<p><a href="https://wordpress.org/support/view/plugin-reviews/woo-mercado-pago-module?filter=5#postform" target="_blank" class="button button-primary">
+					<?php esc_html_e(sprintf(__('Please, rate us %s on WordPress.org and give your feedback to help improve this module!', 'woocommerce-mercadopago-module'), '&#9733;&#9733;&#9733;&#9733;&#9733;')); ?>
+				</a></p>
+				<table class="form-table">
+					<?php $this->generate_settings_html(); ?>
+				</table>
+			<?php
+			return true;
+		}
 	}
 	
 	/*
@@ -529,15 +553,17 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 					));
 				}
 			}
-			// shipment cost as an item (if we enable it in custom, we loss the 2 cards feature)
-			/*array_push($items, array(
+			/*
+			// shipment cost as an item in cart
+			array_push($items, array(
 				'title' => $order->get_shipping_to_display(),
 				'description' => $order->get_shipping_to_display(),
 				'category_id' => $this->store_categories_id[$this->category_id],
 				'quantity' => 1,
 				'unit_price' => (float)$order->get_total_shipping(),
 				'currency_id' => get_woocommerce_currency()
-			));*/
+			));
+			*/
 		}
 		
 		// Find excluded payment methods. If 'n/d' is in array index, we should
@@ -591,11 +617,11 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'failure' => str_replace('&amp;', '&', $order->get_cancel_order_url()),
 				'pending' => esc_url($this->get_return_url($order))
 			),
-			//'marketplace' => $this->site_id,
+			//'marketplace' =>
             //'marketplace_fee' =>
             'shipments' => array(
             	'cost' => (float)$order->get_total_shipping(),
-            	'mode' => 'custom',
+            	//'mode' =>
             	'receiver_address' => array(
             		'zip_code' => $order->shipping_postcode,
             		//'street_number' =>
@@ -610,7 +636,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			'payment_methods' => $payment_methods,
 			'notification_url' => $this->domain . '/' . $this->id . '/?wc-api=WC_WooMercadoPago_Gateway',
 			'external_reference' => $this->invoice_prefix . $order->id
-			//'additional_info' => $order->customer_message
+			//'additional_info' =>
             //'expires' => 
             //'expiration_date_from' => 
             //'expiration_date_to' => 
@@ -690,6 +716,13 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		return false;
 	}
 	
+	// Build the string representing the path to the log file
+	protected function buildLogPathString() {
+		return '<a href="' . esc_url(admin_url('admin.php?page=wc-status&tab=logs&log_file=' .
+			esc_attr($this->id) . '-' . sanitize_file_name(wp_hash($this->id)) . '.log')) . '">' .
+			__('WooCommerce &gt; System Status &gt; Logs', 'woocommerce-mercadopago-module') . '</a>';
+	}
+	
 	// Return boolean indicating if currency is supported.
 	protected function isSupportedCurrency() {
 		return in_array(get_woocommerce_currency(), array('ARS', 'BRL', 'CLP', 'COP', 'MXN', 'USD', 'VEF'));
@@ -758,8 +791,8 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			case 'MLB': return __('Brazil', 'woocommerce-mercadopago-module');
 			case 'MCO': return __('Colombia', 'woocommerce-mercadopago-module');
 			case 'MLC': return __('Chile', 'woocommerce-mercadopago-module');
-			case 'MLV': return __('Mexico', 'woocommerce-mercadopago-module');
-			case 'MLM': return __('Venezuela', 'woocommerce-mercadopago-module');
+			case 'MLM': return __('Mexico', 'woocommerce-mercadopago-module');
+			case 'MLV': return __('Venezuela', 'woocommerce-mercadopago-module');
 		}
 	}
 	
