@@ -460,10 +460,10 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 				'<p>' . __( 'A problem was occurred when processing your payment. Are you sure you have correctly filled all information in the checkout form?', 'woocommerce-mercadopago-module' ) . '</p>',
 				'error'
 			);
-			return array(
+			/*return array(
 				'result'   => 'fail',
 				'redirect' => '',
-			);
+			);*/
 		}
 	}
 
