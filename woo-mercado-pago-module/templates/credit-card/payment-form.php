@@ -29,7 +29,7 @@ if ( !defined( 'ABSPATH' ) ) {
 		<!-- card number -->
 		<div class="mp-box-inputs mp-col-100">
 	        <label for="cardNumber"><?php echo $form_labels[ 'form' ][ 'credit_card_number' ]; ?> <em>*</em></label>
-	        <input type="text" id="cardNumber" data-checkout="cardNumber" placeholder="" autocomplete="off" />
+	        <input type="number" id="cardNumber" data-checkout="cardNumber" placeholder="" autocomplete="off" maxlength="19"/>
 	        <span class="mp-error" id="mp-error-205" data-main="#cardNumber"> <?php echo $form_labels[ 'error' ][ '205' ]; ?> </span>
 	        <span class="mp-error" id="mp-error-E301" data-main="#cardNumber"> <?php echo $form_labels[ 'error' ][ 'E301' ]; ?> </span>
 		</div>
@@ -45,9 +45,7 @@ if ( !defined( 'ABSPATH' ) ) {
           		</select>
         	</div>
         	<div class="mp-box-inputs mp-col-10">
-				<div id="mp-separete-date">
-            	/
-          		</div>
+				<div id="mp-separete-date"></div>
 			</div>
 			<div class="mp-box-inputs mp-col-45">
 				<label for="cardExpirationYear"><?php echo $form_labels[ 'form' ][ 'expiration_year' ]; ?> <em>*</em></label>
@@ -74,7 +72,7 @@ if ( !defined( 'ABSPATH' ) ) {
 		<div class="mp-box-inputs mp-line">
 	        <div class="mp-box-inputs mp-col-45">
 				<label for="securityCode"><?php echo $form_labels[ 'form' ][ 'security_code' ]; ?> <em>*</em></label>
-				<input type="text" id="securityCode" data-checkout="securityCode" placeholder="" name="mercadopago_custom[securityCode]" style="padding: 8px; background: url( <?php echo ( $images_path . 'cvv.png' ); ?> ) 98% 50% no-repeat;" autocomplete="off"/>
+				<input type="number" id="securityCode" data-checkout="securityCode" placeholder="" name="mercadopago_custom[securityCode]" style="padding: 8px; background: url( <?php echo ( $images_path . 'cvv.png' ); ?> ) 98% 50% no-repeat;" autocomplete="off" maxlength="4"/>
 				<span class="mp-error" id="mp-error-224" data-main="#securityCode"> <?php echo $form_labels[ 'error' ][ '224' ]; ?> </span>
 				<span class="mp-error" id="mp-error-E302" data-main="#securityCode"> <?php echo $form_labels[ 'error' ][ 'E302' ]; ?> </span>
 			</div>

@@ -212,7 +212,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 				'title' => __( 'Title', 'woocommerce-mercadopago-module' ),
 				'type' => 'text',
 				'description' => __( 'Title shown to the client in the checkout.', 'woocommerce-mercadopago-module' ),
-				'default' => __( 'Mercado Pago', 'woocommerce-mercadopago-module' )
+				'default' => __( 'Mercado Pago - Credit Card', 'woocommerce-mercadopago-module' )
 			),
 			'description' => array(
 				'title' => __( 'Description', 'woocommerce-mercadopago-module' ),
