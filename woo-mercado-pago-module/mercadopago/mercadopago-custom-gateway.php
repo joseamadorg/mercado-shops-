@@ -388,7 +388,8 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 		if ( isset( $_POST[ 'mercadopago_custom' ][ 'amount' ] ) && !empty( $_POST[ 'mercadopago_custom' ][ 'amount' ] ) &&
 			 isset( $_POST[ 'mercadopago_custom' ][ 'token' ] ) && !empty( $_POST[ 'mercadopago_custom' ][ 'token' ] ) &&
 			 isset( $_POST[ 'mercadopago_custom' ][ 'installments' ] ) && !empty( $_POST[ 'mercadopago_custom' ][ 'installments' ] ) &&
-			 isset( $_POST[ 'mercadopago_custom' ][ 'paymentMethodId' ] ) && !empty( $_POST[ 'mercadopago_custom' ][ 'paymentMethodId' ] ) ) {
+			 isset( $_POST[ 'mercadopago_custom' ][ 'paymentMethodId' ] ) && !empty( $_POST[ 'mercadopago_custom' ][ 'paymentMethodId' ] )
+			 isset( $_POST[ 'mercadopago_custom' ][ 'installments' ] ) && !empty( $_POST[ 'mercadopago_custom' ][ 'installments' ] ) $_POST[ 'mercadopago_custom' ][ 'installments' ] != -1 ) {
 			$post = $_POST;
 			$response = $this->createUrl( $order, $post );
 	        if ( array_key_exists( 'status', $response ) ) {
