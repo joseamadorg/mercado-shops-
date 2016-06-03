@@ -146,7 +146,7 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 * Translation to es_ES;
 * Some bug fixes and code improvements.
 	
-v2.0.0 (01/06/2016)
+= v2.0.0 (01/06/2016) =
 * Custom Checkout for LatAm;
 * Ticket for LatAm;
 * Removed possibility to setting supportable but invalid currency.
