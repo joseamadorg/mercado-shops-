@@ -675,3 +675,15 @@ msgstr ""
 
 msgid "Your Mercado Pago credential Access Token appears to be misconfigured."
 msgstr ""
+
+msgid "Your Card"
+msgstr ""
+
+msgid "Other Cards"
+msgstr ""
+
+msgid "Other Card"
+msgstr ""
+
+msgid "ended in"
+msgstr ""

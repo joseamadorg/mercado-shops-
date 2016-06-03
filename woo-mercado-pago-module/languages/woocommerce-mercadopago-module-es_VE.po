@@ -677,3 +677,15 @@ msgstr "Importante: La solicitud sólo será confirmada después de la aprobaci�
 
 msgid "Your Mercado Pago credential Access Token appears to be misconfigured."
 msgstr "Su credencial Access Token de Mercado de Pago parece estar desconfigurado."
+
+msgid "Your Card"
+msgstr "Sus Tarjetas"
+
+msgid "Other Cards"
+msgstr "Otras Tarjetas"
+
+msgid "Other Card"
+msgstr "Otra Tarjeta"
+
+msgid "ended in"
+msgstr "terminado en"
