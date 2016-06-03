@@ -210,7 +210,7 @@ class MP {
                "access_token" => $this->get_access_token()
            ),
            "headers" => array(
-               "X-Tracking-Id" => "platform:desktop,type:woocommerce,so:1.0.5"
+               "X-Tracking-Id" => "platform:desktop,type:woocommerce,so:2.0.0"
            ),
            "data" => $preference
        );
@@ -253,6 +253,26 @@ class MP {
 
         $preference_result = MPRestClient::get($request);
         return $preference_result;
+    }
+    
+    /**
+     * Create a checkout preference
+     * @param array $preference
+     * @return array(json)
+     */
+    public function create_payment($preference) {
+        $request = array(
+            "uri" => "/v1/payments",
+            "params" => array(
+                "access_token" => $this->get_access_token()
+            ),
+            "headers" => array(
+                "X-Tracking-Id" => "platform:v1-whitelabel,type:woocommerce,so:2.0.0"
+            ),
+            "data" => $preference
+        );
+        $payment = MPRestClient::post($request);
+        return $payment;
     }
 
     /**

@@ -567,3 +567,123 @@ msgid ""
 "mediation or it was "
 "charged-back."
 msgstr ""
+
+msgid " as it appears in your card ..."
+msgstr ""
+
+msgid "Done, your payment was accredited!"
+msgstr ""
+
+msgid "We are processing the payment. In less than an hour we will e-mail you the results."
+msgstr ""
+
+msgid "We are processing the payment. In less than 2 business days we will tell you by e-mail whether it has accredited or we need more information."
+msgstr ""
+
+msgid "Check the card number."
+msgstr ""
+
+msgid "Check the expiration date."
+msgstr ""
+
+msgid "Check the information."
+msgstr ""
+
+msgid "Check the security code."
+msgstr ""
+
+msgid "We could not process your payment."
+msgstr ""
+
+msgid "You must authorize the payment of your orders."
+msgstr ""
+
+msgid "Call your card issuer to activate your card. The phone is on the back of your card."
+msgstr ""
+
+msgid "You already made a payment for that amount. If you need to repay, use another card or other payment method."
+msgstr ""
+
+msgid "Your payment was rejected. Choose another payment method. We recommend cash."
+msgstr ""
+
+msgid "Your payment do not have sufficient funds."
+msgstr ""
+
+msgid "Your payment does not process payments with selected installments."
+msgstr ""
+
+msgid "You have reached the limit of allowed attempts. Choose another card or another payment method."
+msgstr ""
+
+msgid "This payment method did not process the payment."
+msgstr ""
+
+msgid "Ticket"
+msgstr ""
+
+msgid "Mercado Pago - Ticket"
+msgstr ""
+
+msgid "Mercado Pago - Credit Card"
+msgstr ""
+
+msgid "Ticket Options"
+msgstr ""
+
+msgid "Enable Ticket Payment Method"
+msgstr ""
+
+msgid "Other Bank"
+msgstr ""
+
+msgid "Choose"
+msgstr ""
+
+msgid "A problem was occurred when processing your payment. Please, try again."
+msgstr ""
+
+msgid "Thank you for your order. Please, pay the ticket to get your order approved."
+msgstr ""
+
+msgid "Waiting for the ticket payment."
+msgstr ""
+
+msgid "Print the Ticket"
+msgstr ""
+
+msgid "To reprint the ticket click "
+msgstr ""
+
+msgid "here"
+msgstr ""
+
+msgid "Custom Checkout is Inactive"
+msgstr ""
+
+msgid "Standard Checkout is Inactive"
+msgstr ""
+
+msgid "Ticket is Inactive"
+msgstr ""
+
+msgid "Please, select the ticket issuer of your preference and then click "Place order" button. The ticket will be generated and you will be redirected to print it."
+msgstr ""
+
+msgid "Important: The order will be confirmed only after the payment approval."
+msgstr ""
+
+msgid "Your Mercado Pago credential Access Token appears to be misconfigured."
+msgstr ""
+
+msgid "Your Card"
+msgstr ""
+
+msgid "Other Cards"
+msgstr ""
+
+msgid "Other Card"
+msgstr ""
+
+msgid "ended in"
+msgstr ""

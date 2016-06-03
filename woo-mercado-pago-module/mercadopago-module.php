@@ -7,7 +7,7 @@
  * Author URI: https://www.mercadopago.com.br/developers/
  * Developer: Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
  * Copyright: Copyright(c) MercadoPago [http://www.mercadopago.com]
- * Version: 1.0.5
+ * Version: 2.0.0
  * License: http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: woocommerce-mercadopago-module
  * Domain Path: /languages/
@@ -20,22 +20,20 @@
  */
  
 // Exit if accessed directly
-if (!defined('ABSPATH')) {
+if ( !defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 // Check if class is already loaded
-if (!class_exists('WC_WooMercadoPago_Module')) :
+if ( !class_exists( 'WC_WooMercadoPago_Module' ) ) :
 
-/*
- * WooCommerce MercadoPago Module main class
- */
+// WooCommerce MercadoPago Module main class
 class WC_WooMercadoPago_Module {
 
 	// Singleton design pattern
 	protected static $instance = null;
 	public static function initMercadoPagoGatewayClass() {
-		if (null == self::$instance) {
+		if ( null == self::$instance ) {
 			self::$instance = new self;
 		}
 		return self::$instance;
@@ -44,37 +42,50 @@ class WC_WooMercadoPago_Module {
 	// Class constructor
 	private function __construct() {
 		// load plugin text domain
-		add_action('init', array($this, 'load_plugin_textdomain'));
+		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 		// verify if WooCommerce is already installed
-		if (class_exists('WC_Payment_Gateway')) {
+		if ( class_exists( 'WC_Payment_Gateway' ) ) {
 			include_once 'mercadopago/mercadopago-gateway.php';
-			add_filter('woocommerce_payment_gateways', array( $this, 'addGateway'));
+			include_once 'mercadopago/mercadopago-custom-gateway.php';
+			include_once 'mercadopago/mercadopago-ticket-gateway.php';
+			add_filter( 'woocommerce_payment_gateways', array( $this, 'addGateway' ) );
+			add_filter( 'woomercadopago_settings_link_' . plugin_basename( __FILE__ ), array( $this, 'woomercadopago_settings_link' ) );
 		} else {
-			add_action('admin_notices', array($this, 'notifyWooCommerceMiss'));
+			add_action( 'admin_notices', array( $this, 'notifyWooCommerceMiss' ) );
 		}
 	}
 	
 	// As well as defining your class, you need to also tell WooCommerce (WC) that
 	// it exists. Do this by filtering woocommerce_payment_gateways.
-	public function addGateway($methods) {
+	public function addGateway( $methods ) {
 		$methods[] = 'WC_WooMercadoPago_Gateway';
+		$methods[] = 'WC_WooMercadoPagoCustom_Gateway';
+		$methods[] = 'WC_WooMercadoPagoTicket_Gateway';
 		return $methods;
 	}
 	
 	// Places a warning error to notify user that WooCommerce is missing
 	public function notifyWooCommerceMiss() {
 		echo
-			'<div class="error"><p>' .
-			sprintf(
-				__('Woo Mercado Pago Module depends on the last version of %s to execute!', 'woocommerce-mercadopago-module'),
+			'<div class="error"><p>' . sprintf(
+				__( 'Woo Mercado Pago Module depends on the last version of %s to execute!', 'woocommerce-mercadopago-module' ),
 				'<a href="http://wordpress.org/extend/plugins/woocommerce/">' . 'WooCommerce' . '</a>'
 			) .
 			'</p></div>';
 	}
 	
-	// IPN compatibility with version prior to 2.1
+	// Multi-language plugin
+	public function load_plugin_textdomain() {
+		$locale = apply_filters( 'plugin_locale', get_locale(), 'woocommerce-mercadopago-module' );
+		load_textdomain(
+			'woocommerce-mercadopago-module',
+			trailingslashit(WP_LANG_DIR ) . 'woocommerce-mercadopago-module/woocommerce-mercadopago-module-' . $locale . '.mo'
+		);
+		load_plugin_textdomain( 'woocommerce-mercadopago-module', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+	}
+	
 	public static function woocommerceInstance() {
-		if (function_exists('WC')) {
+		if ( function_exists( 'WC' ) ) {
 			return WC();
 		} else {
 			global $woocommerce;
@@ -82,14 +93,7 @@ class WC_WooMercadoPago_Module {
 		}
 	}
 	
-	// Multi-language plugin
-	public function load_plugin_textdomain() {
-		$locale = apply_filters('plugin_locale', get_locale(), 'woocommerce-mercadopago-module');
-		load_textdomain('woocommerce-mercadopago-module', trailingslashit(WP_LANG_DIR ) . 'woocommerce-mercadopago-module/woocommerce-mercadopago-module-' . $locale . '.mo');
-		load_plugin_textdomain('woocommerce-mercadopago-module', false, dirname(plugin_basename(__FILE__)) . '/languages/');
-	}
-	
-	public static function get_templates_path() {
+	public static function getTemplatesPath() {
 		return plugin_dir_path( __FILE__ ) . 'templates/';
 	}
 	
@@ -97,16 +101,27 @@ class WC_WooMercadoPago_Module {
 	
 // Payment gateways should be created as additional plugins that hook into WooCommerce.
 // Inside the plugin, you need to create a class after plugins are loaded
-add_action('plugins_loaded', array('WC_WooMercadoPago_Module', 'initMercadoPagoGatewayClass'), 0);
+add_action( 'plugins_loaded', array( 'WC_WooMercadoPago_Module', 'initMercadoPagoGatewayClass' ), 0 );
  
 // Add settings link on plugin page
-function woomercadopago_settings_link($links) { 
-	$settings_link = '<a href="' . 'admin.php?page=wc-settings&tab=checkout&section=wc_woomercadopago_gateway' . '">' . __('Settings', 'woocommerce-mercadopago-module') . '</a>'; 
-	array_unshift($links, $settings_link); 
-	return $links;
+function woomercadopago_settings_link( $links ) { 
+	$plugin_links = array();
+	$plugin_links[] = '<a href="' . esc_url( admin_url(
+		'admin.php?page=wc-settings&tab=checkout&section=WC_WooMercadoPago_Gateway' ) ) . '">' .
+		__( 'Standard Checkout', 'woocommerce-mercadopago-module' ) .
+	'</a>';
+	$plugin_links[] = '<a href="' . esc_url( admin_url(
+		'admin.php?page=wc-settings&tab=checkout&section=WC_WooMercadoPagoCustom_Gateway' ) ) . '">' .
+		__( 'Custom Checkout', 'woocommerce-mercadopago-module' ) .
+	'</a>';
+	$plugin_links[] = '<a href="' . esc_url( admin_url(
+		'admin.php?page=wc-settings&tab=checkout&section=WC_WooMercadoPagoTicket_Gateway' ) ) . '">' .
+		__( 'Ticket', 'woocommerce-mercadopago-module' ) .
+	'</a>';
+	return array_merge( $plugin_links, $links );
 }
-$plugin = plugin_basename(__FILE__); 
-add_filter("plugin_action_links_$plugin", 'woomercadopago_settings_link');
+$plugin = plugin_basename( __FILE__ ); 
+add_filter( "plugin_action_links_$plugin", 'woomercadopago_settings_link' );
 
 endif;
 
