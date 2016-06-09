@@ -82,10 +82,9 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 			add_action( 'admin_notices', array( $this, 'credentialsMissingMessage' ) );
 		}
 		
-		// Verify if currency is supported.
-		if ( !$this->isSupportedCurrency() ) {
-			add_action( 'admin_notices', array( $this, 'currencyNotSupportedMessage' ) );
-		}
+		add_action( // Verify if SSL is supported.
+			'admin_notices', array( $this, 'checkSSLAbsence' )
+		);
 
 		// Logging and debug.
 		if ( 'yes' == $this->debug ) {
@@ -569,11 +568,28 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 	// Return boolean indicating if currency is supported.
 	// TODO: Peru rollout
 	protected function isSupportedCurrency() {
-		return in_array( get_woocommerce_currency(), array( 'ARS', 'BRL', 'CLP', 'COP', 'MXN', 'VEF' ) );
+		return in_array( $this->site_id, array( 'MLA', 'MLB', 'MLC', 'MCO', 'MLM', 'MLV' ) );
+	}
+
+	public function checkSSLAbsence() {
+		if ( empty( $_SERVER[ 'HTTPS' ] ) || $_SERVER[ 'HTTPS' ] == 'off' ) {
+			if ( 'yes' == $this->settings[ 'enabled' ] ) {
+				echo '<div class="error"><p><strong>' . 
+					__( 'Ticket is Inactive', 'woocommerce-mercadopago-module' ) .
+					'</strong>: ' .
+					sprintf(
+						__( 'Your site appears to not have SSL certification. SSL is a pre-requisite because the payment process is made in your server.', 'woocommerce-mercadopago-module' )
+					) . '</p></div>';
+			}
+		}
 	}
 
 	// Called automatically by WooCommerce, verify if Module is available to use.
 	public function is_available() {
+		// check SSL connection, as we can't use normal http in custom checkout
+		if ( empty( $_SERVER[ 'HTTPS' ] ) || $_SERVER[ 'HTTPS' ] == 'off' ) {
+			return false;
+		}
 		$available = ( 'yes' == $this->settings[ 'enabled' ] ) &&
 			! empty( $this->access_token ) &&
 			$this->isSupportedCurrency();

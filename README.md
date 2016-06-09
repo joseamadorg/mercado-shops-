@@ -22,7 +22,7 @@ payment method exclusion setup, and sandbox/debug options.<br />
 **Custom checkout**<br />
 This feature enables merchants to have the custom checkout, a more integrated type of
 checkout with customized views and more intuitive flow from the cart to the payment page.<br />
-*Available for Argentina, Brazil, Colombia, Mexico and Venezuela*
+*Available for Argentina, Brazil, Chile, Colombia, Mexico and Venezuela*
 
 **Tickets**<br />
 This option enables merchants to give their customers the option to pay via tickets.<br />
@@ -43,7 +43,7 @@ This option enables merchants to give their customers the option to pay via tick
   <thead>
   <tbody>
     <tr>
-      <td>v2.0.0</td>
+      <td>v2.0.1</td>
       <td>Stable (Current version)</td>
       <td>WooCommerce 2.1.x - 2.5.x</td>
     </tr>
@@ -75,7 +75,7 @@ You have two way to install this module: from your WordPress Store, or by downlo
 
 To confirm that your module is really installed, you can click in *Plugins* item in the store administration menu, and check your just installed module. Just click *enable* to activate it and you should receive the message "Plugin enabled." as a notice in your WordPress.
 
-![Features](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/plugin_adm.png)
+![Features](https://raw.github.com/marcelohama/cart-woocommerce/dev_a/README.img/plugin_adm.png)
 
 -----------
 
@@ -84,7 +84,7 @@ To confirm that your module is really installed, you can click in *Plugins* item
 
 On your store administration, go to *WooCommerce > Settings > Checkout* tab. In *Checkout Options*, click in *Mercado Pago - Standard Checkout*. You should get the following page:
 
-![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/standard_checkout.png)
+![Installation Instructions](https://raw.github.com/marcelohama/cart-woocommerce/dev_a/README.img/standard_checkout.png)
 
 1. **Solution Header**: This part is the header, where you can enable/disable the solution;
 
@@ -129,7 +129,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 
 On your store administration, go to *WooCommerce > Settings > Checkout* tab. In *Checkout Options*, click in *Mercado Pago - Custom Checkout*. You should get the following page:
 
-![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/custom_checkout.png)
+![Installation Instructions](https://raw.github.com/marcelohama/cart-woocommerce/dev_a/README.img/custom_checkout.png)
 
 1. **Solution Header**: This part is the header, where you can enable/disable the solution;
 
@@ -166,7 +166,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 
 On your store administration, go to *WooCommerce > Settings > Checkout* tab. In *Checkout Options*, click in *Mercado Pago - Ticket*. You should get the following page:
 
-![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/ticket.png)
+![Installation Instructions](https://raw.github.com/marcelohama/cart-woocommerce/dev_a/README.img/ticket.png)
 
 1. **Solution Header**: This part is the header, where you can enable/disable the solution;
 
