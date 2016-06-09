@@ -139,6 +139,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 
 	* Argentina: https://www.mercadopago.com/mla/account/credentials?type=custom
 	* Brazil: https://www.mercadopago.com/mlb/account/credentials?type=custom
+	* Chile: https://www.mercadopago.com/mlc/account/credentials?type=custom
 	* Colombia: https://www.mercadopago.com/mco/account/credentials?type=custom
 	* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=custom
 	* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=custom
