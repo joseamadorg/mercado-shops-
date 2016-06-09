@@ -84,7 +84,7 @@ To confirm that your module is really installed, you can click in *Plugins* item
 
 On your store administration, go to *WooCommerce > Settings > Checkout* tab. In *Checkout Options*, click in *Mercado Pago - Standard Checkout*. You should get the following page:
 
-![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/dev_a/README.img/standard_checkout.png)
+![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/standard_checkout.png)
 
 1. **Solution Header**: This part is the header, where you can enable/disable the solution;
 
