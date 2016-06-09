@@ -411,7 +411,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 				json_encode( $_POST, JSON_PRETTY_PRINT ) );
 		}
 		if ( $_POST[ 'mercadopago_custom' ][ 'paymentMethodId' ] == "" ) {
-			$_POST[ 'mercadopago_custom' ][ 'paymentMethodId' ] = $_POST[ 'mercadopago_custom' ][ 'paymentMethodIdSelector' ];
+			$_POST[ 'mercadopago_custom' ][ 'paymentMethodId' ] = $_POST[ 'mercadopago_custom' ][ 'paymentMethodSelector' ];
 		}
 		if ( isset( $_POST[ 'mercadopago_custom' ][ 'amount' ] ) && !empty( $_POST[ 'mercadopago_custom' ][ 'amount' ] ) &&
 			 isset( $_POST[ 'mercadopago_custom' ][ 'token' ] ) && !empty( $_POST[ 'mercadopago_custom' ][ 'token' ] ) &&
