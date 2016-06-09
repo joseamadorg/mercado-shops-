@@ -119,12 +119,31 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 
 == Changelog ==
 
-= v1.0.0 (16/03/2016) =
-* LatAm support;
-* Title, description, category, and external reference customizations;
-* Integrations via iframe, modal, and redirection, with configurable auto-returning;
-* Max installments and payment method exclusion setup;
-* Sandbox and debug options.
+= v2.0.1 (09/06/2016) =
+* Customer Cards (One Click Payment)
+* SSL verifications for custom checkout and ticket;
+* Enabling any type of currency without disabling module (now, error message from API).
+
+= v2.0.0 (01/06/2016) =
+* Custom Checkout for LatAm;
+* Ticket for LatAm;
+* Removed possibility to setting supportable but invalid currency.
+
+= v1.0.5 (29/04/2016) =
+* Removal of extra shipment setup in checkout view;
+* Translation to es_ES;
+* Some bug fixes and code improvements.
+
+= v1.0.4 (15/04/2016) =
+* Added a link to module settings page in plugin page;
+* Several bug fixes;
+* Fixed status change when processing with two cards.
+
+= v1.0.3 (23/03/2016) =
+* Improving algorithm when processing IPN.
+
+= v1.0.2 (23/03/2016) =
+* IPN URL wasn’t triggered when topic=payment.
 
 = v1.0.1 (23/03/2016) =
 * Added payment ID in order custom fields information;
@@ -132,32 +151,13 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 * Redesign of the logic of preferences when creating cart, separating items;
 * Proper information of shipment cost.
 
-= v1.0.2 (23/03/2016) =
-* IPN URL wasn’t triggered when topic=payment.
+= v1.0.0 (16/03/2016) =
+* LatAm support;
+* Title, description, category, and external reference customizations;
+* Integrations via iframe, modal, and redirection, with configurable auto-returning;
+* Max installments and payment method exclusion setup;
+* Sandbox and debug options.
 
-= v1.0.3 (23/03/2016) =
-* Improving algorithm when processing IPN.
-
-= v1.0.4 (15/04/2016) =
-* Added a link to module settings page in plugin page;
-* Several bug fixes;
-* Fixed status change when processing with two cards.
-
-= v1.0.5 (29/04/2016) =
-* Removal of extra shipment setup in checkout view;
-* Translation to es_ES;
-* Some bug fixes and code improvements.
-	
-= v2.0.0 (01/06/2016) =
-* Custom Checkout for LatAm;
-* Ticket for LatAm;
-* Removed possibility to setting supportable but invalid currency.
-
-= v2.0.1 (09/06/2016) =
-* Customer Cards (One Click Payment)
-* SSL verifications for custom checkout and ticket;
-* Enabling any type of currency without disabling module (now, error message from API).
-	
 == Upgrade Notice ==
 
 If you're migrating from version 1.x.x to 2.x.x, please be sure to make a backup of your site and database, as there are many additional features and modifications between these versions.
