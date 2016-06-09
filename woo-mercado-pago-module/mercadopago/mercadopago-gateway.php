@@ -678,8 +678,8 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		switch ( $site_id ) {
 			case 'MLA': return 'ARS';
 			case 'MLB': return 'BRL';
-			case 'MCO': return 'CLP';
-			case 'MLC': return 'COP';
+			case 'MCO': return 'COP';
+			case 'MLC': return 'CLP';
 			case 'MLM': return 'MXN';
 			case 'MLV': return 'VEF';
 			default: return '';

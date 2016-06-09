@@ -285,7 +285,7 @@ class MP {
                "access_token" => $this->get_access_token()
            ),
            "headers" => array(
-               "X-Tracking-Id" => "platform:desktop,type:woocommerce,so:2.0.0"
+               "X-Tracking-Id" => "platform:desktop,type:woocommerce,so:2.0.1"
            ),
            "data" => $preference
        );
