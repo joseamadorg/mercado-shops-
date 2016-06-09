@@ -410,7 +410,8 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 				': @[process_payment] - Received [$_POST] from customer front-end page: ' .
 				json_encode( $_POST, JSON_PRETTY_PRINT ) );
 		}
-		if ( $_POST[ 'mercadopago_custom' ][ 'paymentMethodId' ] == "" ) {
+		// Mexico country case
+		if ( $_POST[ 'mercadopago_custom' ][ 'paymentMethodId' ] == "" || empty( $_POST[ 'mercadopago_custom' ][ 'paymentMethodId' ] ) ) {
 			$_POST[ 'mercadopago_custom' ][ 'paymentMethodId' ] = $_POST[ 'mercadopago_custom' ][ 'paymentMethodSelector' ];
 		}
 		if ( isset( $_POST[ 'mercadopago_custom' ][ 'amount' ] ) && !empty( $_POST[ 'mercadopago_custom' ][ 'amount' ] ) &&
