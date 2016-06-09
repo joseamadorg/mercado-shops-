@@ -844,6 +844,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	            // document.querySelector(MPv1.selectors.mpPaymentMethodSelector).removeAttribute('style');
 	            
 	            // I've added this trying to fix paymentMethodSelector that not appear... by mhama
+	            document.querySelector(MPv1.selectors.formCustomerAndCard).removeAttribute('style');
 	            document.querySelector(MPv1.selectors.formCustomerAndCard).style.padding = "36px 36px 16px 36px";
 	            document.querySelector(MPv1.selectors.mpSecurityCodeCustomerAndCard).style.display = 'none';
 
