@@ -840,8 +840,8 @@ if ( !defined( 'ABSPATH' ) ) {
 	        if (MPv1.site_id == "MLM") {
 
 	            //hide documento for mex
-	            //document.querySelector(MPv1.selectors.mpDoc).style.display = 'none';
-	            document.querySelector(MPv1.selectors.mpPaymentMethodSelector).removeAttribute('style');
+	            document.querySelector(MPv1.selectors.mpDoc).style.display = 'none';
+	            // document.querySelector(MPv1.selectors.mpPaymentMethodSelector).removeAttribute('style');
 
 	            //removing not used fields for this country
 	            MPv1.inputs_to_create_token.splice(MPv1.inputs_to_create_token.indexOf("docType"), 1);
