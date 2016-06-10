@@ -109,13 +109,13 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 
 == Screenshots ==
 
-1. `/README.img/std_config_screenshot.png`
+1. `Configuration of Standard Checkout`
 
-2. `/README.img/order_custom.png`
+2. `Custom Checkout`
 
-3. `/README.img/order_cust_card.png`
+3. `One Click Payment`
 
-4. `/README.img/order_ticket.png`
+4. `Tickets`
 
 == Changelog ==
 
