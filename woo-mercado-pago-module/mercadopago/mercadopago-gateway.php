@@ -670,7 +670,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 	
 	// Return boolean indicating if currency is supported.
 	protected function isSupportedCurrency() {
-		return in_array( get_woocommerce_currency(), array( 'ARS', 'BRL', 'CLP', 'COP', 'MXN', 'VEF' ) );
+		return in_array( $this->site_id, array( 'MLA', 'MLB', 'MLC', 'MCO', 'MLM', 'MLV' ) );
 	}
 
 	// Get currency id for a country
@@ -678,8 +678,8 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		switch ( $site_id ) {
 			case 'MLA': return 'ARS';
 			case 'MLB': return 'BRL';
-			case 'MCO': return 'CLP';
-			case 'MLC': return 'COP';
+			case 'MCO': return 'COP';
+			case 'MLC': return 'CLP';
 			case 'MLM': return 'MXN';
 			case 'MLV': return 'VEF';
 			default: return '';

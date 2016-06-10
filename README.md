@@ -22,7 +22,7 @@ payment method exclusion setup, and sandbox/debug options.<br />
 **Custom checkout**<br />
 This feature enables merchants to have the custom checkout, a more integrated type of
 checkout with customized views and more intuitive flow from the cart to the payment page.<br />
-*Available for Argentina, Brazil, Colombia, Mexico and Venezuela*
+*Available for Argentina, Brazil, Chile, Colombia, Mexico and Venezuela*
 
 **Tickets**<br />
 This option enables merchants to give their customers the option to pay via tickets.<br />
@@ -43,7 +43,7 @@ This option enables merchants to give their customers the option to pay via tick
   <thead>
   <tbody>
     <tr>
-      <td>v2.0.0</td>
+      <td>v2.0.1</td>
       <td>Stable (Current version)</td>
       <td>WooCommerce 2.1.x - 2.5.x</td>
     </tr>
@@ -139,6 +139,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 
 	* Argentina: https://www.mercadopago.com/mla/account/credentials?type=custom
 	* Brazil: https://www.mercadopago.com/mlb/account/credentials?type=custom
+	* Chile: https://www.mercadopago.com/mlc/account/credentials?type=custom
 	* Colombia: https://www.mercadopago.com/mco/account/credentials?type=custom
 	* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=custom
 	* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=custom

@@ -689,3 +689,6 @@ msgstr "Otra Tarjeta"
 
 msgid "ended in"
 msgstr "terminado en"
+
+msgid "Your site appears to not have SSL certification. SSL is a pre-requisite because the payment process is made in your server."
+msgstr "Su sitio parece no tener certificación SSL. SSL es un requisito previo porque la tramitación del pago se realiza en el servidor."

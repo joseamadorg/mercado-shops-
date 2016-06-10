@@ -1,10 +1,10 @@
 === Woo Mercado Pago Module ===
-Contributors: mercadopago, mercadolivre, marcelohama, matiasgordon
+Contributors: mercadopago, mercadolivre
 Donate link: https://www.mercadopago.com.br/developers/
 Tags: ecommerce, mercadopago, woocommerce
 Requires at least: WooCommerce 2.1.x
 Tested up to: WooCommerce 2.5.x
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -113,9 +113,43 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 
 2. `/README.img/order_custom.png`
 
-3. `/README.img/order_ticket.png`
+3. `/README.img/order_cust_card.png`
+
+4. `/README.img/order_ticket.png`
 
 == Changelog ==
+
+= v2.0.1 (09/06/2016) =
+* Customer Cards (One Click Payment)
+* SSL verifications for custom checkout and ticket;
+* Enabling any type of currency without disabling module (now, error message from API).
+
+= v2.0.0 (01/06/2016) =
+* Custom Checkout for LatAm;
+* Ticket for LatAm;
+* Removed possibility to setting supportable but invalid currency.
+
+= v1.0.5 (29/04/2016) =
+* Removal of extra shipment setup in checkout view;
+* Translation to es_ES;
+* Some bug fixes and code improvements.
+
+= v1.0.4 (15/04/2016) =
+* Added a link to module settings page in plugin page;
+* Several bug fixes;
+* Fixed status change when processing with two cards.
+
+= v1.0.3 (23/03/2016) =
+* Improving algorithm when processing IPN.
+
+= v1.0.2 (23/03/2016) =
+* IPN URL wasn’t triggered when topic=payment.
+
+= v1.0.1 (23/03/2016) =
+* Added payment ID in order custom fields information;
+* Removed some unused files/code;
+* Redesign of the logic of preferences when creating cart, separating items;
+* Proper information of shipment cost.
 
 = v1.0.0 (16/03/2016) =
 * LatAm support;
@@ -124,33 +158,6 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 * Max installments and payment method exclusion setup;
 * Sandbox and debug options.
 
-= v1.0.1 (23/03/2016) =
-* Added payment ID in order custom fields information;
-* Removed some unused files/code;
-* Redesign of the logic of preferences when creating cart, separating items;
-* Proper information of shipment cost.
-
-= v1.0.2 (23/03/2016) =
-* IPN URL wasn’t triggered when topic=payment.
-
-= v1.0.3 (23/03/2016) =
-* Improving algorithm when processing IPN.
-
-= v1.0.4 (15/04/2016) =
-* Added a link to module settings page in plugin page;
-* Several bug fixes;
-* Fixed status change when processing with two cards.
-
-= v1.0.5 (29/04/2016) =
-* Removal of extra shipment setup in checkout view;
-* Translation to es_ES;
-* Some bug fixes and code improvements.
-	
-v2.0.0 (01/06/2016)
-* Custom Checkout for LatAm;
-* Ticket for LatAm;
-* Removed possibility to setting supportable but invalid currency.
-	
 == Upgrade Notice ==
 
 If you're migrating from version 1.x.x to 2.x.x, please be sure to make a backup of your site and database, as there are many additional features and modifications between these versions.
