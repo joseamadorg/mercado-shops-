@@ -4,7 +4,7 @@ Donate link: https://www.mercadopago.com.br/developers/
 Tags: ecommerce, mercadopago, woocommerce
 Requires at least: WooCommerce 2.1.x
 Tested up to: WooCommerce 2.5.x
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,8 @@ Mercado Pago owns the highest security standards with PCI certification level 1 
 
 You have two way to install this module: from your WordPress Store, or by downloading and manually copying the module directory.
 
+[youtube https://www.youtube.com/watch?v=CgV9aVlx5SE]
+
 = Install from WordPress =
 1. On your store administration, go to **Plugins** option in sidebar;
 2. Click in **Add New** button and type "Woo Mercado Pago Module" in the **Search Plugins** text field. Press Enter;
@@ -53,6 +55,7 @@ To confirm that your module is really installed, you can click in **Plugins** it
 		* Chile: https://www.mercadopago.com/mlc/herramientas/aplicaciones
 		* Colombia: https://www.mercadopago.com/mco/herramientas/aplicaciones
 		* Mexico: https://www.mercadopago.com/mlm/herramientas/aplicaciones
+		* Peru: https://www.mercadopago.com/mpe/herramientas/aplicaciones
 		* Venezuela: https://www.mercadopago.com/mlv/herramientas/aplicaciones
 	* And to get your **Public Key**/**Access Token** you can go to:
 		* Argentina: https://www.mercadopago.com/mla/account/credentials?type=custom
@@ -60,6 +63,7 @@ To confirm that your module is really installed, you can click in **Plugins** it
 		* Chile: https://www.mercadopago.com/mlc/account/credentials?type=custom
 		* Colombia: https://www.mercadopago.com/mco/account/credentials?type=custom
 		* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=custom
+		* Peru: https://www.mercadopago.com/mpe/account/credentials?type=custom
 		* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=custom
 2. For the solutions **Mercado Pago - Standard Checkout**, **Mercado Pago - Custom Checkout**, and **Mercado Pago - Ticket**, you can:
 	* Enable/Disable you plugin (for all solutions);
@@ -98,14 +102,17 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 
 == Changelog ==
 
+= v2.0.2 (13/06/2016) =
+* Rollout to Peru
+* Fix a PHP version issue
+
 = v2.0.1 (09/06/2016) =
-* Customer Cards (One Click Payment);
-* SSL verifications for custom checkout and ticket;
-* Enabling any type of currency without disabling module (now, error message from API).
+* Customer Cards (<a href="https://www.youtube.com/watch?v=_KB8CtDei_4>One Click Payment</a>);
+* SSL verifications for custom checkout and ticket.
 
 = v2.0.0 (01/06/2016) =
 * Custom Checkout for LatAm;
-* Ticket for LatAm;
+* <a href="https://www.youtube.com/watch?v=97VSVx5Uaj0">Ticket</a> for LatAm;
 * Removed possibility to setting supportable but invalid currency.
 
 = v1.0.5 (29/04/2016) =
@@ -131,7 +138,7 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 * Proper information of shipment cost.
 
 = v1.0.0 (16/03/2016) =
-* LatAm support;
+* LatAm <a href="https://www.youtube.com/watch?v=DgOsX1eXjBU>Standard Checkout</a> support;
 * Title, description, category, and external reference customizations;
 * Integrations via iframe, modal, and redirection, with configurable auto-returning;
 * Max installments and payment method exclusion setup;

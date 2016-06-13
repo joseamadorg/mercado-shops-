@@ -17,16 +17,16 @@ This feature allows merchants to have a standard checkout. It includes features 
 customizations of title, description, category, external reference, integrations via
 iframe, modal, and redirection, with configurable auto-returning, max installments,
 payment method exclusion setup, and sandbox/debug options.<br />
-*Available for Argentina, Brazil, Chile, Colombia, Mexico and Venezuela*
+*Available for Argentina, Brazil, Chile, Colombia, Mexico, Peru and Venezuela*
 
 **Custom checkout**<br />
 This feature enables merchants to have the custom checkout, a more integrated type of
 checkout with customized views and more intuitive flow from the cart to the payment page.<br />
-*Available for Argentina, Brazil, Chile, Colombia, Mexico and Venezuela*
+*Available for Argentina, Brazil, Chile, Colombia, Mexico, Peru and Venezuela*
 
 **Tickets**<br />
 This option enables merchants to give their customers the option to pay via tickets.<br />
-*Available for Argentina, Brazil, Chile, Colombia, Mexico and Venezuela*
+*Available for Argentina, Brazil, Chile, Colombia, Mexico, Peru and Venezuela*
 
 -----------
 
@@ -43,7 +43,7 @@ This option enables merchants to give their customers the option to pay via tick
   <thead>
   <tbody>
     <tr>
-      <td>v2.0.1</td>
+      <td>v2.0.2</td>
       <td>Stable (Current version)</td>
       <td>WooCommerce 2.1.x - 2.5.x</td>
     </tr>
@@ -67,7 +67,7 @@ You have two way to install this module: from your WordPress Store, or by downlo
 
 **Manual Download**
 
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.0.0.zip">WordPress Plugin Directory</a>);
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.0.2.zip">WordPress Plugin Directory</a>);
 
 2. Unzip the folder and find "woo-mercado-pago-module" directory;
 
@@ -97,6 +97,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	* Chile: https://www.mercadopago.com/mlc/herramientas/aplicaciones
 	* Colombia: https://www.mercadopago.com/mco/herramientas/aplicaciones
 	* Mexico: https://www.mercadopago.com/mlm/herramientas/aplicaciones
+	* Peru: https://www.mercadopago.com/mpe/herramientas/aplicaciones
 	* Venezuela: https://www.mercadopago.com/mlv/herramientas/aplicaciones
 
 3. **Instant Payment Notification (IPN) URL**: In this part, you can check your IPN URL, where you will get notified about payment updates;
@@ -142,6 +143,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	* Chile: https://www.mercadopago.com/mlc/account/credentials?type=custom
 	* Colombia: https://www.mercadopago.com/mco/account/credentials?type=custom
 	* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=custom
+	* Peru: https://www.mercadopago.com/mpe/account/credentials?type=custom
 	* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=custom
 
 3. **Instant Payment Notification (IPN) URL**: In this part, you can check your IPN URL, where you will get notified about payment updates;
@@ -180,6 +182,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	* Chile: https://www.mercadopago.com/mlc/account/credentials?type=custom
 	* Colombia: https://www.mercadopago.com/mco/account/credentials?type=custom
 	* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=custom
+	* Peru: https://www.mercadopago.com/mpe/account/credentials?type=custom
 	* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=custom
 
 3. **Instant Payment Notification (IPN) URL**: In this part, you can check your IPN URL, where you will get notified about payment updates;

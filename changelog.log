@@ -1,5 +1,9 @@
 CHANGELOG:
 
+= v2.0.2 (13/06/2016) =
+* Rollout to Peru
+* Fix a PHP version issue
+
 = v2.0.1 (09/06/2016) =
 * Customer Cards (One Click Payment)
 * SSL verifications for custom checkout and ticket;

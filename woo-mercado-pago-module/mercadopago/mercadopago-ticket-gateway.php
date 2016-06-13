@@ -20,9 +20,9 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
     	"MLB" => '208686191',
     	"MCO" => '208687643',
     	"MLC" => '208690789',
+    	"MPE" => '216998692',
     	"MLV" => '208692735',
     	"MLM" => '208692380'
-    	// TODO: Peru rollout
 	);
     	
 	// Required inherited method from WC_Payment_Gateway class: __construct.
@@ -106,7 +106,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 			'<a href="https://www.mercadopago.com/mlb/account/credentials?type=custom" target="_blank">%s</a>, ' .
 			'<a href="https://www.mercadopago.com/mlc/account/credentials?type=custom" target="_blank">%s</a>, ' .
 			'<a href="https://www.mercadopago.com/mco/account/credentials?type=custom" target="_blank">%s</a>, ' .
-			// TODO: Peru rollout
+			'<a href="https://www.mercadopago.com/mpe/account/credentials?type=custom" target="_blank">%s</a>, ' .
 			'<a href="https://www.mercadopago.com/mlm/account/credentials?type=custom" target="_blank">%s</a> %s ' .
 			'<a href="https://www.mercadopago.com/mlv/account/credentials?type=custom" target="_blank">%s</a>',
 			__( 'Argentine', 'woocommerce-mercadopago-module' ),
@@ -114,7 +114,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 			__( 'Chile', 'woocommerce-mercadopago-module' ),
 			__( 'Colombia', 'woocommerce-mercadopago-module' ),
 			__( 'Mexico', 'woocommerce-mercadopago-module' ),
-			// TODO: __( 'Peru', 'woocommerce-mercadopago-module' ),
+			__( 'Peru', 'woocommerce-mercadopago-module' ),
 			__( 'or', 'woocommerce-mercadopago-module' ),
 			__( 'Venezuela', 'woocommerce-mercadopago-module' )
 		);
@@ -342,10 +342,6 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 		        		$html = '<p></p><p>' . wordwrap(
 		        			__( 'Thank you for your order. Please, pay the ticket to get your order approved.', 'woocommerce-mercadopago-module'),
 							60, '<br>') . '</p>';
-						/*$html .=
-							'<a class="button cancel" href="' . esc_url( $order->get_cancel_order_url() ) . '">' .
-							__( 'Cancel order &amp; Clear cart', 'woocommerce-mercadopago-module' ) .
-							'</a>';*/
 						$html .=
 							'<a id="submit-payment" target="_blank" href="' . $response[ 'transaction_details' ][ 'external_resource_url' ] . '" class="button alt">' .
 							__( 'Print the Ticket', 'woocommerce-mercadopago-module' ) .
@@ -568,7 +564,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 	// Return boolean indicating if currency is supported.
 	// TODO: Peru rollout
 	protected function isSupportedCurrency() {
-		return in_array( $this->site_id, array( 'MLA', 'MLB', 'MLC', 'MCO', 'MLM', 'MLV' ) );
+		return in_array( $this->site_id, array( 'MLA', 'MLB', 'MLC', 'MCO', 'MLM', 'MPE', 'MLV' ) );
 	}
 
 	public function checkSSLAbsence() {
@@ -617,19 +613,6 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 				__( 'Your Mercado Pago credentials Access Token appears to be misconfigured.', 'woocommerce-mercadopago-module' ) . ' %s',
 				'<a href="' . $this->admin_url() . '">' .
 				__( 'Click here and configure!', 'woocommerce-mercadopago-module' ) . '</a>' ) .
-			'</p></div>';
-	}
-
-	// Notify that currency is not supported.
-	// TODO: Peru rollout
-	public function currencyNotSupportedMessage() {
-		echo '<div class="error"><p><strong>' .
-			__( 'Ticket is Inactive', 'woocommerce-mercadopago-module' ) .
-			'</strong>: ' .
-			sprintf(
-				__( 'The currency' ) . ' <code>%s</code> ' .
-				__( 'is not supported. Supported currencies are: ARS, BRL, CLP, COP, MXN, VEF.', 'woocommerce-mercadopago-module' ),
-				get_woocommerce_currency() ) .
 			'</p></div>';
 	}
 	
