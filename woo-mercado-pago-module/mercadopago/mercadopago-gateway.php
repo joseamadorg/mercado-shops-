@@ -744,6 +744,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			case 'MLC': return __( 'Chile', 'woocommerce-mercadopago-module' );
 			case 'MLM': return __( 'Mexico', 'woocommerce-mercadopago-module' );
 			case 'MLV': return __( 'Venezuela', 'woocommerce-mercadopago-module' );
+			case 'MPE': return __( 'Peru', 'woocommerce-mercadopago-module' );
 		}
 	}
 	
