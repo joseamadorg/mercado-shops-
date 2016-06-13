@@ -96,7 +96,8 @@ class MP {
         if ($customer['status'] == 200 && $customer['response']['paging']['total'] > 0) {
             $customer = $customer['response']['results'][0];
         } else {
-            $customer = $this->create_customer($payer_email)['response'];
+            $resp = $this->create_customer($payer_email);
+            $customer = $resp['response'];
         }
         return $customer;
     }
