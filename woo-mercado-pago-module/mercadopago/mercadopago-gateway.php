@@ -21,7 +21,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
         "MLB" => 'MLB/standard_mlb.jpg',
         "MCO" => 'MCO/standard_mco.jpg',
         "MLC" => 'MLC/standard_mlc.gif',
-		"MPE" => 'MPE/standard_mpe.jpg',
+		"MPE" => 'MPE/standard_mpe.png',
         "MLV" => 'MLV/standard_mlv.jpg',
         "MLM" => 'MLM/standard_mlm.jpg'
     );
