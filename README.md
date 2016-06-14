@@ -7,7 +7,6 @@
 * [Standard Checkout Configuration](#std_configuration)
 * [Custom Checkout Configuration](#cst_configuration)
 * [Ticket Configuration](#ticket_configuration)
-* [Upgrade](#upgrade)
 * [Feedback](#feedback)
 
 <a name="features"></a>
@@ -41,6 +40,32 @@ Great for merchants who want to get going quickly and easily.
 
 *Available for Argentina, Brazil, Chile, Colombia, Mexico, Peru and Venezuela*
 
+<a name="requirements"></a>
+## Requirements:
+
+**Operating System**
+
+* Linux x86-64
+
+**Web Server**
+
+* Apache 2.x
+* Nginx 1.7.x
+
+**Database**
+
+* MySQL 5.6 (Oracle or Percona)
+
+**PHP**
+
+* PHP 5.4.x / 5.5.x
+* Required extensions: PDO_MySQL, simplexml, mcrypt, hash, GD, DOM, iconv, curl
+
+**SSL certificate**
+
+If you're using  Custom Checkout, it is a requirement that you have a SSL certificate, and the payment form to be provided under an HTTPS page.
+During the sandbox mode tests, you can operate over HTTP, but for homologation you'll need to acquire the certificate in case you don't have it.
+
 <a name="available_versions"></a>
 ##Available versions##
 
@@ -61,10 +86,10 @@ Great for merchants who want to get going quickly and easily.
   </tbody>
 </table>
 
------------
-
 <a name="installation"></a>
 ##Installation##
+
+If you have already the module installed, please follow the [Upgrade instructions](#upgrade) first.
 
 You have two way to install this module: from your WordPress Store, or by downloading and manually copying the module directory.
 
@@ -87,8 +112,6 @@ You have two way to install this module: from your WordPress Store, or by downlo
 To confirm that your module is really installed, you can click in *Plugins* item in the store administration menu, and check your just installed module. Just click *enable* to activate it and you should receive the message "Plugin enabled." as a notice in your WordPress.
 
 ![Features](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/plugin_adm.png)
-
------------
 
 <a name="std_configuration"></a>
 ##Standard Checkout Configuration##
@@ -134,8 +157,6 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	*Mercado Pago Sandbox*: Test your payments in Mercado Pago sandbox environment;<br />
 	*Debug and Log*: Enables/disables system logs.
 
------------
-
 <a name="cst_configuration"></a>
 ##Custom Checkout Configuration##
 
@@ -173,8 +194,6 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	*Mercado Pago Sandbox*: Test your payments in Mercado Pago sandbox environment;<br />
 	*Debug and Log*: Enables/disables system logs.
 
------------
-
 <a name="ticket_configuration"></a>
 ##Ticket Configuration##
 
@@ -210,5 +229,11 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 
 	*Mercado Pago Sandbox*: Test your payments in Mercado Pago sandbox environment;<br />
 	*Debug and Log*: Enables/disables system logs.
-	
------------
+
+<a name="Feedback"></a>
+## Feedback ##
+
+We want to know your opinion, please answer the following form.
+
+* [Portuguese](http://goo.gl/forms/2n5jWHaQbfEtdy0E2)
+* [Spanish](http://goo.gl/forms/A9bm8WuqTIZ89MI22)
