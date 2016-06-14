@@ -1,34 +1,45 @@
-# Woo Mercado Pago Module
+# WooCommerce - Mercado Pago Module (2.1.x - 2.5.x)
 
 * [Features](#features)
 * [Available versions](#available_versions)
+* [Requirements](#requirements)
 * [Installation](#installation)
 * [Standard Checkout Configuration](#std_configuration)
 * [Custom Checkout Configuration](#cst_configuration)
 * [Ticket Configuration](#ticket_configuration)
-
------------
+* [Upgrade](#upgrade)
+* [Feedback](#feedback)
 
 <a name="features"></a>
 ##Features##
 
-**Standard checkout**<br />
-This feature allows merchants to have a standard checkout. It includes features like
-customizations of title, description, category, external reference, integrations via
-iframe, modal, and redirection, with configurable auto-returning, max installments,
-payment method exclusion setup, and sandbox/debug options.<br />
-*Available for Argentina, Brazil, Chile, Colombia, Mexico, Peru and Venezuela*
+Checkout options right for your business: 
+We offer two checkout methods that make it easy to securely accept payments from anyone, anywhere.
 
-**Custom checkout**<br />
-This feature enables merchants to have the custom checkout, a more integrated type of
-checkout with customized views and more intuitive flow from the cart to the payment page.<br />
-*Available for Argentina, Brazil, Chile, Colombia, Mexico, Peru and Venezuela*
+**Custom Checkout**
 
-**Tickets**<br />
-This option enables merchants to give their customers the option to pay via tickets.<br />
-*Available for Argentina, Brazil, Chile, Colombia, Mexico, Peru and Venezuela*
+Offer a checkout fully customized to your brand experience with our simple-to-use payments API.
 
------------
+* Seamless integration— no coding required, unless you want to.
+* Full control of buying experience.
+* Store buyer’s card for fast checkout.
+* Accept tickets in addition to cards.
+* Accept Mercado Pago's discount coupons.
+* Improve conversion rate.
+
+*Available for Argentina, Brazil, Colombia, Mexico, Peru and Venezuela*
+
+**Standard Checkout**
+
+Great for merchants who want to get going quickly and easily.
+
+* Easy website integration— no coding required.
+* Limited control of buying experience— display Checkout window as redirect, modal or iframe.
+* Store buyer’s card for fast checkout.
+* Accept tickets, bank transfer and account money in addition to cards.
+* Accept Mercado Pago's discount coupons.
+
+*Available for Argentina, Brazil, Chile, Colombia, Mexico, Peru and Venezuela*
 
 <a name="available_versions"></a>
 ##Available versions##
