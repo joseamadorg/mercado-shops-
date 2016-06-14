@@ -12,7 +12,7 @@ CHANGELOG:
 * SSL verifications for custom checkout and ticket
 	Custom Checkout and Ticket solutions can only be used with SSL certification. As the module behaves inconsistently if there is no SSL, we've put a watchdog to lock the solution if it is active without SSL.
 * Enabling any type of currency without disabling module (now, error message from API)
-	Now, merchants have the option to use currencies of their choices in WooCommerce. Pay attention that **Woo Mercado Pago will always set the currency related to the country of the Mercado Pago credentials**.
+	Now, merchants have the option to use currencies of their choices in WooCommerce. Pay attention that Woo Mercado Pago will always set the currency related to the country of the Mercado Pago credentials.
 
 = v2.0.0 (01/06/2016) =
 * Custom Checkout for LatAm
@@ -54,7 +54,7 @@ CHANGELOG:
 	Previously, the shipment cost was passed together with the cart total order amount.
 
 = v1.0.0 (16/03/2016) =
-* LatAm <a href="https://www.youtube.com/watch?v=DgOsX1eXjBU>Standard Checkout</a> support
+* LatAm Standard Checkout support
 	Great for merchants who want to get going quickly and easily. This is the standard payment integration with Mercado Pago.
 * Set of configurable fields and customizations
 	Title, description, category, and external reference customizations, integrations via iframe, modal, and redirection, with configurable auto-returning, max installments and payment method exclusion setup.
