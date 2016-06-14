@@ -773,9 +773,8 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 	}
 	
 	// Return boolean indicating if currency is supported.
-	// TODO: Peru rollout
 	protected function isSupportedCurrency() {
-		return in_array( $this->site_id, array( 'MLA', 'MLB', 'MLC', 'MCO', 'MLM', 'MPE', ',MLV' ) );
+		return in_array( $this->site_id, array( 'MLA', 'MLB', 'MLC', 'MCO', 'MLM', 'MPE', 'MLV' ) );
 	}
 
 	public function checkSSLAbsence() {
