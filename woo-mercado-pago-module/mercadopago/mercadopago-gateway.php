@@ -130,8 +130,8 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			'<a href="https://www.mercadopago.com/mlb/ferramentas/aplicacoes" target="_blank">%s</a>, ' .
 			'<a href="https://www.mercadopago.com/mlc/herramientas/aplicaciones" target="_blank">%s</a>, ' .
 			'<a href="https://www.mercadopago.com/mco/ferramentas/aplicacoes" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com/mpe/ferramentas/aplicacoes" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com/mlm/herramientas/aplicaciones" target="_blank">%s</a> %s ' .
+			'<a href="https://www.mercadopago.com/mlm/ferramentas/aplicacoes" target="_blank">%s</a>, ' .
+			'<a href="https://www.mercadopago.com/mpe/herramientas/aplicaciones" target="_blank">%s</a> %s ' .
 			'<a href="https://www.mercadopago.com/mlv/herramientas/aplicaciones" target="_blank">%s</a>',
 			__( 'Argentine', 'woocommerce-mercadopago-module' ),
 			__( 'Brazil', 'woocommerce-mercadopago-module' ),

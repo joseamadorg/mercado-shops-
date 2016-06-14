@@ -121,8 +121,8 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			'<a href="https://www.mercadopago.com/mlb/account/credentials?type=custom" target="_blank">%s</a>, ' .
 			'<a href="https://www.mercadopago.com/mlc/account/credentials?type=custom" target="_blank">%s</a>, ' .
 			'<a href="https://www.mercadopago.com/mco/account/credentials?type=custom" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com/mpe/account/credentials?type=custom" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com/mlm/account/credentials?type=custom" target="_blank">%s</a> %s ' .
+			'<a href="https://www.mercadopago.com/mlm/account/credentials?type=custom" target="_blank">%s</a>, ' .
+			'<a href="https://www.mercadopago.com/mpe/account/credentials?type=custom" target="_blank">%s</a> %s ' .
 			'<a href="https://www.mercadopago.com/mlv/account/credentials?type=custom" target="_blank">%s</a>',
 			__( 'Argentine', 'woocommerce-mercadopago-module' ),
 			__( 'Brazil', 'woocommerce-mercadopago-module' ),
