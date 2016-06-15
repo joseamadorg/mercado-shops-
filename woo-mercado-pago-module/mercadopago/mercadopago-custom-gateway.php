@@ -21,9 +21,9 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
         "MLB" => 'MLB/credit_card.png',
         "MCO" => 'MCO/credit_card.png',
         "MLC" => 'MLC/credit_card.png',
+		"MPE" => 'MPE/credit_card.png',
         "MLV" => 'MLV/credit_card.png',
         "MLM" => 'MLM/credit_card.png'
-        // TODO: Peru rollout
     );
     
     // Sponsor ID array by country
@@ -32,9 +32,9 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
     	"MLB" => '208686191',
     	"MCO" => '208687643',
     	"MLC" => '208690789',
+    	"MPE" => '216998692',
     	"MLV" => '208692735',
     	"MLM" => '208692380'
-    	// TODO: Peru rollout
 	);
     	
 	// Required inherited method from WC_Payment_Gateway class: __construct.
@@ -121,15 +121,15 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			'<a href="https://www.mercadopago.com/mlb/account/credentials?type=custom" target="_blank">%s</a>, ' .
 			'<a href="https://www.mercadopago.com/mlc/account/credentials?type=custom" target="_blank">%s</a>, ' .
 			'<a href="https://www.mercadopago.com/mco/account/credentials?type=custom" target="_blank">%s</a>, ' .
-			// TODO: Peru rollout
-			'<a href="https://www.mercadopago.com/mlm/account/credentials?type=custom" target="_blank">%s</a> %s ' .
+			'<a href="https://www.mercadopago.com/mlm/account/credentials?type=custom" target="_blank">%s</a>, ' .
+			'<a href="https://www.mercadopago.com/mpe/account/credentials?type=custom" target="_blank">%s</a> %s ' .
 			'<a href="https://www.mercadopago.com/mlv/account/credentials?type=custom" target="_blank">%s</a>',
 			__( 'Argentine', 'woocommerce-mercadopago-module' ),
 			__( 'Brazil', 'woocommerce-mercadopago-module' ),
 			__( 'Chile', 'woocommerce-mercadopago-module' ),
 			__( 'Colombia', 'woocommerce-mercadopago-module' ),
 			__( 'Mexico', 'woocommerce-mercadopago-module' ),
-			// TODO: __( 'Peru', 'woocommerce-mercadopago-module' ),
+			__( 'Peru', 'woocommerce-mercadopago-module' ),
 			__( 'or', 'woocommerce-mercadopago-module' ),
 			__( 'Venezuela', 'woocommerce-mercadopago-module' )
 		);
@@ -561,7 +561,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 						'picture_url' => $product->get_image(),
 						'category_id' => $this->store_categories_id[ $this->category_id ],
 						'quantity' => 1,
-						'unit_price' => (float) $item[ 'line_total' ]
+						'unit_price' => (float) $item[ 'line_total' ] + (float) $item[ 'line_tax' ],
 					));
 				}
 			}
@@ -773,9 +773,8 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 	}
 	
 	// Return boolean indicating if currency is supported.
-	// TODO: Peru rollout
 	protected function isSupportedCurrency() {
-		return in_array( $this->site_id, array( 'MLA', 'MLB', 'MLC', 'MCO', 'MLM', 'MLV' ) );
+		return in_array( $this->site_id, array( 'MLA', 'MLB', 'MLC', 'MCO', 'MLM', 'MPE', 'MLV' ) );
 	}
 
 	public function checkSSLAbsence() {
@@ -825,19 +824,6 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 				__( 'Your Mercado Pago credentials Public Key/Access Token appears to be misconfigured.', 'woocommerce-mercadopago-module' ) . ' %s',
 				'<a href="' . $this->admin_url() . '">' .
 				__( 'Click here and configure!', 'woocommerce-mercadopago-module' ) . '</a>' ) .
-			'</p></div>';
-	}
-
-	// Notify that currency is not supported.
-	// TODO: Peru rollout
-	public function currencyNotSupportedMessage() {
-		echo '<div class="error"><p><strong>' .
-			__( 'Custom Checkout is Inactive', 'woocommerce-mercadopago-module' ) .
-			'</strong>: ' .
-			sprintf(
-				__( 'The currency' ) . ' <code>%s</code> ' .
-				__( 'is not supported. Supported currencies are: ARS, BRL, CLP, COP, MXN, VEF.', 'woocommerce-mercadopago-module' ),
-				get_woocommerce_currency() ) .
 			'</p></div>';
 	}
 	

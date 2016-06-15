@@ -21,6 +21,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
         "MLB" => 'MLB/standard_mlb.jpg',
         "MCO" => 'MCO/standard_mco.jpg',
         "MLC" => 'MLC/standard_mlc.gif',
+		"MPE" => 'MPE/standard_mpe.png',
         "MLV" => 'MLV/standard_mlv.jpg',
         "MLM" => 'MLM/standard_mlm.jpg'
     );
@@ -31,6 +32,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
     	"MLB" => '208686191',
     	"MCO" => '208687643',
     	"MLC" => '208690789',
+    	"MPE" => '216998692',
     	"MLV" => '208692735',
     	"MLM" => '208692380'
 	);
@@ -107,11 +109,6 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		if ( empty( $this->client_id ) || empty( $this->client_secret ) ) {
 			add_action( 'admin_notices', array( $this, 'clientIdOrSecretMissingMessage' ) );
 		}
-		
-		// Verify if currency is supported.
-		if ( !$this->isSupportedCurrency() ) {
-			add_action( 'admin_notices', array( $this, 'currencyNotSupportedMessage' ) );
-		}
 
 		// Logging and debug.
 		if ( 'yes' == $this->debug ) {
@@ -129,12 +126,19 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 	public function init_form_fields() {
 		
 		$api_secret_locale = sprintf(
-			'<a href="https://www.mercadopago.com/mla/herramientas/aplicaciones" target="_blank">%s</a>, <a href="https://www.mercadopago.com/mlb/ferramentas/aplicacoes" target="_blank">%s</a>, <a href="https://www.mercadopago.com/mlc/herramientas/aplicaciones" target="_blank">%s</a>, <a href="https://www.mercadopago.com/mco/ferramentas/aplicacoes" target="_blank">%s</a>, <a href="https://www.mercadopago.com/mlm/herramientas/aplicaciones" target="_blank">%s</a> %s <a href="https://www.mercadopago.com/mlv/herramientas/aplicaciones" target="_blank">%s</a>',
+			'<a href="https://www.mercadopago.com/mla/herramientas/aplicaciones" target="_blank">%s</a>, ' .
+			'<a href="https://www.mercadopago.com/mlb/ferramentas/aplicacoes" target="_blank">%s</a>, ' .
+			'<a href="https://www.mercadopago.com/mlc/herramientas/aplicaciones" target="_blank">%s</a>, ' .
+			'<a href="https://www.mercadopago.com/mco/ferramentas/aplicacoes" target="_blank">%s</a>, ' .
+			'<a href="https://www.mercadopago.com/mlm/ferramentas/aplicacoes" target="_blank">%s</a>, ' .
+			'<a href="https://www.mercadopago.com/mpe/account/credentials?type=basic" target="_blank">%s</a> %s ' .
+			'<a href="https://www.mercadopago.com/mlv/herramientas/aplicaciones" target="_blank">%s</a>',
 			__( 'Argentine', 'woocommerce-mercadopago-module' ),
 			__( 'Brazil', 'woocommerce-mercadopago-module' ),
 			__( 'Chile', 'woocommerce-mercadopago-module' ),
 			__( 'Colombia', 'woocommerce-mercadopago-module' ),
 			__( 'Mexico', 'woocommerce-mercadopago-module' ),
+			__( 'Peru', 'woocommerce-mercadopago-module' ),
 			__( 'or', 'woocommerce-mercadopago-module' ),
 			__( 'Venezuela', 'woocommerce-mercadopago-module' )
 		);
@@ -493,7 +497,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 						'picture_url' => $product->get_image(),
 						'category_id' => $this->store_categories_id[ $this->category_id ],
 						'quantity' => 1,
-						'unit_price' => (float) $item[ 'line_total' ],
+						'unit_price' => (float) $item[ 'line_total' ] + (float) $item[ 'line_tax' ],
 						'currency_id' => $this->getCurrencyId($this->site_id)
 					));
 				}
@@ -670,7 +674,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 	
 	// Return boolean indicating if currency is supported.
 	protected function isSupportedCurrency() {
-		return in_array( $this->site_id, array( 'MLA', 'MLB', 'MLC', 'MCO', 'MLM', 'MLV' ) );
+		return in_array( $this->site_id, array( 'MLA', 'MLB', 'MLC', 'MCO', 'MLM', 'MPE', 'MLV' ) );
 	}
 
 	// Get currency id for a country
@@ -682,6 +686,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			case 'MLC': return 'CLP';
 			case 'MLM': return 'MXN';
 			case 'MLV': return 'VEF';
+			case 'MPE': return 'PEN';
 			default: return '';
 		}
 	}
@@ -730,17 +735,6 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'<a href="' . $this->admin_url() . '">' . __( 'Click here and configure!', 'woocommerce-mercadopago-module' ) . '</a>' ) .
 			'</p></div>';
 	}
-
-	// Notify that currency is not supported.
-	public function currencyNotSupportedMessage() {
-		echo '<div class="error"><p><strong>' .
-			__( 'Standard Checkout is Inactive', 'woocommerce-mercadopago-module' ) .
-			'</strong>: ' .
-			sprintf(
-				__( 'The currency' ) . ' <code>%s</code> ' . __( 'is not supported. Supported currencies are: ARS, BRL, CLP, COP, MXN, VEF.', 'woocommerce-mercadopago-module' ),
-				get_woocommerce_currency() ) .
-			'</p></div>';
-	}
 	
 	public function getCountryName( $site_id ) {
 		switch ( $site_id ) {
@@ -750,6 +744,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			case 'MLC': return __( 'Chile', 'woocommerce-mercadopago-module' );
 			case 'MLM': return __( 'Mexico', 'woocommerce-mercadopago-module' );
 			case 'MLV': return __( 'Venezuela', 'woocommerce-mercadopago-module' );
+			case 'MPE': return __( 'Peru', 'woocommerce-mercadopago-module' );
 		}
 	}
 	

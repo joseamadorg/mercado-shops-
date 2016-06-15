@@ -1,34 +1,66 @@
-# Woo Mercado Pago Module
+# WooCommerce - Mercado Pago Module (2.1.x - 2.5.x)
 
 * [Features](#features)
 * [Available versions](#available_versions)
+* [Requirements](#requirements)
 * [Installation](#installation)
 * [Standard Checkout Configuration](#std_configuration)
 * [Custom Checkout Configuration](#cst_configuration)
 * [Ticket Configuration](#ticket_configuration)
-
------------
+* [Upgrade](#upgrade)
+* [Feedback](#feedback)
 
 <a name="features"></a>
 ##Features##
 
-**Standard checkout**<br />
-This feature allows merchants to have a standard checkout. It includes features like
-customizations of title, description, category, external reference, integrations via
-iframe, modal, and redirection, with configurable auto-returning, max installments,
-payment method exclusion setup, and sandbox/debug options.<br />
-*Available for Argentina, Brazil, Chile, Colombia, Mexico and Venezuela*
+Checkout options right for your business: 
+We offer two checkout methods that make it easy to securely accept payments from anyone, anywhere.
 
-**Custom checkout**<br />
-This feature enables merchants to have the custom checkout, a more integrated type of
-checkout with customized views and more intuitive flow from the cart to the payment page.<br />
-*Available for Argentina, Brazil, Chile, Colombia, Mexico and Venezuela*
+**Custom Checkout**
 
-**Tickets**<br />
-This option enables merchants to give their customers the option to pay via tickets.<br />
-*Available for Argentina, Brazil, Chile, Colombia, Mexico and Venezuela*
+Offer a checkout fully customized to your brand experience with our simple-to-use payments API.
 
------------
+* Seamless integration— no coding required, unless you want to.
+* Full control of buying experience.
+* Store buyer’s card for fast checkout.
+* Accept tickets in addition to cards.
+* Accept Mercado Pago's discount coupons.
+* Improve conversion rate.
+
+*Available for Argentina, Brazil, Colombia, Mexico, Peru and Venezuela*
+
+**Standard Checkout**
+
+Great for merchants who want to get going quickly and easily.
+
+* Easy website integration— no coding required.
+* Limited control of buying experience— display Checkout window as redirect, modal or iframe.
+* Store buyer’s card for fast checkout.
+* Accept tickets, bank transfer and account money in addition to cards.
+* Accept Mercado Pago's discount coupons.
+
+*Available for Argentina, Brazil, Chile, Colombia, Mexico, Peru and Venezuela*
+
+<a name="requirements"></a>
+##Requirements##
+
+Basically, the requirements of this plugin are same as you need to run WooCommerce. Your machine should have:
+
+**Platforms**
+
+* <a href="https://wordpress.org/download/">WordPress</a> 4.1 or greater;
+* <a href="https://wordpress.org/plugins/woocommerce/">WooCommerce</a> 2.1 or greater;
+
+**Web Server Host**
+
+* <a href="http://php.net/">PHP</a> 5.6 or greater with CURL support;
+* <a href="http://www.mysql.com/">MySQL</a> version 5.6 or greater OR <a href="https://mariadb.org/">MariaDB</a> version 10.0 or greater;
+* <a href="https://httpd.apache.org/">Apache 2.x</a>.
+
+**SSL certificate**
+
+If you're using  Custom Checkout, it is a requirement that you have a SSL certificate, and the payment form to be provided under an HTTPS page.
+During the sandbox mode tests, you can operate over HTTP, but for homologation you'll need to acquire the certificate in case you don't have it.
 
 <a name="available_versions"></a>
 ##Available versions##
@@ -43,17 +75,17 @@ This option enables merchants to give their customers the option to pay via tick
   <thead>
   <tbody>
     <tr>
-      <td>v2.0.1</td>
+      <td>v2.0.2</td>
       <td>Stable (Current version)</td>
       <td>WooCommerce 2.1.x - 2.5.x</td>
     </tr>
   </tbody>
 </table>
 
------------
-
 <a name="installation"></a>
 ##Installation##
+
+If you have already the module installed, please follow the [Upgrade instructions](#upgrade) first.
 
 You have two way to install this module: from your WordPress Store, or by downloading and manually copying the module directory.
 
@@ -67,7 +99,7 @@ You have two way to install this module: from your WordPress Store, or by downlo
 
 **Manual Download**
 
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.0.0.zip">WordPress Plugin Directory</a>);
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.0.2.zip">WordPress Plugin Directory</a>);
 
 2. Unzip the folder and find "woo-mercado-pago-module" directory;
 
@@ -76,8 +108,6 @@ You have two way to install this module: from your WordPress Store, or by downlo
 To confirm that your module is really installed, you can click in *Plugins* item in the store administration menu, and check your just installed module. Just click *enable* to activate it and you should receive the message "Plugin enabled." as a notice in your WordPress.
 
 ![Features](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/plugin_adm.png)
-
------------
 
 <a name="std_configuration"></a>
 ##Standard Checkout Configuration##
@@ -97,6 +127,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	* Chile: https://www.mercadopago.com/mlc/herramientas/aplicaciones
 	* Colombia: https://www.mercadopago.com/mco/herramientas/aplicaciones
 	* Mexico: https://www.mercadopago.com/mlm/herramientas/aplicaciones
+	* Peru: https://www.mercadopago.com/mpe/herramientas/aplicaciones
 	* Venezuela: https://www.mercadopago.com/mlv/herramientas/aplicaciones
 
 3. **Instant Payment Notification (IPN) URL**: In this part, you can check your IPN URL, where you will get notified about payment updates;
@@ -122,8 +153,6 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	*Mercado Pago Sandbox*: Test your payments in Mercado Pago sandbox environment;<br />
 	*Debug and Log*: Enables/disables system logs.
 
------------
-
 <a name="cst_configuration"></a>
 ##Custom Checkout Configuration##
 
@@ -142,6 +171,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	* Chile: https://www.mercadopago.com/mlc/account/credentials?type=custom
 	* Colombia: https://www.mercadopago.com/mco/account/credentials?type=custom
 	* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=custom
+	* Peru: https://www.mercadopago.com/mpe/account/credentials?type=custom
 	* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=custom
 
 3. **Instant Payment Notification (IPN) URL**: In this part, you can check your IPN URL, where you will get notified about payment updates;
@@ -159,8 +189,6 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 
 	*Mercado Pago Sandbox*: Test your payments in Mercado Pago sandbox environment;<br />
 	*Debug and Log*: Enables/disables system logs.
-
------------
 
 <a name="ticket_configuration"></a>
 ##Ticket Configuration##
@@ -180,6 +208,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	* Chile: https://www.mercadopago.com/mlc/account/credentials?type=custom
 	* Colombia: https://www.mercadopago.com/mco/account/credentials?type=custom
 	* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=custom
+	* Peru: https://www.mercadopago.com/mpe/account/credentials?type=custom
 	* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=custom
 
 3. **Instant Payment Notification (IPN) URL**: In this part, you can check your IPN URL, where you will get notified about payment updates;
@@ -196,5 +225,36 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 
 	*Mercado Pago Sandbox*: Test your payments in Mercado Pago sandbox environment;<br />
 	*Debug and Log*: Enables/disables system logs.
-	
------------
+
+<a name="upgrade"></a>
+##Upgrade Mercado Pago Plugin##
+
+If you already had installed a previous version of Woo Mercado Pago Module, please follow the instructions. In same way of the installation, again you have two options: from your WordPress Store, or by downloading and manually copying the module directory.
+
+**Upgrade from WordPress**
+
+1. On your store administration, go to *Plugins* option in sidebar;
+
+2. Click in *update now* button in your plugin dashboard window;
+
+3. In a few seconds it should be installed with *Updated!* message shown.
+
+**Upgrade with Manual Download**
+
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.0.2.zip">WordPress Plugin Directory</a>);
+
+2. Unzip the folder and find "woo-mercado-pago-module" directory;
+
+3. Go to *[WordPressRootDirectory]/wp-content/plugins/* directory and delete the existing directory "woo-mercado-pago-module";
+
+4. Copy "woo-mercado-pago-module" directory to *[WordPressRootDirectory]/wp-content/plugins/* directory.
+
+To confirm that your module is really installed, you can see in *Plugins* item in the store administration menu, and check your just updated module. The version should match the just-updated plugin.
+
+<a name="Feedback"></a>
+##Feedback##
+
+We want to know your opinion, please answer the following form.
+
+* [Portuguese](http://goo.gl/forms/2n5jWHaQbfEtdy0E2)
+* [Spanish](http://goo.gl/forms/A9bm8WuqTIZ89MI22)

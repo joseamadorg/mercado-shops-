@@ -96,7 +96,8 @@ class MP {
         if ($customer['status'] == 200 && $customer['response']['paging']['total'] > 0) {
             $customer = $customer['response']['results'][0];
         } else {
-            $customer = $this->create_customer($payer_email)['response'];
+            $resp = $this->create_customer($payer_email);
+            $customer = $resp['response'];
         }
         return $customer;
     }
@@ -285,7 +286,7 @@ class MP {
                "access_token" => $this->get_access_token()
            ),
            "headers" => array(
-               "X-Tracking-Id" => "platform:desktop,type:woocommerce,so:2.0.1"
+               "user-agent" => "platform:desktop,type:woocommerce,so:2.0.2"
            ),
            "data" => $preference
        );
@@ -342,7 +343,7 @@ class MP {
                 "access_token" => $this->get_access_token()
             ),
             "headers" => array(
-                "X-Tracking-Id" => "platform:v1-whitelabel,type:woocommerce,so:2.0.0"
+                "X-Tracking-Id" => "platform:v1-whitelabel,type:woocommerce,so:2.0.2"
             ),
             "data" => $preference
         );
