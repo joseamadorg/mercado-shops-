@@ -108,7 +108,9 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 * Rollout to Peru
 	- This plugin is now supporting Peru, which includes Standard Checkout, Custom Checkout, Tickets, and local language translations.
 * Fix a PHP version issue
-	- It was reported to us an issue in a function that uses an assign made directly from an array field. This feature is available in PHP 5.4.x or above and we've made an update to support older versions.
+	- It was reported to us an issue in a function that uses an assign made directly from an array field. This feature is available in PHP 5.4.x or above and we've made an update to support older versions;
+* Fix a tax issue
+	It wasn't been correctly added to the total value in Mercado Pago gateway.
 
 = v2.0.1 (09/06/2016) =
 * Customer Cards (One Click Payment)

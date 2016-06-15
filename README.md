@@ -7,6 +7,7 @@
 * [Standard Checkout Configuration](#std_configuration)
 * [Custom Checkout Configuration](#cst_configuration)
 * [Ticket Configuration](#ticket_configuration)
+* [Upgrade](#upgrade)
 * [Feedback](#feedback)
 
 <a name="features"></a>
@@ -41,25 +42,20 @@ Great for merchants who want to get going quickly and easily.
 *Available for Argentina, Brazil, Chile, Colombia, Mexico, Peru and Venezuela*
 
 <a name="requirements"></a>
-## Requirements:
+##Requirements##
 
-**Operating System**
+Basically, the requirements of this plugin are same as you need to run WooCommerce. Your machine should have:
 
-* Linux x86-64
+**Platforms**
 
-**Web Server**
+* <a href="https://wordpress.org/download/">WordPress</a> 4.1 or greater;
+* <a href="https://wordpress.org/plugins/woocommerce/">WooCommerce</a> 2.1 or greater;
 
-* Apache 2.x
-* Nginx 1.7.x
+**Web Server Host**
 
-**Database**
-
-* MySQL 5.6 (Oracle or Percona)
-
-**PHP**
-
-* PHP 5.4.x / 5.5.x
-* Required extensions: PDO_MySQL, simplexml, mcrypt, hash, GD, DOM, iconv, curl
+* <a href="http://php.net/">PHP</a> 5.6 or greater with CURL support;
+* <a href="http://www.mysql.com/">MySQL</a> version 5.6 or greater OR <a href="https://mariadb.org/">MariaDB</a> version 10.0 or greater;
+* <a href="https://httpd.apache.org/">Apache 2.x</a>.
 
 **SSL certificate**
 
@@ -230,8 +226,33 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	*Mercado Pago Sandbox*: Test your payments in Mercado Pago sandbox environment;<br />
 	*Debug and Log*: Enables/disables system logs.
 
+<a name="upgrade"></a>
+##Upgrade Mercado Pago Plugin##
+
+If you already had installed a previous version of Woo Mercado Pago Module, please follow the instructions. In same way of the installation, again you have two options: from your WordPress Store, or by downloading and manually copying the module directory.
+
+**Upgrade from WordPress**
+
+1. On your store administration, go to *Plugins* option in sidebar;
+
+2. Click in *update now* button in your plugin dashboard window;
+
+3. In a few seconds it should be installed with *Updated!* message shown.
+
+**Upgrade with Manual Download**
+
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.0.2.zip">WordPress Plugin Directory</a>);
+
+2. Unzip the folder and find "woo-mercado-pago-module" directory;
+
+3. Go to *[WordPressRootDirectory]/wp-content/plugins/* directory and delete the existing directory "woo-mercado-pago-module";
+
+4. Copy "woo-mercado-pago-module" directory to *[WordPressRootDirectory]/wp-content/plugins/* directory.
+
+To confirm that your module is really installed, you can see in *Plugins* item in the store administration menu, and check your just updated module. The version should match the just-updated plugin.
+
 <a name="Feedback"></a>
-## Feedback ##
+##Feedback##
 
 We want to know your opinion, please answer the following form.
 
