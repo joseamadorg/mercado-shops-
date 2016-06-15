@@ -561,7 +561,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 						'picture_url' => $product->get_image(),
 						'category_id' => $this->store_categories_id[ $this->category_id ],
 						'quantity' => 1,
-						'unit_price' => (float) $item[ 'line_total' ]
+						'unit_price' => (float) $item[ 'line_total' ] + (float) $item[ 'line_tax' ],
 					));
 				}
 			}
