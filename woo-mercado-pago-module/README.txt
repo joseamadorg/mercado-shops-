@@ -94,13 +94,13 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 
 == Screenshots ==
 
-1. `Configuration of Standard Checkout`
+1. `Custom Checkout`
 
-2. `Custom Checkout`
+2. `One Click Payment`
 
-3. `One Click Payment`
+3. `Tickets`
 
-4. `Tickets`
+4. `Configuration of Standard Checkout`
 
 == Changelog ==
 
