@@ -4,7 +4,7 @@ Donate link: https://www.mercadopago.com.br/developers/
 Tags: ecommerce, mercadopago, woocommerce
 Requires at least: WooCommerce 2.1.x
 Tested up to: WooCommerce 2.5.x
-Stable tag: 2.0.2
+Stable tag: 2.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,7 +39,7 @@ You have two way to install this module: from your WordPress Store, or by downlo
 3. You should find the module read to be installed. Click install.
 
 = Manual Download =
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.0.2.zip">WordPress Plugin Directory</a>);
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.0.3.zip">WordPress Plugin Directory</a>);
 2. Unzip the folder and find "woo-mercado-pago-module" directory;
 3. Copy "woo-mercado-pago-module" directory to **[WordPressRootDirectory]/wp-content/plugins/** directory.
 
@@ -103,6 +103,10 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 4. `Configuration of Standard Checkout`
 
 == Changelog ==
+
+= v2.0.3 (21/06/2016) =
+* Bug fix in Standard Checkout for WooCommerce v2.6.x
+	- In WooCommerce v2.6.x, there was a bug related with the ampersand char that was wrongly converted to #38; on URLs and breaking the checkout flow. This update should place a fix to this problem.
 
 = v2.0.2 (13/06/2016) =
 * Rollout to Peru
