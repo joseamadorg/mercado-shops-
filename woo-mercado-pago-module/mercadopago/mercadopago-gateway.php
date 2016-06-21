@@ -82,7 +82,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		// Render our configuration page and init/load fields.
 		$this->init_form_fields();
 		$this->init_settings();
-		
+
 		// Hook actions for WordPress.
 		add_action( // Used by IPN to receive IPN incomings.
 			'woocommerce_api_wc_woomercadopago_gateway',
@@ -555,7 +555,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			),
 			'back_urls' => array(
 				'success' => esc_url( $this->get_return_url( $order ) ),
-				'failure' => str_replace( '&amp;', '&', $order->get_cancel_order_url() ),
+				'failure' => $this->workaroundAmperSandBug( str_replace( '&amp;', '&', $order->get_cancel_order_url() ) ),
 				'pending' => esc_url( $this->get_return_url( $order ) )
 			),
 			//'marketplace' =>
@@ -649,6 +649,11 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 	 * AUXILIARY AND FEEDBACK METHODS
 	 * ========================================================================
 	 */
+
+	// Fix to URL Problem : #038; replaces & and breaks the navigation
+	function workaroundAmperSandBug( $link ) {
+		return str_replace('#038;', '&', $link);
+	}
 
 	// Check if we have valid credentials.
 	public function validateCredentials() {
