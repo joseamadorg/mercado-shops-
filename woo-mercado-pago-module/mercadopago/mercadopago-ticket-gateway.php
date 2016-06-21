@@ -78,7 +78,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 		);
 		
 		// Verify if access token is empty.
-		if ( empty( $this->access_token ) ) {
+		if ( empty( $this->access_token ) && $this->enabled == 'yes' ) {
 			add_action( 'admin_notices', array( $this, 'credentialsMissingMessage' ) );
 		}
 		
@@ -562,7 +562,6 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 	}
 	
 	// Return boolean indicating if currency is supported.
-	// TODO: Peru rollout
 	protected function isSupportedCurrency() {
 		return in_array( $this->site_id, array( 'MLA', 'MLB', 'MLC', 'MCO', 'MLM', 'MPE', 'MLV' ) );
 	}

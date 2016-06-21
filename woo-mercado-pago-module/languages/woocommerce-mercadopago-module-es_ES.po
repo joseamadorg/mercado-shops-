@@ -244,7 +244,7 @@ msgstr "Por favor, da tu evaluación con %s en WordPress.org y da su feedback pa
 
 #: mercadopago/mercadopago-custom-gateway.php:332
 msgid "Payment Method"
-msgstr "Excluir métodos de pago"
+msgstr "Métodos de Pago"
 
 #: mercadopago/mercadopago-custom-gateway.php:333
 msgid "Credit card number"

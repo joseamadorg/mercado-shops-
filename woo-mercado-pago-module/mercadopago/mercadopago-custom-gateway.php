@@ -93,7 +93,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 		);
 		
 		// Verify if public_key or client_secret is empty.
-		if ( empty( $this->public_key ) || empty( $this->access_token ) ) {
+		if ( ( empty( $this->public_key ) || empty( $this->access_token ) ) && $this->enabled == 'yes' ) {
 			add_action( 'admin_notices', array( $this, 'credentialsMissingMessage' ) );
 		}
 		
