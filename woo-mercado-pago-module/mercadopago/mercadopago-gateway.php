@@ -502,6 +502,15 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 					));
 				}
 			}
+			// shipment cost as an item (workaround to prevent API showing shipment setup again)
+  			array_push($items, array(
+  				'title' => $this->workaroundAmperSandBug( $order->get_shipping_to_display() ),
+  				'description' => $this->workaroundAmperSandBug( $order->get_shipping_to_display() ),
+ 				'category_id' => $this->store_categories_id[$this->category_id],
+ 				'quantity' => 1,
+ 				'unit_price' => (float)$order->get_total_shipping(),
+ 				'currency_id' => $this->getCurrencyId($this->site_id)
+ 			));
 		}
 		
 		// Find excluded payment methods. If 'n/d' is in array index, we should
@@ -561,7 +570,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			//'marketplace' =>
             //'marketplace_fee' =>
             'shipments' => array(
-            	'cost' => (float) $order->get_total_shipping(),
+            	//'cost' => (float) $order->get_total_shipping(),
             	//'mode' =>
             	'receiver_address' => array(
             		'zip_code' => $order->shipping_postcode,
