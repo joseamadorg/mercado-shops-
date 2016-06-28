@@ -503,7 +503,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
         // Do not set IPN url if it is a localhost!
         $notification_url = $this->domain . '/woocommerce-mercadopago-module/?wc-api=WC_WooMercadoPagoTicket_Gateway';
         if ( !strrpos( $notification_url, "localhost" ) ) {
-            $payment_preference['notification_url'] = $notification_url;
+            $payment_preference['notification_url'] = $this->workaroundAmperSandBug( $notification_url );
         }
 
         // Coupon Feature
@@ -549,6 +549,11 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 	 * AUXILIARY AND FEEDBACK METHODS
 	 * ========================================================================
 	 */
+
+	// Fix to URL Problem : #038; replaces & and breaks the navigation
+	function workaroundAmperSandBug( $link ) {
+		return str_replace('#038;', '&', $link);
+	}
 
 	// Check if we have valid credentials.
 	public function validateCredentials() {
