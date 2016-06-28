@@ -104,6 +104,11 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			'woocommerce_update_options_payment_gateways_' . $this->id,
 			array( $this, 'process_admin_options' )
 		);
+
+		// Verify if currency is supported.
+		if ( !$this->isSupportedCurrency() ) {
+			add_action( 'admin_notices', array( $this, 'currencyNotSupportedMessage' ) );
+		}
 		
 		// Verify if client_id or client_secret is empty.
 		if ( empty( $this->client_id ) || empty( $this->client_secret ) ) {
@@ -126,13 +131,13 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 	public function init_form_fields() {
 		
 		$api_secret_locale = sprintf(
-			'<a href="https://www.mercadopago.com/mla/herramientas/aplicaciones" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com/mlb/ferramentas/aplicacoes" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com/mlc/herramientas/aplicaciones" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com/mco/ferramentas/aplicacoes" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com/mlm/ferramentas/aplicacoes" target="_blank">%s</a>, ' .
+			'<a href="https://www.mercadopago.com/mla/account/credentials?type=basic" target="_blank">%s</a>, ' .
+			'<a href="https://www.mercadopago.com/mlb/account/credentials?type=basic" target="_blank">%s</a>, ' .
+			'<a href="https://www.mercadopago.com/mlc/account/credentials?type=basic" target="_blank">%s</a>, ' .
+			'<a href="https://www.mercadopago.com/mco/account/credentials?type=basic" target="_blank">%s</a>, ' .
+			'<a href="https://www.mercadopago.com/mlm/account/credentials?type=basic" target="_blank">%s</a>, ' .
 			'<a href="https://www.mercadopago.com/mpe/account/credentials?type=basic" target="_blank">%s</a> %s ' .
-			'<a href="https://www.mercadopago.com/mlv/herramientas/aplicaciones" target="_blank">%s</a>',
+			'<a href="https://www.mercadopago.com/mlv/account/credentials?type=basic" target="_blank">%s</a>',
 			__( 'Argentine', 'woocommerce-mercadopago-module' ),
 			__( 'Brazil', 'woocommerce-mercadopago-module' ),
 			__( 'Chile', 'woocommerce-mercadopago-module' ),
@@ -504,8 +509,8 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			}
 			// shipment cost as an item (workaround to prevent API showing shipment setup again)
   			array_push($items, array(
-  				'title' => $this->workaroundAmperSandBug( $order->get_shipping_to_display() ),
-  				'description' => $this->workaroundAmperSandBug( $order->get_shipping_to_display() ),
+  				'title' => $this->workaroundAmperSandBug( $this->workaroundAmperSandBug( $order->get_shipping_to_display() ) ),
+  				'description' => __( 'Shipping service used by store', 'woocommerce-mercadopago-module' ),
  				'category_id' => $this->store_categories_id[$this->category_id],
  				'quantity' => 1,
  				'unit_price' => (float)$order->get_total_shipping(),
@@ -685,10 +690,10 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			esc_attr( $this->id ) . '-' . sanitize_file_name( wp_hash( $this->id ) ) . '.log' ) ) . '">' .
 			__( 'WooCommerce &gt; System Status &gt; Logs', 'woocommerce-mercadopago-module' ) . '</a>';
 	}
-	
+
 	// Return boolean indicating if currency is supported.
 	protected function isSupportedCurrency() {
-		return in_array( $this->site_id, array( 'MLA', 'MLB', 'MLC', 'MCO', 'MLM', 'MPE', 'MLV' ) );
+		return in_array( get_woocommerce_currency(), array( 'ARS', 'BRL', 'CLP', 'COP', 'MXN', 'PEN', 'VEF' ) );
 	}
 
 	// Get currency id for a country
@@ -710,8 +715,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		// Test if is valid for use.
 		$available = ( 'yes' == $this->settings[ 'enabled' ] ) &&
 					! empty( $this->client_id ) &&
-					! empty( $this->client_secret ) &&
-					$this->isSupportedCurrency();
+					! empty( $this->client_secret );
 		return $available;
 	}
 	

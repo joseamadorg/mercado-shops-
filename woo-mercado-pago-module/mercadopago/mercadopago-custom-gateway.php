@@ -571,7 +571,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
         $shipping_cost = (float) $order->get_total_shipping();
         if ( $shipping_cost > 0 ) {
             $item = array(
-                'title' => __( 'Shipping', 'woocommerce-mercadopago-module' ),
+                'title' => $this->workaroundAmperSandBug( $this->workaroundAmperSandBug( $order->get_shipping_to_display() ) ),
                 'description' => __( 'Shipping service used by store', 'woocommerce-mercadopago-module' ),
                 'quantity' => 1,
                 'category_id' => $this->store_categories_id[ $this->category_id ],
