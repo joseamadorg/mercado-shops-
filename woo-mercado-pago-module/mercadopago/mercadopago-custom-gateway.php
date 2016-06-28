@@ -141,7 +141,17 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 				$get_request = $mp->get( "/users/me?access_token=" . $this->access_token );
 				$this->isTestUser = in_array( 'test_user', $get_request[ 'response' ][ 'tags' ] );
 				$this->site_id = $get_request[ 'response' ][ 'site_id' ];
-				$this->credentials_message = '<img width="12" height="12" src="' .
+				// checking the currency
+				$this->credentials_message = "";
+				if ( !$this->isSupportedCurrency() && 'yes' == $this->settings[ 'enabled' ] ) {
+					$this->credentials_message .= '<img width="12" height="12" src="' .
+						plugins_url( 'images/warning.png', plugin_dir_path( __FILE__ ) ) . '">' .
+						' ' . __( '<strong>ATTENTION: The currency', 'woocommerce-mercadopago-module' ) . ' ' . get_woocommerce_currency() .
+						' ' . __( 'defined in WooCommerce is not supported by Mercado Pago.<br>The currency for transactions in this payment method will be', 'woocommerce-mercadopago-module' ) .
+						' ' . $this->getCurrencyId( $this->site_id ) . ' (' . $this->getCountryName( $this->site_id ) . ').' .
+						' ' . __( 'Currency conversions should be made outside this module.</strong><br><br>', 'woocommerce-mercadopago-module' );
+				}
+				$this->credentials_message .= '<img width="12" height="12" src="' .
 					plugins_url( 'images/check.png', plugin_dir_path( __FILE__ ) ) . '">' .
 					' ' . __( 'Your credentials are <strong>valid</strong> for', 'woocommerce-mercadopago-module' ) .
 					': ' . $this->getCountryName( $this->site_id ) . ' <img width="18.6" height="12" src="' .
@@ -774,7 +784,21 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 	
 	// Return boolean indicating if currency is supported.
 	protected function isSupportedCurrency() {
-		return in_array( $this->site_id, array( 'MLA', 'MLB', 'MLC', 'MCO', 'MLM', 'MPE', 'MLV' ) );
+		return in_array( get_woocommerce_currency(), array( 'ARS', 'BRL', 'CLP', 'COP', 'MXN', 'PEN', 'VEF' ) );
+	}
+
+	// Get currency id for a country
+	protected function getCurrencyId( $site_id ) {
+		switch ( $site_id ) {
+			case 'MLA': return 'ARS';
+			case 'MLB': return 'BRL';
+			case 'MCO': return 'COP';
+			case 'MLC': return 'CLP';
+			case 'MLM': return 'MXN';
+			case 'MLV': return 'VEF';
+			case 'MPE': return 'PEN';
+			default: return '';
+		}
 	}
 
 	public function checkSSLAbsence() {
@@ -798,8 +822,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 		}
 		$available = ( 'yes' == $this->settings[ 'enabled' ] ) &&
 			!empty( $this->public_key ) &&
-			!empty( $this->access_token ) &&
-			$this->isSupportedCurrency();
+			!empty( $this->access_token );
 		return $available;
 	}
 	
