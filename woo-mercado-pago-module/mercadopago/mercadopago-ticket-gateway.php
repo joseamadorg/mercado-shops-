@@ -139,7 +139,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 					$this->credentials_message .= '<img width="12" height="12" src="' .
 						plugins_url( 'images/warning.png', plugin_dir_path( __FILE__ ) ) . '">' .
 						' ' . __( '<strong>ATTENTION: The currency', 'woocommerce-mercadopago-module' ) . ' ' . get_woocommerce_currency() .
-						' ' . __( 'defined in WooCommerce is not supported by Mercado Pago.<br>The currency for transactions in this payment method will be', 'woocommerce-mercadopago-module' ) .
+						' ' . __( 'defined in WooCommerce is different from the one used in your credentials country.<br>The currency for transactions in this payment method will be', 'woocommerce-mercadopago-module' ) .
 						' ' . $this->getCurrencyId( $this->site_id ) . ' (' . $this->getCountryName( $this->site_id ) . ').' .
 						' ' . __( 'Currency conversions should be made outside this module.</strong><br><br>', 'woocommerce-mercadopago-module' );
 				}
@@ -552,7 +552,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 
 	// Fix to URL Problem : #038; replaces & and breaks the navigation
 	function workaroundAmperSandBug( $link ) {
-		return str_replace('#038;', '&', $link);
+		return str_replace('&#038;', '&', $link);
 	}
 
 	// Check if we have valid credentials.
@@ -578,7 +578,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 	
 	// Return boolean indicating if currency is supported.
 	protected function isSupportedCurrency() {
-		return in_array( get_woocommerce_currency(), array( 'ARS', 'BRL', 'CLP', 'COP', 'MXN', 'PEN', 'VEF' ) );
+		return get_woocommerce_currency() == $this->getCurrencyId( $this->$site_id );
 	}
 
 	// Get currency id for a country

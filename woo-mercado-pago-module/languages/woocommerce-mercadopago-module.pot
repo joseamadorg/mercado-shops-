@@ -694,7 +694,7 @@ msgstr ""
 msgid "<strong>ATTENTION: The currency"
 msgstr ""
 
-msgid "defined in WooCommerce is not supported by Mercado Pago.<br>The currency for transactions in this payment method will be"
+msgid "defined in WooCommerce is different from the one used in your credentials country.<br>The currency for transactions in this payment method will be"
 msgstr ""
 
 msgid "Currency conversions should be made outside this module.</strong><br><br>"

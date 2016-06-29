@@ -688,8 +688,8 @@ msgstr "Seu site parece não possuir certificação SSL. SSL é um pré-requisit
 msgid "<strong>ATTENTION: The currency"
 msgstr "<strong>ATENÇÃO: A moeda"
 
-msgid "defined in WooCommerce is not supported by Mercado Pago.<br>The currency for transactions in this payment method will be"
-msgstr "definida no WooCommerce não é suportada pelo Mercado Pago.<br>A moeda para transações feitas por este meio de pagamento será"
+msgid "defined in WooCommerce is different from the one used in your credentials country.<br>The currency for transactions in this payment method will be"
+msgstr "definida no WooCommerce é diferente da usada no país de suas credenciais.<br>A moeda para transações feitas por este meio de pagamento será"
 
 msgid "Currency conversions should be made outside this module.</strong><br><br>"
 msgstr "Conversões devem ser feitas fora deste módulo.</strong><br><br>"
