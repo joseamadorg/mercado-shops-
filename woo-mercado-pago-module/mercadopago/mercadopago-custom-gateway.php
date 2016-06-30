@@ -789,7 +789,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 	
 	// Return boolean indicating if currency is supported.
 	protected function isSupportedCurrency() {
-		return get_woocommerce_currency() == $this->getCurrencyId( $this->$site_id );
+		return get_woocommerce_currency() == $this->getCurrencyId( $this->site_id );
 	}
 
 	// Get currency id for a country
