@@ -14,7 +14,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div width="100%" style="margin:1px; padding:36px 36px 16px 36px; background:white; ">
 	<img class="logo" src="<?php echo ( $images_path . 'mplogo.png' ); ?>" width="156" height="40" />
-	<img class="logo" src="<?php echo ( $images_path . 'boleto.png' ); ?>" width="90" height="40" style="float:right;"/>
+	<?php if ( count( $payment_methods ) > 1 ) { ?>
+		<img class="logo" src="<?php echo ( $images_path . 'boleto.png' ); ?>" width="90" height="40" style="float:right;"/>
+	<?php } else { ?>
+		<?php foreach ( $payment_methods as $payment ) { ?>
+			<img class="logo" src="<?php echo $payment[ 'thumbnail' ]; ?>" width="90" height="40" style="float:right;"/> 
+		<?php } ?>
+	<?php } ?>
 </div>
 <fieldset id="mercadopago-form" style="background:white; ">
 	<div style="padding:0px 36px 0px 36px;">

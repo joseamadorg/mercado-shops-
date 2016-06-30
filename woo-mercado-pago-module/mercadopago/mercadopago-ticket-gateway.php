@@ -133,7 +133,17 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 						array_push( $this->payment_methods, $payment );
 					}
 				}
-				$this->credentials_message = '<img width="12" height="12" src="' .
+				// checking the currency
+				$this->credentials_message = "";
+				if ( !$this->isSupportedCurrency() && 'yes' == $this->settings[ 'enabled' ] ) {
+					$this->credentials_message .= '<img width="12" height="12" src="' .
+						plugins_url( 'images/warning.png', plugin_dir_path( __FILE__ ) ) . '">' .
+						' ' . __( '<strong>ATTENTION: The currency', 'woocommerce-mercadopago-module' ) . ' ' . get_woocommerce_currency() .
+						' ' . __( 'defined in WooCommerce is different from the one used in your credentials country.<br>The currency for transactions in this payment method will be', 'woocommerce-mercadopago-module' ) .
+						' ' . $this->getCurrencyId( $this->site_id ) . ' (' . $this->getCountryName( $this->site_id ) . ').' .
+						' ' . __( 'Currency conversions should be made outside this module.</strong><br><br>', 'woocommerce-mercadopago-module' );
+				}
+				$this->credentials_message .= '<img width="12" height="12" src="' .
 					plugins_url( 'images/check.png', plugin_dir_path( __FILE__ ) ) . '">' .
 					' ' . __( 'Your credentials are <strong>valid</strong> for', 'woocommerce-mercadopago-module' ) .
 					': ' . $this->getCountryName( $this->site_id ) . ' <img width="18.6" height="12" src="' .
@@ -416,7 +426,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
         $shipping_cost = (float) $order->get_total_shipping();
         if ( $shipping_cost > 0 ) {
             $item = array(
-                'title' => __( 'Shipping', 'woocommerce-mercadopago-module' ),
+                'title' => $this->workaroundAmperSandBug( $this->workaroundAmperSandBug( $order->get_shipping_to_display() ) ),
                 'description' => __( 'Shipping service used by store', 'woocommerce-mercadopago-module' ),
                 'quantity' => 1,
                 'category_id' => $this->store_categories_id[ $this->category_id ],
@@ -493,7 +503,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
         // Do not set IPN url if it is a localhost!
         $notification_url = $this->domain . '/woocommerce-mercadopago-module/?wc-api=WC_WooMercadoPagoTicket_Gateway';
         if ( !strrpos( $notification_url, "localhost" ) ) {
-            $payment_preference['notification_url'] = $notification_url;
+            $payment_preference['notification_url'] = $this->workaroundAmperSandBug( $notification_url );
         }
 
         // Coupon Feature
@@ -540,6 +550,11 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 	 * ========================================================================
 	 */
 
+	// Fix to URL Problem : #038; replaces & and breaks the navigation
+	function workaroundAmperSandBug( $link ) {
+		return str_replace('&#038;', '&', $link);
+	}
+
 	// Check if we have valid credentials.
 	public function validateCredentials() {
 		if ( empty( $this->access_token ) ) return false;
@@ -563,7 +578,21 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 	
 	// Return boolean indicating if currency is supported.
 	protected function isSupportedCurrency() {
-		return in_array( $this->site_id, array( 'MLA', 'MLB', 'MLC', 'MCO', 'MLM', 'MPE', 'MLV' ) );
+		return get_woocommerce_currency() == $this->getCurrencyId( $this->site_id );
+	}
+
+	// Get currency id for a country
+	protected function getCurrencyId( $site_id ) {
+		switch ( $site_id ) {
+			case 'MLA': return 'ARS';
+			case 'MLB': return 'BRL';
+			case 'MCO': return 'COP';
+			case 'MLC': return 'CLP';
+			case 'MLM': return 'MXN';
+			case 'MLV': return 'VEF';
+			case 'MPE': return 'PEN';
+			default: return '';
+		}
 	}
 
 	public function checkSSLAbsence() {
@@ -586,8 +615,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 			return false;
 		}
 		$available = ( 'yes' == $this->settings[ 'enabled' ] ) &&
-			! empty( $this->access_token ) &&
-			$this->isSupportedCurrency();
+			! empty( $this->access_token );
 		return $available;
 	}
 	

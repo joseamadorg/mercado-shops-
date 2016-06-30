@@ -1,5 +1,12 @@
 CHANGELOG:
 
+= v2.0.4 (29/06/2016) =
+* Bug fixes
+	- We have wrote a snippet to handle the absent shipment cost problem;
+	- Fixed some URLs of the credentials link for Standard Checkout.
+* Improvements
+	- Added a message in admin view when currency is different from used locally (used in credential's country).
+
 = v2.0.3 (21/06/2016) =
 * Bug fix in Standard Checkout for WooCommerce v2.6.x
 	In WooCommerce v2.6.x, there was a bug related with the ampersand char that was wrongly converted to #38; on URLs and breaking the checkout flow. This update should place a fix to this problem.
@@ -8,7 +15,7 @@ CHANGELOG:
 * Rollout to Peru
 	This plugin is now supporting Peru, which includes Standard Checkout, Custom Checkout, Tickets, and local language translations.
 * Fix a PHP version issue
-	It was reported to us an issue in a function that uses an assign made directly from an array field. This feature is available in PHP 5.4.x or above and we've made an update to support older versions;
+	It was reported to us an issue in a function that uses an assign made directly from an array field. This feature is available in PHP 5.4.x or above and we've made an update to support older versions.
 * Fix a tax issue
 	It wasn't been correctly added to the total value in Mercado Pago gateway.
 	

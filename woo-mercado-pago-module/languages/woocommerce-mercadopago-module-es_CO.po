@@ -19,7 +19,7 @@ msgstr ""
 "X-Poedit-Basepath: ../Documents/woocommerce (MAMP)/wp-content/plugins/woo-mercado-pago-module\n"
 "X-Generator: Poedit 1.8.7\n"
 "Last-Translator: \n"
-"Language: es\n"
+"Language: es_CO\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #. Description of the plugin/theme
@@ -692,3 +692,12 @@ msgstr "terminado en"
 
 msgid "Your site appears to not have SSL certification. SSL is a pre-requisite because the payment process is made in your server."
 msgstr "Su sitio parece no tener certificación SSL. SSL es un requisito previo porque la tramitación del pago se realiza en el servidor."
+
+msgid "<strong>ATTENTION: The currency"
+msgstr "<strong>ATENCIÓN: La moneda"
+
+msgid "defined in WooCommerce is different from the one used in your credentials country.<br>The currency for transactions in this payment method will be"
+msgstr "que se define en WooCommerce es diferente de la utilizada en el país de sus credenciales.<br>La moneda para las transacciones realizadas por este método de pago será"
+
+msgid "Currency conversions should be made outside this module.</strong><br><br>"
+msgstr "Conversiones de monedas se deben hacerse fuera de este módulo.</strong><br><br>"
