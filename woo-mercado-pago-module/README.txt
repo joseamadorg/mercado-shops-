@@ -48,13 +48,13 @@ To confirm that your module is really installed, you can click in **Plugins** it
 = Configuration =
 1. On your store administration, go to **WooCommerce > Settings > Checkout** tab. In **Checkout Options**, you can find configurations for **Mercado Pago - Standard Checkout**, **Mercado Pago - Custom Checkout**, and **Mercado Pago - Ticket**.
 	* To get your **Client_id** and **Client_secret** for your country, you can go to:
-		* Argentina: https://www.mercadopago.com/mla/herramientas/aplicaciones
-		* Brazil: https://www.mercadopago.com/mlb/ferramentas/aplicacoes
-		* Chile: https://www.mercadopago.com/mlc/herramientas/aplicaciones
-		* Colombia: https://www.mercadopago.com/mco/herramientas/aplicaciones
-		* Mexico: https://www.mercadopago.com/mlm/herramientas/aplicaciones
-		* Peru: https://www.mercadopago.com/mpe/herramientas/aplicaciones
-		* Venezuela: https://www.mercadopago.com/mlv/herramientas/aplicaciones
+		* Argentina: https://www.mercadopago.com/mla/account/credentials?type=basic
+		* Brazil: https://www.mercadopago.com/mlb/account/credentials?type=basic
+		* Chile: https://www.mercadopago.com/mlc/account/credentials?type=basic
+		* Colombia: https://www.mercadopago.com/mco/account/credentials?type=basic
+		* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=basic
+		* Peru: https://www.mercadopago.com/mpe/account/credentials?type=basic
+		* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=basic
 	* And to get your **Public Key**/**Access Token** you can go to:
 		* Argentina: https://www.mercadopago.com/mla/account/credentials?type=custom
 		* Brazil: https://www.mercadopago.com/mlb/account/credentials?type=custom

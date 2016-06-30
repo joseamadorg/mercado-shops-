@@ -122,13 +122,13 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 
 	Remember that you can obtain your *Client_id* and *Client_secret*, accordingly to your country, in the following links:
 
-	* Argentina: https://www.mercadopago.com/mla/herramientas/aplicaciones
-	* Brazil: https://www.mercadopago.com/mlb/ferramentas/aplicacoes
-	* Chile: https://www.mercadopago.com/mlc/herramientas/aplicaciones
-	* Colombia: https://www.mercadopago.com/mco/herramientas/aplicaciones
-	* Mexico: https://www.mercadopago.com/mlm/herramientas/aplicaciones
-	* Peru: https://www.mercadopago.com/mpe/herramientas/aplicaciones
-	* Venezuela: https://www.mercadopago.com/mlv/herramientas/aplicaciones
+	* Argentina: https://www.mercadopago.com/mla/account/credentials?type=basic
+	* Brazil: https://www.mercadopago.com/mlb/account/credentials?type=basic
+	* Chile: https://www.mercadopago.com/mlc/account/credentials?type=basic
+	* Colombia: https://www.mercadopago.com/mco/account/credentials?type=basic
+	* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=basic
+	* Peru: https://www.mercadopago.com/mpe/account/credentials?type=basic
+	* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=basic
 
 3. **Instant Payment Notification (IPN) URL**: In this part, you can check your IPN URL, where you will get notified about payment updates;
 
