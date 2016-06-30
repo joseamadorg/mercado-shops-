@@ -109,7 +109,7 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 	- We have wrote a snippet to handle the absent shipment cost problem;
 	- Fixed some URLs of the credentials link for Standard Checkout.
 * Improvements
-	- Added a message in configuration view when currency is not supported by Mercado Pago.
+	- Added a message in admin view when currency is different from used locally (used in credential's country).
 
 = v2.0.3 (21/06/2016) =
 * Bug fix in Standard Checkout for WooCommerce v2.6.x
