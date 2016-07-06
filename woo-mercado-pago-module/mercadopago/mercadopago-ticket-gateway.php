@@ -189,7 +189,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 			'ipn_url' => array(
 				'title' => __( 'Instant Payment Notification (IPN) URL', 'woocommerce-mercadopago-module' ),
 				'type' => 'title',
-				'description' => sprintf( __( 'Your IPN URL to receive instant payment notifications is', 'woocommerce-mercadopago-module' ) . '<br>%s', '<code>' . $this->domain . '/woocommerce-mercadopago-module/?wc-api=WC_WooMercadoPagoCustom_Gateway' . '</code>.' )
+				'description' => sprintf( __( 'Your IPN URL to receive instant payment notifications is', 'woocommerce-mercadopago-module' ) . '<br>%s', '<code>' . $this->domain . '/woocommerce-mercadopago-module/?wc-api=WC_WooMercadoPagoTicket_Gateway' . '</code>.' )
 			),
 			'checkout_options_title' => array(
 				'title' => __( 'Ticket Options', 'woocommerce-mercadopago-module' ),
