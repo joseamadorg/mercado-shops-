@@ -1,9 +1,4 @@
 CHANGELOG:
-
-= v2.0.5 (07/07/2016) =
-* Bug fixes
-	- IPN URL was wrong for tickets, pointing to Custom Checkout IPN URL. Fixed it;
-	- Updated the IPN structure field "id" to "data_id", to correctly trigger the response.
 	
 = v2.0.4 (29/06/2016) =
 * Bug fixes

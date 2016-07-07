@@ -286,7 +286,7 @@ class MP {
                "access_token" => $this->get_access_token()
            ),
            "headers" => array(
-               "user-agent" => "platform:desktop,type:woocommerce,so:2.0.5"
+               "user-agent" => "platform:desktop,type:woocommerce,so:2.0.4"
            ),
            "data" => $preference
        );
@@ -343,7 +343,7 @@ class MP {
                 "access_token" => $this->get_access_token()
             ),
             "headers" => array(
-                "X-Tracking-Id" => "platform:v1-whitelabel,type:woocommerce,so:2.0.5"
+                "X-Tracking-Id" => "platform:v1-whitelabel,type:woocommerce,so:2.0.4"
             ),
             "data" => $preference
         );
