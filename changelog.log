@@ -1,5 +1,11 @@
 CHANGELOG:
-	
+
+= v2.0.5 (07/07/2016) =
+* Bug fixes
+	- Fixed the informative URL of ticket IPN in admin page.
+* Improvements
+	- Improved IPN behavior to handle consistent messages with absent IDs.
+
 = v2.0.4 (29/06/2016) =
 * Bug fixes
 	- We have wrote a snippet to handle the absent shipment cost problem;
