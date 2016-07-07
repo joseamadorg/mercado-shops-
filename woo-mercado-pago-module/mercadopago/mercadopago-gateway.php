@@ -810,14 +810,12 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				': @[check_ipn_request_is_valid] - received ipn message from mercado pago, checking validity with $data containing: ' .
 				json_encode( $data, JSON_PRETTY_PRINT ) );
 		}
-		if ( !isset( $data[ 'data_id' ] ) || !isset( $data[ 'type' ] ) ) {
+		if ( !isset( $data[ 'id' ] ) || !isset( $data[ 'topic' ] ) ) {
 			if ( 'yes' == $this->debug ) {
 				$this->log->add(
 					$this->id, $this->id .
 					': @[check_ipn_request_is_valid] - failing due to ID absent' );
 			}
-			// at least, inform MP API that it received the IPN message, because...
-			header( 'HTTP/1.1 200 OK' );
 			// No ID? No process!
 			return false;
 		}
