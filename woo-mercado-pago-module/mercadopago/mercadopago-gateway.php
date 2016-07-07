@@ -779,19 +779,15 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 	
 	// This call checks any incoming notifications from Mercado Pago server.
 	public function check_ipn_response() {
-		if ( 'yes' == $this->debug ) {
-			$this->log->add( $this->id, $this->id . ': @[check_ipn_response] - got a call from mercado pago ipn' );
-		}
 		@ob_clean();
+		if ( 'yes' == $this->debug ) {
+			$this->log->add( $this->id, $this->id .
+				': @[check_ipn_response] - Received _get content: ' .
+				json_encode( $_GET, JSON_PRETTY_PRINT ) );
+		}
 		$data = $this->check_ipn_request_is_valid( $_GET );
 		if ( $data ) {
 			header( 'HTTP/1.1 200 OK' );
-			if ( 'yes' == $this->debug ) {
-				$this->log->add(
-					$this->id, $this->id .
-					': @[check_ipn_response] - received _get call with following content: ' .
-					json_encode( $data, JSON_PRETTY_PRINT ) );
-			}
 			do_action( 'valid_mercadopago_ipn_request', $data );
 		} else {
 			if ( 'yes' == $this->debug ) {

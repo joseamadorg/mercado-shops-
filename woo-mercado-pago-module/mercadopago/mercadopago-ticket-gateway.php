@@ -673,7 +673,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 		$data = $this->check_ipn_request_is_valid( $_GET );
 		if ( $data ) {
 			header( 'HTTP/1.1 200 OK' );
-			do_action( 'valid_mercadopagocustom_ipn_request', $data );
+			do_action( 'valid_mercadopagoticket_ipn_request', $data );
 		} else {
 			if ( 'yes' == $this->debug ) {
 				$this->log->add( $this->id, $this->id .

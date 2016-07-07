@@ -929,7 +929,8 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			do_action( 'valid_mercadopagocustom_ipn_request', $data );
 		} else {
 			if ( 'yes' == $this->debug ) {
-				$this->log->add( $this->id, $this->id .
+				$this->log->add(
+					$this->id, $this->id .
 					': @[check_ipn_response] - Mercado Pago Request Failure: ' .
 					json_encode( $_GET, JSON_PRETTY_PRINT ) );
 			}
