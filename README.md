@@ -75,7 +75,7 @@ During the sandbox mode tests, you can operate over HTTP, but for homologation y
   <thead>
   <tbody>
     <tr>
-      <td>v2.0.4</td>
+      <td>v2.0.5</td>
       <td>Stable (Current version)</td>
       <td>WooCommerce 2.1.x - 2.5.x</td>
     </tr>
@@ -99,7 +99,7 @@ You have two way to install this module: from your WordPress Store, or by downlo
 
 **Manual Download**
 
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.0.4.zip">WordPress Plugin Directory</a>);
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.0.5.zip">WordPress Plugin Directory</a>);
 
 2. Unzip the folder and find "woo-mercado-pago-module" directory;
 
@@ -122,13 +122,13 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 
 	Remember that you can obtain your *Client_id* and *Client_secret*, accordingly to your country, in the following links:
 
-	* Argentina: https://www.mercadopago.com/mla/herramientas/aplicaciones
-	* Brazil: https://www.mercadopago.com/mlb/ferramentas/aplicacoes
-	* Chile: https://www.mercadopago.com/mlc/herramientas/aplicaciones
-	* Colombia: https://www.mercadopago.com/mco/herramientas/aplicaciones
-	* Mexico: https://www.mercadopago.com/mlm/herramientas/aplicaciones
-	* Peru: https://www.mercadopago.com/mpe/herramientas/aplicaciones
-	* Venezuela: https://www.mercadopago.com/mlv/herramientas/aplicaciones
+	* Argentina: https://www.mercadopago.com/mla/account/credentials?type=basic
+	* Brazil: https://www.mercadopago.com/mlb/account/credentials?type=basic
+	* Chile: https://www.mercadopago.com/mlc/account/credentials?type=basic
+	* Colombia: https://www.mercadopago.com/mco/account/credentials?type=basic
+	* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=basic
+	* Peru: https://www.mercadopago.com/mpe/account/credentials?type=basic
+	* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=basic
 
 3. **Instant Payment Notification (IPN) URL**: In this part, you can check your IPN URL, where you will get notified about payment updates;
 
@@ -241,7 +241,7 @@ If you already had installed a previous version of Woo Mercado Pago Module, plea
 
 **Upgrade with Manual Download**
 
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.0.4.zip">WordPress Plugin Directory</a>);
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.0.5.zip">WordPress Plugin Directory</a>);
 
 2. Unzip the folder and find "woo-mercado-pago-module" directory;
 

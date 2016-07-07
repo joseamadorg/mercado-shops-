@@ -4,7 +4,7 @@ Donate link: https://www.mercadopago.com.br/developers/
 Tags: ecommerce, mercadopago, woocommerce
 Requires at least: WooCommerce 2.1.x
 Tested up to: WooCommerce 2.5.x
-Stable tag: 2.0.4
+Stable tag: 2.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,7 +39,7 @@ You have two way to install this module: from your WordPress Store, or by downlo
 3. You should find the module read to be installed. Click install.
 
 = Manual Download =
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.0.4.zip">WordPress Plugin Directory</a>);
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.0.5.zip">WordPress Plugin Directory</a>);
 2. Unzip the folder and find "woo-mercado-pago-module" directory;
 3. Copy "woo-mercado-pago-module" directory to **[WordPressRootDirectory]/wp-content/plugins/** directory.
 
@@ -48,13 +48,13 @@ To confirm that your module is really installed, you can click in **Plugins** it
 = Configuration =
 1. On your store administration, go to **WooCommerce > Settings > Checkout** tab. In **Checkout Options**, you can find configurations for **Mercado Pago - Standard Checkout**, **Mercado Pago - Custom Checkout**, and **Mercado Pago - Ticket**.
 	* To get your **Client_id** and **Client_secret** for your country, you can go to:
-		* Argentina: https://www.mercadopago.com/mla/herramientas/aplicaciones
-		* Brazil: https://www.mercadopago.com/mlb/ferramentas/aplicacoes
-		* Chile: https://www.mercadopago.com/mlc/herramientas/aplicaciones
-		* Colombia: https://www.mercadopago.com/mco/herramientas/aplicaciones
-		* Mexico: https://www.mercadopago.com/mlm/herramientas/aplicaciones
-		* Peru: https://www.mercadopago.com/mpe/herramientas/aplicaciones
-		* Venezuela: https://www.mercadopago.com/mlv/herramientas/aplicaciones
+		* Argentina: https://www.mercadopago.com/mla/account/credentials?type=basic
+		* Brazil: https://www.mercadopago.com/mlb/account/credentials?type=basic
+		* Chile: https://www.mercadopago.com/mlc/account/credentials?type=basic
+		* Colombia: https://www.mercadopago.com/mco/account/credentials?type=basic
+		* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=basic
+		* Peru: https://www.mercadopago.com/mpe/account/credentials?type=basic
+		* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=basic
 	* And to get your **Public Key**/**Access Token** you can go to:
 		* Argentina: https://www.mercadopago.com/mla/account/credentials?type=custom
 		* Brazil: https://www.mercadopago.com/mlb/account/credentials?type=custom
@@ -103,6 +103,12 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 4. `Configuration of Standard Checkout`
 
 == Changelog ==
+
+= v2.0.5 (07/07/2016) =
+* Bug fixes
+	- Fixed the informative URL of ticket IPN in admin page.
+* Improvements
+	- Improved IPN behavior to handle consistent messages with absent IDs.
 
 = v2.0.4 (29/06/2016) =
 * Bug fixes
