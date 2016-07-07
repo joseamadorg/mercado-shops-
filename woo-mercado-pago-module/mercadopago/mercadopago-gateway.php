@@ -820,7 +820,10 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 					$this->id, $this->id .
 					': @[check_ipn_request_is_valid] - failing due to ID absent' );
 			}
-			return false; // No ID? No process!
+			// at least, inform MP API that it received the IPN message, because...
+			header( 'HTTP/1.1 200 OK' );
+			// No ID? No process!
+			return false;
 		}
 		// Create MP object and setup sandbox mode.
 		$mp = new MP( $this->client_id, $this->client_secret );

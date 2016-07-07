@@ -947,7 +947,10 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 					': @[check_ipn_request_is_valid] - data_id or type not set: ' .
 					json_encode( $data, JSON_PRETTY_PRINT ) );
 			}
-			return false; // No ID? No process!
+			// at least, inform MP API that it received the IPN message, because...
+			header( 'HTTP/1.1 200 OK' );
+			// No ID? No process!
+			return false;
 		}
 		$mp = new MP( $this->access_token );
 		if ( 'yes' == $this->sandbox )
