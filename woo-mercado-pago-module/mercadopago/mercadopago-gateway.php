@@ -146,16 +146,6 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		// Trigger API to get payment methods and site_id, also validates Client_id/Client_secret.
 		if ( $this->validateCredentials() ) {
 			try {
-				$mp = new MP( $this->client_id, $this->client_secret );
-				$access_token = $mp->get_access_token();
-				$get_request = $mp->get( "/users/me?access_token=" . $access_token );
-				$this->isTestUser = in_array( 'test_user', $get_request[ 'response' ][ 'tags' ] );
-				$this->site_id = $get_request[ 'response' ][ 'site_id' ];
-				$payments = $mp->get( "/v1/payment_methods/?access_token=" . $access_token );
-				array_push( $this->payment_methods, "n/d" );
-				foreach ( $payments[ "response" ] as $payment ) {
-					array_push( $this->payment_methods, str_replace( "_", " ", $payment[ 'id' ] ) );
-				}
 				$this->payment_desc =
 					__( 'Select the payment methods that you <strong>don\'t</strong> want to receive with Mercado Pago.', 'woocommerce-mercadopago-module' );
 				// checking the currency
@@ -498,13 +488,13 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 					array_push( $items, array(
 						'id' => $item[ 'product_id' ],
 						'title' => ( $product->post->post_title . ' x ' . $item[ 'qty' ] ),
-						'description' => (
+						'description' => sanitize_file_name( (
 							// This handles description width limit of Mercado Pago.
 							strlen( $product->post->post_content ) > 230 ?
 							substr( $product->post->post_content, 0, 230 ) . "..." :
 							$product->post->post_content
-						),
-						'picture_url' => $product->get_image(),
+						) ),
+						'picture_url' => wp_get_attachment_url( $product->get_image_id() ),
 						'category_id' => $this->store_categories_id[ $this->category_id ],
 						'quantity' => 1,
 						'unit_price' => (float) $item[ 'line_total' ] + (float) $item[ 'line_tax' ],
@@ -573,9 +563,9 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				)
 			),
 			'back_urls' => array(
-				'success' => esc_url( $this->get_return_url( $order ) ),
+				'success' => $this->workaroundAmperSandBug( esc_url( $this->get_return_url( $order ) ) ),
 				'failure' => $this->workaroundAmperSandBug( str_replace( '&amp;', '&', $order->get_cancel_order_url() ) ),
-				'pending' => esc_url( $this->get_return_url( $order ) )
+				'pending' => $this->workaroundAmperSandBug( esc_url( $this->get_return_url( $order ) ) )
 			),
 			//'marketplace' =>
             //'marketplace_fee' =>
@@ -681,7 +671,18 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		if ( strlen( $this->client_id ) > 0 && strlen( $this->client_secret ) > 0 ) {
 			try {
 				$mp = new MP( $this->client_id, $this->client_secret );
-				return true;
+				$access_token = $mp->get_access_token();
+				$get_request = $mp->get( "/users/me?access_token=" . $access_token );
+				if ( isset( $get_request[ 'response' ][ 'site_id' ] ) ) {
+					$this->isTestUser = in_array( 'test_user', $get_request[ 'response' ][ 'tags' ] );
+					$this->site_id = $get_request[ 'response' ][ 'site_id' ];
+					$payments = $mp->get( "/v1/payment_methods/?access_token=" . $access_token );
+					array_push( $this->payment_methods, "n/d" );
+					foreach ( $payments[ "response" ] as $payment ) {
+						array_push( $this->payment_methods, str_replace( "_", " ", $payment[ 'id' ] ) );
+					}
+					return true;
+				} else return false;
 			} catch ( MercadoPagoException $e ) {
 				return false;
 			}

@@ -151,6 +151,21 @@ class MP {
         return $cards;
     }
 
+    public function check_discount_campaigns($transaction_amount, $payer_email, $coupon_code) {
+        $request = array(
+            "uri" => "/discount_campaigns",
+            "params" => array(
+                "access_token" => $this->get_access_token(),
+                "transaction_amount" => $transaction_amount,
+                "payer_email" => $payer_email,
+                "coupon_code" => $coupon_code
+            )
+        );
+
+        $discount_info = MPRestClient::get($request);
+        return $discount_info;
+    }
+
     /**
      * Get information for specific payment
      * @param int $id
@@ -286,7 +301,7 @@ class MP {
                "access_token" => $this->get_access_token()
            ),
            "headers" => array(
-               "user-agent" => "platform:desktop,type:woocommerce,so:2.0.5"
+               "user-agent" => "platform:desktop,type:woocommerce,so:2.1.0"
            ),
            "data" => $preference
        );
@@ -343,7 +358,7 @@ class MP {
                 "access_token" => $this->get_access_token()
             ),
             "headers" => array(
-                "X-Tracking-Id" => "platform:v1-whitelabel,type:woocommerce,so:2.0.5"
+                "X-Tracking-Id" => "platform:v1-whitelabel,type:woocommerce,so:2.1.0"
             ),
             "data" => $preference
         );
@@ -612,7 +627,7 @@ class MPRestClient {
             "response" => json_decode($api_result, true)
         );
 
-        if ($response['status'] >= 400) {
+        /*if ($response['status'] >= 400) {
             $message = $response['response']['message'];
             if (isset ($response['response']['cause'])) {
                 if (isset ($response['response']['cause']['code']) && isset ($response['response']['cause']['description'])) {
@@ -625,7 +640,7 @@ class MPRestClient {
             }
 
             throw new MercadoPagoException ($message, $response['status']);
-        }
+        }*/
 
         curl_close($connect);
 

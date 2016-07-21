@@ -138,6 +138,16 @@ body{
   border-color: #204d74;
 }
 
+.mp-discount{
+   text-transform: uppercase;
+   font-size: 14px;
+   color: #009EE3;
+   font-weight: bold;
+   display: none;
+   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+   clear: both;
+   float: left;
+ }
 
 /*
  *
@@ -157,3 +167,4 @@ body{
    clear: both;
    float: left;
  }
+

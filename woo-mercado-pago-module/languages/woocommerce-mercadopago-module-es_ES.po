@@ -669,8 +669,11 @@ msgstr "Checkout Estándar Inactivo"
 msgid "Ticket is Inactive"
 msgstr "Ticket Inactivo"
 
-msgid "Please, select the ticket issuer of your preference and then click "Place order" button. The ticket will be generated and you will be redirected to print it."
-msgstr "Por favor, seleccione el emisor de su elección y haga clic en el botón "PLACE ORDER". El ticket será generado y usted será redirigido a imprimirlo."
+msgid "Please, select the ticket issuer of your preference."
+msgstr "Por favor, seleccione el emisor de su elección."
+
+msgid "Click "Place order" button. The ticket will be generated and you will be redirected to print it."
+msgstr "Haga clic en el botón "PLACE ORDER". El ticket será generado y usted será redirigido a imprimirlo."
 
 msgid "Important: The order will be confirmed only after the payment approval."
 msgstr "Importante: La solicitud sólo será confirmada después de la aprobación del pago."
@@ -701,3 +704,33 @@ msgstr "que se define en WooCommerce es diferente de la utilizada en el país de
 
 msgid "Currency conversions should be made outside this module.</strong><br><br>"
 msgstr "Conversiones de monedas se deben hacerse fuera de este módulo.</strong><br><br>"
+
+msgid "Coupons"
+msgstr "Cupones"
+
+msgid "Enable coupons of discounts"
+msgstr "Activar los cupones de descuento"
+
+msgid "If there is a Mercado Pago campaign, allow your store to give discounts to customers."
+msgstr "Si hay una campaña de Mercado Pago, permite su tienda hacer descuentos para los clientes."
+
+msgid "gave a discount of"
+msgstr "dio un descuento de"
+
+msgid "Apply"
+msgstr "Aplicar"
+
+msgid "Remove"
+msgstr "Eliminar"
+
+msgid "Please, inform your coupon code"
+msgstr "Por favor, introduzca el código de su cupón"
+
+msgid "Please, inform your email in billing address to use this feature"
+msgstr "Por favor, introduzca su email en la dirección de facturación para utilizar este servicio"
+
+msgid "Discount for %s coupon"
+msgstr "Descuento para el cupón %s"
+
+msgid "Discount provided by store"
+msgstr "Descuento dado por la tienda"

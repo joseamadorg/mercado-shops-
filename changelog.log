@@ -1,5 +1,12 @@
 CHANGELOG:
 
+= v2.1.0 (??/??/2016) =
+* Mercado Pago Coupon of Discounts
+	- This feature lets Mercado Pago and merchants to use campaigns of discount created in their Mercado Pago accounts.
+* Improvements
+	- Improved credentials validation algorithm;
+	- Improved checkout data, with more clean info for product image.
+
 = v2.0.5 (07/07/2016) =
 * Bug fixes
 	- Fixed the informative URL of ticket IPN in admin page.

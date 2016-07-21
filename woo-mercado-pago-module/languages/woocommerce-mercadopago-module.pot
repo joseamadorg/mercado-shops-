@@ -667,7 +667,10 @@ msgstr ""
 msgid "Ticket is Inactive"
 msgstr ""
 
-msgid "Please, select the ticket issuer of your preference and then click "Place order" button. The ticket will be generated and you will be redirected to print it."
+msgid "Please, select the ticket issuer of your preference."
+msgstr ""
+
+msgid "Click "Place order" button. The ticket will be generated and you will be redirected to print it."
 msgstr ""
 
 msgid "Important: The order will be confirmed only after the payment approval."
@@ -698,4 +701,34 @@ msgid "defined in WooCommerce is different from the one used in your credentials
 msgstr ""
 
 msgid "Currency conversions should be made outside this module.</strong><br><br>"
+msgstr ""
+
+msgid "Coupons"
+msgstr ""
+
+msgid "Enable coupons of discounts"
+msgstr ""
+
+msgid "If there is a Mercado Pago campaign, allow your store to give discounts to customers."
+msgstr ""
+
+msgid "campaign gave a discount of"
+msgstr ""
+
+msgid "Apply"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+msgid "Please, inform your coupon code"
+msgstr ""
+
+msgid "Please, inform your email in billing address to use this feature"
+msgstr ""
+
+msgid "Discount for %s coupon"
+msgstr ""
+
+msgid "Discount provided by store"
 msgstr ""

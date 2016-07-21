@@ -661,8 +661,11 @@ msgstr "O Checkout Padrão está Inativo"
 msgid "Ticket is Inactive"
 msgstr "O Boleto está Inativo"
 
-msgid "Please, select the ticket issuer of your preference and then click "Place order" button. The ticket will be generated and you will be redirected to print it."
-msgstr "Por favor, selecione o emissor de sua preferência e clique no botão "FINALIZAR COMPRA". O boleto será gerado e você será redirecionado para imprimí-lo."
+msgid "Please, select the ticket issuer of your preference."
+msgstr "Por favor, selecione o emissor de sua preferência."
+
+msgid "Click "Place order" button. The ticket will be generated and you will be redirected to print it."
+msgstr "Clique no botão "FINALIZAR COMPRA". O boleto será gerado e você será redirecionado para imprimí-lo."
 
 msgid "Important: The order will be confirmed only after the payment approval."
 msgstr "Importante: O pedido só será confirmado após a aprovação do pagamento."
@@ -693,3 +696,33 @@ msgstr "definida no WooCommerce é diferente da usada no país de suas credencia
 
 msgid "Currency conversions should be made outside this module.</strong><br><br>"
 msgstr "Conversões devem ser feitas fora deste módulo.</strong><br><br>"
+
+msgid "Coupons"
+msgstr "Cupons"
+
+msgid "Enable coupons of discounts"
+msgstr "Habilitar cupons de desconto"
+
+msgid "If there is a Mercado Pago campaign, allow your store to give discounts to customers."
+msgstr "Caso haja uma campanha do Mercado Pago, permite que sua loja disponibilize descontos aos clientes."
+
+msgid "gave a discount of"
+msgstr "deu um desconto de"
+
+msgid "Apply"
+msgstr "Aplicar"
+
+msgid "Remove"
+msgstr "Remover"
+
+msgid "Please, inform your coupon code"
+msgstr "Por favor, informe o código do seu cupom"
+
+msgid "Please, inform your email in billing address to use this feature"
+msgstr "Por favor, informe seu email no endereço de cobrança para fazer uso desta funcionalidade"
+
+msgid "Discount for %s coupon"
+msgstr "Desconto para o cupom %s"
+
+msgid "Discount provided by store"
+msgstr "Desconto dado pela loja"
