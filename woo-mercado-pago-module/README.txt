@@ -70,6 +70,7 @@ To confirm that your module is really installed, you can click in **Plugins** it
 	* Set the title of the payment option that will be shown to your customers (for all solutions);
 	* Set the description of the payment option that will be shown to your customers (for all solutions);
 	* Set the description that will be shown in your customer's invoice (for Custom and Ticket);
+	* Enable coupon of campaigns for discounts (for Custom and Ticket);
 	* Set binary mode that when charging a credit card, only [approved] or [reject] status will be taken (only for Custom);
 	* Set the category of your store (for all solutions);
 	* Set a prefix to identify your store, when you have multiple stores for only one Mercado Pago account (for all solutions);
@@ -104,12 +105,12 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 
 == Changelog ==
 
-= v2.1.0 (??/??/2016) =
+= v2.1.0 (25/07/2016) =
 * Mercado Pago Coupon of Discounts
 	- This feature lets Mercado Pago and merchants to use campaigns of discount created in their Mercado Pago accounts.
 * Improvements
 	- Improved credentials validation algorithm;
-	- Improved checkout data, with more clean info for product image.
+	- Improved checkout data, with more clean and sanitized info for product image and description.
 
 = v2.0.5 (07/07/2016) =
 * Bug fixes

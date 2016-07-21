@@ -181,6 +181,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	*Title*: This is the title of the payment option that will be shown to your customers;<br />
 	*Description*: This is the description of the payment option that will be shown to your customers;<br />
 	*Statement Descriptor*: The description that will be shown in your customer's invoice;<br />
+	*Coupons*: Enable coupon of campaigns for discounts;<br />
 	*Binary Mode*: When charging a credit card, only [approved] or [reject] status will be taken;<br />
 	*Store Category*: Sets up the category of the store;<br />
 	*Store Identificator*: A prefix to identify your store, when you have multiple stores for only one Mercado Pago account.
@@ -218,6 +219,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	*Title*: This is the title of the payment option that will be shown to your customers;<br />
 	*Description*: This is the description of the payment option that will be shown to your customers;<br />
 	*Statement Descriptor*: The description that will be shown in your customer's invoice;<br />
+	*Coupons*: Enable coupon of campaigns for discounts;<br />
 	*Store Category*: Sets up the category of the store;<br />
 	*Store Identificator*: A prefix to identify your store, when you have multiple stores for only one Mercado Pago account.
 
