@@ -32,16 +32,16 @@ msgid "Woo Mercado Pago Module depends on the last version of %s to execute!"
 msgstr "Woo Mercado Pago Module depende de la última versión de %s para ejecutarse!"
 
 #: mercadopago-module.php:109
-msgid "Standard Checkout"
-msgstr "Checkout Estándar"
+msgid "Basic Checkout"
+msgstr "Checkout Básico"
 
 #: mercadopago-module.php:113
-msgid "Custom Checkout"
-msgstr "Checkout Custom"
+msgid "Transparent Checkout"
+msgstr "Checkout Transparente"
 
 #: mercadopago/mercadopago-custom-gateway.php:48
-msgid "Mercado Pago - Custom Checkout"
-msgstr "Mercado Pago - Checkout Custom"
+msgid "Mercado Pago - Transparent Checkout"
+msgstr "Mercado Pago - Checkout Transparente"
 
 #: mercadopago/mercadopago-custom-gateway.php:51 mercadopago/mercadopago-gateway.php:54
 msgid "This module enables WooCommerce to use Mercado Pago as payment method for purchases made in your virtual store."
@@ -95,8 +95,8 @@ msgid "Enable/Disable"
 msgstr "Habilitar/Deshabilitar"
 
 #: mercadopago/mercadopago-custom-gateway.php:171
-msgid "Enable Custom Checkout"
-msgstr "Habilitar Checkout Custom"
+msgid "Enable Transparent Checkout"
+msgstr "Habilitar Checkout Transparente"
 
 #: mercadopago/mercadopago-custom-gateway.php:175 mercadopago/mercadopago-gateway.php:217
 msgid "Mercado Pago Credentials"
@@ -175,8 +175,8 @@ msgid "Ticket"
 msgstr "Ticket"
 
 #: mercadopago/mercadopago-custom-gateway.php:231
-msgid "Enable Ticket for Custom Checkout"
-msgstr "Habilitar Ticket para Checkout Custom"
+msgid "Enable Ticket for Transparent Checkout"
+msgstr "Habilitar Ticket para Checkout Transparente"
 
 #: mercadopago/mercadopago-custom-gateway.php:233
 msgid "Let your customer pay you with tickets"
@@ -462,8 +462,8 @@ msgid "The payment is under mediation or it was charged-back."
 msgstr "El pago esta en mediación o la compra fue desconocida por el cliente."
 
 #: mercadopago/mercadopago-gateway.php:51
-msgid "Mercado Pago - Standard Checkout"
-msgstr "Mercado Pago - Checkout Estándar"
+msgid "Mercado Pago - Basic Checkout"
+msgstr "Mercado Pago - Checkout Básico"
 
 #: mercadopago/mercadopago-gateway.php:148
 msgid "Select the payment methods that you <strong>don't</strong> want to receive with Mercado Pago."
@@ -490,8 +490,8 @@ msgid "Select the max number of installments for your customers."
 msgstr "Seleccione el número máximo de mensualidades posibles para sus clientes."
 
 #: mercadopago/mercadopago-gateway.php:213
-msgid "Enable Standard Checkout"
-msgstr "Habilitar el Checkout Estándar"
+msgid "Enable Basic Checkout"
+msgstr "Habilitar el Checkout Básico"
 
 #: mercadopago/mercadopago-gateway.php:224
 msgid "Insert your Mercado Pago Client_id."
@@ -660,11 +660,11 @@ msgstr "Para imprimir nuevamente el ticket hace clic "
 msgid "here"
 msgstr "aquí"
 
-msgid "Custom Checkout is Inactive"
-msgstr "Checkout Custom Inactivo"
+msgid "Transparent Checkout is Inactive"
+msgstr "Checkout Transparente Inactivo"
 
-msgid "Standard Checkout is Inactive"
-msgstr "Checkout Estándar Inactivo"
+msgid "Basic Checkout is Inactive"
+msgstr "Checkout Básico Inactivo"
 
 msgid "Ticket is Inactive"
 msgstr "Ticket Inactivo"
@@ -696,14 +696,14 @@ msgstr "terminado en"
 msgid "Your site appears to not have SSL certification. SSL is a pre-requisite because the payment process is made in your server."
 msgstr "Su sitio parece no tener certificación SSL. SSL es un requisito previo porque la tramitación del pago se realiza en el servidor."
 
-msgid "<strong>ATTENTION: The currency"
-msgstr "<strong>ATENCIÓN: La moneda"
+msgid "ATTENTION: The currency"
+msgstr "ATENCIÓN: La moneda"
 
 msgid "defined in WooCommerce is different from the one used in your credentials country.<br>The currency for transactions in this payment method will be"
 msgstr "que se define en WooCommerce es diferente de la utilizada en el país de sus credenciales.<br>La moneda para las transacciones realizadas por este método de pago será"
 
-msgid "Currency conversions should be made outside this module.</strong><br><br>"
-msgstr "Conversiones de monedas se deben hacerse fuera de este módulo.</strong><br><br>"
+msgid "Currency conversions should be made outside this module."
+msgstr "Conversiones de monedas se deben hacerse fuera de este módulo."
 
 msgid "Coupons"
 msgstr "Cupones"
@@ -714,8 +714,8 @@ msgstr "Activar los cupones de descuento"
 msgid "If there is a Mercado Pago campaign, allow your store to give discounts to customers."
 msgstr "Si hay una campaña de Mercado Pago, permite su tienda hacer descuentos para los clientes."
 
-msgid "gave a discount of"
-msgstr "dio un descuento de"
+msgid "You will save"
+msgstr "Usted ahorrará"
 
 msgid "Apply"
 msgstr "Aplicar"
@@ -734,3 +734,42 @@ msgstr "Descuento para el cupón %s"
 
 msgid "Discount provided by store"
 msgstr "Descuento dado por la tienda"
+
+msgid "Discount Coupon"
+msgstr "Cupón de Descuento"
+
+msgid "CURRENCY CONVERTED: The currency conversion ratio from"
+msgstr "MONEDA CONVERTIDA: "La tasa de conversión de moneda de"
+
+msgid "ERROR: It was not possible to convert the unsupported currency"
+msgstr "ERROR: No fue posible convertir la moneda no soportada"
+
+msgid "to"
+msgstr "para"
+
+msgid "If the used currency in WooCommerce is different or not supported by Mercado Pago, convert values of your transactions using Mercado Pago currency ratio"
+msgstr "Si la moneda utilizada en WooCommerce es diferente o no soportada por Mercado Pago, converte los valores de sus transacciones con la tasa de conversión de moneda de Mercado Pago"
+
+msgid " is: "
+msgstr " es: "
+
+msgid "Currency Conversion"
+msgstr "Conversión de Moneda"
+
+msgid "with discount from"
+msgstr "con descuento de"
+
+msgid "Total of your purchase:"
+msgstr "Total de su compra:"
+
+msgid "Total of your purchase with discount:"
+msgstr "Total de su compra con descuento:"
+
+msgid "*Uppon payment approval"
+msgstr "*Con la aprobación de pago"
+
+msgid "Terms and Conditions of Use"
+msgstr "Términos y Condiciones de Uso"
+
+msgid "Payment converted from"
+msgstr "Pago convertido de"

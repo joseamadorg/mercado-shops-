@@ -4,8 +4,8 @@
 * [Available versions](#available_versions)
 * [Requirements](#requirements)
 * [Installation](#installation)
-* [Standard Checkout Configuration](#std_configuration)
-* [Custom Checkout Configuration](#cst_configuration)
+* [Basic Checkout Configuration](#std_configuration)
+* [Transparent Checkout Configuration](#cst_configuration)
 * [Ticket Configuration](#ticket_configuration)
 * [Upgrade](#upgrade)
 * [Feedback](#feedback)
@@ -16,7 +16,7 @@
 Checkout options right for your business: 
 We offer two checkout methods that make it easy to securely accept payments from anyone, anywhere.
 
-**Custom Checkout**
+**Transparent Checkout**
 
 Offer a checkout fully customized to your brand experience with our simple-to-use payments API.
 
@@ -29,7 +29,7 @@ Offer a checkout fully customized to your brand experience with our simple-to-us
 
 *Available for Argentina, Brazil, Colombia, Mexico, Peru and Venezuela*
 
-**Standard Checkout**
+**Basic Checkout**
 
 Great for merchants who want to get going quickly and easily.
 
@@ -59,7 +59,7 @@ Basically, the requirements of this plugin are same as you need to run WooCommer
 
 **SSL certificate**
 
-If you're using  Custom Checkout, it is a requirement that you have a SSL certificate, and the payment form to be provided under an HTTPS page.
+If you're using  Transparent Checkout, it is a requirement that you have a SSL certificate, and the payment form to be provided under an HTTPS page.
 During the sandbox mode tests, you can operate over HTTP, but for homologation you'll need to acquire the certificate in case you don't have it.
 
 <a name="available_versions"></a>
@@ -110,11 +110,11 @@ To confirm that your module is really installed, you can click in *Plugins* item
 ![Features](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/plugin_adm.png)
 
 <a name="std_configuration"></a>
-##Standard Checkout Configuration##
+##Basic Checkout Configuration##
 
-On your store administration, go to *WooCommerce > Settings > Checkout* tab. In *Checkout Options*, click in *Mercado Pago - Standard Checkout*. You should get the following page:
+On your store administration, go to *WooCommerce > Settings > Checkout* tab. In *Checkout Options*, click in *Mercado Pago - Basic Checkout*. You should get the following page:
 
-![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/standard_checkout.png)
+![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/basic_checkout.png)
 
 1. **Solution Header**: This part is the header, where you can enable/disable the solution;
 
@@ -145,6 +145,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 
 5. **Payment Options**: This part allows you to customize how the payment should be made;
 
+	*Currency Conversion*: Let merchants try to convert unsupported currency into Mercado Pago supported currency;<br />
 	*Max Installments*: The maximum installments allowed for your customers;<br />
 	*Exclude Payment Methods*: Select the payment methods that you want to not work with Mercado Pago.
 
@@ -154,11 +155,11 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	*Debug and Log*: Enables/disables system logs.
 
 <a name="cst_configuration"></a>
-##Custom Checkout Configuration##
+##Transparent Checkout Configuration##
 
-On your store administration, go to *WooCommerce > Settings > Checkout* tab. In *Checkout Options*, click in *Mercado Pago - Custom Checkout*. You should get the following page:
+On your store administration, go to *WooCommerce > Settings > Checkout* tab. In *Checkout Options*, click in *Mercado Pago - Transparent Checkout*. You should get the following page:
 
-![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/custom_checkout.png)
+![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/transparent_checkout.png)
 
 1. **Solution Header**: This part is the header, where you can enable/disable the solution;
 
@@ -184,7 +185,8 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	*Coupons*: Enable coupon of campaigns for discounts;<br />
 	*Binary Mode*: When charging a credit card, only [approved] or [reject] status will be taken;<br />
 	*Store Category*: Sets up the category of the store;<br />
-	*Store Identificator*: A prefix to identify your store, when you have multiple stores for only one Mercado Pago account.
+	*Store Identificator*: A prefix to identify your store, when you have multiple stores for only one Mercado Pago account;<br />
+	*Currency Conversion*: Let merchants try to convert unsupported currency into Mercado Pago supported currency.
 
 5. **Test and Debug Options**: This part allows you to configure debug and test features.
 
@@ -221,7 +223,8 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	*Statement Descriptor*: The description that will be shown in your customer's invoice;<br />
 	*Coupons*: Enable coupon of campaigns for discounts;<br />
 	*Store Category*: Sets up the category of the store;<br />
-	*Store Identificator*: A prefix to identify your store, when you have multiple stores for only one Mercado Pago account.
+	*Store Identificator*: A prefix to identify your store, when you have multiple stores for only one Mercado Pago account;<br />
+	*Currency Conversion*: Let merchants try to convert unsupported currency into Mercado Pago supported currency.
 
 5. **Test and Debug Options**: This part allows you to configure debug and test features.
 

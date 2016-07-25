@@ -148,7 +148,13 @@ if ( !defined( 'ABSPATH' ) ) {
 	</div> <!-- end #mercadopago-form -->
 
 	<div class="mp-box-inputs mp-col-100" style="padding:0px 36px 0px 36px;">
-    	<label for="installments"><?php echo $form_labels['form']['installments']; ?> <em>*</em></label>
+    	<label for="installments">
+    		<?php echo $form_labels['form']['installments']; ?>
+    		<?php if ($is_currency_conversion > 0) { ?>
+    			<?php echo "(" . $form_labels['form']['payment_converted'] . " " . $woocommerce_currency . " " . $form_labels['form']['to'] . " " . $account_currency . ")"; ?>
+    		<?php } ?>
+    		 <em>*</em>
+    	</label>
         <select id="installments" data-checkout="installments" name="mercadopago_custom[installments]"></select>
     </div>
 	<div class="mp-box-inputs mp-line" style="padding:0px 36px 0px 36px;">
@@ -267,7 +273,12 @@ if ( !defined( 'ABSPATH' ) ) {
 	        text: {
 	            choose: "Choose",
 	            other_bank: "Other Bank",
-	            discount_info: "campaign gave you a discount of",
+	            discount_info1: "You will save",
+	            discount_info2: "with discount from",
+	            discount_info3: "Total of your purchase:",
+	            discount_info4: "Total of your purchase with discount:",
+	            discount_info5: "*Uppon payment approval",
+	            discount_info6: "Terms and Conditions of Use",
 	            coupon_empty: "Please, inform your coupon code",
 	            apply: "Apply",
 	            remove: "Remove"
@@ -346,17 +357,23 @@ if ( !defined( 'ABSPATH' ) ) {
 							var response = JSON.parse(request.responseText);
 							if (response.status == 200) {
 								document.querySelector(MPv1.selectors.mpCouponApplyed).style.display = 'block';
+								document.querySelector(MPv1.selectors.discount).value = response.response.coupon_amount;
 								document.querySelector(MPv1.selectors.mpCouponApplyed).innerHTML =
-									response.response.name + " " +
-									MPv1.text.discount_info + " " +
-									MPv1.currencyIdToCurrency(response.response.currency_id) + " " +
-									response.response.coupon_amount;
+									"<div style='border-style: solid; border-width:thin; border-color: #009EE3; padding: 8px 8px 8px 8px; margin-top: 4px;'>" +
+									MPv1.text.discount_info1 + " <strong>" + MPv1.currencyIdToCurrency(response.response.currency_id) + " " +
+									Math.round(response.response.coupon_amount*100)/100 + "</strong> " + MPv1.text.discount_info2 + " " + response.response.name + ".<br>" +
+									MPv1.text.discount_info3 + " <strong>" + MPv1.currencyIdToCurrency(response.response.currency_id) +
+									" " + Math.round(MPv1.getAmountWithoutDiscount()*100)/100 + "</strong><br>" +
+									MPv1.text.discount_info4 + " <strong>" + MPv1.currencyIdToCurrency(response.response.currency_id) +
+									" " + Math.round(MPv1.getAmount()*100)/100 + "*</strong><br>" +
+									"<i>" + MPv1.text.discount_info5 + "</i><br>" +
+									"<a href='https://api.mercadolibre.com/campaigns/" + response.response.id + "/terms_and_conditions?format_type=html' target='_blank'>" +
+									MPv1.text.discount_info6 + "</a></div>";
 								document.querySelector(MPv1.selectors.mpCouponError).style.display = 'none';
 								MPv1.coupon_of_discounts.status = true;
 								document.querySelector(MPv1.selectors.couponCode).style.background = null;
 								document.querySelector(MPv1.selectors.couponCode).style.background = "url("+MPv1.paths.check+") 98% 50% no-repeat #fff";
 								document.querySelector(MPv1.selectors.applyCoupon).value = MPv1.text.remove;
-								document.querySelector(MPv1.selectors.discount).value = response.response.coupon_amount;
 								MPv1.cardsHandler();
 								document.querySelector(MPv1.selectors.campaign_id).value = response.response.id;
 								document.querySelector(MPv1.selectors.campaign).value = response.response.name;
@@ -1062,7 +1079,12 @@ if ( !defined( 'ABSPATH' ) ) {
 
     MPv1.text.choose = '<?php echo $form_labels["form"]["label_choose"]; ?>';
     MPv1.text.other_bank = '<?php echo $form_labels["form"]["label_other_bank"]; ?>';
-    MPv1.text.discount_info = '<?php echo $form_labels["form"]["discount_info"]; ?>';
+    MPv1.text.discount_info1 = '<?php echo $form_labels["form"]["discount_info1"]; ?>';
+    MPv1.text.discount_info2 = '<?php echo $form_labels["form"]["discount_info2"]; ?>';
+    MPv1.text.discount_info3 = '<?php echo $form_labels["form"]["discount_info3"]; ?>';
+    MPv1.text.discount_info4 = '<?php echo $form_labels["form"]["discount_info4"]; ?>';
+    MPv1.text.discount_info5 = '<?php echo $form_labels["form"]["discount_info5"]; ?>';
+    MPv1.text.discount_info6 = '<?php echo $form_labels["form"]["discount_info6"]; ?>';
     MPv1.text.apply = '<?php echo $form_labels["form"]["apply"]; ?>';
     MPv1.text.remove = '<?php echo $form_labels["form"]["remove"]; ?>';
     MPv1.text.coupon_empty = '<?php echo $form_labels["form"]["coupon_empty"]; ?>';
@@ -1092,6 +1114,10 @@ if ( !defined( 'ABSPATH' ) ) {
         return document.querySelector(MPv1.selectors.amount).value - document.querySelector(MPv1.selectors.discount).value;
     }
 
+    MPv1.getAmountWithoutDiscount = function() {
+        return document.querySelector(MPv1.selectors.amount).value;
+    }
+
     MPv1.showErrors = function(response) {
         var $form = MPv1.getForm();
         for (var x = 0; x < response.cause.length; x++) {
@@ -1103,6 +1129,10 @@ if ( !defined( 'ABSPATH' ) ) {
         }
         return;
     }
-    MPv1.Initialize(mercadopago_site_id, mercadopago_public_key, mercadopago_coupon_mode == 'yes', mercadopago_discount_action_url);
+    MPv1.Initialize(
+    	mercadopago_site_id,
+    	mercadopago_public_key,
+    	mercadopago_coupon_mode == 'yes',
+    	mercadopago_discount_action_url);
 
 </script>

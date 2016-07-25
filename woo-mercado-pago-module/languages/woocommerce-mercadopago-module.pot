@@ -215,11 +215,11 @@ msgid ""
 msgstr ""
 
 #: mercadopago/mercadopago-gateway.php:265
-msgid "Custom Checkout"
+msgid "Transparent Checkout"
 msgstr ""
 
 #: mercadopago/mercadopago-gateway.php:267
-msgid "Enable Custom Checkout"
+msgid "Enable Transparent Checkout"
 msgstr ""
 
 #: mercadopago/mercadopago-gateway.php:269
@@ -658,10 +658,10 @@ msgstr ""
 msgid "here"
 msgstr ""
 
-msgid "Custom Checkout is Inactive"
+msgid "Transparent Checkout is Inactive"
 msgstr ""
 
-msgid "Standard Checkout is Inactive"
+msgid "Basic Checkout is Inactive"
 msgstr ""
 
 msgid "Ticket is Inactive"
@@ -694,13 +694,13 @@ msgstr ""
 msgid "Your site appears to not have SSL certification. SSL is a pre-requisite because the payment process is made in your server."
 msgstr ""
 
-msgid "<strong>ATTENTION: The currency"
+msgid "ATTENTION: The currency"
 msgstr ""
 
 msgid "defined in WooCommerce is different from the one used in your credentials country.<br>The currency for transactions in this payment method will be"
 msgstr ""
 
-msgid "Currency conversions should be made outside this module.</strong><br><br>"
+msgid "Currency conversions should be made outside this module."
 msgstr ""
 
 msgid "Coupons"
@@ -712,7 +712,7 @@ msgstr ""
 msgid "If there is a Mercado Pago campaign, allow your store to give discounts to customers."
 msgstr ""
 
-msgid "campaign gave a discount of"
+msgid "You will save"
 msgstr ""
 
 msgid "Apply"
@@ -731,4 +731,43 @@ msgid "Discount for %s coupon"
 msgstr ""
 
 msgid "Discount provided by store"
+msgstr ""
+
+msgid "Discount Coupon"
+msgstr ""
+
+msgid "CURRENCY CONVERTED: The currency conversion ratio from"
+msgstr ""
+
+msgid "ERROR: It was not possible to convert the unsupported currency"
+msgstr ""
+
+msgid "to"
+msgstr ""
+
+msgid "If the used currency in WooCommerce is different or not supported by Mercado Pago, convert values of your transactions using Mercado Pago currency ratio"
+msgstr ""
+
+msgid " is: "
+msgstr ""
+
+msgid "Currency Conversion"
+msgstr ""
+
+msgid "with discount from"
+msgstr ""
+
+msgid "Total of your purchase:"
+msgstr ""
+
+msgid "Total of your purchase with discount:"
+msgstr ""
+
+msgid "*Uppon payment approval"
+msgstr ""
+
+msgid "Terms and Conditions of Use"
+msgstr ""
+
+msgid "Payment converted from"
 msgstr ""
