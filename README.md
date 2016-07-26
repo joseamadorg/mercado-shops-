@@ -5,7 +5,7 @@
 * [Requirements](#requirements)
 * [Installation](#installation)
 * [Basic Checkout Configuration](#std_configuration)
-* [Transparent Checkout Configuration](#cst_configuration)
+* [Custom Checkout Configuration](#cst_configuration)
 * [Ticket Configuration](#ticket_configuration)
 * [Upgrade](#upgrade)
 * [Feedback](#feedback)
@@ -16,7 +16,7 @@
 Checkout options right for your business: 
 We offer two checkout methods that make it easy to securely accept payments from anyone, anywhere.
 
-**Transparent Checkout**
+**Custom Checkout**
 
 Offer a checkout fully customized to your brand experience with our simple-to-use payments API.
 
@@ -59,7 +59,7 @@ Basically, the requirements of this plugin are same as you need to run WooCommer
 
 **SSL certificate**
 
-If you're using  Transparent Checkout, it is a requirement that you have a SSL certificate, and the payment form to be provided under an HTTPS page.
+If you're using Custom Checkout, it is a requirement that you have a SSL certificate, and the payment form to be provided under an HTTPS page.
 During the sandbox mode tests, you can operate over HTTP, but for homologation you'll need to acquire the certificate in case you don't have it.
 
 <a name="available_versions"></a>
@@ -155,11 +155,11 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	*Debug and Log*: Enables/disables system logs.
 
 <a name="cst_configuration"></a>
-##Transparent Checkout Configuration##
+##Custom Checkout Configuration##
 
-On your store administration, go to *WooCommerce > Settings > Checkout* tab. In *Checkout Options*, click in *Mercado Pago - Transparent Checkout*. You should get the following page:
+On your store administration, go to *WooCommerce > Settings > Checkout* tab. In *Checkout Options*, click in *Mercado Pago - Custom Checkout*. You should get the following page:
 
-![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/transparent_checkout.png)
+![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/custom_checkout.png)
 
 1. **Solution Header**: This part is the header, where you can enable/disable the solution;
 

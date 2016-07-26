@@ -25,7 +25,7 @@ Mercado Pago owns the highest security standards with PCI certification level 1 
 * Support to major credit card brands;
 * Payment installments;
 * Anticipation of receivables in D+2 or D+14 (According to Mercado Pago terms and conditions);
-* Payment in one click with Mercado Pago basic and transparent checkouts;
+* Payment in one click with Mercado Pago basic and custom checkouts;
 * Payment via tickets;
 * Seller's Protection Program.
 
@@ -46,7 +46,7 @@ You have two way to install this module: from your WordPress Store, or by downlo
 To confirm that your module is really installed, you can click in **Plugins** item in the store administration menu, and check your just installed module. Just click **enable** to activate it and you should receive the message "Plugin enabled." as a notice in your WordPress.
 
 = Configuration =
-1. On your store administration, go to **WooCommerce > Settings > Checkout** tab. In **Checkout Options**, you can find configurations for **Mercado Pago - Basic Checkout**, **Mercado Pago - Transparent Checkout**, and **Mercado Pago - Ticket**.
+1. On your store administration, go to **WooCommerce > Settings > Checkout** tab. In **Checkout Options**, you can find configurations for **Mercado Pago - Basic Checkout**, **Mercado Pago - Custom Checkout**, and **Mercado Pago - Ticket**.
 	* To get your **Client_id** and **Client_secret** for your country, you can go to:
 		* Argentina: https://www.mercadopago.com/mla/account/credentials?type=basic
 		* Brazil: https://www.mercadopago.com/mlb/account/credentials?type=basic
@@ -63,15 +63,15 @@ To confirm that your module is really installed, you can click in **Plugins** it
 		* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=custom
 		* Peru: https://www.mercadopago.com/mpe/account/credentials?type=custom
 		* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=custom
-2. For the solutions **Mercado Pago - Basic Checkout**, **Mercado Pago - Transparent Checkout**, and **Mercado Pago - Ticket**, you can:
+2. For the solutions **Mercado Pago - Basic Checkout**, **Mercado Pago - Custom Checkout**, and **Mercado Pago - Ticket**, you can:
 	* Enable/Disable you plugin (for all solutions);
-	* Set up your credentials (Client_id/Client_secret for Basic, Public Key/Access Token for Transparent and Ticket);
+	* Set up your credentials (Client_id/Client_secret for Basic, Public Key/Access Token for Custom and Ticket);
 	* Check your IPN URL, where you will get notified about payment updates (for all solutions);
 	* Set the title of the payment option that will be shown to your customers (for all solutions);
 	* Set the description of the payment option that will be shown to your customers (for all solutions);
-	* Set the description that will be shown in your customer's invoice (for Transparent and Ticket);
-	* Enable coupon of campaigns for discounts (for Transparent and Ticket);
-	* Set binary mode that when charging a credit card, only [approved] or [reject] status will be taken (only for Transparent);
+	* Set the description that will be shown in your customer's invoice (for Custom and Ticket);
+	* Enable coupon of campaigns for discounts (for Custom and Ticket);
+	* Set binary mode that when charging a credit card, only [approved] or [reject] status will be taken (only for Custom);
 	* Set the category of your store (for all solutions);
 	* Set a prefix to identify your store, when you have multiple stores for only one Mercado Pago account (for all solutions);
 	* Define how your customers will interact with Mercado Pago to pay their orders (only for Basic);
@@ -96,7 +96,7 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 
 == Screenshots ==
 
-1. `Transparent Checkout`
+1. `Custom Checkout`
 
 2. `One Click Payment`
 
@@ -136,7 +136,7 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 	
 = v2.0.2 (13/06/2016) =
 * Rollout to Peru
-	This plugin is now supporting Peru, which includes Basic Checkout, Transparent Checkout, Tickets, and local language translations.
+	This plugin is now supporting Peru, which includes Basic Checkout, Custom Checkout, Tickets, and local language translations.
 * Fix a PHP version issue
 	It was reported to us an issue in a function that uses an assign made directly from an array field. This feature is available in PHP 5.4.x or above and we've made an update to support older versions.
 * Fix a tax issue
@@ -145,13 +145,13 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 = v2.0.1 (09/06/2016) =
 * Customer Cards (One Click Payment)
 	This feature allows customers to proceed to checkout with only one click. As Mercado Pago owns PCI standards, it can securely store credit card sensitive data and so register the customer card in the first time he uses it. Next time the customer comes back, he can use his card again, only by inserting its CVV code.
-* SSL verifications for transparent checkout and ticket
-	Transparent Checkout and Ticket solutions can only be used with SSL certification. As the module behaves inconsistently if there is no SSL, we've put a watchdog to lock the solution if it is active without SSL.
+* SSL verifications for custom checkout and ticket
+	Custom Checkout and Ticket solutions can only be used with SSL certification. As the module behaves inconsistently if there is no SSL, we've put a watchdog to lock the solution if it is active without SSL.
 * Enabling any type of currency without disabling module (now, error message from API)
 	Now, merchants have the option to use currencies of their choices in WooCommerce. Pay attention that Woo Mercado Pago will always set the currency related to the country of the Mercado Pago credentials.
 
 = v2.0.0 (01/06/2016) =
-* Transparent Checkout for LatAm
+* Custom Checkout for LatAm
 	Offer a checkout fully customized to your brand experience with our simple-to-use payments API.
 * Ticket for LatAm
 	Now, customer can pay orders with bank tickets.
@@ -180,7 +180,7 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 	Fixed a bug for some specific IPN messages of Mercado Pago.
 
 = v1.0.1 (23/03/2016) =
-* Added payment ID in order transparent fields information
+* Added payment ID in order custom fields information
 	Added some good informations about the payment in the order view.
 * Removed some unused files/code
 	We've made some code cleaning.

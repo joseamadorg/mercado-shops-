@@ -36,12 +36,12 @@ msgid "Basic Checkout"
 msgstr "Checkout Básico"
 
 #: mercadopago-module.php:113
-msgid "Transparent Checkout"
-msgstr "Checkout Transparente"
+msgid "Custom Checkout"
+msgstr "Checkout Personalizado"
 
 #: mercadopago/mercadopago-custom-gateway.php:48
-msgid "Mercado Pago - Transparent Checkout"
-msgstr "Mercado Pago - Checkout Transparente"
+msgid "Mercado Pago - Custom Checkout"
+msgstr "Mercado Pago - Checkout Personalizado"
 
 #: mercadopago/mercadopago-custom-gateway.php:51 mercadopago/mercadopago-gateway.php:54
 msgid "This module enables WooCommerce to use Mercado Pago as payment method for purchases made in your virtual store."
@@ -95,8 +95,8 @@ msgid "Enable/Disable"
 msgstr "Habilitar/Deshabilitar"
 
 #: mercadopago/mercadopago-custom-gateway.php:171
-msgid "Enable Transparent Checkout"
-msgstr "Habilitar Checkout Transparente"
+msgid "Enable Custom Checkout"
+msgstr "Habilitar Checkout Personalizado"
 
 #: mercadopago/mercadopago-custom-gateway.php:175 mercadopago/mercadopago-gateway.php:217
 msgid "Mercado Pago Credentials"
@@ -175,8 +175,8 @@ msgid "Ticket"
 msgstr "Ticket"
 
 #: mercadopago/mercadopago-custom-gateway.php:231
-msgid "Enable Ticket for Transparent Checkout"
-msgstr "Habilitar Ticket para Checkout Transparente"
+msgid "Enable Ticket for Custom Checkout"
+msgstr "Habilitar Ticket para Checkout Personalizado"
 
 #: mercadopago/mercadopago-custom-gateway.php:233
 msgid "Let your customer pay you with tickets"
@@ -660,8 +660,8 @@ msgstr "Para imprimir nuevamente el ticket hace clic "
 msgid "here"
 msgstr "aquí"
 
-msgid "Transparent Checkout is Inactive"
-msgstr "Checkout Transparente Inactivo"
+msgid "Custom Checkout is Inactive"
+msgstr "Checkout Personalizado Inactivo"
 
 msgid "Basic Checkout is Inactive"
 msgstr "Checkout Básico Inactivo"

@@ -215,15 +215,11 @@ msgid ""
 msgstr ""
 
 #: mercadopago/mercadopago-gateway.php:265
-msgid "Transparent Checkout"
+msgid "Custom Checkout"
 msgstr ""
 
 #: mercadopago/mercadopago-gateway.php:267
-msgid "Enable Transparent Checkout"
-msgstr ""
-
-#: mercadopago/mercadopago-gateway.php:269
-msgid "This option allows your store to present the custom/transparent checkout to your customers."
+msgid "Enable Custom Checkout"
 msgstr ""
 
 #: mercadopago/mercadopago-gateway.php:242
@@ -658,7 +654,7 @@ msgstr ""
 msgid "here"
 msgstr ""
 
-msgid "Transparent Checkout is Inactive"
+msgid "Custom Checkout is Inactive"
 msgstr ""
 
 msgid "Basic Checkout is Inactive"

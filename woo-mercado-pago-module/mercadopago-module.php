@@ -112,7 +112,7 @@ function woomercadopago_settings_link( $links ) {
 	'</a>';
 	$plugin_links[] = '<a href="' . esc_url( admin_url(
 		'admin.php?page=wc-settings&tab=checkout&section=WC_WooMercadoPagoCustom_Gateway' ) ) . '">' .
-		__( 'Transparent Checkout', 'woocommerce-mercadopago-module' ) .
+		__( 'Custom Checkout', 'woocommerce-mercadopago-module' ) .
 	'</a>';
 	$plugin_links[] = '<a href="' . esc_url( admin_url(
 		'admin.php?page=wc-settings&tab=checkout&section=WC_WooMercadoPagoTicket_Gateway' ) ) . '">' .

@@ -35,11 +35,11 @@ msgid "Basic Checkout"
 msgstr "Checkout Básico"
 
 #: mercadopago-module.php:113
-msgid "Transparent Checkout"
+msgid "Custom Checkout"
 msgstr "Checkout Transparente"
 
 #: mercadopago/mercadopago-custom-gateway.php:48
-msgid "Mercado Pago - Transparent Checkout"
+msgid "Mercado Pago - Custom Checkout"
 msgstr "Mercado Pago - Checkout Transparente"
 
 #: mercadopago/mercadopago-custom-gateway.php:51 mercadopago/mercadopago-gateway.php:54
@@ -94,7 +94,7 @@ msgid "Enable/Disable"
 msgstr "Habilitar/Desabilitar"
 
 #: mercadopago/mercadopago-custom-gateway.php:171
-msgid "Enable Transparent Checkout"
+msgid "Enable Custom Checkout"
 msgstr "Habilitar o Checkout Transparente"
 
 #: mercadopago/mercadopago-custom-gateway.php:175 mercadopago/mercadopago-gateway.php:217
@@ -174,7 +174,7 @@ msgid "Ticket"
 msgstr "Boleto"
 
 #: mercadopago/mercadopago-custom-gateway.php:231
-msgid "Enable Ticket for Transparent Checkout"
+msgid "Enable Ticket for Custom Checkout"
 msgstr "Habilitar Boleto para o Checkout Transparente"
 
 #: mercadopago/mercadopago-custom-gateway.php:233
@@ -652,7 +652,7 @@ msgstr "Para reimprimir o boleto clique "
 msgid "here"
 msgstr "aqui"
 
-msgid "Transparent Checkout is Inactive"
+msgid "Custom Checkout is Inactive"
 msgstr "O Checkout Transparente está Inativo"
 
 msgid "Basic Checkout is Inactive"

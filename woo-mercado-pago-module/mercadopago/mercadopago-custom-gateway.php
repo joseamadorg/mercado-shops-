@@ -199,7 +199,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			'enabled' => array(
 				'title' => __( 'Enable/Disable', 'woocommerce-mercadopago-module' ),
 				'type' => 'checkbox',
-				'label' => __( 'Enable Transparent Checkout', 'woocommerce-mercadopago-module' ),
+				'label' => __( 'Enable Custom Checkout', 'woocommerce-mercadopago-module' ),
 				'default' => 'yes'
 			),
 			'credentials_title' => array(
@@ -892,7 +892,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 		if ( empty( $_SERVER[ 'HTTPS' ] ) || $_SERVER[ 'HTTPS' ] == 'off' ) {
 			if ( 'yes' == $this->settings[ 'enabled' ] ) {
 				echo '<div class="error"><p><strong>' . 
-					__( 'Transparent Checkout is Inactive', 'woocommerce-mercadopago-module' ) .
+					__( 'Custom Checkout is Inactive', 'woocommerce-mercadopago-module' ) .
 					'</strong>: ' .
 					sprintf(
 						__( 'Your site appears to not have SSL certification. SSL is a pre-requisite because the payment process is made in your server.', 'woocommerce-mercadopago-module' )
@@ -928,7 +928,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 	// Notify that public_key and/or access_token are not valid.
 	public function credentialsMissingMessage() {
 		echo '<div class="error"><p><strong>' . 
-			__( 'Transparent Checkout is Inactive', 'woocommerce-mercadopago-module' ) .
+			__( 'Custom Checkout is Inactive', 'woocommerce-mercadopago-module' ) .
 			'</strong>: ' .
 			sprintf(
 				__( 'Your Mercado Pago credentials Public Key/Access Token appears to be misconfigured.', 'woocommerce-mercadopago-module' ) . ' %s',
