@@ -24,7 +24,7 @@ msgstr ""
 
 #. Description of the plugin/theme
 msgid "This is the <strong>oficial</strong> module of Mercado Pago for WooCommerce plugin. This module enables WooCommerce to use Mercado Pago as a payment Gateway for purchases made in your e-commerce store."
-msgstr "Este es el módulo <strong>oficial</strong> de Mercado Pago para el plugin WooCommerce. Este módulo habilita el uso de Mercado Pago en WooCommerce como método de pago para compras realizadas en su tienda virtual."
+msgstr "Este es el módulo <strong>oficial</strong> de Mercado Pago para el plugin WooCommerce. Este módulo habilita el uso de Mercado Pago en WooCommerce como medio de pago para compras realizadas en su tienda virtual."
 
 #: mercadopago-module.php:69
 #, php-format
@@ -45,7 +45,7 @@ msgstr "Mercado Pago - Checkout Personalizado"
 
 #: mercadopago/mercadopago-custom-gateway.php:51 mercadopago/mercadopago-gateway.php:54
 msgid "This module enables WooCommerce to use Mercado Pago as payment method for purchases made in your virtual store."
-msgstr "Este módulo habilita el uso de Mercado Pago en WooCommerce como método de pago para compras realizadas en su tienda virtual."
+msgstr "Este módulo habilita el uso de Mercado Pago en WooCommerce como medio de pago para compras realizadas en su tienda virtual."
 
 #: mercadopago/mercadopago-custom-gateway.php:126 mercadopago/mercadopago-custom-gateway.php:791 mercadopago/mercadopago-gateway.php:125
 #: mercadopago/mercadopago-gateway.php:716
@@ -240,11 +240,11 @@ msgstr "Local del archivo: "
 #: mercadopago/mercadopago-custom-gateway.php:281 mercadopago/mercadopago-gateway.php:351
 #, php-format
 msgid "Please, rate us %s on WordPress.org and give your feedback to help improve this module!"
-msgstr "Por favor, da tu evaluación con %s en WordPress.org y da su feedback para ayudar a mejorar este módulo!"
+msgstr "Por favor, califíquenos con %s en WordPress.org y de su feedback para ayudar a mejorar este módulo!"
 
 #: mercadopago/mercadopago-custom-gateway.php:332
 msgid "Payment Method"
-msgstr "Métodos de Pago"
+msgstr "Medios de Pago"
 
 #: mercadopago/mercadopago-custom-gateway.php:333
 msgid "Credit card number"
@@ -280,7 +280,7 @@ msgstr "Tipo de Documento"
 
 #: mercadopago/mercadopago-custom-gateway.php:341
 msgid "Document number"
-msgstr "Número del Documento"
+msgstr "Número de Documento"
 
 #: mercadopago/mercadopago-custom-gateway.php:342
 msgid "Issuer"
@@ -292,16 +292,16 @@ msgstr "Cuotas"
 
 #: mercadopago/mercadopago-custom-gateway.php:347
 msgid "Parameter cardNumber can not be null/empty"
-msgstr "Parámetro [Numero de tarjeta] no puede ser nulo/vacío"
+msgstr "Parámetro [Número de tarjeta] no puede ser nulo/vacío"
 
 #: mercadopago/mercadopago-custom-gateway.php:348
 msgid "Invalid Card Number"
-msgstr "Numero de tarjeta invalido"
+msgstr "Número de tarjeta inválido"
 
 #: mercadopago/mercadopago-custom-gateway.php:350 mercadopago/mercadopago-custom-gateway.php:351 mercadopago/mercadopago-custom-gateway.php:352
 #: mercadopago/mercadopago-custom-gateway.php:353
 msgid "Invalid Expiration Date"
-msgstr "Fecha de vencimiento inválida"
+msgstr "Fecha de expiración inválida"
 
 #: mercadopago/mercadopago-custom-gateway.php:355
 msgid "Parameter cardholderName can not be null/empty"
@@ -309,7 +309,7 @@ msgstr "Parámetro [Nombre del titular] no puede ser nulo/vacío"
 
 #: mercadopago/mercadopago-custom-gateway.php:356
 msgid "Invalid Card Holder Name"
-msgstr "Nombre del titular de la tarjeta invalido"
+msgstr "Nombre del titular de la tarjeta inválido"
 
 #: mercadopago/mercadopago-custom-gateway.php:358
 msgid "Parameter securityCode can not be null/empty"
@@ -317,7 +317,7 @@ msgstr "Parámetro [Código de seguridad] no puede ser nulo/vacío"
 
 #: mercadopago/mercadopago-custom-gateway.php:359
 msgid "Invalid Security Code"
-msgstr "Código de seguridad invalido"
+msgstr "Código de seguridad inválido"
 
 #: mercadopago/mercadopago-custom-gateway.php:361
 msgid "Parameter docType can not be null/empty"
@@ -325,7 +325,7 @@ msgstr "Parámetro [Tipo de Documento] no puede ser nulo/vacío"
 
 #: mercadopago/mercadopago-custom-gateway.php:362
 msgid "Invalid Document Type"
-msgstr "Tipo de Documento invalido"
+msgstr "Tipo de Documento inválido"
 
 #: mercadopago/mercadopago-custom-gateway.php:364
 msgid "Parameter docNumber can not be null/empty"
@@ -333,7 +333,7 @@ msgstr "Parámetro [Número del Documento] no puede ser nulo/vacío"
 
 #: mercadopago/mercadopago-custom-gateway.php:365
 msgid "Invalid Document Number"
-msgstr "Número del Documento invalido"
+msgstr "Número del Documento inválido"
 
 #: mercadopago/mercadopago-custom-gateway.php:367
 msgid "The parameter cardholder.document.subtype can not be null or empty"
@@ -341,7 +341,7 @@ msgstr "Parámetro [Subtipo del documento] no puede ser nulo/vacío"
 
 #: mercadopago/mercadopago-custom-gateway.php:368
 msgid "Invalid Document Sub Type"
-msgstr "Subtipo del documento invalido"
+msgstr "Subtipo del documento inválido"
 
 #: mercadopago/mercadopago-custom-gateway.php:370
 msgid "Parameter cardIssuerId can not be null/empty"
@@ -353,7 +353,7 @@ msgstr "Pago aprobado."
 
 #: mercadopago/mercadopago-custom-gateway.php:416 mercadopago/mercadopago-custom-gateway.php:805
 msgid "Your payment is under review. In less than 1h, you should be notified by email."
-msgstr "Su pago está en revisión. En menos de 1 hora, usted debe ser notificado por correo electrónico."
+msgstr "Su pago está en revisión. En menos de 1 hora, usted será notificado por correo electrónico."
 
 #: mercadopago/mercadopago-custom-gateway.php:418
 msgid "Check your order resume"
@@ -365,11 +365,11 @@ msgstr "Su pago fue rechazado. Puede intentarlo de nuevo."
 
 #: mercadopago/mercadopago-custom-gateway.php:435 mercadopago/mercadopago-custom-gateway.php:819 mercadopago/mercadopago-gateway.php:460
 msgid "Click to try again"
-msgstr "Haga clic para Inténtalo de nuevo"
+msgstr "Haga clic para intentarlo de nuevo"
 
 #: mercadopago/mercadopago-custom-gateway.php:455
 msgid "A problem was occurred when processing your payment. Are you sure you have correctly filled all information in the checkout form?"
-msgstr "Un problema se produjo al procesar su pago. Usted esta seguro de que ha rellenado correctamente toda la información en la forma de checkout?"
+msgstr "Un problema se produjo al procesar su pago. ¿Esta seguro que ha rellenado correctamente toda la información en el formulario de checkout?"
 
 #: mercadopago/mercadopago-custom-gateway.php:544
 msgid "Shipping"
@@ -377,7 +377,7 @@ msgstr "Envío"
 
 #: mercadopago/mercadopago-custom-gateway.php:545
 msgid "Shipping service used by store"
-msgstr "Servicio de envío utilizado por el almacén"
+msgstr "Servicio de envío utilizado por la tienda"
 
 #: mercadopago/mercadopago-custom-gateway.php:721 mercadopago/mercadopago-gateway.php:649
 msgid "WooCommerce &gt; System Status &gt; Logs"
@@ -401,12 +401,12 @@ msgid "The currency"
 msgstr "La moneda"
 
 #: mercadopago/mercadopago-custom-gateway.php:783 mercadopago/mercadopago-gateway.php:708
-msgid "is not supported. Supported currencies are: ARS, BRL, CLP, COP, MXN, VEF."
-msgstr "no es soportada. Las monedas soportadas son: ARS, BRL, CLP, COP, MXN, VEF."
+msgid "is not supported. Supported currencies are: ARS, BRL, CLP, COP, MXN, PEN, VEF."
+msgstr "no es soportada. Las monedas soportadas son: ARS, BRL, CLP, COP, MXN, PEN, VEF."
 
 #: mercadopago/mercadopago-custom-gateway.php:797
 msgid "Peru"
-msgstr "Peru"
+msgstr "Perú"
 
 #: mercadopago/mercadopago-custom-gateway.php:809
 msgid "Click to check your order"
@@ -430,7 +430,7 @@ msgstr "Email del comprador"
 
 #: mercadopago/mercadopago-custom-gateway.php:926 mercadopago/mercadopago-gateway.php:829
 msgid "Payment type"
-msgstr "Método de pago"
+msgstr "Medio de pago"
 
 #: mercadopago/mercadopago-custom-gateway.php:934 mercadopago/mercadopago-gateway.php:841
 msgid "Mercado Pago Payment ID"
@@ -487,7 +487,7 @@ msgstr "Si su modo de apertura es iFrame, indique el alto del iFrame."
 
 #: mercadopago/mercadopago-gateway.php:205
 msgid "Select the max number of installments for your customers."
-msgstr "Seleccione el número máximo de cuotas posibles para sus clientes."
+msgstr "Seleccione el número máximo de cuotas disponibles para sus clientes."
 
 #: mercadopago/mercadopago-gateway.php:213
 msgid "Enable Basic Checkout"
@@ -539,7 +539,7 @@ msgstr "Redirección automática"
 
 #: mercadopago/mercadopago-gateway.php:295
 msgid "Automatic Return After Payment"
-msgstr "Redirección Automática Luego del Pago"
+msgstr "Redirección Automática luego del pago"
 
 #: mercadopago/mercadopago-gateway.php:297
 msgid "After the payment, client is automatically redirected."
@@ -555,7 +555,7 @@ msgstr "Número máximo de cuotas"
 
 #: mercadopago/mercadopago-gateway.php:311
 msgid "Exclude Payment Methods"
-msgstr "Excluir métodos de pago"
+msgstr "Excluir medios de pago"
 
 #: mercadopago/mercadopago-gateway.php:428
 msgid "Thank you for your order. Please, proceed with your payment clicking in the bellow button."
@@ -580,10 +580,10 @@ msgid "Done, your payment was accredited!"
 msgstr "Listo, su pago ha sido aceptado!"
 
 msgid "We are processing the payment. In less than an hour we will e-mail you the results."
-msgstr "Estamos procesando su pago. En menos de una hora se le notificará por correo electrónico."
+msgstr "Estamos procesando su pago. En menos de una hora le enviaremos el resultado por correo electrónico."
 
 msgid "We are processing the payment. In less than 2 business days we will tell you by e-mail whether it has accredited or we need more information."
-msgstr "Estamos procesando su pago. En menos de 2 días se le notificará por correo electrónico si se ha aprobado el pago o si se necesita información adicional."
+msgstr "Estamos procesando su pago. En menos de 2 días le enviaremos por correo electrónico si se ha aprobado el pago o si se necesita información adicional."
 
 msgid "Check the card number."
 msgstr "Compruebe el número de tarjeta."
@@ -601,16 +601,16 @@ msgid "We could not process your payment."
 msgstr "No se puede procesar su pago."
 
 msgid "You must authorize the payment of your orders."
-msgstr "Usted debe autorizar pagos de sus órdenes."
+msgstr "Usted debe autorizar los pagos de sus órdenes."
 
 msgid "Call your card issuer to activate your card. The phone is on the back of your card."
 msgstr "Póngase en contacto con el emisor de su tarjeta para activarla. El teléfono se encuentra en la parte posterior de su tarjeta."
 
 msgid "You already made a payment for that amount. If you need to repay, use another card or other payment method."
-msgstr "Usted ya realizó el pago de esta cantidad. Si tiene que pagar de nuevo, utilizar otra tarjeta u otro método de pago."
+msgstr "Usted ya realizó un pago de este importe. Si tiene que pagar de nuevo, utilizar otra tarjeta u otro medio de pago."
 
 msgid "Your payment was rejected. Choose another payment method. We recommend cash."
-msgstr "Su pago fue rechazado. Por favor seleccione otro método de pago. Se recomienda dinero."
+msgstr "Su pago fue rechazado. Por favor seleccione otro medio de pago. Se recomienda en efectivo."
 
 msgid "Your payment do not have sufficient funds."
 msgstr "Su pago no tiene fondos suficientes."
@@ -619,10 +619,10 @@ msgid "Your payment does not process payments with selected installments."
 msgstr "El pago no puede procesar la cuota seleccionada."
 
 msgid "You have reached the limit of allowed attempts. Choose another card or another payment method."
-msgstr "Has alcanzado el límite de intentos permitidos. Elija otra tarjeta u otro método de pago."
+msgstr "Has alcanzado el límite de intentos permitidos. Elija otra tarjeta u otro medio de pago."
 
 msgid "This payment method did not process the payment."
-msgstr "Esta forma de pago no puede procesar su pago."
+msgstr "Esta medio de pago no puede procesar su pago."
 
 msgid "Mercado Pago - Ticket"
 msgstr "Mercado Pago - Ticket"
@@ -646,13 +646,13 @@ msgid "A problem was occurred when processing your payment. Please, try again."
 msgstr "Un problema se produjo al procesar su pago. Por favor, inténtelo de nuevo."
 
 msgid "Thank you for your order. Please, pay the ticket to get your order approved."
-msgstr "Gracias por su orden. Por favor, pagar el ticket para tener su solicitud aprobada."
+msgstr "Gracias por su orden. Por favor, realice el pago del ticket para tener su orden aprobada."
 
 msgid "Waiting for the ticket payment."
 msgstr "Esperando el pago del ticket."
 
 msgid "Print the Ticket"
-msgstr "Imprimir el Ticket"
+msgstr "Imprimir el ticket"
 
 msgid "To reprint the ticket click "
 msgstr "Para imprimir nuevamente el ticket hace clic "
@@ -679,7 +679,7 @@ msgid "Important: The order will be confirmed only after the payment approval."
 msgstr "Importante: La solicitud sólo será confirmada después de la aprobación del pago."
 
 msgid "Your Mercado Pago credential Access Token appears to be misconfigured."
-msgstr "Su credencial Access Token de Mercado de Pago parece estar desconfigurado."
+msgstr "Su credencial Access Token de Mercado de Pago parece estar desconfigurada."
 
 msgid "Your Card"
 msgstr "Sus Tarjetas"
@@ -694,16 +694,16 @@ msgid "ended in"
 msgstr "terminado en"
 
 msgid "Your site appears to not have SSL certification. SSL is a pre-requisite because the payment process is made in your server."
-msgstr "Su sitio parece no tener certificación SSL. SSL es un requisito previo porque la tramitación del pago se realiza en el servidor."
+msgstr "Su sitio parece no tener certificación SSL. SSL es un requisito para transaccionar desde su servidor."
 
 msgid "ATTENTION: The currency"
 msgstr "ATENCIÓN: La moneda"
 
 msgid "defined in WooCommerce is different from the one used in your credentials country.<br>The currency for transactions in this payment method will be"
-msgstr "que se define en WooCommerce es diferente de la utilizada en el país de sus credenciales.<br>La moneda para las transacciones realizadas por este método de pago será"
+msgstr "que se define en WooCommerce es diferente de la utilizada en el país de sus credenciales.<br>La moneda para las transacciones realizadas por este medio de pago será"
 
 msgid "Currency conversions should be made outside this module."
-msgstr "Conversiones de monedas se deben hacerse fuera de este módulo."
+msgstr "Conversiones de monedas deben hacerse fuera de este módulo."
 
 msgid "Coupons"
 msgstr "Cupones"
@@ -712,7 +712,7 @@ msgid "Enable coupons of discounts"
 msgstr "Activar los cupones de descuento"
 
 msgid "If there is a Mercado Pago campaign, allow your store to give discounts to customers."
-msgstr "Si hay una campaña de Mercado Pago, permite su tienda hacer descuentos para los clientes."
+msgstr "Si hay una campaña de Mercado Pago, permitir a su tienda hacer descuentos para los clientes."
 
 msgid "You will save"
 msgstr "Usted ahorrará"
@@ -748,7 +748,7 @@ msgid "to"
 msgstr "para"
 
 msgid "If the used currency in WooCommerce is different or not supported by Mercado Pago, convert values of your transactions using Mercado Pago currency ratio"
-msgstr "Si la moneda utilizada en WooCommerce es diferente o no soportada por Mercado Pago, converte los valores de sus transacciones con la tasa de conversión de moneda de Mercado Pago"
+msgstr "Si la moneda utilizada en WooCommerce es diferente o no soportada por Mercado Pago, convierte los importes de sus transacciones con la tasa de conversión de Mercado Pago"
 
 msgid " is: "
 msgstr " es: "

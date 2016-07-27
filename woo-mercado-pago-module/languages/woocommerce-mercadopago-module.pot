@@ -222,6 +222,10 @@ msgstr ""
 msgid "Enable Custom Checkout"
 msgstr ""
 
+#: mercadopago/mercadopago-gateway.php:269
+msgid "This option allows your store to present the custom checkout to your customers."
+msgstr ""
+
 #: mercadopago/mercadopago-gateway.php:242
 msgid ""
 "Instant Payment "
@@ -491,7 +495,7 @@ msgid ""
 "is not supported. "
 "Supported currencies "
 "are: ARS, BRL, CLP, COP, "
-"MXN, USD, VEF."
+"MXN, PEN, USD, VEF."
 msgstr ""
 
 #: mercadopago/mercadopago-gateway.php:712
