@@ -7,7 +7,7 @@
  * Author URI: https://www.mercadopago.com.br/developers/
  * Developer: Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
  * Copyright: Copyright(c) MercadoPago [http://www.mercadopago.com]
- * Version: 2.0.5
+ * Version: 2.1.0
  * License: http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: woocommerce-mercadopago-module
  * Domain Path: /languages/
@@ -108,7 +108,7 @@ function woomercadopago_settings_link( $links ) {
 	$plugin_links = array();
 	$plugin_links[] = '<a href="' . esc_url( admin_url(
 		'admin.php?page=wc-settings&tab=checkout&section=WC_WooMercadoPago_Gateway' ) ) . '">' .
-		__( 'Standard Checkout', 'woocommerce-mercadopago-module' ) .
+		__( 'Basic Checkout', 'woocommerce-mercadopago-module' ) .
 	'</a>';
 	$plugin_links[] = '<a href="' . esc_url( admin_url(
 		'admin.php?page=wc-settings&tab=checkout&section=WC_WooMercadoPagoCustom_Gateway' ) ) . '">' .

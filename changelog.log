@@ -1,5 +1,14 @@
 CHANGELOG:
 
+= v2.1.0 (25/07/2016) =
+* Mercado Pago Discount Coupon
+	- This feature lets Mercado Pago and merchants to use campaigns of discount created in their Mercado Pago accounts.
+* Currency Conversion
+	- Added an option to try to use Mercado Pago currency ratio, to automatically convert any currencies to supported/used currency.
+* Improvements
+	- Improved credentials validation algorithm;
+	- Improved checkout data, with more clean and sanitized info for product image and description.
+
 = v2.0.5 (07/07/2016) =
 * Bug fixes
 	- Fixed the informative URL of ticket IPN in admin page.
@@ -9,17 +18,17 @@ CHANGELOG:
 = v2.0.4 (29/06/2016) =
 * Bug fixes
 	- We have wrote a snippet to handle the absent shipment cost problem;
-	- Fixed some URLs of the credentials link for Standard Checkout.
+	- Fixed some URLs of the credentials link for Basic Checkout.
 * Improvements
 	- Added a message in admin view when currency is different from used locally (used in credential's country).
 
 = v2.0.3 (21/06/2016) =
-* Bug fix in Standard Checkout for WooCommerce v2.6.x
+* Bug fix in Basic Checkout for WooCommerce v2.6.x
 	In WooCommerce v2.6.x, there was a bug related with the ampersand char that was wrongly converted to #38; on URLs and breaking the checkout flow. This update should place a fix to this problem.
 	
 = v2.0.2 (13/06/2016) =
 * Rollout to Peru
-	This plugin is now supporting Peru, which includes Standard Checkout, Custom Checkout, Tickets, and local language translations.
+	This plugin is now supporting Peru, which includes Basic Checkout, Custom Checkout, Tickets, and local language translations.
 * Fix a PHP version issue
 	It was reported to us an issue in a function that uses an assign made directly from an array field. This feature is available in PHP 5.4.x or above and we've made an update to support older versions.
 * Fix a tax issue
@@ -52,7 +61,7 @@ CHANGELOG:
 * Added a link to module settings page in plugin page
 	We've increased the module description informations. Also we've put a link to make a vote on us. Please, VOTE US 5 STARS. Any feedback will be welcome!
 * Fixed status change when processing with two cards
-	When using payments with two cards in Standard Checkout, the flow of order status wasn't correct in some cases when async IPN events occurs. We've made some adjustments to fix it.
+	When using payments with two cards in Basic Checkout, the flow of order status wasn't correct in some cases when async IPN events occurs. We've made some adjustments to fix it.
 
 = v1.0.3 (23/03/2016) =
 * Improving algorithm when processing IPN
@@ -73,8 +82,8 @@ CHANGELOG:
 	Previously, the shipment cost was passed together with the cart total order amount.
 
 = v1.0.0 (16/03/2016) =
-* LatAm Standard Checkout support
-	Great for merchants who want to get going quickly and easily. This is the standard payment integration with Mercado Pago.
+* LatAm Basic Checkout support
+	Great for merchants who want to get going quickly and easily. This is the basic payment integration with Mercado Pago.
 * Set of configurable fields and customizations
 	Title, description, category, and external reference customizations, integrations via iframe, modal, and redirection, with configurable auto-returning, max installments and payment method exclusion setup.
 * Sandbox and debug options

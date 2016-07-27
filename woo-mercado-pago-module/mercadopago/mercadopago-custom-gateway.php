@@ -45,6 +45,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 	
 		// These fields are declared because we use them dinamically in our gateway class.
 		$this->domain = get_site_url() . '/index.php';
+		$this->currency_ratio = -1;
 		$this->site_id = null;
 		$this->isTestUser = false;
 		$this->store_categories_id = array();
@@ -52,7 +53,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
     	
 		// Within your constructor, you should define the following variables.
 		$this->id = 'woocommerce-mercadopago-custom-module';
-		$this->method_title = __( 'Mercado Pago - Custom Checkout', 'woocommerce-mercadopago-module' );
+		$this->method_title = __( 'Mercado Pago - Credit Card', 'woocommerce-mercadopago-module' );
 		$this->method_description = '<img width="200" height="52" src="' .
 			plugins_url( 'images/mplogo.png', plugin_dir_path( __FILE__ ) ) . '"><br><br>' . '<strong>' .
 			wordwrap( __( 'This module enables WooCommerce to use Mercado Pago as payment method for purchases made in your virtual store.', 'woocommerce-mercadopago-module' ), 80, "\n" ) .
@@ -64,9 +65,11 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 		$this->title = $this->get_option( 'title' );
 		$this->description = $this->get_option( 'description' );
 		$this->statement_descriptor = $this->get_option( 'statement_descriptor' );
+		$this->coupon_mode = $this->get_option( 'coupon_mode' );
 		$this->binary_mode = $this->get_option( 'binary_mode' );
 		$this->category_id = $this->get_option( 'category_id' );
 		$this->invoice_prefix = $this->get_option( 'invoice_prefix', 'WC-' );
+		$this->currency_conversion = $this->get_option('currency_conversion', false);
 		$this->sandbox = $this->get_option( 'sandbox', false );
 		$this->debug = $this->get_option( 'debug', false );
 		
@@ -77,7 +80,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 		// Hook actions for WordPress.
 		add_action( // Used by IPN to receive IPN incomings.
 			'woocommerce_api_wc_woomercadopagocustom_gateway',
-			array($this, 'check_ipn_response')
+			array($this, 'process_http_request')
 		);
 		add_action( // Used by IPN to process valid incomings.
 			'valid_mercadopagocustom_ipn_request',
@@ -91,15 +94,19 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			'wp_enqueue_scripts',
 			array( $this, 'customCheckoutScripts' )
 		);
+		add_action( // Apply the discounts
+			'woocommerce_cart_calculate_fees',
+			array( $this, 'add_discount_custom' ), 10
+		);
 		
 		// Verify if public_key or client_secret is empty.
 		if ( ( empty( $this->public_key ) || empty( $this->access_token ) ) && $this->enabled == 'yes' ) {
 			add_action( 'admin_notices', array( $this, 'credentialsMissingMessage' ) );
+		} else {
+			add_action( // Verify if SSL is supported.
+				'admin_notices', array( $this, 'checkSSLAbsence' )
+			);
 		}
-		
-		add_action( // Verify if SSL is supported.
-			'admin_notices', array( $this, 'checkSSLAbsence' )
-		);
 
 		// Logging and debug.
 		if ( 'yes' == $this->debug ) {
@@ -137,21 +144,34 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 		// Trigger API to get payment methods and site_id, also validates public_key/access_token.
 		if ( $this->validateCredentials() ) {
 			try {
-				$mp = new MP( $this->access_token );
-				$get_request = $mp->get( "/users/me?access_token=" . $this->access_token );
-				$this->isTestUser = in_array( 'test_user', $get_request[ 'response' ][ 'tags' ] );
-				$this->site_id = $get_request[ 'response' ][ 'site_id' ];
 				// checking the currency
-				$this->credentials_message = "";
+				$this->currency_message = "";
 				if ( !$this->isSupportedCurrency() && 'yes' == $this->settings[ 'enabled' ] ) {
-					$this->credentials_message .= '<img width="12" height="12" src="' .
-						plugins_url( 'images/warning.png', plugin_dir_path( __FILE__ ) ) . '">' .
-						' ' . __( '<strong>ATTENTION: The currency', 'woocommerce-mercadopago-module' ) . ' ' . get_woocommerce_currency() .
-						' ' . __( 'defined in WooCommerce is different from the one used in your credentials country.<br>The currency for transactions in this payment method will be', 'woocommerce-mercadopago-module' ) .
-						' ' . $this->getCurrencyId( $this->site_id ) . ' (' . $this->getCountryName( $this->site_id ) . ').' .
-						' ' . __( 'Currency conversions should be made outside this module.</strong><br><br>', 'woocommerce-mercadopago-module' );
+					if ( $this->currency_conversion == 'no' ) {
+						$this->currency_ratio = -1;
+						$this->currency_message .= '<img width="12" height="12" src="' .
+							plugins_url( 'images/warning.png', plugin_dir_path( __FILE__ ) ) . '">' .
+							' ' . __( 'ATTENTION: The currency', 'woocommerce-mercadopago-module' ) . ' ' . get_woocommerce_currency() .
+							' ' . __( 'defined in WooCommerce is different from the one used in your credentials country.<br>The currency for transactions in this payment method will be', 'woocommerce-mercadopago-module' ) .
+							' ' . $this->getCurrencyId( $this->site_id ) . ' (' . $this->getCountryName( $this->site_id ) . ').' .
+							' ' . __( 'Currency conversions should be made outside this module.', 'woocommerce-mercadopago-module' );
+					} else if ( $this->currency_conversion == 'yes' && $this->currency_ratio != -1 ) {
+						$this->currency_message .= '<img width="12" height="12" src="' .
+							plugins_url( 'images/check.png', plugin_dir_path( __FILE__ ) ) . '">' .
+							' ' . __( 'CURRENCY CONVERTED: The currency conversion ratio from', 'woocommerce-mercadopago-module' )  . ' ' . get_woocommerce_currency() .
+							' ' . __( 'to', 'woocommerce-mercadopago-module' ) . ' ' . $this->getCurrencyId( $this->site_id ) . __( ' is: ', 'woocommerce-mercadopago-module' ) . $this->currency_ratio . ".";
+					} else {
+						$this->currency_ratio = -1;
+						$this->currency_message .= '<img width="12" height="12" src="' .
+							plugins_url( 'images/error.png', plugin_dir_path( __FILE__ ) ) . '">' .
+							' ' . __( 'ERROR: It was not possible to convert the unsupported currency', 'woocommerce-mercadopago-module' ) . ' ' . get_woocommerce_currency() .
+							' '	. __( 'to', 'woocommerce-mercadopago-module' ) . ' ' . $this->getCurrencyId( $this->site_id ) . '.' .
+							' ' . __( 'Currency conversions should be made outside this module.', 'woocommerce-mercadopago-module' );
+					}
+				} else {
+					$this->currency_ratio = -1;
 				}
-				$this->credentials_message .= '<img width="12" height="12" src="' .
+				$this->credentials_message = '<img width="12" height="12" src="' .
 					plugins_url( 'images/check.png', plugin_dir_path( __FILE__ ) ) . '">' .
 					' ' . __( 'Your credentials are <strong>valid</strong> for', 'woocommerce-mercadopago-module' ) .
 					': ' . $this->getCountryName( $this->site_id ) . ' <img width="18.6" height="12" src="' .
@@ -229,6 +249,13 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 				'description' => __( 'The description that will be shown in your customer\'s invoice.', 'woocommerce-mercadopago-module' ),
 				'default' => __( 'Mercado Pago', 'woocommerce-mercadopago-module' )
 			),
+			'coupon_mode' => array(
+				'title'   => __( 'Coupons', 'woocommerce-mercadopago-module' ),
+				'type'    => 'checkbox',
+				'label'   => __( 'Enable coupons of discounts', 'woocommerce-mercadopago-module' ),
+				'default' => 'no',
+				'description' => __( 'If there is a Mercado Pago campaign, allow your store to give discounts to customers.', 'woocommerce-mercadopago-module' )
+			),
 			'binary_mode' => array(
 				'title'   => __( 'Binary Mode', 'woocommerce-mercadopago-module' ),
 				'type'    => 'checkbox',
@@ -247,6 +274,13 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 				'type' => 'text',
 				'description' => __( 'Please, inform a prefix to your store.', 'woocommerce-mercadopago-module' ) . ' ' . __( 'If you use your Mercado Pago account on multiple stores you should make sure that this prefix is unique as Mercado Pago will not allow orders with same identificators.', 'woocommerce-mercadopago-module' ),
 				'default' => 'WC-'
+			),
+			'currency_conversion' => array(
+				'title' => __( 'Currency Conversion', 'woocommerce-mercadopago-module' ),
+				'type' => 'checkbox',
+				'label' => __( 'If the used currency in WooCommerce is different or not supported by Mercado Pago, convert values of your transactions using Mercado Pago currency ratio', 'woocommerce-mercadopago-module' ),
+				'default' => 'no',
+				'description' => sprintf( '%s', $this->currency_message )
 			),
 			'testing' => array(
 				'title' => __( 'Test and Debug Options', 'woocommerce-mercadopago-module' ),
@@ -321,9 +355,26 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			'images_path' => plugins_url( 'images/', plugin_dir_path( __FILE__ ) ),
 			'banner_path' => plugins_url( 'images/' .
 				$this->banners_mercadopago_credit[ $this->site_id ], plugin_dir_path( __FILE__ ) ),
-			'amount' => $amount,
+			'amount' => $amount * ( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 ),
+			'coupon_mode' => $this->coupon_mode,
+			'is_currency_conversion' => $this->currency_ratio,
+			'woocommerce_currency' => get_woocommerce_currency(),
+			'account_currency' => $this->getCurrencyId( $this->site_id ),
+			'discount_action_url' => $this->domain . '/woocommerce-mercadopago-module/?wc-api=WC_WooMercadoPagoCustom_Gateway',
 			'form_labels' => array(
 				"form" => array(
+					"payment_converted" => __("Payment converted from", "woocommerce-mercadopago-module" ),
+					"to" => __("to", "woocommerce-mercadopago-module" ),
+					"coupon_empty" => __( "Please, inform your coupon code", "woocommerce-mercadopago-module" ),
+					'apply' => __( "Apply", "woocommerce-mercadopago-module" ),
+					'remove' => __( "Remove", "woocommerce-mercadopago-module" ),
+					'discount_info1' => __( "You will save", "woocommerce-mercadopago-module" ),
+					'discount_info2' => __( "with discount from", "woocommerce-mercadopago-module" ),
+					'discount_info3' => __( "Total of your purchase:", "woocommerce-mercadopago-module" ),
+					'discount_info4' => __( "Total of your purchase with discount:", "woocommerce-mercadopago-module" ),
+					'discount_info5' => __( "*Uppon payment approval", "woocommerce-mercadopago-module" ),
+					'discount_info6' => __( "Terms and Conditions of Use", "woocommerce-mercadopago-module" ),
+					'coupon_of_discounts' => __( "Discount Coupon", "woocommerce-mercadopago-module" ),
 					'label_other_bank' => __( "Other Bank", "woocommerce-mercadopago-module" ),
 					'label_choose' => __( "Choose", "woocommerce-mercadopago-module" ),
 					"your_card" => __( "Your Card", 'woocommerce-mercadopago-module' ),
@@ -374,24 +425,14 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			)
 		);
 
-		try {
+		try { // find logged user
 			if ( wp_get_current_user()->ID != 0 ) {
 				$mp = new MP( $this->access_token );
 				$logged_user_email = wp_get_current_user()->user_email;
 				$customer = $mp->get_or_create_customer( $logged_user_email );
 				$customer_cards = $customer[ 'cards' ];
-				if ( 'yes' == $this->debug ) {
-					$this->log->add( $this->id, $this->id .
-						': @[process_fields] - Logged user ' . $logged_user_email . ' cards: ' .
-						json_encode( $customer_cards, JSON_PRETTY_PRINT ) );
-				}
 				$parameters[ 'customerId' ] = $customer[ 'id' ];
 				$parameters[ 'customer_cards' ] = $customer_cards;
-			} else {
-				if ( 'yes' == $this->debug ) {
-					$this->log->add( $this->id, $this->id .
-						': @[process_fields] - Logged user cards: user is not logged in' );
-				}
 			}
 		} catch (Exception $e) {
 			if ( 'yes' == $this->debug ) {
@@ -410,7 +451,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 		);
 	}
 	
-	// This function is called after we clock on [place_order] button, and each field is passed to this
+	// This function is called after we click on [place_order] button, and each field is passed to this
 	// function through $_POST variable.
 	public function process_payment( $order_id ) {
 		$order = new WC_Order( $order_id );
@@ -562,16 +603,17 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 					array_push( $items, array(
 						'id' => $item[ 'product_id' ],
 						'title' => ( $product->post->post_title . ' x ' . $item[ 'qty' ] ),
-						'description' => (
+						'description' => sanitize_file_name( (
 							// This handles description width limit of Mercado Pago
 							strlen( $product->post->post_content ) > 230 ?
 							substr( $product->post->post_content, 0, 230 ) . "..." :
 							$product->post->post_content
-						),
-						'picture_url' => $product->get_image(),
+						) ),
+						'picture_url' => wp_get_attachment_url( $product->get_image_id() ),
 						'category_id' => $this->store_categories_id[ $this->category_id ],
 						'quantity' => 1,
-						'unit_price' => (float) $item[ 'line_total' ] + (float) $item[ 'line_tax' ],
+						'unit_price' => floor( ( (float) $item[ 'line_total' ] + (float) $item[ 'line_tax' ] ) *
+							( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 ) * 100 ) / 100,
 					));
 				}
 			}
@@ -585,25 +627,27 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
                 'description' => __( 'Shipping service used by store', 'woocommerce-mercadopago-module' ),
                 'quantity' => 1,
                 'category_id' => $this->store_categories_id[ $this->category_id ],
-                'unit_price' => $shipping_cost
+                'unit_price' => $shipping_cost * ( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 )
             );
             $items[] = $item;
         }
         
         // Discounts features
-        /*
-        $discounts = (double) $cart->getOrderTotal( true, Cart::ONLY_DISCOUNTS );
-        if ( $discounts > 0 ) {
+        if ( isset( $post_from_form[ 'mercadopago_custom' ][ 'discount' ] ) &&
+        	$post_from_form[ 'mercadopago_custom' ][ 'discount' ] != "" &&
+        	$post_from_form[ 'mercadopago_custom' ][ 'discount' ] > 0 &&
+        	isset( $post_from_form[ 'mercadopago_custom' ][ 'coupon_code' ] ) &&
+        	$post_from_form[ 'mercadopago_custom' ][ 'coupon_code' ] != "" &&
+        	WC()->session->chosen_payment_method == "woocommerce-mercadopago-custom-module" ) {
             $item = array(
-                'title' => 'Discount',
-                'description' => 'Discount provided by store',
+                'title' => __( 'Discount', 'woocommerce-mercadopago-module' ),
+                'description' => __( 'Discount provided by store', 'woocommerce-mercadopago-module' ),
                 'quantity' => 1,
-                'category_id' => Configuration::get( 'MERCADOPAGO_CATEGORY' ),
-                'unit_price' => - $discounts
+                'category_id' => $this->store_categories_id[ $this->category_id ],
+                'unit_price' => - ( (float) $post_from_form[ 'mercadopago_custom' ][ 'discount' ] )
             );
             $items[] = $item;
         }
-        */
 
 		// Build additional information from the customer data
         $payer_additional_info = array(
@@ -641,7 +685,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
         
         // The payment preference
         $payment_preference = array (
-        	'transaction_amount' => (float) $post_from_form[ 'mercadopago_custom' ][ 'amount' ],
+        	'transaction_amount' => floor( ( (float) $post_from_form[ 'mercadopago_custom' ][ 'amount' ] ) * 100 ) / 100,
         	'token' => $post_from_form[ 'mercadopago_custom' ][ 'token' ],
         	'description' => $purchase_description,
         	'installments' => (int) $post_from_form[ 'mercadopago_custom' ][ 'installments' ],
@@ -659,7 +703,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
             )
         );
 
-        // Customer's Card Feature, add only it has issuer id
+        // Customer's Card Feature, add only if it has issuer id
         if ( array_key_exists( 'token', $post_from_form[ 'mercadopago_custom' ] ) ) {
         	$payment_preference[ 'metadata' ][ 'token' ] = $post_from_form[ 'mercadopago_custom' ][ 'token' ];
             if ( array_key_exists( 'issuer', $post_from_form[ 'mercadopago_custom' ] ) ) {
@@ -678,25 +722,17 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
             $payment_preference['notification_url'] = $this->workaroundAmperSandBug( $notification_url );
         }
 
-        // Coupon Feature
-        /*
-        $mercadopago_coupon = isset( $post[ 'mercadopago_coupon' ] ) ? $post[ 'mercadopago_coupon' ] : "";
-        if ( $mercadopago_coupon != "" ) {
-        	$coupon = $this->validCoupon( $mercadopago_coupon );
-            if ( $coupon[ 'status' ] == 200 ) {
-            	$payment_preference[ 'campaign_id' ] =  $coupon[ 'response' ][ 'id' ];
-                $payment_preference[ 'coupon_amount' ] = (float) $coupon[ 'response' ][ 'coupon_amount' ];
-                $payment_preference[ 'coupon_code' ] = strtoupper( $mercadopago_coupon );
-            } else {
-                PrestaShopLogger::addLog ( $coupon['response']['error'] . Tools::jsonEncode($coupon), MP_SDK::ERROR, 0 );
-                $this->context->smarty->assign( array(
-	                'message_error' => $coupon[ 'response' ][ 'error' ],
-	                'version' => $this->getPrestashopVersion()
-                ) );
-                return $this->display ( __file__, '/views/templates/front/error_admin.tpl' );
-            }
+        // Discounts features
+        if ( isset( $post_from_form[ 'mercadopago_custom' ][ 'discount' ] ) &&
+        	$post_from_form[ 'mercadopago_custom' ][ 'discount' ] != "" &&
+        	$post_from_form[ 'mercadopago_custom' ][ 'discount' ] > 0 &&
+        	isset( $post_from_form[ 'mercadopago_custom' ][ 'coupon_code' ] ) &&
+        	$post_from_form[ 'mercadopago_custom' ][ 'coupon_code' ] != "" &&
+        	WC()->session->chosen_payment_method == "woocommerce-mercadopago-custom-module" ) {
+        	$payment_preference[ 'campaign_id' ] =  (int) $post_from_form[ 'mercadopago_custom' ][ 'campaign_id' ];
+            $payment_preference[ 'coupon_amount' ] = ( (float) $post_from_form[ 'mercadopago_custom' ][ 'discount' ] );
+            $payment_preference[ 'coupon_code' ] = strtoupper( $post_from_form[ 'mercadopago_custom' ][ 'coupon_code' ] );
         }
-        */
 
         if ( !$this->isTestUser ) {
 			$preferences[ 'sponsor_id' ] = (int) ( $this->sponsor_id[ $this->site_id ] );
@@ -713,7 +749,6 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
         	$payment_preference, $order
         );
 		return $payment_preference;
-
     }
 
     public function checkAndSaveCustomerCard( $checkout_info ) {
@@ -754,6 +789,31 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 		}
 	}
 
+	public function add_discount_custom() {
+		if ( is_admin() && ! defined( 'DOING_AJAX' ) || is_cart() ) {
+			return;
+		}
+		if ( 'yes' == $this->debug ) {
+			$this->log->add( $this->id, $this->id . ': @[add_discount_custom] - Custom checkout trying to apply discount...' );
+		}
+		if ( isset( $_POST[ 'mercadopago_custom' ][ 'discount' ] ) &&
+        	$_POST[ 'mercadopago_custom' ][ 'discount' ] != "" &&
+        	$_POST[ 'mercadopago_custom' ][ 'discount' ] > 0 &&
+			isset( $_POST[ 'mercadopago_custom' ][ 'coupon_code' ] ) &&
+        	$_POST[ 'mercadopago_custom' ][ 'coupon_code' ] != "" &&
+			WC()->session->chosen_payment_method == "woocommerce-mercadopago-custom-module" ) {
+			$value = ( $_POST[ 'mercadopago_custom' ][ 'discount' ] ) /
+				( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 );
+			global $woocommerce;
+			if ( apply_filters( 'wc_mercadopagocustom_module_apply_discount', 0 < $value, $woocommerce->cart ) ) {
+				$woocommerce->cart->add_fee(
+					sprintf( __( 'Discount for %s coupon', 'woocommerce-mercadopago-module' ), esc_attr( $_POST[ 'mercadopago_custom' ][ 'campaign' ] ) ),
+					( $value * -1 ), true
+				);
+			}
+		}
+	}
+
 	/*
 	 * ========================================================================
 	 * AUXILIARY AND FEEDBACK METHODS
@@ -772,7 +832,29 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 		if ( strlen( $this->public_key ) > 0 && strlen( $this->access_token ) > 0 ) {
 			try {
 				$mp = new MP( $this->access_token );
-				return true;
+				$get_request = $mp->get( "/users/me?access_token=" . $this->access_token );
+				if ( isset( $get_request[ 'response' ][ 'site_id' ] ) ) {
+					$this->isTestUser = in_array( 'test_user', $get_request[ 'response' ][ 'tags' ] );
+					$this->site_id = $get_request[ 'response' ][ 'site_id' ];
+					// check for auto converstion of currency
+					$currency_obj = MPRestClient::get_ml( array( "uri" =>
+						"/currency_conversions/search?from=" .
+						get_woocommerce_currency() .
+						"&to=" .
+						$this->getCurrencyId( $this->site_id )
+					) );
+					if ( isset( $currency_obj[ 'response' ] ) ) {
+						$currency_obj = $currency_obj[ 'response' ];
+						if ( isset( $currency_obj['ratio'] ) ) {
+							$this->currency_ratio = (float) $currency_obj['ratio'];
+						} else {
+							$this->currency_ratio = -1;
+						}
+					} else {
+						$this->currency_ratio = -1;
+					}
+					return true;
+				} else return false;
 			} catch ( MercadoPagoException $e ) {
 				return false;
 			}
@@ -914,19 +996,54 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 	 * IPN MECHANICS
 	 * ========================================================================
 	 */
-	
-	// This call checks any incoming notifications from Mercado Pago server.
-	public function check_ipn_response() {
+
+	// [Server Side] This call checks any incoming notifications from Mercado Pago server.
+	public function process_http_request() {
 		@ob_clean();
 		if ( 'yes' == $this->debug ) {
 			$this->log->add( $this->id, $this->id .
-				': @[check_ipn_response] - Received _get content: ' .
+				': @[process_http_request] - Received _get content: ' .
 				json_encode( $_GET, JSON_PRETTY_PRINT ) );
 		}
-		$data = $this->check_ipn_request_is_valid( $_GET );
-		if ( $data ) {
-			header( 'HTTP/1.1 200 OK' );
-			do_action( 'valid_mercadopagocustom_ipn_request', $data );
+		if ( isset( $_GET[ 'coupon_id' ] ) && $_GET[ 'coupon_id' ] != '' ) {
+			// process coupon evaluations
+			if ( isset( $_GET[ 'payer' ] ) && $_GET[ 'payer' ] != '' ) {
+				$logged_user_email = $_GET[ 'payer' ];
+				$coupon_id = $_GET[ 'coupon_id' ];
+				$mp = new MP( $this->access_token );
+			    if ( 'yes' == $this->sandbox )
+					$mp->sandbox_mode( true );
+				else
+					$mp->sandbox_mode( false );
+			    $response = $mp->check_discount_campaigns(
+			    	$_GET[ 'amount' ],
+			    	$logged_user_email,
+			    	$coupon_id
+			    );
+			    header( 'HTTP/1.1 200 OK' );
+			    header( 'Content-Type: application/json' );
+				echo json_encode( $response );
+			} else {
+				$obj = new stdClass();
+				$obj->status = 404;
+				$obj->response = array(
+					'message' => __( 'Please, inform your email in billing address to use this feature', 'woocommerce-mercadopago-module' ),
+					'error' => 'payer_not_found',
+					'status' => 404,
+					'cause' => array()
+				);
+				header( 'HTTP/1.1 200 OK' );
+			    header( 'Content-Type: application/json' );
+				echo json_encode( $obj );
+			}
+			exit(0);
+		} else {
+			// process IPN messages
+			$data = $this->check_ipn_request_is_valid( $_GET );
+			if ( $data ) {
+				header( 'HTTP/1.1 200 OK' );
+				do_action( 'valid_mercadopagocustom_ipn_request', $data );
+			}
 		}
 	}
 	
@@ -946,7 +1063,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 				if ( 'yes' == $this->debug ) {
 					$this->log->add(
 						$this->id, $this->id .
-						': @[check_ipn_response] - Mercado Pago Request Failure: ' .
+						': @[check_ipn_request_is_valid] - Mercado Pago Request Failure: ' .
 						json_encode( $_GET, JSON_PRETTY_PRINT ) );
 				}
 				wp_die( __( 'Mercado Pago Request Failure', 'woocommerce-mercadopago-module' ) );
@@ -1093,5 +1210,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			}
 		}
 	}
-	
+
 }
+
+new WC_WooMercadoPagoCustom_Gateway();

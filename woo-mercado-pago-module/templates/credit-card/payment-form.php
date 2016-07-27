@@ -20,6 +20,21 @@ if ( !defined( 'ABSPATH' ) ) {
 </div>
 <fieldset style="background:white; ">
 	
+	<div class="mp-box-inputs mp-line" id="mercadopago-form-coupon" style="padding:0px 36px 16px 36px;">
+		<label for="couponCodeLabel"><?php echo $form_labels['form']['coupon_of_discounts']; ?></label>
+      	<div class="mp-box-inputs mp-col-65">
+	        <input type="text" id="couponCode" name="mercadopago_custom[coupon_code]" autocomplete="off" maxlength="24" />
+	        <span class="mp-discount" id="mpCouponApplyed" ></span>
+	        <span class="mp-error" id="mpCouponError" ></span>
+      	</div>
+      	<div class="mp-box-inputs mp-col-10">
+        	<div id="mp-separete-date"></div>
+      	</div>
+      	<div class="mp-box-inputs mp-col-25">
+        	<input type="button" class="button" id="applyCoupon" value="<?php echo $form_labels['form']['apply']; ?>" >
+      	</div>
+    </div>
+
 	<!-- payment method -->
 	<div id="mercadopago-form-customer-and-card" style="padding:0px 36px 0px 36px;">
 		<div class="mp-box-inputs mp-line">
@@ -133,7 +148,13 @@ if ( !defined( 'ABSPATH' ) ) {
 	</div> <!-- end #mercadopago-form -->
 
 	<div class="mp-box-inputs mp-col-100" style="padding:0px 36px 0px 36px;">
-    	<label for="installments"><?php echo $form_labels['form']['installments']; ?> <em>*</em></label>
+    	<label for="installments">
+    		<?php echo $form_labels['form']['installments']; ?>
+    		<?php if ($is_currency_conversion > 0) { ?>
+    			<?php echo "(" . $form_labels['form']['payment_converted'] . " " . $woocommerce_currency . " " . $form_labels['form']['to'] . " " . $account_currency . ")"; ?>
+    		<?php } ?>
+    		 <em>*</em>
+    	</label>
         <select id="installments" data-checkout="installments" name="mercadopago_custom[installments]"></select>
     </div>
 	<div class="mp-box-inputs mp-line" style="padding:0px 36px 0px 36px;">
@@ -148,6 +169,9 @@ if ( !defined( 'ABSPATH' ) ) {
 	<div class="mp-box-inputs mp-col-100" id="mercadopago-utilities" style="padding:0px 36px 0px 36px;">
 		<input type="hidden" id="site_id"  name="mercadopago_custom[site_id]"/>
 		<input type="hidden" id="amount" value='<?php echo $amount; ?>' name="mercadopago_custom[amount]"/>
+		<input type="hidden" id="campaign_id" name="mercadopago_custom[campaign_id]"/>
+		<input type="hidden" id="campaign" name="mercadopago_custom[campaign]"/>
+		<input type="hidden" id="discount" name="mercadopago_custom[discount]"/>
 		<input type="hidden" id="paymentMethodId" name="mercadopago_custom[paymentMethodId]"/>
 		<input type="hidden" id="token" name="mercadopago_custom[token]"/>
 		<input type="hidden" id="cardTruncated" name="mercadopago_custom[cardTruncated]"/>
@@ -166,6 +190,11 @@ if ( !defined( 'ABSPATH' ) ) {
 	        add_truncated_card: true,
 	        site_id: '',
 	        public_key: '',
+	        coupon_of_discounts: {
+				discount_action_url: '',
+				default: true,
+				status: false
+    		},
 	        customer_and_card: {
 	            default: true,
 	            status: true
@@ -173,8 +202,14 @@ if ( !defined( 'ABSPATH' ) ) {
 	        create_token_on: {
 	            event: true, //if true create token on event, if false create on click and ignore others events. eg: paste or keyup
 	            keyup: false,
-	            paste: true,
+	            paste: true
 	        },
+
+	        inputs_to_create_discount: [
+				"couponCode",
+				"applyCoupon"
+			],
+
 	        inputs_to_create_token: [
 	            "cardNumber",
 	            "cardExpirationMonth",
@@ -191,6 +226,11 @@ if ( !defined( 'ABSPATH' ) ) {
 	        ],
 
 	        selectors: {
+
+	        	couponCode: "#couponCode",
+				applyCoupon: "#applyCoupon",
+				mpCouponApplyed: "#mpCouponApplyed",
+				mpCouponError: "#mpCouponError",
 
 	            paymentMethodSelector: "#paymentMethodSelector",
 	            pmCustomerAndCards: "#payment-methods-for-customer-and-cards",
@@ -216,6 +256,9 @@ if ( !defined( 'ABSPATH' ) ) {
 	            paymentMethodId: "#paymentMethodId",
 	            amount: "#amount",
 	            token: "#token",
+	            campaign_id: "#campaign_id",
+	            campaign: "#campaign",
+	            discount: "#discount",
 	            cardTruncated: "#cardTruncated",
 	            site_id: "#site_id",
 	            CustomerAndCard: '#CustomerAndCard',
@@ -223,17 +266,146 @@ if ( !defined( 'ABSPATH' ) ) {
 	            box_loading: "#mp-box-loading",
 	            submit: "#submit",
 	            form: '#mercadopago-form',
+	            formCoupon: '#mercadopago-form-coupon',
 	            formCustomerAndCard: '#mercadopago-form-customer-and-card',
 	            utilities_fields: "#mercadopago-utilities"
 	        },
 	        text: {
 	            choose: "Choose",
-	            other_bank: "Other Bank"
+	            other_bank: "Other Bank",
+	            discount_info1: "You will save",
+	            discount_info2: "with discount from",
+	            discount_info3: "Total of your purchase:",
+	            discount_info4: "Total of your purchase with discount:",
+	            discount_info5: "*Uppon payment approval",
+	            discount_info6: "Terms and Conditions of Use",
+	            coupon_empty: "Please, inform your coupon code",
+	            apply: "Apply",
+	            remove: "Remove"
 	        },
 	        paths: {
-	            loading: "images/loading.gif"
+	            loading: "images/loading.gif",
+	            check: "images/check.png",
+	            error: "images/error.png"
 	        }
 	    }
+
+	    /*
+    	 * Coupon of Discounts
+    	 */
+
+	    MPv1.currencyIdToCurrency = function (currency_id) {
+	    	if ( currency_id == 'ARS' ) {
+				return '$';
+	    	} else if ( currency_id == 'BRL' ) {
+	    		return 'R$';
+	    	} else if ( currency_id == 'COP' ) {
+	    		return '$';
+	    	} else if ( currency_id == 'CLP' ) {
+	    		return '$';
+	    	} else if ( currency_id == 'MXN' ) {
+	    		return '$';
+	    	} else if ( currency_id == 'VEF' ) {
+	    		return 'Bs';
+	    	} else if ( currency_id == 'PEN' ) {
+	    		return 'S/';
+	    	} else {
+	    		return '$';
+	    	}
+	    }
+
+	    MPv1.checkCouponEligibility = function () {
+	    	if ( document.querySelector(MPv1.selectors.couponCode).value == "" ) {
+	    		// coupon code is empty
+	    		document.querySelector(MPv1.selectors.mpCouponApplyed).style.display = 'none';
+				document.querySelector(MPv1.selectors.mpCouponError).style.display = 'block';
+				document.querySelector(MPv1.selectors.mpCouponError).innerHTML = MPv1.text.coupon_empty;
+				MPv1.coupon_of_discounts.status = false;
+				document.querySelector(MPv1.selectors.couponCode).style.background = null;
+				document.querySelector(MPv1.selectors.applyCoupon).value = MPv1.text.apply;
+				document.querySelector(MPv1.selectors.discount).value = 0;
+				MPv1.cardsHandler();
+	    	} else if ( MPv1.coupon_of_discounts.status ) {
+	    		// we already have a coupon set, so we remove it
+	    		document.querySelector(MPv1.selectors.mpCouponApplyed).style.display = 'none';
+				document.querySelector(MPv1.selectors.mpCouponError).style.display = 'none';
+				MPv1.coupon_of_discounts.status = false;
+				document.querySelector(MPv1.selectors.applyCoupon).style.background = null;
+	    		document.querySelector(MPv1.selectors.applyCoupon).value = MPv1.text.apply;
+	    		document.querySelector(MPv1.selectors.couponCode).value = "";
+	    		document.querySelector(MPv1.selectors.couponCode).style.background = null;
+	    		document.querySelector(MPv1.selectors.discount).value = 0;
+	    		MPv1.cardsHandler();
+	    	} else {
+				// set loading
+				document.querySelector(MPv1.selectors.mpCouponApplyed).style.display = 'none';
+				document.querySelector(MPv1.selectors.mpCouponError).style.display = 'none';
+				document.querySelector(MPv1.selectors.couponCode).style.background = "url("+MPv1.paths.loading+") 98% 50% no-repeat #fff";
+				document.querySelector(MPv1.selectors.applyCoupon).disabled = true;
+				var request = new XMLHttpRequest();
+				request.open(
+					'GET',
+					MPv1.coupon_of_discounts.discount_action_url +
+						"&coupon_id=" + document.querySelector(MPv1.selectors.couponCode).value +
+						"&amount=" + document.querySelector(MPv1.selectors.amount).value +
+						"&payer=" + document.getElementById("billing_email").value,
+					true
+				);
+				request.onreadystatechange = function() {
+					if (request.readyState == 4) {
+						if (request.status == 200) {
+							var response = JSON.parse(request.responseText);
+							if (response.status == 200) {
+								document.querySelector(MPv1.selectors.mpCouponApplyed).style.display = 'block';
+								document.querySelector(MPv1.selectors.discount).value = response.response.coupon_amount;
+								document.querySelector(MPv1.selectors.mpCouponApplyed).innerHTML =
+									"<div style='border-style: solid; border-width:thin; border-color: #009EE3; padding: 8px 8px 8px 8px; margin-top: 4px;'>" +
+									MPv1.text.discount_info1 + " <strong>" + MPv1.currencyIdToCurrency(response.response.currency_id) + " " +
+									Math.round(response.response.coupon_amount*100)/100 + "</strong> " + MPv1.text.discount_info2 + " " + response.response.name + ".<br>" +
+									MPv1.text.discount_info3 + " <strong>" + MPv1.currencyIdToCurrency(response.response.currency_id) +
+									" " + Math.round(MPv1.getAmountWithoutDiscount()*100)/100 + "</strong><br>" +
+									MPv1.text.discount_info4 + " <strong>" + MPv1.currencyIdToCurrency(response.response.currency_id) +
+									" " + Math.round(MPv1.getAmount()*100)/100 + "*</strong><br>" +
+									"<i>" + MPv1.text.discount_info5 + "</i><br>" +
+									"<a href='https://api.mercadolibre.com/campaigns/" + response.response.id + "/terms_and_conditions?format_type=html' target='_blank'>" +
+									MPv1.text.discount_info6 + "</a></div>";
+								document.querySelector(MPv1.selectors.mpCouponError).style.display = 'none';
+								MPv1.coupon_of_discounts.status = true;
+								document.querySelector(MPv1.selectors.couponCode).style.background = null;
+								document.querySelector(MPv1.selectors.couponCode).style.background = "url("+MPv1.paths.check+") 98% 50% no-repeat #fff";
+								document.querySelector(MPv1.selectors.applyCoupon).value = MPv1.text.remove;
+								MPv1.cardsHandler();
+								document.querySelector(MPv1.selectors.campaign_id).value = response.response.id;
+								document.querySelector(MPv1.selectors.campaign).value = response.response.name;
+							} else if (response.status == 400 || response.status == 404) {
+								document.querySelector(MPv1.selectors.mpCouponApplyed).style.display = 'none';
+								document.querySelector(MPv1.selectors.mpCouponError).style.display = 'block';
+								document.querySelector(MPv1.selectors.mpCouponError).innerHTML = response.response.message;
+								MPv1.coupon_of_discounts.status = false;
+								document.querySelector(MPv1.selectors.couponCode).style.background = null;
+								document.querySelector(MPv1.selectors.couponCode).style.background = "url("+MPv1.paths.error+") 98% 50% no-repeat #fff";
+								document.querySelector(MPv1.selectors.applyCoupon).value = MPv1.text.apply;
+								document.querySelector(MPv1.selectors.discount).value = 0;
+								MPv1.cardsHandler();
+							}
+						} else {
+							// request failed
+							document.querySelector(MPv1.selectors.mpCouponApplyed).style.display = 'none';
+							document.querySelector(MPv1.selectors.mpCouponError).style.display = 'none';
+							MPv1.coupon_of_discounts.status = false;
+							document.querySelector(MPv1.selectors.applyCoupon).style.background = null;
+				    		document.querySelector(MPv1.selectors.applyCoupon).value = MPv1.text.apply;
+				    		document.querySelector(MPv1.selectors.couponCode).value = "";
+				    		document.querySelector(MPv1.selectors.couponCode).style.background = null;
+				    		document.querySelector(MPv1.selectors.discount).value = 0;
+				    		MPv1.cardsHandler();
+						}
+						document.querySelector(MPv1.selectors.applyCoupon).disabled = false;
+					}
+				};
+				request.send(null);
+			}
+		}
 
 	    MPv1.getBin = function() {
 	        var cardSelector = document.querySelector(MPv1.selectors.paymentMethodSelector);
@@ -806,13 +978,22 @@ if ( !defined( 'ABSPATH' ) ) {
 	     *
 	     */
 
-	    MPv1.Initialize = function(site_id, public_key) {
+	    MPv1.Initialize = function(site_id, public_key, coupon_mode, discount_action_url) {
 
 	        //sets
 	        MPv1.site_id = site_id
-	        MPv1.public_key = public_key
+			MPv1.public_key = public_key
+			MPv1.coupon_of_discounts.default = coupon_mode
+			MPv1.coupon_of_discounts.discount_action_url = discount_action_url
 
 	        Mercadopago.setPublishableKey(MPv1.public_key);
+
+	        // flow coupon of discounts
+			if (MPv1.coupon_of_discounts.default) {
+				MPv1.addListenerEvent(document.querySelector(MPv1.selectors.applyCoupon), 'click', MPv1.checkCouponEligibility);
+			} else {
+				document.querySelector(MPv1.selectors.formCoupon).style.display = 'none';
+			}
 
 	        //flow: customer & cards
 	        var selectorPmCustomerAndCards = document.querySelector(MPv1.selectors.pmCustomerAndCards);
@@ -893,10 +1074,23 @@ if ( !defined( 'ABSPATH' ) ) {
 
     var mercadopago_site_id = '<?php echo $site_id; ?>';
     var mercadopago_public_key = '<?php echo $public_key; ?>';
+    var mercadopago_coupon_mode = '<?php echo $coupon_mode; ?>';
+    var mercadopago_discount_action_url = '<?php echo $discount_action_url; ?>';
 
     MPv1.text.choose = '<?php echo $form_labels["form"]["label_choose"]; ?>';
     MPv1.text.other_bank = '<?php echo $form_labels["form"]["label_other_bank"]; ?>';
+    MPv1.text.discount_info1 = '<?php echo $form_labels["form"]["discount_info1"]; ?>';
+    MPv1.text.discount_info2 = '<?php echo $form_labels["form"]["discount_info2"]; ?>';
+    MPv1.text.discount_info3 = '<?php echo $form_labels["form"]["discount_info3"]; ?>';
+    MPv1.text.discount_info4 = '<?php echo $form_labels["form"]["discount_info4"]; ?>';
+    MPv1.text.discount_info5 = '<?php echo $form_labels["form"]["discount_info5"]; ?>';
+    MPv1.text.discount_info6 = '<?php echo $form_labels["form"]["discount_info6"]; ?>';
+    MPv1.text.apply = '<?php echo $form_labels["form"]["apply"]; ?>';
+    MPv1.text.remove = '<?php echo $form_labels["form"]["remove"]; ?>';
+    MPv1.text.coupon_empty = '<?php echo $form_labels["form"]["coupon_empty"]; ?>';
     MPv1.paths.loading = '<?php echo ( $images_path . "loading.gif" ); ?>';
+    MPv1.paths.check = '<?php echo ( $images_path . "check.png" ); ?>';
+    MPv1.paths.error = '<?php echo ( $images_path . "error.png" ); ?>';
 
     // overriding this function to give form padding attribute
     MPv1.setForm = function() {
@@ -916,6 +1110,14 @@ if ( !defined( 'ABSPATH' ) ) {
         document.querySelector(MPv1.selectors.CustomerAndCard).value = MPv1.customer_and_card.status;
     }
 
+    MPv1.getAmount = function() {
+        return document.querySelector(MPv1.selectors.amount).value - document.querySelector(MPv1.selectors.discount).value;
+    }
+
+    MPv1.getAmountWithoutDiscount = function() {
+        return document.querySelector(MPv1.selectors.amount).value;
+    }
+
     MPv1.showErrors = function(response) {
         var $form = MPv1.getForm();
         for (var x = 0; x < response.cause.length; x++) {
@@ -927,6 +1129,10 @@ if ( !defined( 'ABSPATH' ) ) {
         }
         return;
     }
-    MPv1.Initialize(mercadopago_site_id, mercadopago_public_key);
+    MPv1.Initialize(
+    	mercadopago_site_id,
+    	mercadopago_public_key,
+    	mercadopago_coupon_mode == 'yes',
+    	mercadopago_discount_action_url);
 
 </script>
