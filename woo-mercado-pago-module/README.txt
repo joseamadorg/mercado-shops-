@@ -110,7 +110,6 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 
 = v2.1.1 (02/08/2016) =
 * Improvements
-	- Decreasing stock for ticket when generating the payment;
 	- Improved log messages when applying discounts;
 	- Added a link to reprint ticket in customer account order page.
 

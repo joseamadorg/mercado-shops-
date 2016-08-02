@@ -933,7 +933,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 						}
 						if ( !$has_note ) {
 							// dont have order note
-							if ( sizeof( $order->get_items() ) > 0 ) {
+							/*if ( sizeof( $order->get_items() ) > 0 ) {
 								foreach ( $order->get_items() as $item ) {
 									if ( $item['qty'] ) {
 										$product = new WC_product( $item[ 'product_id' ] );
@@ -945,7 +945,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 										}
 									}
 								}
-							}
+							}*/
 							$order->add_order_note(
 								'Mercado Pago: ' . __( 'Waiting for the ticket payment.',
 									'woocommerce-mercadopago-module' )
