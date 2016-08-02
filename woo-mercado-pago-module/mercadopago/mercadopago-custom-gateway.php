@@ -793,15 +793,15 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 		if ( is_admin() && ! defined( 'DOING_AJAX' ) || is_cart() ) {
 			return;
 		}
-		if ( 'yes' == $this->debug ) {
-			$this->log->add( $this->id, $this->id . ': @[add_discount_custom] - Custom checkout trying to apply discount...' );
-		}
 		if ( isset( $_POST[ 'mercadopago_custom' ][ 'discount' ] ) &&
         	$_POST[ 'mercadopago_custom' ][ 'discount' ] != "" &&
         	$_POST[ 'mercadopago_custom' ][ 'discount' ] > 0 &&
 			isset( $_POST[ 'mercadopago_custom' ][ 'coupon_code' ] ) &&
         	$_POST[ 'mercadopago_custom' ][ 'coupon_code' ] != "" &&
 			WC()->session->chosen_payment_method == "woocommerce-mercadopago-custom-module" ) {
+			if ( 'yes' == $this->debug ) {
+				$this->log->add( $this->id, $this->id . ': @[add_discount_custom] - Custom checkout trying to apply discount...' );
+			}
 			$value = ( $_POST[ 'mercadopago_custom' ][ 'discount' ] ) /
 				( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 );
 			global $woocommerce;
@@ -1121,7 +1121,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 				if ( 'yes' == $this->debug ) {
 					$this->log->add( $this->id, $this->id .
 						': @[successful_request] - got order with ID ' . $order->id .
-						' and status ' . $data[ 'status' ] );
+						' and data: ' . json_encode( $data, JSON_PRETTY_PRINT ) );
 				}
 				// Order details.
 				if ( !empty( $data[ 'payer' ][ 'email' ] ) ) {

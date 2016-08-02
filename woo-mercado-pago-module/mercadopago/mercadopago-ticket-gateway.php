@@ -416,15 +416,22 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 		        		);
 		        		$order->add_order_note(
 							'Mercado Pago: ' .
-							__( 'Waiting for the ticket payment.', 'woocommerce-mercadopago-module' )
+							__( 'Customer haven\'t paid yet.', 'woocommerce-mercadopago-module' )
 						);
 						$order->add_order_note(
+							'Mercado Pago: ' .
+							__( 'To reprint the ticket click ', 'woocommerce-mercadopago-module' ) .
+							'<a target="_blank" href="' . $response[ 'transaction_details' ][ 'external_resource_url' ] . '">' .
+							__( 'here', 'woocommerce-mercadopago-module' ) .
+							'</a>', 1, false
+						);
+						/*$order->add_order_note(
 							'Mercado Pago: ' .
 							__( 'To reprint the ticket click ', 'woocommerce-mercadopago-module' ) .
 							'<a href="' . $response[ 'transaction_details' ][ 'external_resource_url' ] . '">' .
 							__( 'here', 'woocommerce-mercadopago-module' ) .
 							'</a>'
-						);
+						);*/
 
 						return array(
 							'result' => 'success',
@@ -596,15 +603,15 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 		if ( is_admin() && ! defined( 'DOING_AJAX' ) || is_cart() ) {
 			return;
 		}
-		if ( 'yes' == $this->debug ) {
-			$this->log->add( $this->id, $this->id . ': @[add_discount_ticket] - Ticket trying to apply discount...' );
-		}
 		if ( isset( $_POST[ 'mercadopago_ticket' ][ 'discount' ] ) &&
         	$_POST[ 'mercadopago_ticket' ][ 'discount' ] != "" &&
         	$_POST[ 'mercadopago_ticket' ][ 'discount' ] > 0 &&
 			isset( $_POST[ 'mercadopago_ticket' ][ 'coupon_code' ] ) &&
         	$_POST[ 'mercadopago_ticket' ][ 'coupon_code' ] != "" &&
 			WC()->session->chosen_payment_method == "woocommerce-mercadopago-ticket-module" ) {
+			if ( 'yes' == $this->debug ) {
+				$this->log->add( $this->id, $this->id . ': @[add_discount_ticket] - Ticket trying to apply discount...' );
+			}
 			$value = ( $_POST[ 'mercadopago_ticket' ][ 'discount' ] ) /
 				( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 );
 			global $woocommerce;
@@ -887,7 +894,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 				if ( 'yes' == $this->debug ) {
 					$this->log->add( $this->id, $this->id .
 						': @[successful_request] - got order with ID ' . $order->id .
-						' and status ' . $data[ 'status' ] );
+						' and data: ' . json_encode( $data, JSON_PRETTY_PRINT ) );
 				}
 				// Order details.
 				if ( !empty( $data[ 'payer' ][ 'email' ] ) ) {
@@ -924,10 +931,37 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 						$order->payment_complete();
 						break;
 					case 'pending':
-						$order->add_order_note(
-							'Mercado Pago: ' . __( 'Customer haven\'t paid yet.',
-								'woocommerce-mercadopago-module' )
-						);
+						// decrease stock if not yet decreased and order not exists
+						$notes = $order->get_customer_order_notes();
+						$has_note = false;
+						if ( sizeof($notes) > 1 ) {
+							$has_note = true;
+							break;
+						}
+						if ( !$has_note ) {
+							// dont have order note
+							if ( sizeof( $order->get_items() ) > 0 ) {
+								foreach ( $order->get_items() as $item ) {
+									if ( $item['qty'] ) {
+										$product = new WC_product( $item[ 'product_id' ] );
+										if ( !$product->is_downloadable('yes') ) {
+											wc_update_product_stock(
+												$item[ 'product_id' ],
+												$product->get_stock_quantity()-$item[ 'qty' ]
+											);
+										}
+									}
+								}
+							}
+							$order->add_order_note(
+								'Mercado Pago: ' . __( 'Waiting for the ticket payment.',
+									'woocommerce-mercadopago-module' )
+							);
+							$order->add_order_note(
+								'Mercado Pago: ' . __( 'Waiting for the ticket payment.',
+									'woocommerce-mercadopago-module' ), 1, false
+							);
+						}
 						break;
 					case 'in_process':
 						$order->update_status(

@@ -1,5 +1,11 @@
 CHANGELOG:
 
+= v2.1.1 (02/08/2016) =
+* Improvements
+	- Decreasing stock for ticket when generating the payment;
+	- Improved log messages when applying discounts;
+	- Added a link to reprint ticket in customer account order page.
+
 = v2.1.0 (25/07/2016) =
 * Mercado Pago Discount Coupon
 	- This feature lets Mercado Pago and merchants to use campaigns of discount created in their Mercado Pago accounts.
