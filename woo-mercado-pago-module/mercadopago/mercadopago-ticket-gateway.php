@@ -425,13 +425,6 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 							__( 'here', 'woocommerce-mercadopago-module' ) .
 							'</a>', 1, false
 						);
-						/*$order->add_order_note(
-							'Mercado Pago: ' .
-							__( 'To reprint the ticket click ', 'woocommerce-mercadopago-module' ) .
-							'<a href="' . $response[ 'transaction_details' ][ 'external_resource_url' ] . '">' .
-							__( 'here', 'woocommerce-mercadopago-module' ) .
-							'</a>'
-						);*/
 
 						return array(
 							'result' => 'success',
