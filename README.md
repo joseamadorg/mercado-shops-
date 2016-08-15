@@ -254,7 +254,7 @@ If you already had installed a previous version of Woo Mercado Pago Module, plea
 
 4. Copy "woo-mercado-pago-module" directory to *[WordPressRootDirectory]/wp-content/plugins/* directory.
 
-To confirm that your module is really installed, you can see in *Plugins* item in the store administration menu, and check your just updated module. The version should match the just-updated plugin.
+To confirm that your module is really updated, you can see in *Plugins* item in the store administration menu, and check your just updated module. The version should match the just-updated plugin.
 
 <a name="Feedback"></a>
 ##Feedback##
