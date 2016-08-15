@@ -13,7 +13,7 @@
 <a name="features"></a>
 ##Features##
 
-Checkout options right for your business: 
+Checkout options right for your business:
 We offer two checkout methods that make it easy to securely accept payments from anyone, anywhere.
 
 **Custom Checkout**
@@ -34,7 +34,7 @@ Offer a checkout fully customized to your brand experience with our simple-to-us
 Great for merchants who want to get going quickly and easily.
 
 * Easy website integration— no coding required.
-* Limited control of buying experience— display Checkout window as redirect, modal or iframe.
+* Limited control of buying experience — display Checkout window as redirect, modal or iframe.
 * Store buyer’s card for fast checkout.
 * Accept tickets, bank transfer and account money in addition to cards.
 * Accept Mercado Pago's discount coupons.
@@ -87,7 +87,7 @@ During the sandbox mode tests, you can operate over HTTP, but for homologation y
 
 If you have already the module installed, please follow the [Upgrade instructions](#upgrade) first.
 
-You have two way to install this module: from your WordPress Store, or by downloading and manually copying the module directory.
+You have two ways to install this module: from your WordPress Store, or by downloading and manually copying the module directory.
 
 **Install from WordPress**
 

@@ -456,7 +456,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		if ( $url ) {
 			// Display checkout.
 			$html =
-				$this->iframe_width_desc = '<img width="468" height="60" src="' .
+				'<img width="468" height="60" src="' .
 				plugins_url( 'images/' . $this->banners_mercadopago_standard[ $this->site_id ], plugin_dir_path( __FILE__ ) ) . '">';
 			if ( 'iframe' != $this->method ) {
 				if ( 'yes' == $this->debug ) {
