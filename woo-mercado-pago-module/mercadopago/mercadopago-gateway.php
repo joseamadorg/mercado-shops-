@@ -505,12 +505,15 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 	// order options from the cart.
 	public function buildPaymentPreference( $order ) {
 
+		// Using a string to register each item (this is a workaround to deal with API problem that shows only first item)
+		$list_of_items = array();
 		// Here we build the array that contains ordered itens, from customer cart
 		$items = array();
 		if ( sizeof( $order->get_items() ) > 0 ) {
 			foreach ( $order->get_items() as $item ) {
 				if ( $item['qty'] ) {
 					$product = new WC_product( $item[ 'product_id' ] );
+					array_push( $list_of_items, $product->post->post_title . ' x ' . $item[ 'qty' ] );
 					array_push( $items, array(
 						'id' => $item[ 'product_id' ],
 						'title' => ( $product->post->post_title . ' x ' . $item[ 'qty' ] ),
@@ -529,9 +532,11 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 					));
 				}
 			}
+			// Using a string to register each item (this is a workaround to deal with API problem that shows only first item)
+			$items[0]['title'] = implode( ', ', $list_of_items );
 			// shipment cost as an item (workaround to prevent API showing shipment setup again)
   			array_push($items, array(
-  				'title' => $this->workaroundAmperSandBug( $this->workaroundAmperSandBug( $order->get_shipping_to_display() ) ),
+  				'title' => $this->workaroundAmperSandBug( sanitize_file_name( $order->get_shipping_to_display() ) ),
   				'description' => __( 'Shipping service used by store', 'woocommerce-mercadopago-module' ),
  				'category_id' => $this->store_categories_id[$this->category_id],
  				'quantity' => 1,
