@@ -7,7 +7,7 @@
  * Author URI: https://www.mercadopago.com.br/developers/
  * Developer: Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
  * Copyright: Copyright(c) MercadoPago [http://www.mercadopago.com]
- * Version: 2.1.1
+ * Version: 2.1.2
  * License: http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: woocommerce-mercadopago-module
  * Domain Path: /languages/
@@ -18,7 +18,7 @@
  * 1. https://docs.woothemes.com/document/payment-gateway-api/
  * 2. https://www.mercadopago.com.br/developers/en/api-docs/
  */
- 
+
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) {
 	exit;
@@ -54,7 +54,7 @@ class WC_WooMercadoPago_Module {
 			add_action( 'admin_notices', array( $this, 'notifyWooCommerceMiss' ) );
 		}
 	}
-	
+
 	// As well as defining your class, you need to also tell WooCommerce (WC) that
 	// it exists. Do this by filtering woocommerce_payment_gateways.
 	public function addGateway( $methods ) {
@@ -63,7 +63,7 @@ class WC_WooMercadoPago_Module {
 		$methods[] = 'WC_WooMercadoPagoTicket_Gateway';
 		return $methods;
 	}
-	
+
 	// Places a warning error to notify user that WooCommerce is missing
 	public function notifyWooCommerceMiss() {
 		echo
@@ -73,7 +73,7 @@ class WC_WooMercadoPago_Module {
 			) .
 			'</p></div>';
 	}
-	
+
 	// Multi-language plugin
 	public function load_plugin_textdomain() {
 		$locale = apply_filters( 'plugin_locale', get_locale(), 'woocommerce-mercadopago-module' );
@@ -83,7 +83,7 @@ class WC_WooMercadoPago_Module {
 		);
 		load_plugin_textdomain( 'woocommerce-mercadopago-module', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
-	
+
 	public static function woocommerceInstance() {
 		if ( function_exists( 'WC' ) ) {
 			return WC();
@@ -92,19 +92,19 @@ class WC_WooMercadoPago_Module {
 			return $woocommerce;
 		}
 	}
-	
+
 	public static function getTemplatesPath() {
 		return plugin_dir_path( __FILE__ ) . 'templates/';
 	}
-	
+
 }
-	
+
 // Payment gateways should be created as additional plugins that hook into WooCommerce.
 // Inside the plugin, you need to create a class after plugins are loaded
 add_action( 'plugins_loaded', array( 'WC_WooMercadoPago_Module', 'initMercadoPagoGatewayClass' ), 0 );
- 
+
 // Add settings link on plugin page
-function woomercadopago_settings_link( $links ) { 
+function woomercadopago_settings_link( $links ) {
 	$plugin_links = array();
 	$plugin_links[] = '<a href="' . esc_url( admin_url(
 		'admin.php?page=wc-settings&tab=checkout&section=WC_WooMercadoPago_Gateway' ) ) . '">' .
@@ -120,7 +120,7 @@ function woomercadopago_settings_link( $links ) {
 	'</a>';
 	return array_merge( $plugin_links, $links );
 }
-$plugin = plugin_basename( __FILE__ ); 
+$plugin = plugin_basename( __FILE__ );
 add_filter( "plugin_action_links_$plugin", 'woomercadopago_settings_link' );
 
 endif;
