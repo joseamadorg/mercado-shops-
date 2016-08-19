@@ -13,7 +13,7 @@
 <a name="features"></a>
 ##Features##
 
-Checkout options right for your business: 
+Checkout options right for your business:
 We offer two checkout methods that make it easy to securely accept payments from anyone, anywhere.
 
 **Custom Checkout**
@@ -34,7 +34,7 @@ Offer a checkout fully customized to your brand experience with our simple-to-us
 Great for merchants who want to get going quickly and easily.
 
 * Easy website integration— no coding required.
-* Limited control of buying experience— display Checkout window as redirect, modal or iframe.
+* Limited control of buying experience — display Checkout window as redirect, modal or iframe.
 * Store buyer’s card for fast checkout.
 * Accept tickets, bank transfer and account money in addition to cards.
 * Accept Mercado Pago's discount coupons.
@@ -75,7 +75,7 @@ During the sandbox mode tests, you can operate over HTTP, but for homologation y
   <thead>
   <tbody>
     <tr>
-      <td>v2.1.1</td>
+      <td>v2.1.2</td>
       <td>Stable (Current version)</td>
       <td>WooCommerce 2.1.x - 2.5.x</td>
     </tr>
@@ -87,7 +87,7 @@ During the sandbox mode tests, you can operate over HTTP, but for homologation y
 
 If you have already the module installed, please follow the [Upgrade instructions](#upgrade) first.
 
-You have two way to install this module: from your WordPress Store, or by downloading and manually copying the module directory.
+You have two ways to install this module: from your WordPress Store, or by downloading and manually copying the module directory.
 
 **Install from WordPress**
 
@@ -99,7 +99,7 @@ You have two way to install this module: from your WordPress Store, or by downlo
 
 **Manual Download**
 
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.1.1.zip">WordPress Plugin Directory</a>);
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.1.2.zip">WordPress Plugin Directory</a>);
 
 2. Unzip the folder and find "woo-mercado-pago-module" directory;
 
@@ -246,7 +246,7 @@ If you already had installed a previous version of Woo Mercado Pago Module, plea
 
 **Upgrade with Manual Download**
 
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.1.1.zip">WordPress Plugin Directory</a>);
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.1.2.zip">WordPress Plugin Directory</a>);
 
 2. Unzip the folder and find "woo-mercado-pago-module" directory;
 
@@ -254,7 +254,7 @@ If you already had installed a previous version of Woo Mercado Pago Module, plea
 
 4. Copy "woo-mercado-pago-module" directory to *[WordPressRootDirectory]/wp-content/plugins/* directory.
 
-To confirm that your module is really installed, you can see in *Plugins* item in the store administration menu, and check your just updated module. The version should match the just-updated plugin.
+To confirm that your module is really updated, you can see in *Plugins* item in the store administration menu, and check your just updated module. The version should match the just-updated plugin.
 
 <a name="Feedback"></a>
 ##Feedback##
