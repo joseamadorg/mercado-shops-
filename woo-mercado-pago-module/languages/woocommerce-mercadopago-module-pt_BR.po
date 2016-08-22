@@ -28,7 +28,7 @@ msgstr "Este é o módulo <strong>oficial</strong> do Mercado Pago para o plugin
 #: mercadopago-module.php:69
 #, php-format
 msgid "Woo Mercado Pago Module depends on the last version of %s to execute!"
-msgstr "Woo Mercado Pago Module depends on the last version of %s to execute!"
+msgstr "Woo Mercado Pago Module depende da última versão do %s para executar!"
 
 #: mercadopago-module.php:109
 msgid "Basic Checkout"
