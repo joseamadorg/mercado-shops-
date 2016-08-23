@@ -477,8 +477,8 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 						'picture_url' => wp_get_attachment_url( $product->get_image_id() ),
 						'category_id' => $this->store_categories_id[ $this->category_id ],
 						'quantity' => 1,
-						'unit_price' => floor( ( (float) $item[ 'line_total' ] + (float) $item[ 'line_tax' ] ) *
-							( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 ) * 100 ) / 100,
+						'unit_price' => ( (float) $item[ 'line_total' ] + (float) $item[ 'line_tax' ] ) *
+							( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 ),
 					));
 				}
 			}
@@ -550,7 +550,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 
     // The payment preference
     $payment_preference = array (
-    	'transaction_amount' => floor( ( (float) $post_from_form[ 'mercadopago_ticket' ][ 'amount' ] ) * 100 ) / 100,
+    	'transaction_amount' => (float) number_format( $post_from_form[ 'mercadopago_ticket' ][ 'amount' ], 2 ),
     	'description' => $purchase_description,
       'payment_method_id' => $post_from_form[ 'mercadopago_ticket' ][ 'paymentMethodId' ],
       'payer' => array(

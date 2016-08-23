@@ -624,8 +624,8 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 						'picture_url' => wp_get_attachment_url( $product->get_image_id() ),
 						'category_id' => $this->store_categories_id[ $this->category_id ],
 						'quantity' => 1,
-						'unit_price' => floor( ( (float) $item[ 'line_total' ] + (float) $item[ 'line_tax' ] ) *
-							( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 ) * 100 ) / 100
+						'unit_price' => ( (float) $item[ 'line_total' ] + (float) $item[ 'line_tax' ] ) *
+							( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 )
 					));
 				}
 			}
@@ -697,7 +697,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 
     // The payment preference
     $payment_preference = array (
-    	'transaction_amount' => floor( ( (float) $post_from_form[ 'mercadopago_custom' ][ 'amount' ] ) * 100 ) / 100,
+    	'transaction_amount' => (float) number_format( $post_from_form[ 'mercadopago_custom' ][ 'amount' ], 2 ),
     	'token' => $post_from_form[ 'mercadopago_custom' ][ 'token' ],
     	'description' => $purchase_description,
     	'installments' => (int) $post_from_form[ 'mercadopago_custom' ][ 'installments' ],
