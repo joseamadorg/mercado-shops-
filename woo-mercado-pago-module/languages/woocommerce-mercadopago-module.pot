@@ -568,6 +568,15 @@ msgid ""
 "charged-back."
 msgstr ""
 
+msgid "Binary Mode"
+msgstr ""
+
+msgid "Enable binary mode for checkout status"
+msgstr ""
+
+msgid "When charging a credit card, only [approved] or [reject] status will be taken."
+msgstr ""
+
 msgid " as it appears in your card ..."
 msgstr ""
 
