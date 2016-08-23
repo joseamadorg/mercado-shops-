@@ -574,6 +574,12 @@ msgstr ""
 msgid "Enable binary mode for checkout status"
 msgstr ""
 
+msgid "Statement Descriptor"
+msgstr ""
+
+msgid "The description that will be shown in your customer's invoice."
+msgstr ""
+
 msgid "When charging a credit card, only [approved] or [reject] status will be taken."
 msgstr ""
 
