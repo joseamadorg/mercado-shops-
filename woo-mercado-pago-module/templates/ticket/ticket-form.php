@@ -6,7 +6,7 @@
  * Copyright - Copyright(c) MercadoPago [http://www.mercadopago.com]
  * License - http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  */
- 
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<img class="logo" src="<?php echo ( $images_path . 'boleto.png' ); ?>" width="90" height="40" style="float:right;"/>
 	<?php } else { ?>
 		<?php foreach ( $payment_methods as $payment ) { ?>
-			<img class="logo" src="<?php echo $payment[ 'thumbnail' ]; ?>" width="90" height="40" style="float:right;"/> 
+			<img class="logo" src="<?php echo $payment[ 'thumbnail' ]; ?>" width="90" height="40" style="float:right;"/>
 		<?php } ?>
 	<?php } ?>
 </div>
@@ -66,7 +66,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			  			</div>
 			  			<div class="mp-box-inputs mp-col-45">
 							<label>
-			  					<img src="<?php echo $payment[ 'thumbnail' ]; ?>" alt="<?php echo $payment[ 'name' ]; ?>" /> 
+			  					<img src="<?php echo $payment[ 'thumbnail' ]; ?>" alt="<?php echo $payment[ 'name' ]; ?>" />
 			  					&nbsp;(<?php echo $payment[ 'name' ]; ?>)
 			  				</label>
 			  			</div>
@@ -98,7 +98,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<!-- utilities -->
 		<div class="mp-box-inputs mp-col-100" id="mercadopago-utilities">
-			<input type="hidden" id="public_key" value="<?php echo $public_key; ?>" name="mercadopago_ticket[amount]"/>
 			<input type="hidden" id="site_id"  value="<?php echo $site_id; ?>" name="mercadopago_ticket[site_id]"/>
 			<input type="hidden" id="amountTicket" value="<?php echo $amount; ?>" name="mercadopago_ticket[amount]"/>
 			<input type="hidden" id="campaign_idTicket" name="mercadopago_ticket[campaign_id]"/>
@@ -110,7 +109,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 </fieldset>
 
 <script type="text/javascript">
-    
+
     (function() {
 
 	    var MPv1Ticket = {
