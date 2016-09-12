@@ -31,7 +31,7 @@ Mercado Pago owns the highest security standards with PCI certification level 1 
 
 == Installation ==
 
-You have two way to install this module: from your WordPress Store, or by downloading and manually copying the module directory.
+You have two ways to install this module: from your WordPress Store, or by downloading and manually copying the module directory.
 
 = Install from WordPress =
 1. On your store administration, go to **Plugins** option in sidebar;
@@ -79,7 +79,7 @@ To confirm that your module is really installed, you can click in **Plugins** it
 	* Configure the maximum installments allowed for your customers (only for Basic);
 	* Configure the payment methods that you want to not work with Mercado Pago (only for Basic);
 	* Enable currency conversion (for all solutions);
-	* Enable/disable sandbox mode, where you can test your payments in Mercado Pago sandbox environment (for all solutions);
+	* Enable/disable sandbox mode, where you can test your payments in Mercado Pago sandbox environment (for Basic and Custom);
 	* Enables/disable system logs (for all solutions).
 
 = In this video, we show how you can install and configure from your WordPress store =
