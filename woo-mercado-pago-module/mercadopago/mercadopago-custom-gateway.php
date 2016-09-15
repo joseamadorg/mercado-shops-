@@ -3,8 +3,8 @@
  * Part of Woo Mercado Pago Module
  * Author - Mercado Pago
  * Developer - Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
- * Copyright - Copyright(c) MercadoPago [http://www.mercadopago.com]
- * License - http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
+ * Copyright - Copyright(c) MercadoPago [https://www.mercadopago.com]
+ * License - https://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  */
 
 // This include Mercado Pago library SDK

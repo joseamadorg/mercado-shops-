@@ -3,8 +3,8 @@
  * Part of Woo Mercado Pago Module
  * Author - Mercado Pago
  * Developer - Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
- * Copyright - Copyright(c) MercadoPago [http://www.mercadopago.com]
- * License - http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
+ * Copyright - Copyright(c) MercadoPago [https://www.mercadopago.com]
+ * License - https://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -80,7 +80,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<select id="paymentMethodId" name="mercadopago_ticket[paymentMethodId]">
 					<?php foreach ( $payment_methods as $payment ) { ?>
 			  			<option value="<?php echo $payment[ 'id' ]; ?>"
-			  				style="padding: 8px; background: url( 'http://img.mlstatic.com/org-img/MP3/API/logos/bapropagos.gif' ); ?> ) 98% 50% no-repeat;"> <?php echo $payment[ 'name' ]; ?></option>
+			  				style="padding: 8px; background: url( 'https://img.mlstatic.com/org-img/MP3/API/logos/bapropagos.gif' ); ?> ) 98% 50% no-repeat;"> <?php echo $payment[ 'name' ]; ?></option>
 					<?php } ?>
 				</select>
 			</div>

@@ -6,7 +6,7 @@ Requires at least: WooCommerce 2.1.x
 Tested up to: WooCommerce 2.5.x
 Stable tag: 2.1.3
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 This is the oficial module of Mercado Pago for WooCommerce plugin.
 
@@ -111,8 +111,9 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 = v2.1.3 (15/09/2016) =
 * Improvements
 	- A few improvements in performance;
-	- Improved translations.
-	
+	- Improved translations;
+	- Improved security with URL access via SSL in all module flow.
+
 = v2.1.2 (18/08/2016) =
 * Improvements
 	- Improved performance for both client and server sides.
@@ -201,7 +202,7 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 
 = v1.0.0 (16/03/2016) =
 * Features
-	- LatAm Basic Checkout support. Great for merchants who want to get going quickly and easily. This is the basic payment integration with Mercado Pago. Want to see how it works on-the-fly? Please check this video: <a href="https://www.youtube.com/watch?v=DgOsX1eXjBU">Standard Checkout</a>;
+	- LatAm Basic Checkout support. Great for merchants who want to get going quickly and easily. This is the basic payment integration with Mercado Pago. Want to see how it works on-the-fly? Please check this video: <a href="https://www.youtube.com/watch?v=DgOsX1eXjBU">Basic Checkout</a>;
 	- Set of configurable fields and customizations. Title, description, category, and external reference customizations, integrations via iframe, modal, and redirection, with configurable auto-returning, max installments and payment method exclusion setup;
 	- Sandbox and debug options. Basicer can test orders by enabling debug mode or using sandbox environment.
 
