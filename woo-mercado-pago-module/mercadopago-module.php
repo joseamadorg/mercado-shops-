@@ -6,9 +6,9 @@
  * Author: Mercado Pago
  * Author URI: https://www.mercadopago.com.br/developers/
  * Developer: Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
- * Copyright: Copyright(c) MercadoPago [http://www.mercadopago.com]
- * Version: 2.1.2
- * License: http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
+ * Copyright: Copyright(c) MercadoPago [https://www.mercadopago.com]
+ * Version: 2.1.3
+ * License: https://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: woocommerce-mercadopago-module
  * Domain Path: /languages/
  */
@@ -69,7 +69,7 @@ class WC_WooMercadoPago_Module {
 		echo
 			'<div class="error"><p>' . sprintf(
 				__( 'Woo Mercado Pago Module depends on the last version of %s to execute!', 'woocommerce-mercadopago-module' ),
-				'<a href="http://wordpress.org/extend/plugins/woocommerce/">' . 'WooCommerce' . '</a>'
+				'<a href="https://wordpress.org/extend/plugins/woocommerce/">' . 'WooCommerce' . '</a>'
 			) .
 			'</p></div>';
 	}

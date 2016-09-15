@@ -4,9 +4,9 @@ Donate link: https://www.mercadopago.com.br/developers/
 Tags: ecommerce, mercadopago, woocommerce
 Requires at least: WooCommerce 2.1.x
 Tested up to: WooCommerce 2.5.x
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 This is the oficial module of Mercado Pago for WooCommerce plugin.
 
@@ -31,7 +31,7 @@ Mercado Pago owns the highest security standards with PCI certification level 1 
 
 == Installation ==
 
-You have two way to install this module: from your WordPress Store, or by downloading and manually copying the module directory.
+You have two ways to install this module: from your WordPress Store, or by downloading and manually copying the module directory.
 
 = Install from WordPress =
 1. On your store administration, go to **Plugins** option in sidebar;
@@ -39,7 +39,7 @@ You have two way to install this module: from your WordPress Store, or by downlo
 3. You should find the module read to be installed. Click install.
 
 = Manual Download =
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.1.2.zip">WordPress Plugin Directory</a>);
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.1.3.zip">WordPress Plugin Directory</a>);
 2. Unzip the folder and find "woo-mercado-pago-module" directory;
 3. Copy "woo-mercado-pago-module" directory to **[WordPressRootDirectory]/wp-content/plugins/** directory.
 
@@ -79,7 +79,7 @@ To confirm that your module is really installed, you can click in **Plugins** it
 	* Configure the maximum installments allowed for your customers (only for Basic);
 	* Configure the payment methods that you want to not work with Mercado Pago (only for Basic);
 	* Enable currency conversion (for all solutions);
-	* Enable/disable sandbox mode, where you can test your payments in Mercado Pago sandbox environment (for all solutions);
+	* Enable/disable sandbox mode, where you can test your payments in Mercado Pago sandbox environment (for Basic and Custom);
 	* Enables/disable system logs (for all solutions).
 
 = In this video, we show how you can install and configure from your WordPress store =
@@ -107,6 +107,12 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 5. `Configuration of Basic Checkout`
 
 == Changelog ==
+
+= v2.1.3 (15/09/2016) =
+* Improvements
+	- A few improvements in performance;
+	- Improved translations;
+	- Improved security with URL access via SSL in all module flow.
 
 = v2.1.2 (18/08/2016) =
 * Improvements
@@ -196,7 +202,7 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 
 = v1.0.0 (16/03/2016) =
 * Features
-	- LatAm Basic Checkout support. Great for merchants who want to get going quickly and easily. This is the basic payment integration with Mercado Pago. Want to see how it works on-the-fly? Please check this video: <a href="https://www.youtube.com/watch?v=DgOsX1eXjBU">Standard Checkout</a>;
+	- LatAm Basic Checkout support. Great for merchants who want to get going quickly and easily. This is the basic payment integration with Mercado Pago. Want to see how it works on-the-fly? Please check this video: <a href="https://www.youtube.com/watch?v=DgOsX1eXjBU">Basic Checkout</a>;
 	- Set of configurable fields and customizations. Title, description, category, and external reference customizations, integrations via iframe, modal, and redirection, with configurable auto-returning, max installments and payment method exclusion setup;
 	- Sandbox and debug options. Basicer can test orders by enabling debug mode or using sandbox environment.
 

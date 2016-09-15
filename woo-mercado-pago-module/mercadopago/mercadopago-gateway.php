@@ -3,8 +3,8 @@
  * Part of Woo Mercado Pago Module
  * Author - Mercado Pago
  * Developer - Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
- * Copyright - Copyright(c) MercadoPago [http://www.mercadopago.com]
- * License - http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
+ * Copyright - Copyright(c) MercadoPago [https://www.mercadopago.com]
+ * License - https://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  */
 
 // This include Mercado Pago library SDK
@@ -495,7 +495,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 					'</a><style type="text/css">#MP-Checkout-dialog #MP-Checkout-IFrame { bottom: -28px !important;  height: 590px !important; }</style>';
 				// Includes javascript.
 				$html .=
-					'<script type="text/javascript">(function(){function $MPBR_load(){window.$MPBR_loaded !== true && (function(){var s = document.createElement("script");s.type = "text/javascript";s.async = true;s.src = ("https:"==document.location.protocol?"https://www.mercadopago.com/org-img/jsapi/mptools/buttons/":"http://mp-tools.mlstatic.com/buttons/")+"render.js";var x = document.getElementsByTagName("script")[0];x.parentNode.insertBefore(s, x);window.$MPBR_loaded = true;})();}window.$MPBR_loaded !== true ? (window.attachEvent ? window.attachEvent("onload", $MPBR_load) : window.addEventListener("load", $MPBR_load, false)) : null;})();</script>';
+					'<script type="text/javascript">(function(){function $MPBR_load(){window.$MPBR_loaded !== true && (function(){var s = document.createElement("script");s.type = "text/javascript";s.async = true;s.src = ("https:"==document.location.protocol?"https://www.mercadopago.com/org-img/jsapi/mptools/buttons/":"https://mp-tools.mlstatic.com/buttons/")+"render.js";var x = document.getElementsByTagName("script")[0];x.parentNode.insertBefore(s, x);window.$MPBR_loaded = true;})();}window.$MPBR_loaded !== true ? (window.attachEvent ? window.attachEvent("onload", $MPBR_load) : window.addEventListener("load", $MPBR_load, false)) : null;})();</script>';
 			} else {
 				if ( 'yes' == $this->debug ) {
 					$this->log->add( $this->id, $this->id . ': @[renderOrderForm] - embedding Mercado Pago iFrame.' );

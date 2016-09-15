@@ -87,7 +87,6 @@ body{
   border-radius: 3px;
   color: #666;
   height: 40px;
-  font-size: 20px;
 }
 
 .mp-box-inputs input:focus, .mp-box-inputs select:focus{

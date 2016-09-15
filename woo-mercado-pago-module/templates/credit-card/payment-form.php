@@ -3,8 +3,8 @@
  * Part of Woo Mercado Pago Module
  * Author - Mercado Pago
  * Developer - Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
- * Copyright - Copyright(c) MercadoPago [http://www.mercadopago.com]
- * License - http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
+ * Copyright - Copyright(c) MercadoPago [https://www.mercadopago.com]
+ * License - https://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  */
 
 if ( !defined( 'ABSPATH' ) ) {
@@ -19,7 +19,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	<?php } ?>
 </div>
 <fieldset style="background:white; ">
-	
+
 	<div class="mp-box-inputs mp-line" id="mercadopago-form-coupon" style="padding:0px 36px 16px 36px;">
 		<label for="couponCodeLabel"><?php echo $form_labels['form']['coupon_of_discounts']; ?></label>
       	<div class="mp-box-inputs mp-col-65">
@@ -181,7 +181,7 @@ if ( !defined( 'ABSPATH' ) ) {
 </fieldset>
 
 <script type="text/javascript">
-    
+
     (function() {
 
 	    var MPv1 = {
@@ -1022,7 +1022,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	            //hide documento for mex
 	            document.querySelector(MPv1.selectors.mpDoc).style.display = 'none';
 	            // document.querySelector(MPv1.selectors.mpPaymentMethodSelector).removeAttribute('style');
-	            
+
 	            // I've added this trying to fix paymentMethodSelector that not appear... by mhama
 	            document.querySelector(MPv1.selectors.formCustomerAndCard).removeAttribute('style');
 	            document.querySelector(MPv1.selectors.formCustomerAndCard).style.padding = "36px 36px 16px 36px";

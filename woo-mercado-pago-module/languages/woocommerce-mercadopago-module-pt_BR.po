@@ -28,7 +28,7 @@ msgstr "Este é o módulo <strong>oficial</strong> do Mercado Pago para o plugin
 #: mercadopago-module.php:69
 #, php-format
 msgid "Woo Mercado Pago Module depends on the last version of %s to execute!"
-msgstr "Woo Mercado Pago Module depends on the last version of %s to execute!"
+msgstr "Woo Mercado Pago Module depende da última versão do %s para executar!"
 
 #: mercadopago-module.php:109
 msgid "Basic Checkout"
@@ -42,54 +42,72 @@ msgstr "Checkout Transparente"
 msgid "Mercado Pago - Custom Checkout"
 msgstr "Mercado Pago - Checkout Transparente"
 
-#: mercadopago/mercadopago-custom-gateway.php:51 mercadopago/mercadopago-gateway.php:54
+#: mercadopago/mercadopago-custom-gateway.php:51
+#: mercadopago/mercadopago-gateway.php:54
 msgid "This module enables WooCommerce to use Mercado Pago as payment method for purchases made in your virtual store."
 msgstr "Este módulo habilita o WooCommerce a usar o Mercado Pago como meio de pagamento para compras realizadas em sua loja virtual."
 
-#: mercadopago/mercadopago-custom-gateway.php:126 mercadopago/mercadopago-custom-gateway.php:791 mercadopago/mercadopago-gateway.php:125
+#: mercadopago/mercadopago-custom-gateway.php:126
+#: mercadopago/mercadopago-custom-gateway.php:791
+#: mercadopago/mercadopago-gateway.php:125
 #: mercadopago/mercadopago-gateway.php:716
 msgid "Argentine"
 msgstr "Argentina"
 
-#: mercadopago/mercadopago-custom-gateway.php:127 mercadopago/mercadopago-custom-gateway.php:792 mercadopago/mercadopago-gateway.php:126
+#: mercadopago/mercadopago-custom-gateway.php:127
+#: mercadopago/mercadopago-custom-gateway.php:792
+#: mercadopago/mercadopago-gateway.php:126
 #: mercadopago/mercadopago-gateway.php:717
 msgid "Brazil"
 msgstr "Brasil"
 
-#: mercadopago/mercadopago-custom-gateway.php:128 mercadopago/mercadopago-custom-gateway.php:794 mercadopago/mercadopago-gateway.php:127
+#: mercadopago/mercadopago-custom-gateway.php:128
+#: mercadopago/mercadopago-custom-gateway.php:794
+#: mercadopago/mercadopago-gateway.php:127
 #: mercadopago/mercadopago-gateway.php:719
 msgid "Chile"
 msgstr "Chile"
 
-#: mercadopago/mercadopago-custom-gateway.php:129 mercadopago/mercadopago-custom-gateway.php:793 mercadopago/mercadopago-gateway.php:128
+#: mercadopago/mercadopago-custom-gateway.php:129
+#: mercadopago/mercadopago-custom-gateway.php:793
+#: mercadopago/mercadopago-gateway.php:128
 #: mercadopago/mercadopago-gateway.php:718
 msgid "Colombia"
 msgstr "Colômbia"
 
-#: mercadopago/mercadopago-custom-gateway.php:130 mercadopago/mercadopago-custom-gateway.php:795 mercadopago/mercadopago-gateway.php:129
+#: mercadopago/mercadopago-custom-gateway.php:130
+#: mercadopago/mercadopago-custom-gateway.php:795
+#: mercadopago/mercadopago-gateway.php:129
 #: mercadopago/mercadopago-gateway.php:720
 msgid "Mexico"
 msgstr "México"
 
-#: mercadopago/mercadopago-custom-gateway.php:132 mercadopago/mercadopago-gateway.php:130
+#: mercadopago/mercadopago-custom-gateway.php:132
+#: mercadopago/mercadopago-gateway.php:130
 msgid "or"
 msgstr "ou"
 
-#: mercadopago/mercadopago-custom-gateway.php:133 mercadopago/mercadopago-custom-gateway.php:796 mercadopago/mercadopago-gateway.php:131
+#: mercadopago/mercadopago-custom-gateway.php:133
+#: mercadopago/mercadopago-custom-gateway.php:796
+#: mercadopago/mercadopago-gateway.php:131
 #: mercadopago/mercadopago-gateway.php:721
 msgid "Venezuela"
 msgstr "Venezuela"
 
-#: mercadopago/mercadopago-custom-gateway.php:145 mercadopago/mercadopago-gateway.php:151
+#: mercadopago/mercadopago-custom-gateway.php:145
+#: mercadopago/mercadopago-gateway.php:151
 msgid "Your credentials are <strong>valid</strong> for"
 msgstr "Suas credenciais <strong>são válidas</strong> para"
 
-#: mercadopago/mercadopago-custom-gateway.php:151 mercadopago/mercadopago-custom-gateway.php:156 mercadopago/mercadopago-gateway.php:161
+#: mercadopago/mercadopago-custom-gateway.php:151
+#: mercadopago/mercadopago-custom-gateway.php:156
+#: mercadopago/mercadopago-gateway.php:161
 #: mercadopago/mercadopago-gateway.php:170
 msgid "Your credentials are <strong>not valid</strong>!"
 msgstr "Suas credenciais <strong>não são válidas</strong>!"
 
-#: mercadopago/mercadopago-custom-gateway.php:169 mercadopago/mercadopago-gateway.php:211
+#: mercadopago/mercadopago-custom-gateway.php:169
+#: mercadopago/mercadopago-gateway.php:211
 msgid "Enable/Disable"
 msgstr "Habilitar/Desabilitar"
 
@@ -97,11 +115,13 @@ msgstr "Habilitar/Desabilitar"
 msgid "Enable Custom Checkout"
 msgstr "Habilitar o Checkout Transparente"
 
-#: mercadopago/mercadopago-custom-gateway.php:175 mercadopago/mercadopago-gateway.php:217
+#: mercadopago/mercadopago-custom-gateway.php:175
+#: mercadopago/mercadopago-gateway.php:217
 msgid "Mercado Pago Credentials"
 msgstr "Credenciais do Mercado Pago"
 
-#: mercadopago/mercadopago-custom-gateway.php:177 mercadopago/mercadopago-gateway.php:219
+#: mercadopago/mercadopago-custom-gateway.php:177
+#: mercadopago/mercadopago-gateway.php:219
 msgid "You can obtain your credentials for"
 msgstr "Você pode obter suas credenciais para"
 
@@ -113,39 +133,50 @@ msgstr "Insira sua Public Key do Mercado Pago."
 msgid "Insert your Mercado Pago Access token."
 msgstr "Insira seu Access Token do Mercado Pago."
 
-#: mercadopago/mercadopago-custom-gateway.php:194 mercadopago/mercadopago-gateway.php:236
+#: mercadopago/mercadopago-custom-gateway.php:194
+#: mercadopago/mercadopago-gateway.php:236
 msgid "Instant Payment Notification (IPN) URL"
 msgstr "URL de Notificações Instantâneas de Pagamento (IPN)"
 
-#: mercadopago/mercadopago-custom-gateway.php:196 mercadopago/mercadopago-gateway.php:238
+#: mercadopago/mercadopago-custom-gateway.php:196
+#: mercadopago/mercadopago-gateway.php:238
 msgid "Your IPN URL to receive instant payment notifications is"
 msgstr "Sua URL de IPN para receber notificações instantâneas de pagamentos é"
 
-#: mercadopago/mercadopago-custom-gateway.php:199 mercadopago/mercadopago-gateway.php:241
+#: mercadopago/mercadopago-custom-gateway.php:199
+#: mercadopago/mercadopago-gateway.php:241
 msgid "Checkout Options"
 msgstr "Opções de Checkout"
 
-#: mercadopago/mercadopago-custom-gateway.php:204 mercadopago/mercadopago-gateway.php:246
+#: mercadopago/mercadopago-custom-gateway.php:204
+#: mercadopago/mercadopago-gateway.php:246
 msgid "Title"
 msgstr "Título"
 
-#: mercadopago/mercadopago-custom-gateway.php:206 mercadopago/mercadopago-gateway.php:248
+#: mercadopago/mercadopago-custom-gateway.php:206
+#: mercadopago/mercadopago-gateway.php:248
 msgid "Title shown to the client in the checkout."
 msgstr "Título mostrado ao cliente durante o checkout."
 
-#: mercadopago/mercadopago-custom-gateway.php:207 mercadopago/mercadopago-custom-gateway.php:219 mercadopago/mercadopago-gateway.php:249
+#: mercadopago/mercadopago-custom-gateway.php:207
+#: mercadopago/mercadopago-custom-gateway.php:219
+#: mercadopago/mercadopago-gateway.php:249
 msgid "Mercado Pago"
 msgstr "Mercado Pago"
 
-#: mercadopago/mercadopago-custom-gateway.php:210 mercadopago/mercadopago-gateway.php:252
+#: mercadopago/mercadopago-custom-gateway.php:210
+#: mercadopago/mercadopago-gateway.php:252
 msgid "Description"
 msgstr "Descrição"
 
-#: mercadopago/mercadopago-custom-gateway.php:212 mercadopago/mercadopago-gateway.php:254
+#: mercadopago/mercadopago-custom-gateway.php:212
+#: mercadopago/mercadopago-gateway.php:254
 msgid "Description shown to the client in the checkout."
 msgstr "Descrição mostrada ao cliente durante o checkout."
 
-#: mercadopago/mercadopago-custom-gateway.php:213 mercadopago/mercadopago-gateway.php:255 mercadopago/mercadopago-gateway.php:432
+#: mercadopago/mercadopago-custom-gateway.php:213
+#: mercadopago/mercadopago-gateway.php:255
+#: mercadopago/mercadopago-gateway.php:432
 msgid "Pay with Mercado Pago"
 msgstr "Pagar com Mercado Pago"
 
@@ -181,59 +212,73 @@ msgstr "Habilitar Boleto para o Checkout Transparente"
 msgid "Let your customer pay you with tickets"
 msgstr "Permitir que seus clientes façam pagamentos por boletos"
 
-#: mercadopago/mercadopago-custom-gateway.php:236 mercadopago/mercadopago-gateway.php:258
+#: mercadopago/mercadopago-custom-gateway.php:236
+#: mercadopago/mercadopago-gateway.php:258
 msgid "Store Category"
 msgstr "Categoria da loja"
 
-#: mercadopago/mercadopago-custom-gateway.php:238 mercadopago/mercadopago-gateway.php:260
+#: mercadopago/mercadopago-custom-gateway.php:238
+#: mercadopago/mercadopago-gateway.php:260
 msgid "Define which type of products your store sells."
 msgstr "Defina qual o tipo dos produtos que sua loja vende."
 
-#: mercadopago/mercadopago-custom-gateway.php:242 mercadopago/mercadopago-gateway.php:264
+#: mercadopago/mercadopago-custom-gateway.php:242
+#: mercadopago/mercadopago-gateway.php:264
 msgid "Store Identificator"
 msgstr "Identificador da Loja"
 
-#: mercadopago/mercadopago-custom-gateway.php:244 mercadopago/mercadopago-gateway.php:266
+#: mercadopago/mercadopago-custom-gateway.php:244
+#: mercadopago/mercadopago-gateway.php:266
 msgid "Please, inform a prefix to your store."
 msgstr "Por favor, informe um prefixo para sua loja."
 
-#: mercadopago/mercadopago-custom-gateway.php:244 mercadopago/mercadopago-gateway.php:266
+#: mercadopago/mercadopago-custom-gateway.php:244
+#: mercadopago/mercadopago-gateway.php:266
 msgid "If you use your Mercado Pago account on multiple stores you should make sure that this prefix is unique as Mercado Pago will not allow orders with same identificators."
 msgstr "Se estiver usando sua conta Mercado Pago para múltiplas lojas então você deverá assegurar-se que este prefixo seja único pois o Mercado Pago não permitirá pedidos com um mesmo identificador."
 
-#: mercadopago/mercadopago-custom-gateway.php:248 mercadopago/mercadopago-gateway.php:318
+#: mercadopago/mercadopago-custom-gateway.php:248
+#: mercadopago/mercadopago-gateway.php:318
 msgid "Test and Debug Options"
 msgstr "Opções de Teste e Debug"
 
-#: mercadopago/mercadopago-custom-gateway.php:253 mercadopago/mercadopago-gateway.php:323
+#: mercadopago/mercadopago-custom-gateway.php:253
+#: mercadopago/mercadopago-gateway.php:323
 msgid "Mercado Pago Sandbox"
 msgstr "Sandbox Mercado Pago"
 
-#: mercadopago/mercadopago-custom-gateway.php:255 mercadopago/mercadopago-gateway.php:325
+#: mercadopago/mercadopago-custom-gateway.php:255
+#: mercadopago/mercadopago-gateway.php:325
 msgid "Enable Mercado Pago Sandbox"
 msgstr "Habilitar o sandbox do Mercado Pago"
 
-#: mercadopago/mercadopago-custom-gateway.php:257 mercadopago/mercadopago-gateway.php:327
+#: mercadopago/mercadopago-custom-gateway.php:257
+#: mercadopago/mercadopago-gateway.php:327
 msgid "This option allows you to test payments inside a sandbox environment."
 msgstr "Esta opção permite a você testar pagamentos em um ambiente sandbox."
 
-#: mercadopago/mercadopago-custom-gateway.php:260 mercadopago/mercadopago-gateway.php:330
+#: mercadopago/mercadopago-custom-gateway.php:260
+#: mercadopago/mercadopago-gateway.php:330
 msgid "Debug and Log"
 msgstr "Debug e Log"
 
-#: mercadopago/mercadopago-custom-gateway.php:262 mercadopago/mercadopago-gateway.php:332
+#: mercadopago/mercadopago-custom-gateway.php:262
+#: mercadopago/mercadopago-gateway.php:332
 msgid "Enable log"
 msgstr "Habilitar Log"
 
-#: mercadopago/mercadopago-custom-gateway.php:264 mercadopago/mercadopago-gateway.php:334
+#: mercadopago/mercadopago-custom-gateway.php:264
+#: mercadopago/mercadopago-gateway.php:334
 msgid "Register event logs of Mercado Pago, such as API requests, in the file"
 msgstr "Registrar logs de eventos do Mercado Pago, como requisições à API, dentro do arquivo"
 
-#: mercadopago/mercadopago-custom-gateway.php:265 mercadopago/mercadopago-gateway.php:335
+#: mercadopago/mercadopago-custom-gateway.php:265
+#: mercadopago/mercadopago-gateway.php:335
 msgid "File location: "
 msgstr "Local do arquivo: "
 
-#: mercadopago/mercadopago-custom-gateway.php:281 mercadopago/mercadopago-gateway.php:351
+#: mercadopago/mercadopago-custom-gateway.php:281
+#: mercadopago/mercadopago-gateway.php:351
 #, php-format
 msgid "Please, rate us %s on WordPress.org and give your feedback to help improve this module!"
 msgstr "Por favor, avalie-nos com %s na WordPress.org e dê seu feedback para ajudar a melhorar este módulo!"
@@ -276,7 +321,7 @@ msgstr "Tipo de documento"
 
 #: mercadopago/mercadopago-custom-gateway.php:341
 msgid "Document number"
-msgstr "Número do documento"
+msgstr "Número do CPF"
 
 #: mercadopago/mercadopago-custom-gateway.php:342
 msgid "Issuer"
@@ -294,7 +339,9 @@ msgstr "O campo [Número do cartão] não pode ser nulo/vazio"
 msgid "Invalid Card Number"
 msgstr "Número do cartão inválido"
 
-#: mercadopago/mercadopago-custom-gateway.php:350 mercadopago/mercadopago-custom-gateway.php:351 mercadopago/mercadopago-custom-gateway.php:352
+#: mercadopago/mercadopago-custom-gateway.php:350
+#: mercadopago/mercadopago-custom-gateway.php:351
+#: mercadopago/mercadopago-custom-gateway.php:352
 #: mercadopago/mercadopago-custom-gateway.php:353
 msgid "Invalid Expiration Date"
 msgstr "Data de expiração inválida"
@@ -343,11 +390,14 @@ msgstr "Subtipo do documento inválido"
 msgid "Parameter cardIssuerId can not be null/empty"
 msgstr "O campo [Emitente do cartão] não pode ser nulo/vazio"
 
-#: mercadopago/mercadopago-custom-gateway.php:402 mercadopago/mercadopago-custom-gateway.php:943 mercadopago/mercadopago-gateway.php:869
+#: mercadopago/mercadopago-custom-gateway.php:402
+#: mercadopago/mercadopago-custom-gateway.php:943
+#: mercadopago/mercadopago-gateway.php:869
 msgid "Payment approved."
 msgstr "Pagamento aprovado."
 
-#: mercadopago/mercadopago-custom-gateway.php:416 mercadopago/mercadopago-custom-gateway.php:805
+#: mercadopago/mercadopago-custom-gateway.php:416
+#: mercadopago/mercadopago-custom-gateway.php:805
 msgid "Your payment is under review. In less than 1h, you should be notified by email."
 msgstr "Seu pagamento está sob análise. Em menos de 1h, você deverá ser notificado por email."
 
@@ -359,7 +409,9 @@ msgstr "Ver o resumo do pedido"
 msgid "Your payment was refused. You can try again."
 msgstr "Seu pagamento foi rejeitado. Você pode tentar novamente."
 
-#: mercadopago/mercadopago-custom-gateway.php:435 mercadopago/mercadopago-custom-gateway.php:819 mercadopago/mercadopago-gateway.php:460
+#: mercadopago/mercadopago-custom-gateway.php:435
+#: mercadopago/mercadopago-custom-gateway.php:819
+#: mercadopago/mercadopago-gateway.php:460
 msgid "Click to try again"
 msgstr "Clique para tentar novamente"
 
@@ -375,11 +427,14 @@ msgstr "Método de envio"
 msgid "Shipping service used by store"
 msgstr "Serviço de envio usado pela loja"
 
-#: mercadopago/mercadopago-custom-gateway.php:721 mercadopago/mercadopago-gateway.php:649
+#: mercadopago/mercadopago-custom-gateway.php:721
+#: mercadopago/mercadopago-gateway.php:649
 msgid "WooCommerce &gt; System Status &gt; Logs"
 msgstr "WooCommerce &gt; Status de Sistema &gt; Logs"
 
-#: mercadopago/mercadopago-custom-gateway.php:766 mercadopago/mercadopago-custom-gateway.php:779 mercadopago/mercadopago-gateway.php:694
+#: mercadopago/mercadopago-custom-gateway.php:766
+#: mercadopago/mercadopago-custom-gateway.php:779
+#: mercadopago/mercadopago-gateway.php:694
 #: mercadopago/mercadopago-gateway.php:705
 msgid "Mercado Pago is Inactive"
 msgstr "O Mercado Pago está inativo"
@@ -388,15 +443,18 @@ msgstr "O Mercado Pago está inativo"
 msgid "Your Mercado Pago credentials Public Key/Access Token appears to be misconfigured."
 msgstr "Suas credenciais Public Key/Access Token do Mercado Pago parecem estar desconfiguradas."
 
-#: mercadopago/mercadopago-custom-gateway.php:771 mercadopago/mercadopago-gateway.php:698
+#: mercadopago/mercadopago-custom-gateway.php:771
+#: mercadopago/mercadopago-gateway.php:698
 msgid "Click here and configure!"
 msgstr "Clique aqui e configure!"
 
-#: mercadopago/mercadopago-custom-gateway.php:782 mercadopago/mercadopago-gateway.php:708
+#: mercadopago/mercadopago-custom-gateway.php:782
+#: mercadopago/mercadopago-gateway.php:708
 msgid "The currency"
 msgstr "As moedas"
 
-#: mercadopago/mercadopago-custom-gateway.php:783 mercadopago/mercadopago-gateway.php:708
+#: mercadopago/mercadopago-custom-gateway.php:783
+#: mercadopago/mercadopago-gateway.php:708
 msgid "is not supported. Supported currencies are: ARS, BRL, CLP, COP, MXN, VEF."
 msgstr "não são suportadas. As moedas suportadas são: ARS, BRL, CLP, COP, MXN, VEF."
 
@@ -408,7 +466,8 @@ msgstr "Peru"
 msgid "Click to check your order"
 msgstr "Clique para ver o resumo do seu pedido"
 
-#: mercadopago/mercadopago-custom-gateway.php:814 mercadopago/mercadopago-gateway.php:457
+#: mercadopago/mercadopago-custom-gateway.php:814
+#: mercadopago/mercadopago-gateway.php:457
 msgid "An error occurred when proccessing your payment. Please try again or contact us for assistence."
 msgstr "Um erro ocorreu ao processar seu pagamento. Por favor tente novamente ou nos contacte para assistência."
 
@@ -416,43 +475,54 @@ msgstr "Um erro ocorreu ao processar seu pagamento. Por favor tente novamente ou
 msgid "Reason is: "
 msgstr "Causa: "
 
-#: mercadopago/mercadopago-custom-gateway.php:849 mercadopago/mercadopago-gateway.php:748
+#: mercadopago/mercadopago-custom-gateway.php:849
+#: mercadopago/mercadopago-gateway.php:748
 msgid "Mercado Pago Request Failure"
 msgstr "Falha na Requisição do Mercado Pago"
 
-#: mercadopago/mercadopago-custom-gateway.php:918 mercadopago/mercadopago-gateway.php:822
+#: mercadopago/mercadopago-custom-gateway.php:918
+#: mercadopago/mercadopago-gateway.php:822
 msgid "Payer email"
 msgstr "Email do pagador"
 
-#: mercadopago/mercadopago-custom-gateway.php:926 mercadopago/mercadopago-gateway.php:829
+#: mercadopago/mercadopago-custom-gateway.php:926
+#: mercadopago/mercadopago-gateway.php:829
 msgid "Payment type"
 msgstr "Tipo de pagamento"
 
-#: mercadopago/mercadopago-custom-gateway.php:934 mercadopago/mercadopago-gateway.php:841
+#: mercadopago/mercadopago-custom-gateway.php:934
+#: mercadopago/mercadopago-gateway.php:841
 msgid "Mercado Pago Payment ID"
 msgstr "ID de Pagamento do Mercado Pago"
 
-#: mercadopago/mercadopago-custom-gateway.php:950 mercadopago/mercadopago-gateway.php:875
+#: mercadopago/mercadopago-custom-gateway.php:950
+#: mercadopago/mercadopago-gateway.php:875
 msgid "Customer haven't paid yet."
 msgstr "O cliente ainda não realizou o pagamento."
 
-#: mercadopago/mercadopago-custom-gateway.php:957 mercadopago/mercadopago-gateway.php:881
+#: mercadopago/mercadopago-custom-gateway.php:957
+#: mercadopago/mercadopago-gateway.php:881
 msgid "Payment under review."
 msgstr "O pagamento está em revisão."
 
-#: mercadopago/mercadopago-custom-gateway.php:964 mercadopago/mercadopago-gateway.php:887
+#: mercadopago/mercadopago-custom-gateway.php:964
+#: mercadopago/mercadopago-gateway.php:887
 msgid "The payment was refused. The customer can try again."
 msgstr "O pagamento foi recusado. O cliente pode tentar novamente."
 
-#: mercadopago/mercadopago-custom-gateway.php:971 mercadopago/mercadopago-gateway.php:893
+#: mercadopago/mercadopago-custom-gateway.php:971
+#: mercadopago/mercadopago-gateway.php:893
 msgid "The payment was refunded to the customer."
 msgstr "O pagamento foi estornado ao cliente."
 
-#: mercadopago/mercadopago-custom-gateway.php:978 mercadopago/mercadopago-gateway.php:899
+#: mercadopago/mercadopago-custom-gateway.php:978
+#: mercadopago/mercadopago-gateway.php:899
 msgid "The payment was cancelled."
 msgstr "O pagamento foi cancelado."
 
-#: mercadopago/mercadopago-custom-gateway.php:984 mercadopago/mercadopago-custom-gateway.php:990 mercadopago/mercadopago-gateway.php:904
+#: mercadopago/mercadopago-custom-gateway.php:984
+#: mercadopago/mercadopago-custom-gateway.php:990
+#: mercadopago/mercadopago-gateway.php:904
 #: mercadopago/mercadopago-gateway.php:909
 msgid "The payment is under mediation or it was charged-back."
 msgstr "O pagamento está em mediação ou a compra não foi reconhecida pelo cliente."
@@ -465,11 +535,14 @@ msgstr "Mercado Pago - Checkout Básico"
 msgid "Select the payment methods that you <strong>don't</strong> want to receive with Mercado Pago."
 msgstr "Selecione os meios de pagamento que <strong>não</strong> gostaria de receber com o Mercado Pago."
 
-#: mercadopago/mercadopago-gateway.php:158 mercadopago/mercadopago-gateway.php:167
+#: mercadopago/mercadopago-gateway.php:158
+#: mercadopago/mercadopago-gateway.php:167
 msgid "Configure your Client_id and Client_secret to have access to more options."
 msgstr "Configure seu Client_id e Client_secret para ter acesso a mais opções."
 
-#: mercadopago/mercadopago-gateway.php:184 mercadopago/mercadopago-gateway.php:192 mercadopago/mercadopago-gateway.php:202
+#: mercadopago/mercadopago-gateway.php:184
+#: mercadopago/mercadopago-gateway.php:192
+#: mercadopago/mercadopago-gateway.php:202
 msgid "This field should be an integer."
 msgstr "Este campo deve ser um número inteiro."
 
@@ -664,8 +737,8 @@ msgstr "O Boleto está Inativo"
 msgid "Please, select the ticket issuer of your preference."
 msgstr "Por favor, selecione o emissor de sua preferência."
 
-msgid "Click "Place order" button. The ticket will be generated and you will be redirected to print it."
-msgstr "Clique no botão "FINALIZAR COMPRA". O boleto será gerado e você será redirecionado para imprimí-lo."
+msgid "Click \"Place order\" button. The ticket will be generated and you will be redirected to print it."
+msgstr "Clique no botão \"FINALIZAR COMPRA\". O boleto será gerado e você será redirecionado para imprimí-lo."
 
 msgid "Important: The order will be confirmed only after the payment approval."
 msgstr "Importante: O pedido só será confirmado após a aprovação do pagamento."

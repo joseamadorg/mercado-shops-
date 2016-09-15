@@ -11,7 +11,7 @@ $GLOBALS["LIB_LOCATION"] = dirname(__FILE__);
 
 class MP {
 
-    const version = "0.5.2";
+    const version = "2.1.3";
 
     private $client_id;
     private $client_secret;
@@ -301,7 +301,7 @@ class MP {
                "access_token" => $this->get_access_token()
            ),
            "headers" => array(
-               "user-agent" => "platform:desktop,type:woocommerce,so:2.1.2"
+               "user-agent" => "platform:desktop,type:woocommerce,so:" . MP::version
            ),
            "data" => $preference
        );
@@ -358,7 +358,7 @@ class MP {
                 "access_token" => $this->get_access_token()
             ),
             "headers" => array(
-                "X-Tracking-Id" => "platform:v1-whitelabel,type:woocommerce,so:2.1.2"
+                "X-Tracking-Id" => "platform:v1-whitelabel,type:woocommerce,so:" . MP::version
             ),
             "data" => $preference
         );
@@ -572,7 +572,7 @@ class MPRestClient {
         // Build $connect
         $connect = curl_init();
 
-        curl_setopt($connect, CURLOPT_USERAGENT, "MercadoPago PHP SDK v" . MP::version);
+        curl_setopt($connect, CURLOPT_USERAGENT, "platform:v1-whitelabel,type:woocommerce,so:" . MP::version);
         curl_setopt($connect, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($connect, CURLOPT_SSL_VERIFYPEER, true);
         curl_setopt($connect, CURLOPT_CAINFO, $GLOBALS["LIB_LOCATION"] . "/cacert.pem");
@@ -651,7 +651,7 @@ class MPRestClient {
         // Build $connect
         $connect = curl_init();
 
-        curl_setopt($connect, CURLOPT_USERAGENT, "MercadoPago PHP SDK v" . MP::version);
+        curl_setopt($connect, CURLOPT_USERAGENT, "platform:v1-whitelabel,type:woocommerce,so:" . MP::version);
         curl_setopt($connect, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($connect, CURLOPT_SSL_VERIFYPEER, true);
         curl_setopt($connect, CURLOPT_CAINFO, $GLOBALS["LIB_LOCATION"] . "/cacert.pem");

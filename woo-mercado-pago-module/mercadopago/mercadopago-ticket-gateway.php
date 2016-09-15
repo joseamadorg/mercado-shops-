@@ -3,8 +3,8 @@
  * Part of Woo Mercado Pago Module
  * Author - Mercado Pago
  * Developer - Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
- * Copyright - Copyright(c) MercadoPago [http://www.mercadopago.com]
- * License - http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
+ * Copyright - Copyright(c) MercadoPago [https://www.mercadopago.com]
+ * License - https://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  */
 
 // This include Mercado Pago library SDK
@@ -478,7 +478,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 						'category_id' => $this->store_categories_id[ $this->category_id ],
 						'quantity' => 1,
 						'unit_price' => floor( ( (float) $item[ 'line_total' ] + (float) $item[ 'line_tax' ] ) *
-							( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 ) * 100 ) / 100,
+							( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 ) * 100 ) / 100
 					));
 				}
 			}
@@ -488,11 +488,11 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
     $shipping_cost = (float) $order->get_total_shipping() + (float) $order->get_shipping_tax();
     if ( $shipping_cost > 0 ) {
       $item = array(
-        'title' => $this->workaroundAmperSandBug( $this->workaroundAmperSandBug( $order->get_shipping_to_display() ) ),
+        'title' => $this->workaroundAmperSandBug( $order->get_shipping_to_display() ),
         'description' => __( 'Shipping service used by store', 'woocommerce-mercadopago-module' ),
         'quantity' => 1,
         'category_id' => $this->store_categories_id[ $this->category_id ],
-        'unit_price' => $shipping_cost * ( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 )
+        'unit_price' => floor( $shipping_cost * ( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 ) * 100 ) / 100
       );
       $items[] = $item;
     }
