@@ -4,7 +4,7 @@ Donate link: https://www.mercadopago.com.br/developers/
 Tags: ecommerce, mercadopago, woocommerce
 Requires at least: WooCommerce 2.1.x
 Tested up to: WooCommerce 2.5.x
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,7 +39,7 @@ You have two ways to install this module: from your WordPress Store, or by downl
 3. You should find the module read to be installed. Click install.
 
 = Manual Download =
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.1.2.zip">WordPress Plugin Directory</a>);
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.1.3.zip">WordPress Plugin Directory</a>);
 2. Unzip the folder and find "woo-mercado-pago-module" directory;
 3. Copy "woo-mercado-pago-module" directory to **[WordPressRootDirectory]/wp-content/plugins/** directory.
 
@@ -108,6 +108,11 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 
 == Changelog ==
 
+= v2.1.3 (15/09/2016) =
+* Improvements
+	- A few improvements in performance;
+	- Improved translations.
+	
 = v2.1.2 (18/08/2016) =
 * Improvements
 	- Improved performance for both client and server sides.
