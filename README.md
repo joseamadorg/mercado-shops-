@@ -1,4 +1,4 @@
-# WooCommerce - Mercado Pago Module (2.1.x - 2.5.x)
+# WooCommerce - Mercado Pago Module (2.1.x - 2.6.6)
 
 * [Features](#features)
 * [Available versions](#available_versions)

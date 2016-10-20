@@ -3,7 +3,7 @@ Contributors: mercadopago, mercadolivre
 Donate link: https://www.mercadopago.com.br/developers/
 Tags: ecommerce, mercadopago, woocommerce
 Requires at least: WooCommerce 2.1.x
-Tested up to: WooCommerce 2.5.x
+Tested up to: WooCommerce 2.6.6
 Stable tag: 2.1.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
