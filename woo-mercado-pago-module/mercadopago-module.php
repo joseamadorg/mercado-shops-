@@ -393,7 +393,7 @@ if (!class_exists('WC_WooMercadoPago_Module')) {
 
       // Fix to URL Problem : #038; replaces & and breaks the navigation
       public static function workaround_ampersand_bug($link) {
-         return str_replace('&#038;', '&', $link);
+         return str_replace('\/', '/', str_replace('&#038;', '&', $link));
       }
 
 	}
