@@ -218,8 +218,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 				'type' => 'title',
 				'description' => sprintf(
 					__('Your IPN URL to receive instant payment notifications is', 'woocommerce-mercadopago-module') .
-					'<br>%s', '<code>' . $this->domain . '/' . $this->id .
-					'/?wc-api=WC_WooMercadoPagoTicket_Gateway' . '</code>.'
+					'<br>%s', '<code>' . WC()->api_request_url('WC_WooMercadoPagoTicket_Gateway') . '</code>.'
 				)
 			),
 			'checkout_options_title' => array(
@@ -556,7 +555,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
     	// Do not set IPN url if it is a localhost
     	if (!strrpos($this->domain, 'localhost')) {
       	$preferences['notification_url'] = WC_WooMercadoPago_Module::workaround_ampersand_bug(
-      		$this->domain . '/woocommerce-mercadopago-module/?wc-api=WC_WooMercadoPagoTicket_Gateway'
+      		WC()->api_request_url('WC_WooMercadoPagoTicket_Gateway')
       	);
     	}
 
