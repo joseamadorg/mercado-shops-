@@ -1215,8 +1215,9 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 		try {
 			// Get the payment reported by the IPN
 			if ($data['type'] == 'payment') {
+				$access_token = array('access_token' => $this->mp->get_access_token());
 				$payment_info = $this->mp->get(
-					'/v1/payments/' . $data['data_id'], $this->access_token, false
+					'/v1/payments/' . $data['data_id'], $access_token, false
 				);
 				if (!is_wp_error($payment_info) &&
 					($payment_info['status'] == 200 || $payment_info['status'] == 201)) {
