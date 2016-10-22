@@ -1,4 +1,4 @@
-# WooCommerce - Mercado Pago Module (2.1.x - 2.6.6)
+# WooCommerce - Mercado Pago Module (2.1.x - 2.6.x)
 
 * [Features](#features)
 * [Available versions](#available_versions)
@@ -48,8 +48,8 @@ Basically, the requirements of this plugin are same as you need to run WooCommer
 
 **Platforms**
 
-* <a href="https://wordpress.org/download/">WordPress</a> 4.1 or greater;
-* <a href="https://wordpress.org/plugins/woocommerce/">WooCommerce</a> 2.1 or greater;
+* <a href="https://wordpress.org/download/">WordPress</a> 4.6 or greater;
+* <a href="https://wordpress.org/plugins/woocommerce/">WooCommerce</a> 2.6 or greater;
 
 **Web Server Host**
 
@@ -75,9 +75,9 @@ During the sandbox mode tests, you can operate over HTTP, but for homologation y
   <thead>
   <tbody>
     <tr>
-      <td>v2.1.4</td>
+      <td>v2.6.6</td>
       <td>Stable (Current version)</td>
-      <td>WooCommerce 2.1.x - 2.5.x</td>
+      <td>WooCommerce 2.1.x - 2.6.x</td>
     </tr>
   </tbody>
 </table>
