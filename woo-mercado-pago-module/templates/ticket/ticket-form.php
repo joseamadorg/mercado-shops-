@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Part of Woo Mercado Pago Module
  * Author - Mercado Pago
@@ -7,22 +8,23 @@
  * License - https://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  */
 
-if (!defined('ABSPATH')) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 ?>
 
 <div width="100%" style="margin:1px; padding:36px 36px 16px 36px; background:white;">
 	<img class="logo" src="<?php echo ($images_path . 'mplogo.png'); ?>" width="156" height="40" />
-	<?php if (count($payment_methods) > 1) { ?>
+	<?php if ( count( $payment_methods ) > 1 ) : ?>
 		<img class="logo" src="<?php echo ($images_path . 'boleto.png'); ?>"
 		width="90" height="40" style="float:right;"/>
-	<?php } else { ?>
-		<?php foreach ($payment_methods as $payment) { ?>
+	<?php else : ?>
+		<?php foreach ( $payment_methods as $payment ) : ?>
 			<img class="logo" src="<?php echo $payment['secure_thumbnail']; ?>" width="90" height="40"
 			style="float:right;"/>
-		<?php } ?>
-	<?php } ?>
+		<?php endforeach; ?>
+	<?php endif; ?>
 </div>
 
 <fieldset id="mercadopago-form" style="background:white;">
@@ -36,11 +38,11 @@ if (!defined('ABSPATH')) {
 			autocomplete="off" maxlength="24" />
 			<span class="mp-discount" id="mpCouponApplyedTicket" ></span>
 			<span class="mp-error" id="mpCouponErrorTicket" ></span>
-   	</div>
+ 		</div>
 		<div class="mp-box-inputs mp-col-10">
 			<div id="mp-separete-date"></div>
 		</div>
-      <div class="mp-box-inputs mp-col-25">
+		<div class="mp-box-inputs mp-col-25">
 			<input type="button" class="button" id="applyCouponTicket"
 			value="<?php echo $form_labels['form']['apply']; ?>">
 		</div>
@@ -49,53 +51,53 @@ if (!defined('ABSPATH')) {
 	<div style="padding:0px 36px 0px 36px;">
 		<p>
 			<?php
-				if (count($payment_methods) > 1) {
+				if ( count( $payment_methods ) > 1 ) :
 					echo $form_labels['form']['issuer_selection'];
-				}
+				endif;
 				echo $form_labels['form']['payment_instructions'];
 			?> <br /> <?php
 				echo $form_labels['form']['ticket_note'];
-				if ($is_currency_conversion > 0) {
-    				echo " (" . $form_labels['form']['payment_converted'] . " " .
+				if ( $is_currency_conversion > 0 ) :
+  					echo " (" . $form_labels['form']['payment_converted'] . " " .
 					$woocommerce_currency . " " . $form_labels['form']['to'] . " " .
 					$account_currency . ")";
-				}
+				endif;
 			?>
 		</p>
-		<?php if (count($payment_methods) > 1) { ?>
+		<?php if ( count( $payment_methods ) > 1 ) : ?>
 			<div class="mp-box-inputs mp-col-100">
 				<?php $atFirst = true; ?>
-				<?php foreach ($payment_methods as $payment) { ?>
+				<?php foreach ( $payment_methods as $payment ) : ?>
 					<div class="mp-box-inputs mp-line">
 						<div id="paymentMethodId" class="mp-box-inputs mp-col-5">
 							<input type="radio" class="input-radio"
 							name="mercadopago_ticket[paymentMethodId]"
-	  						style="height:16px; width:16px;" value="<?php echo $payment['id']; ?>"
-	  						<?php if ($atFirst) { ?> checked="checked" } <?php } ?> />
+							style="height:16px; width:16px;" value="<?php echo $payment['id']; ?>"
+							<?php if ( $atFirst ) : ?> checked="checked" <?php endif; ?> />
 						</div>
 						<div class="mp-box-inputs mp-col-45">
 							<label>
 								<img src="<?php echo $payment['secure_thumbnail']; ?>"
 								alt="<?php echo $payment['name']; ?>" />
-			  					&nbsp;&nbsp;<?php echo $payment['name']; ?>
-			  				</label>
+								&nbsp;&nbsp;<?php echo $payment['name']; ?>
+							</label>
 						</div>
 					</div>
 					<?php $atFirst = false; ?>
-				<?php } ?>
+				<?php endforeach; ?>
 			</div>
-		<?php } else { ?>
+		<?php else : ?>
 			<div class="mp-box-inputs mp-col-100" style="display:none;">
 				<select id="paymentMethodId" name="mercadopago_ticket[paymentMethodId]">
-					<?php foreach ($payment_methods as $payment) { ?>
+					<?php foreach ( $payment_methods as $payment ) : ?>
 						<option value="<?php echo $payment['id']; ?>" style="padding: 8px;
 						background: url('https://img.mlstatic.com/org-img/MP3/API/logos/bapropagos.gif')
 						98% 50% no-repeat;"> <?php echo $payment['name']; ?>
 						</option>
-					<?php } ?>
+					<?php endforeach; ?>
 				</select>
 			</div>
-		<?php } ?>
+		<?php endif; ?>
 
 		<div class="mp-box-inputs mp-line">
 			<div class="mp-box-inputs mp-col-25">
@@ -120,7 +122,7 @@ if (!defined('ABSPATH')) {
 
 <script type="text/javascript">
 
-	(function() {
+	( function() {
 
 		var MPv1Ticket = {
 			site_id: "",
@@ -168,171 +170,187 @@ if (!defined('ABSPATH')) {
 
 		// === Coupon of Discounts
 
-	    MPv1Ticket.currencyIdToCurrency = function (currency_id) {
-         if (currency_id == "ARS") {
+		MPv1Ticket.currencyIdToCurrency = function ( currency_id ) {
+			if ( currency_id == "ARS" ) {
 				return "$";
-	    	} else if (currency_id == "BRL") {
-	    		return "R$";
-	    	} else if (currency_id == "COP") {
-	    		return "$";
-	    	} else if (currency_id == "CLP") {
-	    		return "$";
-	    	} else if (currency_id == "MXN") {
-	    		return "$";
-	    	} else if (currency_id == "VEF") {
-	    		return "Bs";
-	    	} else if (currency_id == "PEN") {
-	    		return "S/";
-	    	} else {
-	    		return "$";
-	    	}
-      }
+			} else if ( currency_id == "BRL" ) {
+				return "R$";
+			} else if ( currency_id == "COP" ) {
+				return "$";
+			} else if ( currency_id == "CLP" ) {
+				return "$";
+			} else if ( currency_id == "MXN" ) {
+				return "$";
+			} else if ( currency_id == "VEF" ) {
+				return "Bs";
+			} else if ( currency_id == "PEN" ) {
+				return "S/";
+			} else {
+				return "$";
+			}
+		}
 
 		MPv1Ticket.checkCouponEligibility = function () {
-			if (document.querySelector(MPv1Ticket.selectors.couponCode).value == "") {
-				// coupon code is empty
-	    		document.querySelector(MPv1Ticket.selectors.mpCouponApplyed).style.display = "none";
-				document.querySelector(MPv1Ticket.selectors.mpCouponError).style.display = "block";
-				document.querySelector(MPv1Ticket.selectors.mpCouponError).innerHTML =
-					MPv1Ticket.text.coupon_empty;
+			if ( document.querySelector( MPv1Ticket.selectors.couponCode ).value == "" ) {
+				// Coupon code is empty.
+	  			document.querySelector( MPv1Ticket.selectors.mpCouponApplyed ).style.display =
+	  				"none";
+				document.querySelector( MPv1Ticket.selectors.mpCouponError ).style.display =
+					"block";
+				document.querySelector( MPv1Ticket.selectors.mpCouponError ).innerHTML =
+				MPv1Ticket.text.coupon_empty;
 				MPv1Ticket.coupon_of_discounts.status = false;
-				document.querySelector(MPv1Ticket.selectors.couponCode).style.background = null;
-				document.querySelector(MPv1Ticket.selectors.applyCoupon).value = MPv1Ticket.text.apply;
-				document.querySelector(MPv1.selectors.discount).value = 0;
-	    	} else if (MPv1Ticket.coupon_of_discounts.status) {
-	    		// we already have a coupon set, so we remove it
-	    		document.querySelector(MPv1Ticket.selectors.mpCouponApplyed).style.display = "none";
-				document.querySelector(MPv1Ticket.selectors.mpCouponError).style.display = "none";
+				document.querySelector( MPv1Ticket.selectors.couponCode ).style.background = null;
+				document.querySelector( MPv1Ticket.selectors.applyCoupon ).value =
+					MPv1Ticket.text.apply;
+				document.querySelector( MPv1.selectors.discount ).value = 0;
+			} else if ( MPv1Ticket.coupon_of_discounts.status ) {
+				// We already have a coupon set, so we remove it.
+  				document.querySelector( MPv1Ticket.selectors.mpCouponApplyed ).style.display =
+  					"none";
+				document.querySelector( MPv1Ticket.selectors.mpCouponError ).style.display =
+					"none";
 				MPv1Ticket.coupon_of_discounts.status = false;
-				document.querySelector(MPv1Ticket.selectors.applyCoupon).style.background = null;
-	    		document.querySelector(MPv1Ticket.selectors.applyCoupon).value = MPv1Ticket.text.apply;
-	    		document.querySelector(MPv1Ticket.selectors.couponCode).value = "";
-	    		document.querySelector(MPv1Ticket.selectors.couponCode).style.background = null;
-	    		document.querySelector(MPv1.selectors.discount).value = 0;
-	    	} else {
-				// set loading
-				document.querySelector(MPv1Ticket.selectors.mpCouponApplyed).style.display = "none";
-				document.querySelector(MPv1Ticket.selectors.mpCouponError).style.display = "none";
-				document.querySelector(MPv1Ticket.selectors.couponCode).style.background =
+				document.querySelector( MPv1Ticket.selectors.applyCoupon ).style.background = null;
+				document.querySelector( MPv1Ticket.selectors.applyCoupon ).value =
+					MPv1Ticket.text.apply;
+				document.querySelector( MPv1Ticket.selectors.couponCode ).value = "";
+				document.querySelector( MPv1Ticket.selectors.couponCode ).style.background = null;
+				document.querySelector( MPv1.selectors.discount ).value = 0;
+			} else {
+				// Set loading.
+				document.querySelector( MPv1Ticket.selectors.mpCouponApplyed ).style.display =
+					"none";
+				document.querySelector( MPv1Ticket.selectors.mpCouponError ).style.display =
+					"none";
+				document.querySelector( MPv1Ticket.selectors.couponCode ).style.background =
 					"url(" + MPv1Ticket.paths.loading + ") 98% 50% no-repeat #fff";
-				document.querySelector(MPv1Ticket.selectors.applyCoupon).disabled = true;
-				// call method in server to validate coupom
+				document.querySelector( MPv1Ticket.selectors.applyCoupon ).disabled = true;
+				// Call method in server to validate coupom.
 				var request = new XMLHttpRequest();
 				request.open(
 					"GET",
 					MPv1Ticket.coupon_of_discounts.discount_action_url +
-						"&coupon_id=" + document.querySelector(MPv1Ticket.selectors.couponCode).value +
-						"&amount=" + document.querySelector(MPv1Ticket.selectors.amount).value +
-						"&payer=" + document.getElementById("billing_email").value,
+						"&coupon_id=" + document.querySelector(
+							MPv1Ticket.selectors.couponCode
+						).value +
+						"&amount=" + document.querySelector( MPv1Ticket.selectors.amount ).value +
+						"&payer=" + document.getElementById( "billing_email" ).value,
 					true
 				);
 				request.onreadystatechange = function() {
-					if (request.readyState == 4) {
-						if (request.status == 200) {
-							var response = JSON.parse(request.responseText);
-							if (response.status == 200) {
-								document.querySelector(MPv1Ticket.selectors.mpCouponApplyed).style.display =
-									"block";
-								document.querySelector(MPv1Ticket.selectors.discount).value =
-									response.response.coupon_amount;
-								document.querySelector(MPv1Ticket.selectors.mpCouponApplyed).innerHTML =
+					if ( request.readyState == 4 ) {
+						if ( request.status == 200 ) {
+							var response = JSON.parse( request.responseText );
+							if ( response.status == 200 ) {
+								document.querySelector( MPv1Ticket.selectors.mpCouponApplyed )
+								.style.display = "block";
+								document.querySelector( MPv1Ticket.selectors.discount )
+								.value = response.response.coupon_amount;
+								document.querySelector( MPv1Ticket.selectors.mpCouponApplyed )
+								.innerHTML =
 									"<div style='border-style: solid; border-width:thin; " +
 									"border-color: #009EE3; padding: 8px 8px 8px 8px; margin-top: 4px;'>" +
 									MPv1Ticket.text.discount_info1 + " <strong>" +
-									MPv1Ticket.currencyIdToCurrency(response.response.currency_id) + " " +
-									Math.round(response.response.coupon_amount*100)/100 + "</strong> " +
-									MPv1Ticket.text.discount_info2 + " " + response.response.name + ".<br>" +
+									MPv1Ticket.currencyIdToCurrency( response.response.currency_id ) +
+									" " + Math.round( response.response.coupon_amount * 100 ) / 100 +
+									"</strong> " + MPv1Ticket.text.discount_info2 + " " +
+									response.response.name + ".<br>" +
 									MPv1Ticket.text.discount_info3 + " <strong>" +
-									MPv1Ticket.currencyIdToCurrency(response.response.currency_id) + " " +
-									Math.round(MPv1Ticket.getAmountWithoutDiscount()*100)/100 + "</strong><br>" +
-									MPv1Ticket.text.discount_info4 + " <strong>" +
-									MPv1Ticket.currencyIdToCurrency(response.response.currency_id) + " " +
-									Math.round(MPv1Ticket.getAmount()*100)/100 + "*</strong><br>" + "<i>" +
-									MPv1Ticket.text.discount_info5 + "</i><br>" +
-									"<a href='https://api.mercadolibre.com/campaigns/" +
-									response.response.id +
-									"/terms_and_conditions?format_type=html' target='_blank'>" +
+									MPv1Ticket.currencyIdToCurrency( response.response.currency_id ) +
+									" " + Math.round( MPv1Ticket.getAmountWithoutDiscount() * 100 ) / 100 +
+									"</strong><br>" + MPv1Ticket.text.discount_info4 + " <strong>" +
+									MPv1Ticket.currencyIdToCurrency( response.response.currency_id ) +
+									" " + Math.round( MPv1Ticket.getAmount() * 100 ) / 100 +
+									"*</strong><br>" + "<i>" + MPv1Ticket.text.discount_info5 +
+									"</i><br><a href='https://api.mercadolibre.com/campaigns/" +
+									response.response.id + "/terms_and_conditions?format_type=html' target='_blank'>" +
 									MPv1Ticket.text.discount_info6 + "</a></div>";
-								document.querySelector(MPv1Ticket.selectors.mpCouponError).style.display =
-									"none";
+								document.querySelector( MPv1Ticket.selectors.mpCouponError )
+								.style.display = "none";
 								MPv1Ticket.coupon_of_discounts.status = true;
-								document.querySelector(MPv1Ticket.selectors.couponCode).style.background =
-									null;
-								document.querySelector(MPv1Ticket.selectors.couponCode).style.background =
-									"url(" + MPv1Ticket.paths.check + ") 98% 50% no-repeat #fff";
-								document.querySelector(MPv1Ticket.selectors.applyCoupon).value =
+								document.querySelector( MPv1Ticket.selectors.couponCode )
+								.style.background = null;
+								document.querySelector( MPv1Ticket.selectors.couponCode )
+								.style.background = "url(" + MPv1Ticket.paths.check +
+									") 98% 50% no-repeat #fff";
+								document.querySelector( MPv1Ticket.selectors.applyCoupon ).value =
 									MPv1Ticket.text.remove;
-								document.querySelector(MPv1Ticket.selectors.campaign_id).value =
+								document.querySelector( MPv1Ticket.selectors.campaign_id ).value =
 									response.response.id;
-								document.querySelector(MPv1Ticket.selectors.campaign).value =
+								document.querySelector( MPv1Ticket.selectors.campaign ).value =
 									response.response.name;
-							} else if (response.status == 400 || response.status == 404) {
-								document.querySelector(MPv1Ticket.selectors.mpCouponApplyed).style.display =
-									"none";
-								document.querySelector(MPv1Ticket.selectors.mpCouponError).style.display =
-									"block";
-								document.querySelector(MPv1Ticket.selectors.mpCouponError).innerHTML =
-									response.response.message;
+							} else if ( response.status == 400 || response.status == 404 ) {
+								document.querySelector( MPv1Ticket.selectors.mpCouponApplyed )
+								.style.display = "none";
+								document.querySelector( MPv1Ticket.selectors.mpCouponError )
+								.style.display = "block";
+								document.querySelector( MPv1Ticket.selectors.mpCouponError )
+								.innerHTML = response.response.message;
 								MPv1Ticket.coupon_of_discounts.status = false;
-								document.querySelector(MPv1Ticket.selectors.couponCode).style.background =
-									null;
-								document.querySelector(MPv1Ticket.selectors.couponCode).style.background =
-									"url(" + MPv1Ticket.paths.error + ") 98% 50% no-repeat #fff";
-								document.querySelector(MPv1Ticket.selectors.applyCoupon).value =
+								document.querySelector(MPv1Ticket.selectors.couponCode)
+								.style.background = null;
+								document.querySelector( MPv1Ticket.selectors.couponCode )
+								.style.background = "url(" + MPv1Ticket.paths.error +
+									") 98% 50% no-repeat #fff";
+								document.querySelector( MPv1Ticket.selectors.applyCoupon ).value =
 									MPv1Ticket.text.apply;
-								document.querySelector(MPv1.selectors.discount).value = 0;
+								document.querySelector( MPv1.selectors.discount ).value = 0;
 							}
 						} else {
-							// request failed
-							document.querySelector(MPv1Ticket.selectors.mpCouponApplyed).style.display =
-								"none";
-							document.querySelector(MPv1Ticket.selectors.mpCouponError).style.display =
-								"none";
+							// Request failed.
+							document.querySelector( MPv1Ticket.selectors.mpCouponApplyed )
+							.style.display = "none";
+							document.querySelector( MPv1Ticket.selectors.mpCouponError )
+							.style.display = "none";
 							MPv1Ticket.coupon_of_discounts.status = false;
-							document.querySelector(MPv1Ticket.selectors.applyCoupon).style.background =
-								null;
-				    		document.querySelector(MPv1Ticket.selectors.applyCoupon).value =
-				    			MPv1Ticket.text.apply;
-				    		document.querySelector(MPv1Ticket.selectors.couponCode).value = "";
-				    		document.querySelector(MPv1Ticket.selectors.couponCode).style.background =
-				    			null;
-				    		document.querySelector(MPv1.selectors.discount).value = 0;
+							document.querySelector( MPv1Ticket.selectors.applyCoupon )
+							.style.background = null;
+				  			document.querySelector( MPv1Ticket.selectors.applyCoupon )
+				  			.value = MPv1Ticket.text.apply;
+				  			document.querySelector( MPv1Ticket.selectors.couponCode )
+				  			.value = "";
+				  			document.querySelector( MPv1Ticket.selectors.couponCode )
+				  			.style.background = null;
+				  			document.querySelector( MPv1.selectors.discount )
+				  			.value = 0;
 						}
-						document.querySelector(MPv1Ticket.selectors.applyCoupon).disabled = false;
+						document.querySelector( MPv1Ticket.selectors.applyCoupon )
+						.disabled = false;
 					}
 				};
-				request.send(null);
+				request.send( null );
 			}
 		}
 
 		// === Initialization function
 
-		MPv1Ticket.addListenerEvent = function(el, eventName, handler) {
-			if (el.addEventListener) {
-				el.addEventListener(eventName, handler);
+		MPv1Ticket.addListenerEvent = function( el, eventName, handler ) {
+			if ( el.addEventListener ) {
+				el.addEventListener( eventName, handler );
 			} else {
-				el.attachEvent("on" + eventName, function() {
-					handler.call(el);
-				});
+				el.attachEvent( "on" + eventName, function() {
+					handler.call( el );
+				} );
 			}
 		};
 
-		MPv1Ticket.Initialize = function(site_id, coupon_mode, discount_action_url) {
+		MPv1Ticket.Initialize = function( site_id, coupon_mode, discount_action_url ) {
 
-			// sets
+			// Sets.
 			MPv1Ticket.site_id = site_id
 			MPv1Ticket.coupon_of_discounts.default = coupon_mode
 			MPv1Ticket.coupon_of_discounts.discount_action_url = discount_action_url
 
-			// flow coupon of discounts
-			if (MPv1Ticket.coupon_of_discounts.default) {
+			// Flow coupon of discounts.
+			if ( MPv1Ticket.coupon_of_discounts.default ) {
 				MPv1Ticket.addListenerEvent(
-					document.querySelector(MPv1Ticket.selectors.applyCoupon),
+					document.querySelector( MPv1Ticket.selectors.applyCoupon ),
 					"click",
 					MPv1Ticket.checkCouponEligibility
 				);
 			} else {
-				document.querySelector(MPv1Ticket.selectors.formCoupon).style.display = "none";
+				document.querySelector( MPv1Ticket.selectors.formCoupon ).style.display = "none";
 			}
 
 			return;
@@ -341,7 +359,7 @@ if (!defined('ABSPATH')) {
 
 		this.MPv1Ticket = MPv1Ticket;
 
-	}).call();
+	} ).call();
 
 	// === Instantiation
 
@@ -363,17 +381,17 @@ if (!defined('ABSPATH')) {
 	MPv1Ticket.paths.error = "<?php echo ( $images_path . 'error.png' ); ?>";
 
 	MPv1Ticket.getAmount = function() {
-		return document.querySelector(MPv1Ticket.selectors.amount)
-		.value - document.querySelector(MPv1Ticket.selectors.discount).value;
+		return document.querySelector( MPv1Ticket.selectors.amount )
+		.value - document.querySelector( MPv1Ticket.selectors.discount ).value;
 	}
 
 	MPv1Ticket.getAmountWithoutDiscount = function() {
-		return document.querySelector(MPv1Ticket.selectors.amount).value;
+		return document.querySelector( MPv1Ticket.selectors.amount ).value;
 	}
 
 	MPv1Ticket.Initialize(
 		mercadopago_site_id,
-    	mercadopago_coupon_mode == "yes",
+		mercadopago_coupon_mode == "yes",
 		mercadopago_discount_action_url
 	);
 
