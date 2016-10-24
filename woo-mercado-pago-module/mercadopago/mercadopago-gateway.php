@@ -657,9 +657,8 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				);
 				array_push( $items, array(
 					'id' => 2147483647,
-					'title' => sanitize_file_name( $order->get_shipping_to_display() ),
-					'description' =>
-						__( 'Shipping service used by store', 'woocommerce-mercadopago-module' ),
+					'title' => implode( ', ', $list_of_items ),
+					'description' => implode( ', ', $list_of_items ),
 					'category_id' => $this->store_categories_id[$this->category_id],
 					'quantity' => 1,
 					'unit_price' => $ship_cost,
