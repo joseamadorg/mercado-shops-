@@ -75,7 +75,7 @@ During the sandbox mode tests, you can operate over HTTP, but for homologation y
   <thead>
   <tbody>
     <tr>
-      <td>v2.6.6</td>
+      <td>v2.1.4</td>
       <td>Stable (Current version)</td>
       <td>WooCommerce 2.1.x - 2.6.x</td>
     </tr>
