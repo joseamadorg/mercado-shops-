@@ -739,7 +739,7 @@ msgid "Discount Coupon"
 msgstr "Cupón de Descuento"
 
 msgid "CURRENCY CONVERTED: The currency conversion ratio from"
-msgstr "MONEDA CONVERTIDA: "La tasa de conversión de moneda de"
+msgstr "MONEDA CONVERTIDA: La tasa de conversión de moneda de"
 
 msgid "ERROR: It was not possible to convert the unsupported currency"
 msgstr "ERROR: No fue posible convertir la moneda no soportada"
