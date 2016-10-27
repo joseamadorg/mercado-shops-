@@ -66,7 +66,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		$this->currency_conversion = $this->get_option( 'currency_conversion', false );
 		$this->installments = $this->get_option( 'installments', '24' );
 		$this->ex_payments = $this->get_option( 'ex_payments', 'n/d' );
-		$this->payment_split_mode = false;
+		$this->payment_split_mode = 'inactive';
 		$this->sandbox = $this->get_option( 'sandbox', false );
 		$this->debug = $this->get_option( 'debug' );
 
@@ -350,8 +350,8 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			  'type' => 'multiselect',
 			  'options' => $this->payment_methods,
 			  'default' => ''
-		  ),
-		  'payment_split_mode' => array(
+			),
+			'payment_split_mode' => array(
 				'title' => __( 'Two Cards Mode', 'woocommerce-mercadopago-module' ),
 				'type' => 'checkbox',
 				'label' => __( 'Payments with Two Cards', 'woocommerce-mercadopago-module' ),
