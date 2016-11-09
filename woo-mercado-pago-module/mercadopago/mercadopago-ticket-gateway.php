@@ -753,7 +753,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 				$this->collector_id = $get_request['response']['id'];
 				$this->country_configs = WC_WooMercadoPago_Module::get_country_config( $this->site_id );
 
-				// get ticket payments.
+				// Get ticket payments.
 				$payments = $this->mp->get( '/v1/payment_methods/?access_token=' . $this->access_token );
 				foreach ( $payments['response'] as $payment ) {
 					if ( $payment['payment_type_id'] != 'account_money' &&
@@ -766,7 +766,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 					}
 				}
 
-				// check for auto converstion of currency.
+				// Check for auto converstion of currency.
 				$this->currency_ratio = -1;
 				if ( $this->currency_conversion == 'yes' ) {
 					$this->currency_ratio = WC_WooMercadoPago_Module::get_conversion_rate(
