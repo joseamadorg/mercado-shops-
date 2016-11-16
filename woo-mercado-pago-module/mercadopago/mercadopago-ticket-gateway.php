@@ -318,6 +318,30 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 			}
 		}
 
+		if ( ! empty( $this->settings['access_token'] ) ) {
+			$this->mp = new MP(
+				WC_WooMercadoPago_Module::get_module_version(),
+				$this->settings['access_token']
+			);
+		} else {
+			$this->mp = null;
+		}
+
+		// analytics
+		$infra_data = WC_WooMercadoPago_Module::get_common_settings();
+		$infra_data['checkout_custom_ticket'] = ( $this->settings['enabled'] == 'yes' ? 'true' : 'false' );
+		$infra_data['checkout_custom_ticket_coupon'] = ( $this->settings['coupon_mode'] == 'yes' ? 'true' : 'false' );
+		if ( $this->mp != null ) {
+			$response = $this->mp->analytics_save_settings( $infra_data );
+			if ( 'yes' == $this->debug) {
+				$this->log->add(
+					$this->id,
+					'[custom_process_admin_options] - analytics info response: ' .
+					json_encode( $response, JSON_PRETTY_PRINT )
+				);
+			}
+		}
+
 		return update_option(
 			$this->get_option_key(),
 			apply_filters( 'woocommerce_settings_api_sanitized_fields_' . $this->id, $this->settings )
@@ -325,10 +349,10 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 	}
 
 	/*
-	* ========================================================================
-	* CHECKOUT BUSINESS RULES (CLIENT SIDE)
-	* ========================================================================
-	*/
+	 * ========================================================================
+	 * CHECKOUT BUSINESS RULES (CLIENT SIDE)
+	 * ========================================================================
+	 */
 
 	public function ticket_checkout_scripts() {
 		if ( is_checkout() && $this->is_available() ) {
@@ -543,7 +567,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 		// The payment preference.
 		$preferences = array(
 			'transaction_amount' => floor( ( ( float ) $ticket_checkout['amount'] ) * 100 ) / 100,
-			'description' => $purchase_description,
+			'description' => implode( ', ', $list_of_items ),
 			'payment_method_id' => $ticket_checkout['paymentMethodId'],
 			'payer' => array(
 		 		'email' => $order->billing_email
@@ -753,7 +777,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 				$this->collector_id = $get_request['response']['id'];
 				$this->country_configs = WC_WooMercadoPago_Module::get_country_config( $this->site_id );
 
-				// get ticket payments.
+				// Get ticket payments.
 				$payments = $this->mp->get( '/v1/payment_methods/?access_token=' . $this->access_token );
 				foreach ( $payments['response'] as $payment ) {
 					if ( $payment['payment_type_id'] != 'account_money' &&
@@ -766,7 +790,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 					}
 				}
 
-				// check for auto converstion of currency.
+				// Check for auto converstion of currency.
 				$this->currency_ratio = -1;
 				if ( $this->currency_conversion == 'yes' ) {
 					$this->currency_ratio = WC_WooMercadoPago_Module::get_conversion_rate(
