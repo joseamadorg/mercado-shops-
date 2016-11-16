@@ -397,56 +397,51 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 	public function custom_process_admin_options() {
 		$this->init_settings();
 
-	  $post_data = $this->get_post_data();
+		$post_data = $this->get_post_data();
 
-		foreach ( $this->get_form_fields() as $key => $field) {
-	  	if ( 'title' !== $this->get_field_type( $field) ) {
-		 	try {
-		 		if ( $key == 'payment_split_mode' ) {
-					// We dont save split mode as it should come from api.
-		 			$value = $this->get_field_value( $key, $field, $post_data );
-		 			$this->payment_split_mode = ( $value == 'yes' ? 'active' : 'inactive' );
-		 		} else {
-		 			$this->settings[$key] = $this->get_field_value( $key, $field, $post_data );
-		 		}
-			} catch ( Exception $e ) {
-				$this->add_error( $e->getMessage() );
+		foreach ( $this->get_form_fields() as $key => $field ) {
+		  	if ( 'title' !== $this->get_field_type( $field ) ) {
+			 	try {
+			 		if ( $key == 'payment_split_mode' ) {
+						// We dont save split mode as it should come from api.
+			 			$value = $this->get_field_value( $key, $field, $post_data );
+			 			$this->payment_split_mode = ( $value == 'yes' ? 'active' : 'inactive' );
+			 		} else {
+			 			$this->settings[$key] = $this->get_field_value( $key, $field, $post_data );
+			 		}
+				} catch ( Exception $e ) {
+					$this->add_error( $e->getMessage() );
 				}
-		 }
+			}
 		}
 
-		//========== ANALYTICS
-		/*$this->mp = new MP(
-			WC_WooMercadoPago_Module::get_module_version(),
-			$this->settings['client_id'],
-			$this->settings['client_secret']
-		);
-		$access_token = $this->mp->get_access_token();
-		$get_request = $this->mp->get( '/users/me?access_token=' . $access_token);
-		if (isset( $get_request['response']['site_id'] ) ) {
+		if ( ! empty( $this->settings['client_id'] ) && ! empty( $this->settings['client_secret'] ) ) {
+			$this->mp = new MP(
+				WC_WooMercadoPago_Module::get_module_version(),
+				$this->settings['client_id'],
+				$this->settings['client_secret']
+			);
 		} else {
 			$this->mp = null;
 		}
 
-		if ( $this->mp != null) {
-			// Handle Basic checkout use
-			WC_WooMercadoPago_Module::$status_standard = ( $this->settings['enabled'] == 'yes' ? 1 : 0 );
-			// Saving analytics for settings
-			if ( $this->mp != null) {
-				$response = $this->mp->analytics_save_settings(null); // TODO:
-				if ( 'yes' == $this->debug) {
-					$this->log->add(
-						$this->id,
-						'[custom_process_admin_options] - analytics info: ' .
-						json_encode(WC_WooMercadoPago_Module::get_module_settings(
-							$get_request['response']['site_id'], 123
-						), JSON_PRETTY_PRINT)
-					);
-				}
+		// analytics
+		if ( $this->mp != null ) {
+			$infra_data = WC_WooMercadoPago_Module::get_common_settings();
+			$infra_data['checkout_basic'] = ( $this->settings['enabled'] == 'yes' ? 'true' : 'false' );
+			$infra_data['mercado_envios'] = 'false';
+			$infra_data['two_cards'] = ( $this->payment_split_mode == 'active' ? 'true' : 'false' );
+			$response = $this->mp->analytics_save_settings( $infra_data );
+			if ( 'yes' == $this->debug) {
+				$this->log->add(
+					$this->id,
+					'[custom_process_admin_options] - analytics response: ' .
+					json_encode( $response, JSON_PRETTY_PRINT )
+				);
 			}
-		}*/
-		//========== ANALYTICS
+		}
 
+		// two cards mode
 		if ( $this->mp != null ) {
 			$response = $this->mp->set_two_cards_mode( $this->payment_split_mode );
 		}

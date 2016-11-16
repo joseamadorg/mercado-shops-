@@ -12,7 +12,7 @@ $GLOBALS['LIB_LOCATION'] = dirname( __FILE__ );
 
 class MP {
 
-	private $version = '2.1.4';
+	private $version = '2.1.5';
 	private $client_id;
 	private $client_secret;
 	private $ll_access_token;
@@ -702,7 +702,7 @@ class MP {
 		}
 
 		$request['params'] = isset( $request['params'] ) && is_array( $request['params'] ) ?
-			$request["params"] :
+			$request['params'] :
 			array();
 
 		if ( ! isset( $request['authenticate'] ) || $request['authenticate'] !== false ) {
@@ -725,11 +725,11 @@ class MP {
 	public function analytics_save_settings( $module_info ) {
 
 		$request = array(
-			'uri' => '/modules/tracking/saveSettings?access_token=' . $this->get_access_token(),
+			'uri' => '/modules/tracking/settings?access_token=' . $this->get_access_token(),
 			'data' => $module_info
 		 );
 
-		$result = MPRestClient::get( $request, $this->version );
+		$result = MPRestClient::post( $request, $this->version );
 		return $result;
 
 	}
