@@ -812,8 +812,8 @@ msgstr "ERRO: Não foi possível converter a moeda não suportada"
 msgid "to"
 msgstr "para"
 
-msgid "If the used currency in WooCommerce is different or not supported by Mercado Pago, convert values of your transactions using Mercado Pago currency ratio"
-msgstr "Se a moeda utilizada pelo WooCommerce for diferente ou não suportada pelo Mercado Pago, converte os valores de suas transações usando a taxa de conversão do Mercado Pago"
+msgid "If the used currency in WooCommerce is different or not supported by Mercado Pago, convert values of your transactions using Mercado Pago currency ratio."
+msgstr "Se a moeda utilizada pelo WooCommerce for diferente ou não suportada pelo Mercado Pago, converte os valores de suas transações usando a taxa de conversão do Mercado Pago."
 
 msgid " is: "
 msgstr " é: "
@@ -856,3 +856,39 @@ msgstr "Seus clientes poderão utilizar dois diferentes cartões para pagar pedi
 
 msgid "Your Mercado Pago credentials Access Token appears to be misconfigured."
 msgstr "Sua credencial Access Token do Mercado Pago parece estar desconfigurada."
+
+msgid "Cancel Order"
+msgstr "Cancelar Pedido"
+
+msgid "Refund Order"
+msgstr "Extornar Pedido"
+
+msgid "Back URL Options"
+msgstr "Opções de URL de Retorno"
+
+msgid "Sucess URL"
+msgstr "URL de Sucesso"
+
+msgid "Where customers should be redirected after a successful purchase. Let blank to redirect to the default store order resume page."
+msgstr "Onde os clientes deverão ser redirecionados após uma compra bem-sucedida. Deixe em branco para redirecionar para a página padrão de resumo de pedido da loja."
+
+msgid "Failure URL"
+msgstr "URL de Falha"
+
+msgid "Where customers should be redirected after a failed purchase. Let blank to redirect to the default store order resume page."
+msgstr "Onde os clientes deverão ser redirecionados após uma compra ter falhado. Deixe em branco para redirecionar para a página padrão de resumo de pedido da loja."
+
+msgid "Pending URL"
+msgstr "URL de Pendência"
+
+msgid "Where customers should be redirected after a pending purchase. Let blank to redirect to the default store order resume page."
+msgstr "Onde os clientes deverão ser redirecionados após uma compra entrar em análise. Deixe em branco para redirecionar para a página padrão de resumo de pedido da loja."
+
+msgid "Stock Reduce"
+msgstr "Redução de Estoque"
+
+msgid "Reduce Stock in Order Generation"
+msgstr "Reduzir Estoquer ao Gerar Pedido"
+
+msgid "Enable this to reduce the stock on order creation. Disable this to reduce <strong>after</strong> the payment approval."
+msgstr "Habilite esta opção para reduzir o estoque ao se criar um pedido. Desabilite para reduzir somente <strong>depois</strong> da aprovação do pagamento."

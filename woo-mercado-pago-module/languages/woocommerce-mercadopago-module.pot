@@ -737,7 +737,7 @@ msgstr ""
 msgid "to"
 msgstr ""
 
-msgid "If the used currency in WooCommerce is different or not supported by Mercado Pago, convert values of your transactions using Mercado Pago currency ratio"
+msgid "If the used currency in WooCommerce is different or not supported by Mercado Pago, convert values of your transactions using Mercado Pago currency ratio."
 msgstr ""
 
 msgid " is: "
@@ -780,4 +780,40 @@ msgid "Your customer will be able to use two different cards to pay the order."
 msgstr ""
 
 msgid "Your Mercado Pago credentials Access Token appears to be misconfigured."
+msgstr ""
+
+msgid "Cancel Order"
+msgstr ""
+
+msgid "Refund Order"
+msgstr ""
+
+msgid "Back URL Options"
+msgstr ""
+
+msgid "Sucess URL"
+msgstr ""
+
+msgid "Where customers should be redirected after a successful purchase. Let blank to redirect to the default store order resume page."
+msgstr ""
+
+msgid "Failure URL"
+msgstr ""
+
+msgid "Where customers should be redirected after a failed purchase. Let blank to redirect to the default store order resume page."
+msgstr ""
+
+msgid "Pending URL"
+msgstr ""
+
+msgid "Where customers should be redirected after a pending purchase. Let blank to redirect to the default store order resume page."
+msgstr ""
+
+msgid "Stock Reduce"
+msgstr ""
+
+msgid "Reduce Stock in Order Generation"
+msgstr ""
+
+msgid "Enable this to reduce the stock on order creation. Disable this to reduce <strong>after</strong> the payment approval."
 msgstr ""

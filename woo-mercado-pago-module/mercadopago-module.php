@@ -8,7 +8,7 @@
  * Author URI: https://www.mercadopago.com.br/developers/
  * Developer: Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
  * Copyright: Copyright(c) MercadoPago [https://www.mercadopago.com]
- * Version: 2.1.5
+ * Version: 2.1.6
  * License: https://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: woocommerce-mercadopago-module
  * Domain Path: /languages/
@@ -31,7 +31,7 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 	 */
 	class WC_WooMercadoPago_Module {
 
-		const VERSION = '2.1.5';
+		const VERSION = '2.1.6';
 
 		// Singleton design pattern
 		protected static $instance = null;
@@ -181,6 +181,19 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 		 */
 		public static function get_module_version() {
 			return WC_WooMercadoPago_Module::VERSION;
+		}
+
+		/**
+		 * Summary: Get client id from access token.
+		 * Description: Get client id from access token.
+		 * @return the client id.
+		 */
+		public static function get_client_id( $at ){
+			$t = explode ( '-', $at );
+			if ( count( $t ) > 0 ) {
+				return $t[1];
+			}
+			return '';
 		}
 
 		/**
@@ -383,6 +396,15 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 	}
 
 	// ==========================================================================================
+
+	// add our own item to the order actions meta box
+	add_action( 'woocommerce_order_actions', 'add_mp_order_meta_box_actions' );
+	// define the item in the meta box by adding an item to the $actions array
+	function add_mp_order_meta_box_actions( $actions ) {
+		$actions['cancel_order'] = __( 'Cancel Order', 'woocommerce-mercadopago-module' );
+		$actions['refund_order'] = __( 'Refund Order', 'woocommerce-mercadopago-module' );
+		return $actions;
+	}
 
 	// Payment gateways should be created as additional plugins that hook into WooCommerce.
 	// Inside the plugin, you need to create a class after plugins are loaded.
