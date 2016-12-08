@@ -848,7 +848,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 					if ( $response['status'] == 'pending' ) {
 						if ( $response['status_detail'] == 'pending_waiting_payment' ) {
 							WC()->cart->empty_cart();
-							if ( $this->reduce_stock_on_order_gen ) {
+							if ( $this->reduce_stock_on_order_gen == 'yes' ) {
 								$order->reduce_order_stock();
 							}
 							/*$html = '<p></p><p>' . wordwrap(
@@ -1264,7 +1264,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 						$order->add_order_note(
 							'Mercado Pago: ' . __( 'Payment approved.', 'woocommerce-mercadopago-module' )
 						);
-						if ( ! $this->reduce_stock_on_order_gen ) {
+						if ( $this->reduce_stock_on_order_gen == 'no' ) {
 							$order->payment_complete();
 						}
 						break;
