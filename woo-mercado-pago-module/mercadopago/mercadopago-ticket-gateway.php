@@ -112,6 +112,11 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 			'woocommerce_update_options_payment_gateways_' . $this->id,
 			array( $this, 'custom_process_admin_options' )
 		);
+		// Customizes thank you page.
+		add_filter(
+			'woocommerce_thankyou_order_received_text',
+			array( $this, 'show_ticket_button' ), 10, 2
+		);
 
 		if ( ! empty( $this->settings['enabled'] ) && $this->settings['enabled'] == 'yes' ) {
 			if ( $is_instance ) {
@@ -523,17 +528,6 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 
 		$client_id = WC_WooMercadoPago_Module::get_client_id( $this->get_option( 'access_token' ) );
 
-		$html = '<p></p><p>' . wordwrap(
-			__( 'Thank you for your order. Please, pay the ticket to get your order approved.', 'woocommerce-mercadopago-module' ),
-			60, '<br>'
-		) . '</p>';
-		$html .= '<a id="submit-payment" target="_blank" href="' .
-			get_post_meta( $order_id, '_transaction_details_ticket', true ) .
-			'" class="button alt">' .
-			__( 'Print the Ticket', 'woocommerce-mercadopago-module' ) .
-			'</a> ';
-		echo( '<p>' . $html . '</p>' );
-
 		echo '<script src="https://secure.mlstatic.com/modules/javascript/analytics.js"></script>
 		<script type="text/javascript">
 			var MA = ModuleAnalytics;
@@ -543,6 +537,19 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 			MA.put();
 		</script>';
 
+	}
+
+	public function show_ticket_button( $thankyoutext, $order ) {
+		$html = '<p>' .
+			__( 'Thank you for your order. Please, pay the ticket to get your order approved.', 'woocommerce-mercadopago-module' ) .
+		'</p>';
+		$html .= '<a id="submit-payment" target="_blank" href="' .
+			get_post_meta( $order->id, '_transaction_details_ticket', true ) . '" class="button alt"' .
+			' style="font-size:1.25rem; width:75%; height:48px; line-height:24px; text-align:center;">' .
+			__( 'Print the Ticket', 'woocommerce-mercadopago-module' ) .
+			'</a> ';
+		$added_text = '<p>' . $html . '</p>';
+		return $added_text;
 	}
 
 	public function ticket_checkout_scripts() {
@@ -677,12 +684,12 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 					array_push( $items, array(
 						'id' => $item['product_id'],
 						'title' => ( $product->post->post_title . ' x ' . $item['qty'] ),
-						'description' => sanitize_file_name(
+						'description' => html_entity_decode( sanitize_file_name(
 							// This handles description width limit of Mercado Pago.
 							( strlen( $product->post->post_content ) > 230 ?
 								substr( $product->post->post_content, 0, 230 ) . '...' :
 								$product->post->post_content )
-						),
+						), ENT_COMPAT, 'UTF-8' ),
 						'picture_url' => wp_get_attachment_url( $product->get_image_id() ),
 						'category_id' => $this->store_categories_id[$this->category_id],
 						'quantity' => 1,
@@ -760,7 +767,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 		// The payment preference.
 		$preferences = array(
 			'transaction_amount' => floor( ( ( float ) $ticket_checkout['amount'] ) * 100 ) / 100,
-			'description' => implode( ', ', $list_of_items ),
+			'description' => html_entity_decode( implode( ', ', $list_of_items ), ENT_COMPAT, 'UTF-8' ),
 			'payment_method_id' => $ticket_checkout['paymentMethodId'],
 			'payer' => array(
 		 		'email' => $order->billing_email

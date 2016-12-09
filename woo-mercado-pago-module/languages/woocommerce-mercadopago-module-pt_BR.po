@@ -888,7 +888,7 @@ msgid "Stock Reduce"
 msgstr "Redução de Estoque"
 
 msgid "Reduce Stock in Order Generation"
-msgstr "Reduzir Estoquer ao Gerar Pedido"
+msgstr "Reduzir Estoque ao Gerar Pedido"
 
 msgid "Enable this to reduce the stock on order creation. Disable this to reduce <strong>after</strong> the payment approval."
 msgstr "Habilite esta opção para reduzir o estoque ao se criar um pedido. Desabilite para reduzir somente <strong>depois</strong> da aprovação do pagamento."
