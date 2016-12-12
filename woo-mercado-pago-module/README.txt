@@ -110,7 +110,7 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 
 = v2.1.7 (12/12/2016) =
 * Bug fixes
-	- IMPORTANT: when ticket payment method was enabled, the button for print ticket was appearing for other methods.
+	- When ticket payment method was enabled, the button for print ticket was appearing for other methods.
 
 = v2.1.6 (09/12/2016) =
 * Features
