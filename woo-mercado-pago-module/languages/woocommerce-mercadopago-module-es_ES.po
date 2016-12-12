@@ -790,7 +790,7 @@ msgid "Your customer will be able to use two different cards to pay the order."
 msgstr "Su cliente será capaz de utilizar dos tarjetas diferentes para pagar el pedido."
 
 msgid "Your Mercado Pago credentials Access Token appears to be misconfigured."
-msgstr "Las credenciales de Mercado Pago Access Token parece estar mal configurado."
+msgstr "La credencial Mercado Pago Access Token parece estar mal configurada."
 
 msgid "Cancel Order"
 msgstr "Cancelar la Compra"
@@ -805,25 +805,25 @@ msgid "Sucess URL"
 msgstr "URL de Éxito"
 
 msgid "Where customers should be redirected after a successful purchase. Let blank to redirect to the default store order resume page."
-msgstr "Donde los clientes deberán reorientarse después de una compra exitosa. Dejar en blanco para redirigir a la página estándar de resumen de compra en la tienda."
+msgstr "Donde los clientes serán redirigidos después de una compra exitosa. Dejar en blanco para redirigir a la página estándar de resumen de compra en la tienda."
 
 msgid "Failure URL"
-msgstr "URL de Fracaso"
+msgstr "URL de Pago Rechazado"
 
 msgid "Where customers should be redirected after a failed purchase. Let blank to redirect to the default store order resume page."
-msgstr "Donde los clientes deberán reorientarse después de una compra fracasada. Dejar en blanco para redirigir a la página estándar de resumen de compra en la tienda."
+msgstr "Donde los clientes serán redirigidos después de una compra rechazada. Dejar en blanco para redirigir a la página estándar de resumen de compra en la tienda."
 
 msgid "Pending URL"
-msgstr "URL de Pendencia"
+msgstr "URL de Pago Pendiente"
 
 msgid "Where customers should be redirected after a pending purchase. Let blank to redirect to the default store order resume page."
-msgstr "Donde los clientes deberán reorientarse después de una compra pendiente. Dejar en blanco para redirigir a la página estándar de resumen de compra en la tienda."
+msgstr "Donde los clientes ​serán redirigidos después de una compra pendiente. Dejar en blanco para redirigir a la página estándar de resumen de compra en la tienda."
 
 msgid "Stock Reduce"
-msgstr "Reducción de Inventario"
+msgstr "Reducir Inventario"
 
 msgid "Reduce Stock in Order Generation"
-msgstr "Reducir Estoquer Mediante Pedido"
+msgstr "Reducir Inventario en la Orden"
 
 msgid "Enable this to reduce the stock on order creation. Disable this to reduce <strong>after</strong> the payment approval."
 msgstr "Activar esta opción para reducir el inventario mediante la creación de un pedido. Desactivar para reducir sólo <strong>después</strong> de la aprobación del pago."
