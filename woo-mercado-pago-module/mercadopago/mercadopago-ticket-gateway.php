@@ -540,6 +540,8 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 	}
 
 	public function show_ticket_button( $thankyoutext, $order ) {
+		if ( get_post_meta( $order->id, '_used_gateway', true ) != 'WC_WooMercadoPagoTicket_Gateway' )
+			return;
 		$html = '<p>' .
 			__( 'Thank you for your order. Please, pay the ticket to get your order approved.', 'woocommerce-mercadopago-module' ) .
 		'</p>';
