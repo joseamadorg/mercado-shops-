@@ -1,8 +1,16 @@
 CHANGELOG:
 
+= v2.1.6 (09/12/2016) =
+* Features
+	- Cancel/Refund API integration. Now, merchants can cancel and refund orders through store back-office. Options available in order details, order actions;
+	- Back url (checkout callback) configurable in back-office for basic checkout solution.
+* Improvements
+	- Added option to select when (payment approval or order generation) to reduce stocks for tickets solution;
+	- Payment with ticket with order description at finish.
+
 = v2.1.5 (16/11/2016) =
 * Improvements
-	- Analytical analysis checking.
+	- Analytics of module settings.
 * Bug fixes
 	- Fixed issue in ticket solution that was printing [null] in ticket description.
 
