@@ -30,8 +30,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="mp-box-inputs mp-col-65">
 	    	<input type="text" id="couponCode" name="mercadopago_custom[coupon_code]"
 			autocomplete="off" maxlength="24"/>
-			<span class="mp-discount" id="mpCouponApplyed"></span>
-			<span class="mp-error" id="mpCouponError"></span>
 		</div>
 		<div class="mp-box-inputs mp-col-10">
 			<div id="mp-separete-date"></div>
@@ -39,6 +37,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="mp-box-inputs mp-col-25">
 			<input type="button" class="button" id="applyCoupon"
 			value="<?php echo $form_labels['form']['apply']; ?>">
+		</div>
+		<div class="mp-box-inputs mp-col-100 mp-box-message">
+			<span class="mp-discount" id="mpCouponApplyed" ></span>
+			<span class="mp-error" id="mpCouponError" ></span>
 		</div>
 	</div>
 
@@ -217,17 +219,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	</div> <!-- end #mercadopago-form -->
 
-	<div class="mp-box-inputs mp-col-100" style="padding:0px 36px 0px 36px;">
-		<label for="installments">
-			<?php echo $form_labels['form']['installments']; ?>
-			<?php if ($is_currency_conversion > 0) :
-				echo "(" . $form_labels['form']['payment_converted'] . " " .
-				$woocommerce_currency . " " . $form_labels['form']['to'] . " " .
-				$account_currency . ")";
-			endif; ?> <em>*</em>
-		</label>
-		<select id="installments" data-checkout="installments"
-		name="mercadopago_custom[installments]"></select>
+	<div id="mp-box-installments" style="padding:0px 36px 0px 36px;">
+		<div class="mp-box-inputs mp-col-50" id="mp-box-installments-selector">
+			<label for="installments">
+				<?php echo $form_labels['form']['installments']; ?>
+				<?php if ($is_currency_conversion > 0) :
+					echo "(" . $form_labels['form']['payment_converted'] . " " .
+					$woocommerce_currency . " " . $form_labels['form']['to'] . " " .
+					$account_currency . ")";
+				endif; ?> <em>*</em>
+			</label>
+			<select id="installments" data-checkout="installments"
+			name="mercadopago_custom[installments]"></select>
+		</div>
+		<div class="mp-box-inputs mp-col-50 mp-col-70" id="mp-box-input-tax-cft">
+			<label >&nbsp;</label>
+			<div id="mp-tax-cft-text"></div>
+		</div>
+		<div class="mp-box-inputs mp-col-100" id="mp-box-input-tax-tea">
+			<div id="mp-tax-tea-text"></div>
+		</div>
 	</div>
 	<div class="mp-box-inputs mp-line" style="padding:0px 36px 0px 36px;">
 		<!-- NOT DELETE LOADING-->
@@ -239,8 +250,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="mp-box-inputs mp-col-100" id="mercadopago-utilities"
 	style="padding:0px 36px 0px 36px;">
 		<input type="hidden" id="site_id" name="mercadopago_custom[site_id]"/>
-		<input type="hidden" id="amount" value='<?php echo $amount; ?>'
-		name="mercadopago_custom[amount]"/>
+		<input type="hidden" id="amount" value='<?php echo $amount; ?>' name="mercadopago_custom[amount]"/>
 		<input type="hidden" id="campaign_id" name="mercadopago_custom[campaign_id]"/>
 		<input type="hidden" id="campaign" name="mercadopago_custom[campaign]"/>
 		<input type="hidden" id="discount" name="mercadopago_custom[discount]"/>
@@ -248,8 +258,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<input type="hidden" id="token" name="mercadopago_custom[token]"/>
 		<input type="hidden" id="cardTruncated" name="mercadopago_custom[cardTruncated]"/>
 		<input type="hidden" id="CustomerAndCard" name="mercadopago_custom[CustomerAndCard]"/>
-		<input type="hidden" id="CustomerId" value='<?php echo $customerId; ?>'
-		name="mercadopago_custom[CustomerId]"/>
+		<input type="hidden" id="CustomerId" value='<?php echo $customerId; ?>' name="mercadopago_custom[CustomerId]"/>
 	</div>
 
 </fieldset>
@@ -332,6 +341,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 				CustomerAndCard: '#CustomerAndCard',
 				box_loading: "#mp-box-loading",
 				submit: "#submit",
+				// tax resolution AG 51/2017
+				boxInstallments: '#mp-box-installments',
+				boxInstallmentsSelector: '#mp-box-installments-selector',
+				taxCFT: '#mp-box-input-tax-cft',
+				taxTEA: '#mp-box-input-tax-tea',
+				taxTextCFT: '#mp-tax-cft-text',
+				taxTextTEA: '#mp-tax-tea-text',
 				// form
 				form: '#mercadopago-form',
 				formCoupon: '#mercadopago-form-coupon',
@@ -712,8 +728,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				// fragment.appendChild(option);
 				for ( var i=0; i<payerCosts.length; i++) {
-					html_option += "<option value='" + payerCosts[i].installments + "'>" +
+					/*html_option += "<option value='" + payerCosts[i].installments + "'>" +
 					( payerCosts[i].recommended_message || payerCosts[i].installments ) +
+					"</option>";*/
+					// Resolution 51/2017
+					var dataInput = "";
+					if ( MPv1.site_id == "MLA" ) {
+						var tax = payerCosts[i].labels;
+						if ( tax.length > 0 ) {
+							for ( var l=0; l<tax.length; l++ ) {
+								if ( tax[l].indexOf( "CFT_" ) !== -1 ) {
+									dataInput = "data-tax='" + tax[l] + "'";
+								}
+							}
+						}
+					}
+					html_option += "<option value='" + payerCosts[i].installments + "' " + dataInput + ">" +
+					(payerCosts[i].recommended_message || payerCosts[i].installments) +
 					"</option>";
 				}
 
@@ -723,9 +754,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 				}
 
 				selectorInstallments.removeAttribute( "disabled" );
+				MPv1.showTaxes();
 
 			}
 
+		}
+
+		MPv1.showTaxes = function() {
+			var selectorIsntallments = document.querySelector( MPv1.selectors.installments );
+			var tax = selectorIsntallments.options[selectorIsntallments.selectedIndex].getAttribute( "data-tax" );
+			var cft = "";
+			var tea = "";
+			if ( tax != null ) {
+				var tax_split = tax.split( "|" );
+				cft = tax_split[0].replace( "_", " ");
+				tea = tax_split[1].replace( "_", " ");
+				if ( cft == "CFT 0,00%" && tea == "TEA 0,00%" ) {
+					cft = "";
+					tea = "";
+				}
+			}
+			document.querySelector( MPv1.selectors.taxTextCFT ).innerHTML = cft;
+			document.querySelector( MPv1.selectors.taxTextTEA ).innerHTML = tea;
 		}
 
 		// === Customer & Cards
@@ -1168,6 +1218,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			} else if ( MPv1.site_id == "MCO" ) {
 				document.querySelector( MPv1.selectors.mpIssuer ).style.display = "none";
+			} else if ( MPv1.site_id == "MLA" ) {
+				document.querySelector( MPv1.selectors.boxInstallmentsSelector ).classList.remove( "mp-col-100" );
+				document.querySelector( MPv1.selectors.boxInstallmentsSelector ).classList.add( "mp-col-70" );
+				document.querySelector( MPv1.selectors.taxCFT ).style.display = "block";
+				document.querySelector( MPv1.selectors.taxTEA ).style.display = "block";
+				MPv1.addListenerEvent( document.querySelector( MPv1.selectors.installments ), "change", MPv1.showTaxes );
 			}
 
 			if ( MPv1.debug ) {

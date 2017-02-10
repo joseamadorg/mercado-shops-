@@ -36,8 +36,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="mp-box-inputs mp-col-65">
 			<input type="text" id="couponCodeTicket" name="mercadopago_ticket[coupon_code]"
 			autocomplete="off" maxlength="24" />
-			<span class="mp-discount" id="mpCouponApplyedTicket" ></span>
-			<span class="mp-error" id="mpCouponErrorTicket" ></span>
  		</div>
 		<div class="mp-box-inputs mp-col-10">
 			<div id="mp-separete-date"></div>
@@ -45,6 +43,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="mp-box-inputs mp-col-25">
 			<input type="button" class="button" id="applyCouponTicket"
 			value="<?php echo $form_labels['form']['apply']; ?>">
+		</div>
+		<div class="mp-box-inputs mp-col-100 mp-box-message">
+			<span class="mp-discount" id="mpCouponApplyed" ></span>
+			<span class="mp-error" id="mpCouponError" ></span>
 		</div>
 	</div>
 

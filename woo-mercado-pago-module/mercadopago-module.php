@@ -8,7 +8,7 @@
  * Author URI: https://www.mercadopago.com.br/developers/
  * Developer: Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
  * Copyright: Copyright(c) MercadoPago [https://www.mercadopago.com]
- * Version: 2.1.7
+ * Version: 2.1.8
  * License: https://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: woocommerce-mercadopago-module
  * Domain Path: /languages/
@@ -31,7 +31,7 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 	 */
 	class WC_WooMercadoPago_Module {
 
-		const VERSION = '2.1.7';
+		const VERSION = '2.1.8';
 
 		// Singleton design pattern
 		protected static $instance = null;
@@ -53,6 +53,10 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 				include_once 'mercadopago/mercadopago-gateway.php';
 				include_once 'mercadopago/mercadopago-custom-gateway.php';
 				include_once 'mercadopago/mercadopago-ticket-gateway.php';
+
+				// TODO: uncomment and implement
+				//include_once 'mercadopago/class-wc-product-mp_recurrent.php';
+
 				add_filter( 'woocommerce_payment_gateways', array( $this, 'add_gateway' ) );
 				add_filter(
 					'woomercadopago_settings_link_' . plugin_basename( __FILE__ ),
@@ -188,7 +192,7 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 		 * Description: Get client id from access token.
 		 * @return the client id.
 		 */
-		public static function get_client_id( $at ){
+		public static function get_client_id( $at ) {
 			$t = explode ( '-', $at );
 			if ( count( $t ) > 0 ) {
 				return $t[1];
@@ -322,6 +326,20 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 						),
 						'currency' => 'PEN'
 					);
+				case 'MLU':
+					return array(
+						'sponsor_id' => 243692679,
+						'country_name' => __( 'Uruguay', 'woocommerce-mercadopago-module' ),
+						'checkout_banner' => plugins_url(
+							'woo-mercado-pago-module/images/MLU/standard_mlu.png',
+							plugin_dir_path( __FILE__ )
+						),
+						'checkout_banner_custom' => plugins_url(
+							'woo-mercado-pago-module/images/MLU/credit_card.png',
+							plugin_dir_path( __FILE__ )
+						),
+						'currency' => 'UYU'
+					);
 				default: // set Argentina as default country
 					return array(
 						'sponsor_id' => 208682286,
@@ -356,7 +374,7 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 				__( 'ATTENTION: The currency', 'woocommerce-mercadopago-module' ) .
 				' ' . get_woocommerce_currency() . ' ' .
 				__( 'defined in WooCommerce is different from the one used in your credentials country.<br>The currency for transactions in this payment method will be', 'woocommerce-mercadopago-module' ) .
-				' ' . $currency . ' ( ' . $country_name . ' ). ' .
+				' ' . $currency . ' (' . $country_name . '). ' .
 				__( 'Currency conversions should be made outside this module.', 'woocommerce-mercadopago-module' );
 		}
 
@@ -391,6 +409,13 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 		// Fix to URL Problem : #038; replaces & and breaks the navigation.
 		public static function workaround_ampersand_bug( $link ) {
 			return str_replace( '\/', '/', str_replace( '&#038;', '&', $link) );
+		}
+
+		// Converts HTML entities to readable UTF8
+		public static function utf8_ansi( $str = '' ) {
+			$str = str_replace( '\u', 'u', $str );
+			$str = preg_replace( '/u([\da-fA-F]{4})/', '&#x\1;', $str );
+			return html_entity_decode( $str );
 		}
 
 	}
