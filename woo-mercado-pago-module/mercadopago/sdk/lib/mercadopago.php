@@ -12,7 +12,7 @@ $GLOBALS['LIB_LOCATION'] = dirname( __FILE__ );
 
 class MP {
 
-	private $version = '2.1.7';
+	private $version = '2.1.8';
 	private $client_id;
 	private $client_secret;
 	private $ll_access_token;
@@ -522,6 +522,29 @@ class MP {
 
 	}
 
+	/**
+	 * Summary: Cancel preapproval payment.
+	 * Description: Cancel preapproval payment.
+	 * @param int $id
+	 * @return array( json )
+	 */
+	public function cancel_preapproval_payment( $id ) {
+
+		$request = array(
+			'uri' => '/preapproval/{$id}',
+			'params' => array(
+				'access_token' => $this->get_access_token()
+			 ),
+			'data' => array(
+				'status' => 'cancelled'
+			 )
+		 );
+
+		$response = MPRestClient::put( $request, $this->version );
+		return $response;
+
+	}
+
 	//=== REFUND AND CANCELING FLOW FUNCTIONS ===
 
 	/**
@@ -559,29 +582,6 @@ class MP {
 				'access_token' => $this->get_access_token()
 			 ),
 			'data' => '{"status":"cancelled"}'
-		 );
-
-		$response = MPRestClient::put( $request, $this->version );
-		return $response;
-
-	}
-
-	/**
-	 * Summary: Cancel preapproval payment.
-	 * Description: Cancel preapproval payment.
-	 * @param int $id
-	 * @return array( json )
-	 */
-	public function cancel_preapproval_payment( $id ) {
-
-		$request = array(
-			'uri' => '/preapproval/{$id}',
-			'params' => array(
-				'access_token' => $this->get_access_token()
-			 ),
-			'data' => array(
-				'status' => 'cancelled'
-			 )
 		 );
 
 		$response = MPRestClient::put( $request, $this->version );

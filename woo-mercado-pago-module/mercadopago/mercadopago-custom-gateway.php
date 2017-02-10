@@ -390,7 +390,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 				$this->log->add(
 					$this->id,
 					'[custom_process_admin_options] - analytics info response: ' .
-					json_encode( $response, JSON_PRETTY_PRINT )
+					json_encode( $response, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE )
 				);
 			}
 		}
@@ -707,7 +707,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			$this->log->add(
 				$this->id,
 				'[process_payment] - Received [$_POST] from customer front-end page: ' .
-				json_encode( $_POST, JSON_PRETTY_PRINT )
+				json_encode( $_POST, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE )
 			);
 		}
 
@@ -822,27 +822,38 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 		// A string to register items (workaround to deal with API problem that shows only first item).
 		$list_of_items = array();
 
-		// Here we build the array that contains ordered itens, from customer cart.
+		// Here we build the array that contains ordered items, from customer cart.
 		$items = array();
-		if ( sizeof( $order->get_items() ) > 0) {
+		if ( sizeof( $order->get_items() ) > 0 ) {
 			foreach ( $order->get_items() as $item ) {
 				if ( $item['qty'] ) {
 					$product = new WC_product( $item['product_id'] );
-					array_push( $list_of_items, $product->post->post_title . ' x ' . $item['qty'] );
+					$product_title = WC_WooMercadoPago_Module::utf8_ansi(
+						$product->post->post_title
+					);
+					$product_content = WC_WooMercadoPago_Module::utf8_ansi(
+						$product->post->post_content
+					);
+					// Remove decimals if MCO/MLC
+					$unit_price = floor( ( (float) $item['line_total'] + (float) $item['line_tax'] ) *
+						( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 ) * 100 ) / 100;
+					if ( $this->site_id == 'MCO' || $this->site_id == 'MLC' ) {
+						$unit_price = floor( $unit_price );
+					}
+					array_push( $list_of_items, $product_title . ' x ' . $item['qty'] );
 					array_push( $items, array(
 						'id' => $item['product_id'],
-						'title' => ( $product->post->post_title . ' x ' . $item['qty'] ),
+						'title' => ( $product_title . ' x ' . $item['qty'] ),
 						'description' => sanitize_file_name(
 							// This handles description width limit of Mercado Pago.
-							( strlen( $product->post->post_content ) > 230 ?
-								substr( $product->post->post_content, 0, 230 ) . '...' :
-								$product->post->post_content )
+							( strlen( $product_content ) > 230 ?
+								substr( $product_content, 0, 230 ) . '...' :
+								$product_content )
 						),
 						'picture_url' => wp_get_attachment_url( $product->get_image_id() ),
 						'category_id' => $this->store_categories_id[$this->category_id],
 						'quantity' => 1,
-						'unit_price' => floor( ( (float) $item['line_total'] + (float) $item['line_tax'] ) *
-							( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 ) * 100 ) / 100
+						'unit_price' => $unit_price
 					) );
 				}
 			}
@@ -851,6 +862,10 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 		// Creates the shipment cost structure.
 		$ship_cost = ( (float) $order->get_total_shipping() + (float) $order->get_shipping_tax() ) *
 			( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 );
+		// Remove decimals if MCO/MLC
+		if ( $this->site_id == 'MCO' || $this->site_id == 'MLC' ) {
+			$ship_cost = floor( $ship_cost );
+		}
 		if ( $ship_cost > 0 ) {
 			$item = array(
 				'title' => sanitize_file_name( $order->get_shipping_to_display() ),
@@ -868,6 +883,11 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			$custom_checkout['coupon_code'] != '' &&
 			WC()->session->chosen_payment_method == 'woocommerce-mercadopago-custom-module' ) {
 
+			// Remove decimals if MCO/MLC
+			if ( $this->site_id == 'MCO' || $this->site_id == 'MLC' ) {
+				$custom_checkout['discount'] = floor( $custom_checkout['discount'] );
+			}
+
 			$item = array(
 				'title' => __( 'Discount', 'woocommerce-mercadopago-module' ),
 				'description' => __( 'Discount provided by store', 'woocommerce-mercadopago-module' ),
@@ -880,10 +900,10 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 
 		// Build additional information from the customer data.
 		$payer_additional_info = array(
-		'first_name' => $order->billing_first_name,
-		'last_name' => $order->billing_last_name,
-		//'registration_date' =>
-		'phone' => array(
+			'first_name' => $order->billing_first_name,
+			'last_name' => $order->billing_last_name,
+			//'registration_date' =>
+			'phone' => array(
 				//'area_code' =>
 				'number' => $order->billing_phone
 			),
@@ -972,7 +992,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			$this->log->add(
 				$this->id,
 				'[build_payment_preference] - returning just created [$preferences] structure: ' .
-				json_encode( $preferences, JSON_PRETTY_PRINT )
+				json_encode( $preferences, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE )
 			);
 		}
 
@@ -1030,7 +1050,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 					$this->log->add(
 						$this->id,
 						'[create_url] - payment link generated with success from mercado pago, with structure as follow: ' .
-						json_encode( $checkout_info, JSON_PRETTY_PRINT ) );
+						json_encode( $checkout_info, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE ) );
 				}
 				return $checkout_info['response'];
 			}
@@ -1058,7 +1078,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			$this->log->add(
 				$this->id,
 				': @[check_and_save_customer_card] - checking info to create card: ' .
-				json_encode( $checkout_info, JSON_PRETTY_PRINT )
+				json_encode( $checkout_info, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE )
 			);
 		}
 
@@ -1170,6 +1190,12 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			);
 
 			if ( isset( $get_request['response']['site_id'] ) ) {
+
+				// TODO: revalidate MLU
+				if ( $get_request['response']['site_id'] == 'MLU' ) {
+					$this->mp = null;
+					return false;
+				}
 
 				$this->is_test_user = in_array( 'test_user', $get_request['response']['tags'] );
 				$this->site_id = $get_request['response']['site_id'];
@@ -1323,7 +1349,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			$this->log->add(
 				$this->id,
 				'[process_http_request] - Received _get content: ' .
-				json_encode( $_GET, JSON_PRETTY_PRINT )
+				json_encode( $_GET, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE )
 			);
 		}
 		if ( isset( $_GET['coupon_id'] ) && $_GET['coupon_id'] != '' ) {
@@ -1381,7 +1407,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 				$this->log->add(
 					$this->id,
 					'[check_ipn_request_is_valid] - data_id or type not set: ' .
-					json_encode( $data, JSON_PRETTY_PRINT )
+					json_encode( $data, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE )
 				);
 			}
 			// At least, check if its a v0 ipn.
@@ -1390,7 +1416,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 					$this->log->add(
 						$this->id,
 						'[check_ipn_request_is_valid] - Mercado Pago Request failure: ' .
-						json_encode( $_GET, JSON_PRETTY_PRINT )
+						json_encode( $_GET, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE )
 					);
 				}
 				wp_die( __( 'Mercado Pago Request Failure', 'woocommerce-mercadopago-module' ) );
@@ -1422,7 +1448,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 						$this->log->add(
 							$this->id,
 							'[check_ipn_request_is_valid] - error when processing received data: ' .
-							json_encode( $payment_info, JSON_PRETTY_PRINT )
+							json_encode( $payment_info, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE )
 						);
 					}
 					return false;
@@ -1464,7 +1490,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 					$this->log->add(
 						$this->id,
 						'[successful_request] - got order with ID ' . $order->id . ' and data: ' .
-						json_encode( $data, JSON_PRETTY_PRINT )
+						json_encode( $data, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE )
 					);
 				}
 				update_post_meta( $order->id, '_used_gateway', 'WC_WooMercadoPagoCustom_Gateway' );

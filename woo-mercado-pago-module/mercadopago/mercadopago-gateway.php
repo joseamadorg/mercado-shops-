@@ -157,16 +157,18 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			'<a href="https://www.mercadopago.com/mlc/account/credentials?type=basic" target="_blank">%s</a>, ' .
 			'<a href="https://www.mercadopago.com/mco/account/credentials?type=basic" target="_blank">%s</a>, ' .
 			'<a href="https://www.mercadopago.com/mlm/account/credentials?type=basic" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com/mpe/account/credentials?type=basic" target="_blank">%s</a> %s ' .
-			'<a href="https://www.mercadopago.com/mlv/account/credentials?type=basic" target="_blank">%s</a>',
+			'<a href="https://www.mercadopago.com/mpe/account/credentials?type=basic" target="_blank">%s</a>, ' .
+			'<a href="https://www.mercadopago.com/mlv/account/credentials?type=basic" target="_blank">%s</a> %s ' .
+			'<a href="https://www.mercadopago.com/mlu/account/credentials?type=basic" target="_blank">%s</a>',
 			__( 'Argentine', 'woocommerce-mercadopago-module' ),
 			__( 'Brazil', 'woocommerce-mercadopago-module' ),
 			__( 'Chile', 'woocommerce-mercadopago-module' ),
 			__( 'Colombia', 'woocommerce-mercadopago-module' ),
 			__( 'Mexico', 'woocommerce-mercadopago-module' ),
 			__( 'Peru', 'woocommerce-mercadopago-module' ),
+			__( 'Venezuela', 'woocommerce-mercadopago-module' ),
 			__( 'or', 'woocommerce-mercadopago-module' ),
-			__( 'Venezuela', 'woocommerce-mercadopago-module' )
+			__( 'Uruguay', 'woocommerce-mercadopago-module' )
 		);
 
 		// Trigger API to get payment methods and site_id, also validates Client_id/Client_secret.
@@ -482,7 +484,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				$this->log->add(
 					$this->id,
 					'[custom_process_admin_options] - analytics response: ' .
-					json_encode( $response, JSON_PRETTY_PRINT )
+					json_encode( $response, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE )
 				);
 			}
 		}
@@ -809,21 +811,33 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		// A string to register items (workaround to deal with API problem that shows only first item)
 		$list_of_items = array();
 
-		// Here we build the array that contains ordered items from customer cart
+		// Here we build the array that contains ordered items, from customer cart
 		$items = array();
 		if ( sizeof( $order->get_items() ) > 0 ) {
 			foreach ( $order->get_items() as $item ) {
 				if ( $item['qty'] ) {
 					$product = new WC_product( $item['product_id'] );
-					array_push( $list_of_items, $product->post->post_title . ' x ' . $item['qty'] );
+					$product_title = WC_WooMercadoPago_Module::utf8_ansi(
+						$product->post->post_title
+					);
+					$product_content = WC_WooMercadoPago_Module::utf8_ansi(
+						$product->post->post_content
+					);
+					// Remove decimals if MCO/MLC
+					$unit_price = floor( ( (float) $item['line_total'] + (float) $item['line_tax'] ) *
+						( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 ) * 100 ) / 100;
+					if ( $this->site_id == 'MCO' || $this->site_id == 'MLC' ) {
+						$unit_price = floor( $unit_price );
+					}
+					array_push( $list_of_items, $product_title . ' x ' . $item['qty'] );
 					array_push( $items, array(
 						'id' => $item['product_id'],
-						'title' => ( $product->post->post_title . ' x ' . $item['qty'] ),
+						'title' => ( $product_title . ' x ' . $item['qty'] ),
 						'description' => sanitize_file_name(
 							// This handles description width limit of Mercado Pago.
-							( strlen( $product->post->post_content ) > 230 ?
-								substr( $product->post->post_content, 0, 230 ) . '...' :
-								$product->post->post_content )
+							( strlen( $product_content ) > 230 ?
+								substr( $product_content, 0, 230 ) . '...' :
+								$product_content )
 						),
 						'picture_url' => ( sizeof( $order->get_items() ) > 1 ?
 							plugins_url( 'images/cart.png', plugin_dir_path( __FILE__ ) ) :
@@ -831,15 +845,18 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 						),
 						'category_id' => $this->store_categories_id[$this->category_id],
 						'quantity' => 1,
-						'unit_price' => ( ( (float) $item['line_total'] + (float) $item['line_tax'] ) ) *
-							( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 ),
+						'unit_price' => $unit_price,
 						'currency_id' => $this->country_configs['currency']
 					) );
 				}
 			}
-			// shipment cost as an item (workaround to prevent API showing shipment setup again).
+			// Shipment cost as an item (workaround to prevent API showing shipment setup again).
 			$ship_cost = ( (float) $order->get_total_shipping() + (float) $order->get_shipping_tax() ) *
 				( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 );
+			// Remove decimals if MCO/MLC
+			if ( $this->site_id == 'MCO' || $this->site_id == 'MLC' ) {
+				$ship_cost = floor( $ship_cost );
+			}
 			if ( $ship_cost > 0 ) {
 				array_push(
 					$list_of_items,
@@ -962,7 +979,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			$this->log->add(
 				$this->id,
 				'[build_payment_preference] - preference created with following structure: ' .
-				json_encode( $preferences, JSON_PRETTY_PRINT) );
+				json_encode( $preferences, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE ) );
 		}
 
 		$preferences = apply_filters(
@@ -972,9 +989,86 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		return $preferences;
 	}
 
+	/**
+	 * Summary: Build Mercado Pago preapproval.
+	 * Description: Create Mercado Pago preapproval structure and get init_point URL based in the order options
+	 * from the cart.
+	 * @return the preapproval structure.
+	 */
+	public function build_preapproval( $order ) {
+
+		// Here we build the array that contains ordered items, from customer cart
+		$preapproval = null;
+
+		if ( sizeof( $order->get_items() ) == 1 ) {
+			$arr = $order->get_items();
+			$item = $arr[0];
+			if ( $item['qty'] ) {
+				$product = new WC_product( $item['product_id'] );
+				$product_title = WC_WooMercadoPago_Module::utf8_ansi(
+					$product->post->post_title
+				);
+				// Remove decimals if MCO/MLC
+				$unit_price = floor( ( (float) $item['line_total'] + (float) $item['line_tax'] ) *
+					( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 ) * 100 ) / 100;
+				if ( $this->site_id == 'MCO' || $this->site_id == 'MLC' ) {
+					$unit_price = floor( $unit_price );
+				}
+				// Creates the pre-approval structure
+				$preapproval = array(
+					'payer_email' => $order->billing_email,
+					'back_url' => ( empty( $this->success_url ) ?
+						WC_WooMercadoPago_Module::workaround_ampersand_bug(
+							esc_url( $this->get_return_url( $order) )
+						) : $this->success_url
+					),
+					'reason' => $product_title . ' x ' . $item['qty'],
+					'external_reference' => $this->invoice_prefix . $order->id,
+					'auto_recurring' => array(
+						'frequency' => $frequency,
+						'frequency_type' => $frequency_type,
+						'transaction_amount' => $unit_price,
+						'currency_id' => $this->country_configs['currency'],
+						'start_date' => $start_date,
+						'end_date' => $end_date
+					)
+				);
+				// Do not set IPN url if it is a localhost.
+				if ( ! strrpos( $this->domain, 'localhost' ) ) {
+					$preapproval['notification_url'] = WC_WooMercadoPago_Module::workaround_ampersand_bug(
+						WC()->api_request_url( 'WC_WooMercadoPago_Gateway' )
+					);
+				}
+				// Set sponsor ID.
+				if ( ! $this->is_test_user ) {
+					$preapproval['sponsor_id'] = $this->country_configs['sponsor_id'];
+				}
+
+				if ( 'yes' == $this->debug ) {
+					$this->log->add(
+						$this->id,
+						'[build_preapproval] - preapproval created with following structure: ' .
+						json_encode( $preapproval, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE ) );
+				}
+				if ( 'yes' == $this->debug ) {
+					$this->log->add(
+						$this->id,
+						'[build_preapproval] - product data are: ' .
+						json_encode( $product, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE ) );
+				}
+			}
+		}
+
+		return $preapproval;
+	}
+
 	// --------------------------------------------------
 
 	protected function create_url( $order ) {
+
+		// TODO: check product type
+		//$pre_approval = $this->build_preapproval( $order );
+		//return false;
 
 		// Creates the order parameters by checking the cart configuration.
 		$preferences = $this->build_payment_preference( $order );
@@ -1019,7 +1113,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 					$this->log->add(
 						$this->id,
 						'[create_url] - payment link generated with success from mercado pago, with structure as follow: ' .
-						json_encode( $checkout_info, JSON_PRETTY_PRINT ) );
+						json_encode( $checkout_info, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE ) );
 				}
 				if ( 'yes' == $this->sandbox) {
 					return $checkout_info['response']['sandbox_init_point'];
@@ -1181,7 +1275,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			$this->log->add(
 				$this->id,
 				'[check_ipn_response] - received _get content: ' .
-				json_encode( $_GET, JSON_PRETTY_PRINT )
+				json_encode( $_GET, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE )
 			);
 		}
 		$data = $this->check_ipn_request_is_valid( $_GET );
@@ -1204,7 +1298,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				$this->log->add(
 					$this->id,
 					'[check_ipn_request_is_valid] - data_id or type not set: ' .
-					json_encode( $data, JSON_PRETTY_PRINT )
+					json_encode( $data, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE )
 				);
 			}
 			// at least, check if its a v0 ipn.
@@ -1213,7 +1307,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 					$this->log->add(
 						$this->id,
 						'[check_ipn_request_is_valid] - mercado pago request failure: ' .
-						json_encode( $_GET, JSON_PRETTY_PRINT )
+						json_encode( $_GET, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE )
 					);
 				}
 				wp_die( __( 'Mercado Pago Request Failure', 'woocommerce-mercadopago-module' ) );

@@ -892,3 +892,45 @@ msgstr "Reduzir Estoque ao Gerar Pedido"
 
 msgid "Enable this to reduce the stock on order creation. Disable this to reduce <strong>after</strong> the payment approval."
 msgstr "Habilite esta opção para reduzir o estoque ao se criar um pedido. Desabilite para reduzir somente <strong>depois</strong> da aprovação do pagamento."
+
+msgid "Recurrent Product"
+msgstr "Produto Recorrente"
+
+msgid "Frequency"
+msgstr "Frequência"
+
+msgid "Amount of time (in days or months) for the execution of the next payment."
+msgstr "Quantia de tempo (em dias ou meses) para a cobrança do próximo pagamento."
+
+msgid "Start date"
+msgstr "Data de início"
+
+msgid "First payment date (effective debit). Defaults to now if blank."
+msgstr "Data do primeiro pagamento (débito efetivo). Por padrão agora, se deixado em branco."
+
+msgid "End date"
+msgstr "Data final"
+
+msgid "Deadline to generate new charges. Defaults to never if blank."
+msgstr "Data limite para gerar nova cobrança. Por padrão nunca, se deixado em branco."
+
+msgid "Days"
+msgstr "Dias"
+
+msgid "Months"
+msgstr "Meses"
+
+msgid "Indicates the period of time."
+msgstr "Indica o período de tempo."
+
+msgid "The amount to charge the payer each period."
+msgstr "A quantia a cobrar o pagador em cada período."
+
+msgid "Uruguay"
+msgstr "Uruguai"
+
+msgid "Frequency type"
+msgstr "Tipo de frequência"
+
+msgid "Transaction amount"
+msgstr "Quantia transacionada"
