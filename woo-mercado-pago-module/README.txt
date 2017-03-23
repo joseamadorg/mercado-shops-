@@ -110,7 +110,7 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 
 = v2.1.8 (13/02/2017) =
 * Features
-	- Rollout to Uruguay. This plugin is now supporting Uruguay for Basic Checkout with its local language translations.
+	- Rollout to Uruguay. This plugin is now supporting Uruguay for Basic Checkout and its local language translations.
 * Improvements
 	- Conformity with Argentina's E 51/2017 resolution to show up CFT/TEA amounts;
 	- Removed decimals from Chile and Colombia currencies, as they aren't used.

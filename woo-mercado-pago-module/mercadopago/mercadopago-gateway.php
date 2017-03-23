@@ -811,6 +811,9 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		// A string to register items (workaround to deal with API problem that shows only first item)
 		$list_of_items = array();
 
+		//selected shipping
+		$selected_shipping = $order->get_shipping_method();
+
 		// Here we build the array that contains ordered items, from customer cart
 		$items = array();
 		if ( sizeof( $order->get_items() ) > 0 ) {
@@ -850,28 +853,37 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 					) );
 				}
 			}
-			// Shipment cost as an item (workaround to prevent API showing shipment setup again).
-			$ship_cost = ( (float) $order->get_total_shipping() + (float) $order->get_shipping_tax() ) *
+
+			// $shipping_method = array_shift($order->get_shipping_methods());
+			// $shipping_method_id = $shipping_method['method_id'];
+			// error_log("SHIPPING:    " . $shipping_method_id );
+
+			//check is not mercado envios
+			if(strpos($selected_shipping, 'Mercado Envios') !== 0){
+				// Shipment cost as an item (workaround to prevent API showing shipment setup again).
+				$ship_cost = ( (float) $order->get_total_shipping() + (float) $order->get_shipping_tax() ) *
 				( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 );
-			// Remove decimals if MCO/MLC
-			if ( $this->site_id == 'MCO' || $this->site_id == 'MLC' ) {
-				$ship_cost = floor( $ship_cost );
-			}
-			if ( $ship_cost > 0 ) {
-				array_push(
-					$list_of_items,
-					__( 'Shipping service used by store', 'woocommerce-mercadopago-module' )
-				);
-				array_push( $items, array(
-					'id' => 2147483647,
-					'title' => implode( ', ', $list_of_items ),
-					'description' => implode( ', ', $list_of_items ),
-					'category_id' => $this->store_categories_id[$this->category_id],
-					'quantity' => 1,
-					'unit_price' => $ship_cost,
-					'currency_id' => $this->country_configs['currency']
-				) );
-			}
+				// Remove decimals if MCO/MLC
+				if ( $this->site_id == 'MCO' || $this->site_id == 'MLC' ) {
+					$ship_cost = floor( $ship_cost );
+				}
+				if ( $ship_cost > 0 ) {
+					array_push(
+						$list_of_items,
+						__( 'Shipping service used by store', 'woocommerce-mercadopago-module' )
+					);
+					array_push( $items, array(
+						'id' => 2147483647,
+						'title' => implode( ', ', $list_of_items ),
+						'description' => implode( ', ', $list_of_items ),
+						'category_id' => $this->store_categories_id[$this->category_id],
+						'quantity' => 1,
+						'unit_price' => $ship_cost,
+						'currency_id' => $this->country_configs['currency']
+						) );
+					}
+				}
+
 			// String of item names (workaround to deal with API problem that shows only first item).
 			$items[0]['title'] = implode( ', ', $list_of_items );
 		}
@@ -957,6 +969,39 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			//'expiration_date_from' =>
 			//'expiration_date_to' =>
 		);
+
+
+		// Set Mercado Envios
+		if(strpos($selected_shipping, 'Mercado Envios') === 0){
+			$preferences['shipments']['mode'] = "me2";
+
+			foreach ( $order->get_shipping_methods() as $shipping ) {
+
+				$preferences['shipments']['dimensions'] = $shipping['dimensions'];
+				$preferences['shipments']['default_shipping_method'] = (int) $shipping['shipping_method_id'];
+				$preferences['shipments']['free_methods'] = array();
+
+				//get shipping method id
+				$prepare_method_id = explode(":", $shipping['method_id']);
+
+				//get instance_id
+				$shipping_id = $prepare_method_id[count($prepare_method_id) - 1];
+
+				//get zone by instance_id
+				$shipping_zone = WC_Shipping_Zones::get_zone_by("instance_id", $shipping_id);
+
+				//get all shipping and filter by free_shipping (Mercado Envios)
+				foreach ($shipping_zone->get_shipping_methods() as $key => $shipping_object) {
+
+					//check is a free method
+					if($shipping_object->get_option('free_shipping') == 'yes'){
+						//get shipping method id (Mercado Envios)
+						$shipping_method_id = $shipping_object->get_shipping_method_id($this->site_id);
+						$preferences['shipments']['free_methods'][] = array("id" => (int) $shipping_method_id);
+					}
+				} //end foreach shipping
+			} //end foreach order
+		}//end if
 
 		// Do not set IPN url if it is a localhost.
 		if ( ! strrpos( $this->domain, 'localhost' ) ) {
@@ -1089,6 +1134,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		// Create order preferences with Mercado Pago API request.
 		try {
 			$checkout_info = $this->mp->create_preference(json_encode( $preferences ) );
+			error_log("*********    **********  Result preferences: " . json_encode($checkout_info));
 			if ( $checkout_info['status'] < 200 || $checkout_info['status'] >= 300 ) {
 				// Mercado Pago trowed an error.
 				if ( 'yes' == $this->debug ) {
@@ -1371,9 +1417,9 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * Summary: Properly handles each case of notification, based in payment status.
-	 * Description: Properly handles each case of notification, based in payment status.
-	 */
+	* Summary: Properly handles each case of notification, based in payment status.
+	* Description: Properly handles each case of notification, based in payment status.
+	*/
 	public function successful_request( $data ) {
 
 		if ( 'yes' == $this->debug ) {
@@ -1448,63 +1494,209 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				// Switch the status and update in WooCommerce.
 				switch ( $status ) {
 					case 'approved':
-						$order->add_order_note(
-							'Mercado Pago: ' .
-							__( 'Payment approved.', 'woocommerce-mercadopago-module' )
-						);
-						$order->payment_complete();
-						break;
+					$order->add_order_note(
+						'Mercado Pago: ' .
+						__( 'Payment approved.', 'woocommerce-mercadopago-module' )
+					);
+					$order->payment_complete();
+					break;
 					case 'pending':
-						$order->add_order_note(
-							'Mercado Pago: ' .
-							__( 'Customer haven\'t paid yet.', 'woocommerce-mercadopago-module' )
-						);
-						break;
+					$order->add_order_note(
+						'Mercado Pago: ' .
+						__( 'Customer haven\'t paid yet.', 'woocommerce-mercadopago-module' )
+					);
+					break;
 					case 'in_process':
-						$order->update_status(
-							'on-hold',
-							'Mercado Pago: ' .
-							__( 'Payment under review.', 'woocommerce-mercadopago-module' )
-						);
-						break;
+					$order->update_status(
+						'on-hold',
+						'Mercado Pago: ' .
+						__( 'Payment under review.', 'woocommerce-mercadopago-module' )
+					);
+					break;
 					case 'rejected':
-						$order->update_status(
-							'failed',
-							'Mercado Pago: ' .
-							__( 'The payment was refused. The customer can try again.', 'woocommerce-mercadopago-module' )
-						);
-						break;
+					$order->update_status(
+						'failed',
+						'Mercado Pago: ' .
+						__( 'The payment was refused. The customer can try again.', 'woocommerce-mercadopago-module' )
+					);
+					break;
 					case 'refunded':
-						$order->update_status(
-							'refunded',
-							'Mercado Pago: ' .
-							__( 'The payment was refunded to the customer.', 'woocommerce-mercadopago-module' )
-						);
-						break;
+					$order->update_status(
+						'refunded',
+						'Mercado Pago: ' .
+						__( 'The payment was refunded to the customer.', 'woocommerce-mercadopago-module' )
+					);
+					break;
 					case 'cancelled':
-						$order->update_status(
-							'cancelled',
-							'Mercado Pago: ' .
-							__( 'The payment was cancelled.', 'woocommerce-mercadopago-module' )
-						);
-						break;
+					$order->update_status(
+						'cancelled',
+						'Mercado Pago: ' .
+						__( 'The payment was cancelled.', 'woocommerce-mercadopago-module' )
+					);
+					break;
 					case 'in_mediation':
-						$order->add_order_note(
-							'Mercado Pago: ' .
-							__( 'The payment is under mediation or it was charged-back.', 'woocommerce-mercadopago-module' )
-						);
-						break;
+					$order->add_order_note(
+						'Mercado Pago: ' .
+						__( 'The payment is under mediation or it was charged-back.', 'woocommerce-mercadopago-module' )
+					);
+					break;
 					case 'charged-back':
-						$order->add_order_note(
-							'Mercado Pago: ' .
-							__( 'The payment is under mediation or it was charged-back.', 'woocommerce-mercadopago-module' )
-						);
-						break;
+					$order->add_order_note(
+						'Mercado Pago: ' .
+						__( 'The payment is under mediation or it was charged-back.', 'woocommerce-mercadopago-module' )
+					);
+					break;
 					default:
-						break;
+					break;
 				}
+
+				$this->check_mercado_envios($data);
+
+
 			}
 		}
 	}
+
+	function check_mercado_envios($merchant_order){
+
+		$order_key = $merchant_order['external_reference'];
+
+		if ( ! empty( $order_key ) ) {
+			$order_id = (int) str_replace( $this->invoice_prefix, '', $order_key );
+			$order = new WC_Order( $order_id );
+
+			if(count($merchant_order['shipments']) > 0){
+				foreach ($merchant_order['shipments'] as $shipment) {
+
+					$shipment_id = $shipment['id'];
+
+					//get shipping data on merchant_order
+					$shipment_name = $shipment['shipping_option']['name'];
+					$shipment_cost = $shipment['shipping_option']['cost'];
+					$shipping_method_id = $shipment['shipping_option']['shipping_method_id'];
+
+					// get data shipping selected on checkout
+					$shipping_meta = $order->get_items("shipping");
+					$order_item_shipping_id = null;
+					$method_id = null;
+					foreach ($shipping_meta as $key => $shipping) {
+						$order_item_shipping_id = $key;
+						$method_id = $shipping['method_id'];
+					}
+
+					$free_shipping_text = "";
+					$free_shipping_status = "no";
+					if($shipment_cost == 0 ){
+						$free_shipping_status = "yes";
+						$free_shipping_text = " (" . __( 'Free Shipping', 'woocommerce' ) . ")";
+					}
+
+					// update shipping cost and method title
+					$r = $order->update_shipping($order_item_shipping_id, array(
+						"method_title" => "Mercado Envios - " . $shipment_name . $free_shipping_text,
+						"method_id" => $method_id,
+						"cost" => wc_format_decimal($shipment_cost)
+					));
+
+					// WTF?
+					// https://docs.woocommerce.com/wc-apidocs/source-class-WC_Abstract_Order.html#541
+					// FORCE UPDATE SHIPPING
+					$order->set_total( wc_format_decimal($shipment_cost) , 'shipping' );
+
+					// update total order
+					$order->set_total(
+						wc_format_decimal($order->get_subtotal())
+						+ wc_format_decimal($order->get_total_shipping())
+						+ wc_format_decimal($order->get_total_tax())
+						- wc_format_decimal($order->get_total_discount())
+					);
+
+					//update additional info
+					wc_update_order_item_meta($order_item_shipping_id, 'shipping_method_id', $shipping_method_id);
+					wc_update_order_item_meta($order_item_shipping_id, 'free_shipping', $free_shipping_status);
+
+					$this->log->add(
+						$this->id,
+						'[check_mercado_envios] - $shipment_cost : ' .
+						$shipment_cost .
+						' - $total_amount : ' .
+						$merchant_order['total_amount'] .
+						' - SUM TOTAL : ' .
+						($merchant_order['total_amount'] + $shipment_cost)
+					);
+
+					$this->log->add(
+						$this->id,
+						'[check_mercado_envios] - get_subtotal() : ' .
+						$order->get_subtotal() .
+						' - get_total_shipping() : ' .
+						$order->get_total_shipping() .
+						' - get_total_discount() : ' .
+						$order->get_total_discount() .
+						' - get_total_tax() : ' .
+						$order->get_total_tax() .
+						' - TOTAL : ' .
+						(
+							$order->get_subtotal()
+							+ wc_format_decimal($order->get_total_shipping())
+							+ wc_format_decimal($order->get_total_tax())
+							- wc_format_decimal($order->get_total_discount())
+							) .
+							' - TOTAL BY WOOCOMMERCE : ' .
+							$order->get_total()
+						);
+
+						$access_token = $this->mp->get_access_token();
+						$request = array(
+							'uri' => "/shipments/" . $shipment_id,
+							'params' => array(
+								"access_token" => $access_token
+							)
+						);
+
+						$shipments_data = MeliRestClient::get($request, "");
+
+						switch ($shipments_data['response']['substatus']) {
+
+							case 'ready_to_print':
+								$substatus_description = __( 'Tag ready to print', 'woocommerce-mercadopago-module' );
+								break;
+							case 'printed':
+								$substatus_description = __( 'Tag printed', 'woocommerce-mercadopago-module' );
+								break;
+							case 'stale':
+								$substatus_description = __( 'Unsuccessful', 'woocommerce-mercadopago-module' );
+								break;
+							case 'delayed':
+								$substatus_description = __( 'Sending the delayed path', 'woocommerce-mercadopago-module' );
+								break;
+							case 'receiver_absent':
+								$substatus_description = __( 'Missing recipient for delivery', 'woocommerce-mercadopago-module' );
+								break;
+							case 'returning_to_sender':
+								$substatus_description = __( 'In return to sender', 'woocommerce-mercadopago-module' );
+								break;
+							case 'claimed_me':
+								$substatus_description = __( 'Buyer initiates complaint and requested a refund.', 'woocommerce-mercadopago-module' );
+								break;
+							default:
+								$substatus_description = $shipments_data['substatus'];
+								break;
+						}
+
+						$order->add_order_note( 'Mercado Envios: ' . $substatus_description );
+
+
+						// add tracking number in meta data to use in order page
+						update_post_meta( $order_id, '_mercadoenvios_tracking_number', $shipments_data['response']['tracking_number']);
+
+						// add shipiment_id in meta data to use in order page
+						update_post_meta( $order_id, '_mercadoenvios_shipment_id', $shipment_id);
+
+					}
+				}
+			}
+
+		}
 
 }
