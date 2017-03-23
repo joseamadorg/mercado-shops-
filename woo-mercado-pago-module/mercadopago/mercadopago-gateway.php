@@ -1680,18 +1680,31 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 								$substatus_description = __( 'Buyer initiates complaint and requested a refund.', 'woocommerce-mercadopago-module' );
 								break;
 							default:
-								$substatus_description = $shipments_data['substatus'];
+								$substatus_description = $shipments_data['response']['substatus'];
 								break;
 						}
 
 						$order->add_order_note( 'Mercado Envios: ' . $substatus_description );
 
+						$this->log->add(
+							$this->id,
+							'[check_mercado_envios] - status : ' .
+							$shipments_data['response']['status'] .
+							' - substatus : ' .
+							$substatus_description
+						);
 
 						// add tracking number in meta data to use in order page
 						update_post_meta( $order_id, '_mercadoenvios_tracking_number', $shipments_data['response']['tracking_number']);
 
 						// add shipiment_id in meta data to use in order page
 						update_post_meta( $order_id, '_mercadoenvios_shipment_id', $shipment_id);
+
+						// add status in meta data to use in order page
+						update_post_meta( $order_id, '_mercadoenvios_status', $shipments_data['response']['status']);
+						
+						// add  substatus in meta data to use in order page
+						update_post_meta( $order_id, '_mercadoenvios_substatus', $shipments_data['response']['substatus']);
 
 					}
 				}
