@@ -8,7 +8,7 @@
  * Author URI: https://www.mercadopago.com.br/developers/
  * Developer: Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
  * Copyright: Copyright(c) MercadoPago [https://www.mercadopago.com]
- * Version: 2.1.8
+ * Version: 2.1.9
  * License: https://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: woocommerce-mercadopago-module
  * Domain Path: /languages/
@@ -31,7 +31,7 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 	 */
 	class WC_WooMercadoPago_Module {
 
-		const VERSION = '2.1.8';
+		const VERSION = '2.1.9';
 
 		// Singleton design pattern
 		protected static $instance = null;
@@ -54,6 +54,12 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 				include_once 'mercadopago/mercadopago-custom-gateway.php';
 				include_once 'mercadopago/mercadopago-ticket-gateway.php';
 
+				// Shipping
+				include_once 'shipment/abstract-wc-mercadoenvios-shipping.php';
+				include_once 'shipment/class-wc-mercadoenvios-shipping-normal.php';
+				include_once 'shipment/class-wc-mercadoenvios-shipping-express.php';
+				include_once 'shipment/class-wc-mercadoenvios-package.php';
+
 				// TODO: uncomment and implement
 				//include_once 'mercadopago/class-wc-product-mp_recurrent.php';
 
@@ -62,10 +68,26 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 					'woomercadopago_settings_link_' . plugin_basename( __FILE__ ),
 					array( $this, 'woomercadopago_settings_link' ) );
 
+
+				add_filter('woocommerce_shipping_methods', array( $this, 'add_shipping' ));
+				add_filter('woocommerce_available_payment_gateways', array( $this, 'filter_payment_method_by_shipping' ));
+
+
 			} else {
 				add_action( 'admin_notices', array( $this, 'notify_woocommerce_miss' ) );
 			}
 
+			if ( is_admin() ) {
+				$this->admin_includes();
+			}
+
+		}
+
+		/**
+		 * Admin includes.
+		 */
+		private function admin_includes() {
+			include_once dirname( __FILE__ ) . '/admin/class-wc-mercadoenvios-admin-orders.php';
 		}
 
 		// As well as defining your class, you need to also tell WooCommerce (WC) that
@@ -74,6 +96,38 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 			$methods[] = 'WC_WooMercadoPago_Gateway';
 			$methods[] = 'WC_WooMercadoPagoCustom_Gateway';
 			$methods[] = 'WC_WooMercadoPagoTicket_Gateway';
+			return $methods;
+		}
+
+
+		// woocommerce_shipping_methods
+		public function add_shipping( $methods ) {
+			$methods['mercadoenvios-normal'] = 'WC_MercadoEnvios_Shipping_Normal';
+			$methods['mercadoenvios-express'] = 'WC_MercadoEnvios_Shipping_Express';
+			return $methods;
+		}
+
+		// When selected Mercado Envios the payment can be made only with Mercado Pago Basic (Standard)
+		public function filter_payment_method_by_shipping($methods){
+
+			$chosen_methods = WC()->session->get( 'chosen_shipping_methods' );
+			$chosen_shipping = $chosen_methods[0];
+
+			//check shipping methods is a Mercado Envios
+			if (strpos($chosen_shipping, 'mercadoenvios-normal') !== false || strpos($chosen_shipping, 'mercadoenvios-express') !== false) {
+				$new_array = array();
+				foreach ($methods as $payment_method => $payment_method_object) {
+
+					if($payment_method == "woocommerce-mercadopago-module"){
+						$new_array["woocommerce-mercadopago-module"] = $payment_method_object;
+					}
+				}
+
+				//return new array shipping methods (only Mercado Pago Basic)
+				return $new_array;
+			}
+
+			//return all shipping methods
 			return $methods;
 		}
 
