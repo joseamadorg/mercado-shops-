@@ -854,10 +854,6 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				}
 			}
 
-			// $shipping_method = array_shift($order->get_shipping_methods());
-			// $shipping_method_id = $shipping_method['method_id'];
-			// error_log("SHIPPING:    " . $shipping_method_id );
-
 			//check is not mercado envios
 			if(strpos($selected_shipping, 'Mercado Envios') !== 0){
 				// Shipment cost as an item (workaround to prevent API showing shipment setup again).
@@ -987,6 +983,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				//get instance_id
 				$shipping_id = $prepare_method_id[count($prepare_method_id) - 1];
 
+				// TODO: REFACTOR
 				//get zone by instance_id
 				$shipping_zone = WC_Shipping_Zones::get_zone_by("instance_id", $shipping_id);
 
@@ -1134,7 +1131,6 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		// Create order preferences with Mercado Pago API request.
 		try {
 			$checkout_info = $this->mp->create_preference(json_encode( $preferences ) );
-			error_log("*********    **********  Result preferences: " . json_encode($checkout_info));
 			if ( $checkout_info['status'] < 200 || $checkout_info['status'] >= 300 ) {
 				// Mercado Pago trowed an error.
 				if ( 'yes' == $this->debug ) {
@@ -1617,7 +1613,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 
 					$this->log->add(
 						$this->id,
-						'[check_mercado_envios] - $shipment_cost : ' .
+						'[check_mercado_envios] - Shipment Cost MP : ' .
 						$shipment_cost .
 						' - $total_amount : ' .
 						$merchant_order['total_amount'] .
@@ -1684,11 +1680,16 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 								break;
 						}
 
+
+						if($substatus_description == ""){
+							$substatus_description = $shipments_data['response']['status'];
+						}
+
 						$order->add_order_note( 'Mercado Envios: ' . $substatus_description );
 
 						$this->log->add(
 							$this->id,
-							'[check_mercado_envios] - status : ' .
+							'[check_mercado_envios] - Mercado Envios - Status : ' .
 							$shipments_data['response']['status'] .
 							' - substatus : ' .
 							$substatus_description
@@ -1702,7 +1703,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 
 						// add status in meta data to use in order page
 						update_post_meta( $order_id, '_mercadoenvios_status', $shipments_data['response']['status']);
-						
+
 						// add  substatus in meta data to use in order page
 						update_post_meta( $order_id, '_mercadoenvios_substatus', $shipments_data['response']['substatus']);
 
