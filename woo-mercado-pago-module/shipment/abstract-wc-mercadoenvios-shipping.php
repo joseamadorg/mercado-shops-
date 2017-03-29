@@ -306,7 +306,6 @@ abstract class WC_MercadoEnvios_Shipping extends WC_Shipping_Method {
     public function get_shipping_method_id($site_id){
       return $this->shipments_id[$site_id];
     }
-
     /**
     * Update settings api
     */

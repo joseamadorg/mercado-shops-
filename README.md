@@ -11,7 +11,7 @@
 * [Feedback](#feedback)
 
 <a name="features"></a>
-##Features##
+## Features
 
 Checkout options right for your business:
 We offer two checkout methods that make it easy to securely accept payments from anyone, anywhere.
@@ -41,8 +41,15 @@ Great for merchants who want to get going quickly and easily.
 
 *Available for Argentina, Brazil, Chile, Colombia, Mexico, Peru and Venezuela*
 
+**Shipment integration - Beta Version**
+
+This feature allows to setup and integrate with Mercado Envios shipment method as another shipment option for customers. It includes the possibility to print the shipping label directly from the Magento Admin Panel. Free shipping is also available.
+
+*Available for Argentina, Brazil and Mexico only with Standard Checkout*
+
+
 <a name="requirements"></a>
-##Requirements##
+## Requirements
 
 Basically, the requirements of this plugin are same as you need to run WooCommerce. Your machine should have:
 
@@ -63,7 +70,7 @@ If you're using Custom Checkout, it is a requirement that you have a SSL certifi
 During the sandbox mode tests, you can operate over HTTP, but for homologation you'll need to acquire the certificate in case you don't have it.
 
 <a name="available_versions"></a>
-##Available versions##
+## Available versions
 
 <table>
   <thead>
@@ -83,7 +90,7 @@ During the sandbox mode tests, you can operate over HTTP, but for homologation y
 </table>
 
 <a name="installation"></a>
-##Installation##
+## Installation
 
 If you have already the module installed, please follow the [Upgrade instructions](#upgrade) first.
 
@@ -110,7 +117,7 @@ To confirm that your module is really installed, you can click in *Plugins* item
 ![Features](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/plugin_adm.png)
 
 <a name="std_configuration"></a>
-##Basic Checkout Configuration##
+## Basic Checkout Configuration
 
 On your store administration, go to *WooCommerce > Settings > Checkout* tab. In *Checkout Options*, click in *Mercado Pago - Basic Checkout*. You should get the following page:
 
@@ -155,7 +162,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	*Debug and Log*: Enables/disables system logs.
 
 <a name="cst_configuration"></a>
-##Custom Checkout Configuration##
+## Custom Checkout Configuration
 
 On your store administration, go to *WooCommerce > Settings > Checkout* tab. In *Checkout Options*, click in *Mercado Pago - Custom Checkout*. You should get the following page:
 
@@ -194,7 +201,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	*Debug and Log*: Enables/disables system logs.
 
 <a name="ticket_configuration"></a>
-##Ticket Configuration##
+## Ticket Configuration
 
 On your store administration, go to *WooCommerce > Settings > Checkout* tab. In *Checkout Options*, click in *Mercado Pago - Ticket*. You should get the following page:
 
@@ -232,7 +239,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	*Debug and Log*: Enables/disables system logs.
 
 <a name="upgrade"></a>
-##Upgrade Mercado Pago Plugin##
+## Upgrade Mercado Pago Plugin
 
 If you already had installed a previous version of Woo Mercado Pago Module, please follow the instructions. In same way of the installation, again you have two options: from your WordPress Store, or by downloading and manually copying the module directory.
 
@@ -257,7 +264,7 @@ If you already had installed a previous version of Woo Mercado Pago Module, plea
 To confirm that your module is really updated, you can see in *Plugins* item in the store administration menu, and check your just updated module. The version should match the just-updated plugin.
 
 <a name="Feedback"></a>
-##Feedback##
+## Feedback
 
 We want to know your opinion, please answer the following form.
 
