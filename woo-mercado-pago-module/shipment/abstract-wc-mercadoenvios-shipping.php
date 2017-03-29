@@ -56,6 +56,7 @@ abstract class WC_MercadoEnvios_Shipping extends WC_Shipping_Method {
     $this->cost	= $this->get_option( 'cost' );
     $this->free_shipping	= $this->get_option( 'free_shipping' );
     $this->show_delivery_time	= $this->get_option( 'show_delivery_time' );
+
     // Actions
     add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
 
@@ -100,14 +101,32 @@ abstract class WC_MercadoEnvios_Shipping extends WC_Shipping_Method {
       'access_token' => $this->mp->get_access_token()
     );
 
+
     if($this->get_option( 'free_shipping' ) == 'yes' ){
       $params['free_method'] = $shipping_method_id;
+    }else{
+      $list_shipping_methods = $this->get_shipping_methods_zone_by_shipping_id($this->instance_id);
+
+
+      foreach ($list_shipping_methods as $key => $shipping_object) {
+
+
+        if($key == 'mercadoenvios-normal' || $key == 'mercadoenvios-express'){
+
+          //WTF?
+          $shipping_object = new $shipping_object($shipping_object->instance_id);
+
+          if($shipping_object->get_option('free_shipping') == 'yes'){
+            $temp_shipping_method_id = $shipping_object->get_shipping_method_id($checkout_standard->site_id);
+            $params['free_method'] = $temp_shipping_method_id;
+          }
+        }
+      }
     }
 
     $response = $this->mp->get("/shipping_options", $params);
-
-    $this->log->add($this->id, "-----> Params sent: " . json_encode($params));
-    $this->log->add($this->id, "-----> Shipments Response API: " . json_encode($response));
+    $this->log->add($this->id, "[calculate_shipping] Params sent: " . json_encode($params));
+    $this->log->add($this->id, "[calculate_shipping] Shipments Response API: " . json_encode($response));
 
     if($response['status'] == 200){
 
@@ -118,7 +137,7 @@ abstract class WC_MercadoEnvios_Shipping extends WC_Shipping_Method {
 
           $label_free_shipping = "";
 
-          if($this->get_option( 'free_shipping' ) == 'yes' ){
+          if($this->get_option( 'free_shipping' ) == 'yes' || $shipping['cost'] == 0){
             $label_free_shipping = __( 'Free Shipping', 'woocommerce-mercadopago-module' );
           }
 
@@ -266,36 +285,39 @@ abstract class WC_MercadoEnvios_Shipping extends WC_Shipping_Method {
 
     public function show_message_shipping_methods(){
 
-      if($this->instance_id > 0){
-        $shipping_methods_list = $this->get_shipping_methods_zone_by_shipping_id($this->instance_id);
+      //is admin?
+      if ( is_admin() ) {
+        if($this->instance_id > 0){
+          $shipping_methods_list = $this->get_shipping_methods_zone_by_shipping_id($this->instance_id);
 
-        $shipping_methods = array();
-        foreach ($shipping_methods_list as $key => $shipping_object) {
-          $shipping_methods[$shipping_object->id] = $shipping_object->is_enabled();
-        }
-
-        if( isset($shipping_methods['mercadoenvios-normal']) && isset($shipping_methods['mercadoenvios-express']) ){
-
-          if($shipping_methods['mercadoenvios-normal'] === true && $shipping_methods['mercadoenvios-express'] === true){
-            //add settings
-            $this->update_settings_api('true');
-
-            //not display message
-            return false;
-          }elseif($shipping_methods['mercadoenvios-normal'] === false && $shipping_methods['mercadoenvios-express'] === false){
-            //remove settings
-            $this->update_settings_api('false');
-
-            //not display message
-            return false;
+          $shipping_methods = array();
+          foreach ($shipping_methods_list as $key => $shipping_object) {
+            $shipping_methods[$shipping_object->id] = $shipping_object->is_enabled();
           }
+
+          if( isset($shipping_methods['mercadoenvios-normal']) && isset($shipping_methods['mercadoenvios-express']) ){
+
+            if($shipping_methods['mercadoenvios-normal'] === true && $shipping_methods['mercadoenvios-express'] === true){
+              //add settings
+              $this->update_settings_api('true');
+
+              //not display message
+              return false;
+            }elseif($shipping_methods['mercadoenvios-normal'] === false && $shipping_methods['mercadoenvios-express'] === false){
+              //remove settings
+              $this->update_settings_api('false');
+
+              //not display message
+              return false;
+            }
+          }
+
+          //show message
+          return true;
+
+        }else{
+          return false;
         }
-
-        //show message
-        return true;
-
-      }else{
-        return false;
       }
     }
 

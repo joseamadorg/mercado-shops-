@@ -1633,7 +1633,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 							$substatus_description = __( 'Unsuccessful', 'woocommerce-mercadopago-module' );
 							break;
 						case 'delayed':
-							$substatus_description = __( 'Sending the delayed path', 'woocommerce-mercadopago-module' );
+							$substatus_description = __( 'Delayed shipping', 'woocommerce-mercadopago-module' );
 							break;
 						case 'receiver_absent':
 							$substatus_description = __( 'Missing recipient for delivery', 'woocommerce-mercadopago-module' );

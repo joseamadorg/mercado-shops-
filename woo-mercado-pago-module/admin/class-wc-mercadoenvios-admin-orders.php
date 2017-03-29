@@ -65,7 +65,7 @@ class WC_MercadoEnvios_Admin_Orders {
 					$client_secret
 				);
 
-				echo '<label for="mercadoenvios_tracking_number">' . esc_html__( 'Ticket:', 'woocommerce-mercadopago-module' ) . '</label><br />';
+				echo '<label for="mercadoenvios_tracking_number">' . esc_html__( 'Tag:', 'woocommerce-mercadopago-module' ) . '</label><br />';
 				echo '<a href="https://api.mercadolibre.com/shipment_labels?shipment_ids=' . esc_attr( get_post_meta( $post->ID, '_mercadoenvios_shipment_id', true ) ) . '&savePdf=Y&access_token=' . $this->mp->get_access_token() . '" class="button-primary" target="_blank">' . esc_html__( 'Print', 'woocommerce-mercadopago-module' ) . '</a>';
 			}
 		}else{
