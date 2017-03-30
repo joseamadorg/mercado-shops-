@@ -83,7 +83,7 @@ During the sandbox mode tests, you can operate over HTTP, but for homologation y
   <thead>
   <tbody>
     <tr>
-      <td>v2.1.8</td>
+      <td>v2.1.9</td>
       <td>Stable (Current version)</td>
       <td>WooCommerce 2.1.x - 2.6.x</td>
     </tr>
@@ -239,32 +239,6 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	*Mercado Pago Sandbox*: Test your payments in Mercado Pago sandbox environment;<br />
 	*Debug and Log*: Enables/disables system logs.
 
-<a name="upgrade"></a>
-## Upgrade Mercado Pago Plugin
-
-If you already had installed a previous version of Woo Mercado Pago Module, please follow the instructions. In same way of the installation, again you have two options: from your WordPress Store, or by downloading and manually copying the module directory.
-
-**Upgrade from WordPress**
-
-1. On your store administration, go to *Plugins* option in sidebar;
-
-2. Click in *update now* button in your plugin dashboard window;
-
-3. In a few seconds it should be installed with *Updated!* message shown.
-
-**Upgrade with Manual Download**
-
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.1.8.zip">WordPress Plugin Directory</a>);
-
-2. Unzip the folder and find "woo-mercado-pago-module" directory;
-
-3. Go to *[WordPressRootDirectory]/wp-content/plugins/* directory and delete the existing directory "woo-mercado-pago-module";
-
-4. Copy "woo-mercado-pago-module" directory to *[WordPressRootDirectory]/wp-content/plugins/* directory.
-
-To confirm that your module is really updated, you can see in *Plugins* item in the store administration menu, and check your just updated module. The version should match the just-updated plugin.
-
-
 <a name="me_configuration"></a>
 ## Mercado Envios Configuration
 
@@ -285,6 +259,31 @@ To confirm that your module is really updated, you can see in *Plugins* item in 
 5. Now you can also set the **Free Shipping** option and show the estimated **Delivery Time** in the freight calculation.
 
 ![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/me_3.png)
+
+<a name="upgrade"></a>
+## Upgrade Mercado Pago Plugin
+
+If you already had installed a previous version of Woo Mercado Pago Module, please follow the instructions. In same way of the installation, again you have two options: from your WordPress Store, or by downloading and manually copying the module directory.
+
+**Upgrade from WordPress**
+
+1. On your store administration, go to *Plugins* option in sidebar;
+
+2. Click in *update now* button in your plugin dashboard window;
+
+3. In a few seconds it should be installed with *Updated!* message shown.
+
+**Upgrade with Manual Download**
+
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.1.9.zip">WordPress Plugin Directory</a>);
+
+2. Unzip the folder and find "woo-mercado-pago-module" directory;
+
+3. Go to *[WordPressRootDirectory]/wp-content/plugins/* directory and delete the existing directory "woo-mercado-pago-module";
+
+4. Copy "woo-mercado-pago-module" directory to *[WordPressRootDirectory]/wp-content/plugins/* directory.
+
+To confirm that your module is really updated, you can see in *Plugins* item in the store administration menu, and check your just updated module. The version should match the just-updated plugin.
 
 <a name="Feedback"></a>
 ## Feedback
