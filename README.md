@@ -7,6 +7,7 @@
 * [Basic Checkout Configuration](#std_configuration)
 * [Custom Checkout Configuration](#cst_configuration)
 * [Ticket Configuration](#ticket_configuration)
+* [Mercado Envios Configuration](#ne_configuration)
 * [Upgrade](#upgrade)
 * [Feedback](#feedback)
 
@@ -262,6 +263,25 @@ If you already had installed a previous version of Woo Mercado Pago Module, plea
 4. Copy "woo-mercado-pago-module" directory to *[WordPressRootDirectory]/wp-content/plugins/* directory.
 
 To confirm that your module is really updated, you can see in *Plugins* item in the store administration menu, and check your just updated module. The version should match the just-updated plugin.
+
+
+<a name="me_configuration"></a>
+## Mercado Envios Configuration
+
+1. On your store administration, go to *WooCommerce > Settings > Shipping* tab. In *Shipping Zone*, click in *Add shipping zone*. Enter the zone name, select the regions within this zone and click in *Save Changes*. You should get the following page:
+
+![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/me_0.png)
+
+2. Click in *view* of the zone created. You should get the following page:
+![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/me_1.png)
+
+3. Click in *Add shipping method* and selected the *Mercado Envios - Normal* or *Mercado Envios - Express*. This process has to be repeated twice, until normal and express is set.
+![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/me_2.png)
+
+4. The module is ready for use, but do not forget to enable the *Basic Checkout* for the correct operation of the Mercado Envios.
+
+5. Now you can also set the Free Shipping option and Show the estimated delivery time in the freight calculation.
+![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/me_3.png)
 
 <a name="Feedback"></a>
 ## Feedback
