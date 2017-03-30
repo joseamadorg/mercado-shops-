@@ -7,7 +7,7 @@
 * [Basic Checkout Configuration](#std_configuration)
 * [Custom Checkout Configuration](#cst_configuration)
 * [Ticket Configuration](#ticket_configuration)
-* [Mercado Envios Configuration](#ne_configuration)
+* [Mercado Envios Configuration](#me_configuration)
 * [Upgrade](#upgrade)
 * [Feedback](#feedback)
 
