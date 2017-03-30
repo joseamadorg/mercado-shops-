@@ -273,14 +273,17 @@ To confirm that your module is really updated, you can see in *Plugins* item in 
 ![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/me_0.png)
 
 2. Click in *view* of the zone created. You should get the following page:
+
 ![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/me_1.png)
 
 3. Click in *Add shipping method* and selected the *Mercado Envios - Normal* or *Mercado Envios - Express*. This process has to be repeated twice, until normal and express is set.
+
 ![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/me_2.png)
 
 4. The module is ready for use, but do not forget to enable the *Basic Checkout* for the correct operation of the Mercado Envios.
 
 5. Now you can also set the Free Shipping option and Show the estimated delivery time in the freight calculation.
+
 ![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/me_3.png)
 
 <a name="Feedback"></a>
