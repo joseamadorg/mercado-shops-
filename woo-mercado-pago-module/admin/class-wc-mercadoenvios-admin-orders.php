@@ -23,8 +23,6 @@ class WC_MercadoEnvios_Admin_Orders {
 	 */
 	public function __construct() {
 		add_action( 'add_meta_boxes', array( $this, 'register_metabox' ) );
-		// add_action( 'woocommerce_process_shop_order_meta', array( $this, 'save_tracking_code' ) );
-		// add_filter( 'woocommerce_resend_order_emails_available', array( $this, 'resend_tracking_code_email' ) );
 	}
 
 	/**
@@ -52,7 +50,7 @@ class WC_MercadoEnvios_Admin_Orders {
 		$status = get_post_meta( $post->ID, '_mercadoenvios_status', true );
 
 		if(isset($status) && $status != "" && $status != "pending"){
-			echo '<label for="mercadoenvios_tracking_code">' . esc_html__( 'Tracking code:', 'woocommerce-mercadoenvios' ) . '</label><br />';
+			echo '<label for="mercadoenvios_tracking_code">' . esc_html__( 'Tracking code:', 'woocommerce-mercadopago-module' ) . '</label><br />';
 			echo '<input type="text" id="mercadoenvios_tracking_code" name="mercadoenvios_tracking_code" value="' . esc_attr( get_post_meta( $post->ID, '_mercadoenvios_tracking_number', true ) ) . '" style="width: 100%;" />';
 
 			//check exist shipment_id
@@ -67,11 +65,11 @@ class WC_MercadoEnvios_Admin_Orders {
 					$client_secret
 				);
 
-				echo '<label for="mercadoenvios_tracking_number">' . esc_html__( 'Ticket:', 'woocommerce-mercadoenvios' ) . '</label><br />';
-				echo '<a href="https://api.mercadolibre.com/shipment_labels?shipment_ids=' . esc_attr( get_post_meta( $post->ID, '_mercadoenvios_shipment_id', true ) ) . '&savePdf=Y&access_token=' . $this->mp->get_access_token() . '" class="button-primary" target="_blank">' . esc_html__( 'Print', 'woocommerce-mercadoenvios' ) . '</a>';
+				echo '<label for="mercadoenvios_tracking_number">' . esc_html__( 'Tag:', 'woocommerce-mercadopago-module' ) . '</label><br />';
+				echo '<a href="https://api.mercadolibre.com/shipment_labels?shipment_ids=' . esc_attr( get_post_meta( $post->ID, '_mercadoenvios_shipment_id', true ) ) . '&savePdf=Y&access_token=' . $this->mp->get_access_token() . '" class="button-primary" target="_blank">' . esc_html__( 'Print', 'woocommerce-mercadopago-module' ) . '</a>';
 			}
 		}else{
-			echo '<label for="mercadoenvios_tracking_number">' . esc_html__( 'Shipping is pending', 'woocommerce-mercadoenvios' ) . '</label><br />';
+			echo '<label for="mercadoenvios_tracking_number">' . esc_html__( 'Shipping is pending', 'woocommerce-mercadopago-module' ) . '</label><br />';
 		}
 	}
 }

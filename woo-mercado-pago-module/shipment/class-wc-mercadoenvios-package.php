@@ -1,6 +1,9 @@
 <?php
 /**
  * Mercado Envios Package.
+ * @since   3.0.0
+ * @version 3.0.0
+ * @reference WooCommerce Correios
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

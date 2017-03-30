@@ -477,7 +477,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		if ( $this->mp != null ) {
 			$infra_data = WC_WooMercadoPago_Module::get_common_settings();
 			$infra_data['checkout_basic'] = ( $this->settings['enabled'] == 'yes' ? 'true' : 'false' );
-			$infra_data['mercado_envios'] = 'false';
+			// $infra_data['mercado_envios'] = 'false';
 			$infra_data['two_cards'] = ( $this->payment_split_mode == 'active' ? 'true' : 'false' );
 			$response = $this->mp->analytics_save_settings( $infra_data );
 			if ( 'yes' == $this->debug) {
@@ -1611,73 +1611,42 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 					wc_update_order_item_meta($order_item_shipping_id, 'shipping_method_id', $shipping_method_id);
 					wc_update_order_item_meta($order_item_shipping_id, 'free_shipping', $free_shipping_status);
 
-					$this->log->add(
-						$this->id,
-						'[check_mercado_envios] - Shipment Cost MP : ' .
-						$shipment_cost .
-						' - $total_amount : ' .
-						$merchant_order['total_amount'] .
-						' - SUM TOTAL : ' .
-						($merchant_order['total_amount'] + $shipment_cost)
+					$access_token = $this->mp->get_access_token();
+					$request = array(
+						'uri' => "/shipments/" . $shipment_id,
+						'params' => array(
+							"access_token" => $access_token
+						)
 					);
 
-					$this->log->add(
-						$this->id,
-						'[check_mercado_envios] - get_subtotal() : ' .
-						$order->get_subtotal() .
-						' - get_total_shipping() : ' .
-						$order->get_total_shipping() .
-						' - get_total_discount() : ' .
-						$order->get_total_discount() .
-						' - get_total_tax() : ' .
-						$order->get_total_tax() .
-						' - TOTAL : ' .
-						(
-							$order->get_subtotal()
-							+ wc_format_decimal($order->get_total_shipping())
-							+ wc_format_decimal($order->get_total_tax())
-							- wc_format_decimal($order->get_total_discount())
-							) .
-							' - TOTAL BY WOOCOMMERCE : ' .
-							$order->get_total()
-						);
+					$shipments_data = MeliRestClient::get($request, "");
 
-						$access_token = $this->mp->get_access_token();
-						$request = array(
-							'uri' => "/shipments/" . $shipment_id,
-							'params' => array(
-								"access_token" => $access_token
-							)
-						);
+					switch ($shipments_data['response']['substatus']) {
 
-						$shipments_data = MeliRestClient::get($request, "");
-
-						switch ($shipments_data['response']['substatus']) {
-
-							case 'ready_to_print':
-								$substatus_description = __( 'Tag ready to print', 'woocommerce-mercadopago-module' );
-								break;
-							case 'printed':
-								$substatus_description = __( 'Tag printed', 'woocommerce-mercadopago-module' );
-								break;
-							case 'stale':
-								$substatus_description = __( 'Unsuccessful', 'woocommerce-mercadopago-module' );
-								break;
-							case 'delayed':
-								$substatus_description = __( 'Sending the delayed path', 'woocommerce-mercadopago-module' );
-								break;
-							case 'receiver_absent':
-								$substatus_description = __( 'Missing recipient for delivery', 'woocommerce-mercadopago-module' );
-								break;
-							case 'returning_to_sender':
-								$substatus_description = __( 'In return to sender', 'woocommerce-mercadopago-module' );
-								break;
-							case 'claimed_me':
-								$substatus_description = __( 'Buyer initiates complaint and requested a refund.', 'woocommerce-mercadopago-module' );
-								break;
-							default:
-								$substatus_description = $shipments_data['response']['substatus'];
-								break;
+						case 'ready_to_print':
+							$substatus_description = __( 'Tag ready to print', 'woocommerce-mercadopago-module' );
+							break;
+						case 'printed':
+							$substatus_description = __( 'Tag printed', 'woocommerce-mercadopago-module' );
+							break;
+						case 'stale':
+							$substatus_description = __( 'Unsuccessful', 'woocommerce-mercadopago-module' );
+							break;
+						case 'delayed':
+							$substatus_description = __( 'Delayed shipping', 'woocommerce-mercadopago-module' );
+							break;
+						case 'receiver_absent':
+							$substatus_description = __( 'Missing recipient for delivery', 'woocommerce-mercadopago-module' );
+							break;
+						case 'returning_to_sender':
+							$substatus_description = __( 'In return to sender', 'woocommerce-mercadopago-module' );
+							break;
+						case 'claimed_me':
+							$substatus_description = __( 'Buyer initiates complaint and requested a refund.', 'woocommerce-mercadopago-module' );
+							break;
+						default:
+							$substatus_description = $shipments_data['response']['substatus'];
+							break;
 						}
 
 
