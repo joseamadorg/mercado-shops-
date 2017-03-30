@@ -163,6 +163,26 @@ body{
   float: left;
  }
 
+#mpCouponApplyed{
+  display: none;
+  border-style: solid;
+  border-width: thin;
+  border-color: #009EE3;
+  padding: 8px 8px 8px 8px;
+}
+
+#mpCouponApplyedTicket{
+  display: none;
+  border-style: solid;
+  border-width: thin;
+  border-color: #009EE3;
+  padding: 8px 8px 8px 8px;
+}
+
+#mercadopago-form-coupon .mp-box-message{
+  margin: -5px 0 5px;
+}
+
 /*
  *
  *

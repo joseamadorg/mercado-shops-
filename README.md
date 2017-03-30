@@ -40,14 +40,13 @@ Great for merchants who want to get going quickly and easily.
 * Accept tickets, bank transfer and account money in addition to cards.
 * Accept Mercado Pago's discount coupons.
 
-*Available for Argentina, Brazil, Chile, Colombia, Mexico, Peru and Venezuela*
+*Available for Argentina, Brazil, Chile, Colombia, Mexico, Peru, Uruguay, and Venezuela*
 
 **Shipment integration - Beta Version**
 
 This feature allows to setup and integrate with Mercado Envios shipment method as another shipment option for customers. It includes the possibility to print the shipping label directly from the Magento Admin Panel. Free shipping is also available.
 
 *Available for Argentina, Brazil and Mexico only with Standard Checkout*
-
 
 <a name="requirements"></a>
 ## Requirements
@@ -83,7 +82,7 @@ During the sandbox mode tests, you can operate over HTTP, but for homologation y
   <thead>
   <tbody>
     <tr>
-      <td>v2.1.9</td>
+      <td>v2.2.0</td>
       <td>Stable (Current version)</td>
       <td>WooCommerce 2.1.x - 2.6.x</td>
     </tr>
@@ -136,6 +135,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	* Colombia: https://www.mercadopago.com/mco/account/credentials?type=basic
 	* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=basic
 	* Peru: https://www.mercadopago.com/mpe/account/credentials?type=basic
+	* Uruguay: https://www.mercadopago.com/mlu/account/credentials?type=basic
 	* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=basic
 
 3. **Instant Payment Notification (IPN) URL**: In this part, you can check your IPN URL, where you will get notified about payment updates;
@@ -181,6 +181,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	* Colombia: https://www.mercadopago.com/mco/account/credentials?type=custom
 	* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=custom
 	* Peru: https://www.mercadopago.com/mpe/account/credentials?type=custom
+	* Uruguay: https://www.mercadopago.com/mlu/account/credentials?type=custom
 	* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=custom
 
 3. **Instant Payment Notification (IPN) URL**: In this part, you can check your IPN URL, where you will get notified about payment updates;
@@ -220,6 +221,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	* Colombia: https://www.mercadopago.com/mco/account/credentials?type=custom
 	* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=custom
 	* Peru: https://www.mercadopago.com/mpe/account/credentials?type=custom
+	* Uruguay: https://www.mercadopago.com/mlu/account/credentials?type=custom
 	* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=custom
 
 3. **Instant Payment Notification (IPN) URL**: In this part, you can check your IPN URL, where you will get notified about payment updates;

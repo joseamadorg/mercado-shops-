@@ -8,7 +8,7 @@
  * Author URI: https://www.mercadopago.com.br/developers/
  * Developer: Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
  * Copyright: Copyright(c) MercadoPago [https://www.mercadopago.com]
- * Version: 2.1.9
+ * Version: 2.2.0
  * License: https://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: woocommerce-mercadopago-module
  * Domain Path: /languages/
@@ -31,7 +31,7 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 	 */
 	class WC_WooMercadoPago_Module {
 
-		const VERSION = '2.1.9';
+		const VERSION = '2.2.0';
 
 		// Singleton design pattern
 		protected static $instance = null;
@@ -53,6 +53,9 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 				include_once 'mercadopago/mercadopago-gateway.php';
 				include_once 'mercadopago/mercadopago-custom-gateway.php';
 				include_once 'mercadopago/mercadopago-ticket-gateway.php';
+				include_once 'mercadopago/mercadopago-subscription-gateway.php';
+
+				include_once 'mercadopago/class-wc-product-mp_recurrent.php';
 
 				// Shipping
 				include_once 'shipment/abstract-wc-mercadoenvios-shipping.php';
@@ -60,18 +63,13 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 				include_once 'shipment/class-wc-mercadoenvios-shipping-express.php';
 				include_once 'shipment/class-wc-mercadoenvios-package.php';
 
-				// TODO: uncomment and implement
-				//include_once 'mercadopago/class-wc-product-mp_recurrent.php';
-
 				add_filter( 'woocommerce_payment_gateways', array( $this, 'add_gateway' ) );
 				add_filter(
 					'woomercadopago_settings_link_' . plugin_basename( __FILE__ ),
 					array( $this, 'woomercadopago_settings_link' ) );
 
-
 				add_filter('woocommerce_shipping_methods', array( $this, 'add_shipping' ));
 				add_filter('woocommerce_available_payment_gateways', array( $this, 'filter_payment_method_by_shipping' ));
-
 
 			} else {
 				add_action( 'admin_notices', array( $this, 'notify_woocommerce_miss' ) );
@@ -96,9 +94,9 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 			$methods[] = 'WC_WooMercadoPago_Gateway';
 			$methods[] = 'WC_WooMercadoPagoCustom_Gateway';
 			$methods[] = 'WC_WooMercadoPagoTicket_Gateway';
+			$methods[] = 'WC_WooMercadoPagoSubscription_Gateway';
 			return $methods;
 		}
-
 
 		// woocommerce_shipping_methods
 		public function add_shipping( $methods ) {
@@ -108,26 +106,23 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 		}
 
 		// When selected Mercado Envios the payment can be made only with Mercado Pago Basic (Standard)
-		public function filter_payment_method_by_shipping($methods){
+		public function filter_payment_method_by_shipping( $methods ) {
 
 			$chosen_methods = WC()->session->get( 'chosen_shipping_methods' );
 			$chosen_shipping = $chosen_methods[0];
 
-			//check shipping methods is a Mercado Envios
-			if (strpos($chosen_shipping, 'mercadoenvios-normal') !== false || strpos($chosen_shipping, 'mercadoenvios-express') !== false) {
+			// Check shipping methods is a Mercado Envios.
+			if ( strpos( $chosen_shipping, 'mercadoenvios-normal' ) !== false || strpos( $chosen_shipping, 'mercadoenvios-express' ) !== false ) {
 				$new_array = array();
-				foreach ($methods as $payment_method => $payment_method_object) {
-
-					if($payment_method == "woocommerce-mercadopago-module"){
-						$new_array["woocommerce-mercadopago-module"] = $payment_method_object;
+				foreach ( $methods as $payment_method => $payment_method_object ) {
+					if ( $payment_method == 'woocommerce-mercadopago-module' ) {
+						$new_array['woocommerce-mercadopago-module'] = $payment_method_object;
 					}
 				}
-
-				//return new array shipping methods (only Mercado Pago Basic)
+				// Return new array shipping methods (only Mercado Pago Basic).
 				return $new_array;
 			}
-
-			//return all shipping methods
+			// Return all shipping methods.
 			return $methods;
 		}
 
@@ -453,6 +448,21 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 				) . '"> ';
 		}
 
+		// Check if an order is recurrent.
+		public static function is_subscription( $items ) {
+			$is_subscription = false;
+			if ( sizeof( $items ) == 1 ) {
+				foreach ( $items as $cart_item_key => $cart_item ) {
+					$terms = get_the_terms( $cart_item['product_id'], 'product_type' );
+					$product_type = ( ! empty( $terms ) ) ? sanitize_title( current( $terms )->name ) : 'simple';
+					if ( $product_type == 'mp_recurrent_product' ) {
+						$is_subscription = true;
+					}
+				}
+			}
+			return $is_subscription;
+		}
+
 		public static function build_invalid_credentials_msg() {
 			return '<img width="12" height="12" src="' .
 				plugins_url( 'woo-mercado-pago-module/images/error.png', plugin_dir_path( __FILE__ ) ) .
@@ -481,9 +491,37 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 	// define the item in the meta box by adding an item to the $actions array
 	function add_mp_order_meta_box_actions( $actions ) {
 		$actions['cancel_order'] = __( 'Cancel Order', 'woocommerce-mercadopago-module' );
-		$actions['refund_order'] = __( 'Refund Order', 'woocommerce-mercadopago-module' );
 		return $actions;
 	}
+
+	// Setup from which statuses the order can be cancelled.
+	/*add_filter(
+		'woocommerce_valid_order_statuses_for_cancel',
+		'filter_woocommerce_valid_order_statuses_for_cancel', 10, 1
+	);
+	function filter_woocommerce_valid_order_statuses_for_cancel( $array ) {
+		// TODO: remove the processing status (we're using only to test)
+		return array( 'processing', 'on-hold', 'pending', 'failed' ); 
+	};
+
+	// Places the cancel button/action in the admin's button list
+	add_filter( 'woocommerce_admin_order_actions', 'add_cancel_order_actions_button' , PHP_INT_MAX, 2 );
+	function add_cancel_order_actions_button( $actions, $order ) {
+		if ( $order->has_status( array( 'processing', 'on-hold', 'pending', 'failed' ) ) ) {
+			$actions['cancel'] = $actions['cancel_order'] = array(
+				'url' => wp_nonce_url( admin_url(
+					'admin-ajax.php?action=woocommerce_mark_order_status&status=cancelled&order_id=' . $order->id
+				), 'woocommerce-mark-order-status' ),
+				'name' => __( 'Cancel', 'woocommerce' ),
+				'action' => "view cancel"
+			);
+		}
+		return $actions;
+	}
+	add_action( 'admin_head', 'add_cancel_order_actions_button_css' );
+	function add_cancel_order_actions_button_css() {
+		echo '<style>.view.cancel::after { content: "\f158" !important; }</style>';
+	}*/
 
 	// Payment gateways should be created as additional plugins that hook into WooCommerce.
 	// Inside the plugin, you need to create a class after plugins are loaded.
@@ -504,6 +542,9 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 		$plugin_links[] = '<a href="' . esc_url( admin_url(
 			'admin.php?page=wc-settings&tab=checkout&section=WC_WooMercadoPagoTicket_Gateway' ) ) .
 			'">' . __( 'Ticket', 'woocommerce-mercadopago-module' ) . '</a>';
+		$plugin_links[] = '<a href="' . esc_url( admin_url(
+			'admin.php?page=wc-settings&tab=checkout&section=WC_WooMercadoPagoSubscription_Gateway' ) ) .
+			'">' . __( 'Subscription', 'woocommerce-mercadopago-module' ) . '</a>';
 		$plugin_links[] = '<br><a target="_blank" href="' .
 			'https://wordpress.org/support/view/plugin-reviews/woo-mercado-pago-module?filter=5#postform' .
 			'">' . sprintf(
