@@ -264,7 +264,7 @@ This feature enables you to sell signatures by using Mercado Pago recurrent paym
 	* Uruguay: https://www.mercadopago.com/mlu/account/credentials?type=basic
 	* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=basic
 
-3. **Instant Payment Notification (IPN) URL**: In this part, you can check your IPN URL, where you will get notified about payment updates. IMPORTANT: For this solution, you need to configure the Instant Payment Notification (IPN) URL. Don't forget it!
+3. **Instant Payment Notification (IPN) URL**: In this part, you can check your IPN URL, where you will get notified about payment updates. For this solution, you need to configure the Instant Payment Notification (IPN) URL. Don't forget it!
 
 4. **Subscription Options**: This part allows you to customize your general subscription fields;
 
