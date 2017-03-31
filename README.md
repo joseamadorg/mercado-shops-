@@ -251,7 +251,7 @@ This feature enables you to sell signatures by using Mercado Pago recurrent paym
 
 ![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/subscriptions_0.png)
 
-	Fill the needed informations. Remember that you can obtain your *Client_id* and *Client_secret*, accordingly to your country, in the following links:
+Fill the needed informations. Remember that you can obtain your *Client_id* and *Client_secret*, accordingly to your country, in the following links:
 
 	* Argentina: https://www.mercadopago.com/mla/account/credentials?type=basic
 	* Brazil: https://www.mercadopago.com/mlb/account/credentials?type=basic
@@ -262,9 +262,9 @@ This feature enables you to sell signatures by using Mercado Pago recurrent paym
 	* Uruguay: https://www.mercadopago.com/mlu/account/credentials?type=basic
 	* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=basic
 
-	IMPORTANT: For this solution, you need to configure the Instant Payment Notification (IPN) URL. Don't forget it!
+IMPORTANT: For this solution, you need to configure the Instant Payment Notification (IPN) URL. Don't forget it!
 
-2. Now, you need to create an Assignable Product. To do this, go to **Products > Products > Add Product Button**. On the openned page, complete your product informations (name, price, images, etc), and set the **Product Data** type to **Recurrent Product**, as shown:
+2. **Create a Recurrent Product**: Now, you need to create an Assignable Product. To do this, go to **Products > Products > Add Product Button**. On the openned page, complete your product informations (name, price, images, etc), and set the **Product Data** type to **Recurrent Product**, as shown:
 
 ![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/subscriptions_1.png)
 
@@ -275,7 +275,7 @@ This feature enables you to sell signatures by using Mercado Pago recurrent paym
 	*Tax status*: Setup if the product is taxable or not;<br />
 	*Tax class*: The class of the tax.
 
-3. There are a few important points about Subscription:
+3. **Considerations**: There are a few important points about Subscription:
 
 	* A subscription should be unique in the customer cart. Customers can only sign a product each time, and it can't be mixed with other non-assignable products;
 	* This solution uses a custom product type called *Recurrent Product*.
