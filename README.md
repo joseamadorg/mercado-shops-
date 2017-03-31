@@ -7,6 +7,7 @@
 * [Basic Checkout Configuration](#std_configuration)
 * [Custom Checkout Configuration](#cst_configuration)
 * [Ticket Configuration](#ticket_configuration)
+* [Mercado Pago Subscriptions](#subscription_configuration)
 * [Mercado Envios Configuration](#me_configuration)
 * [Upgrade](#upgrade)
 * [Feedback](#feedback)
@@ -241,24 +242,39 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	*Mercado Pago Sandbox*: Test your payments in Mercado Pago sandbox environment;<br />
 	*Debug and Log*: Enables/disables system logs.
 
+<a name="subscription_configuration"></a>
+## Mercado Pago Subscriptions
+
+
 <a name="me_configuration"></a>
 ## Mercado Envios Configuration
 
-1. On your store administration, go to **WooCommerce > Settings > Shipping** tab. In **Shipping Zone**, click in **Add shipping zone**. Enter the zone name, select the regions within this zone and click in **Save Changes**. You should get the following page:
+1. **Mercado Envios Configuration**: On you Mercado Pago account, enable you Mercado Envios option.
+
+	You can do it, accordingly to your country, in the following links:
+
+	* Argentina: http://shipping.mercadopago.com.ar/optin/doOptin
+	* Brazil: http://shipping.mercadopago.com.br/optin/doOptin
+	* Mexico: http://shipping.mercadopago.com.mx/optin/doOptin
+	* Other Countries: (work in progress...)
+
+	IMPORTANT: Your Mercado Pago account must be a *seller account*.
+
+2. On your store administration, go to **WooCommerce > Settings > Shipping** tab. In **Shipping Zone**, click in **Add shipping zone**. Enter the zone name, select the regions within this zone and click in **Save Changes**. You should get the following page:
 
 ![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/me_0.png)
 
-2. Click in **view** of the zone created. You should get the following page:
+3. Click in **view** of the zone created. You should get the following page:
 
 ![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/me_1.png)
 
-3. Click in **Add shipping method** and selected the **Mercado Envios - Normal** or **Mercado Envios - Express**. This process has to be repeated twice, until normal and express is set.
+4. Click in **Add shipping method** and selected the **Mercado Envios - Normal** or **Mercado Envios - Express**. This process has to be repeated twice, until normal and express is set.
 
 ![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/me_2.png)
 
-4. The module is ready for use, but do not forget to enable the **Basic Checkout** for the correct operation of the **Mercado Envios**.
+5. The module is ready for use, but do not forget to enable the **Basic Checkout** for the correct operation of the **Mercado Envios**.
 
-5. Now you can also set the **Free Shipping** option and show the estimated **Delivery Time** in the freight calculation.
+6. Now you can also set the **Free Shipping** option and show the estimated **Delivery Time** in the freight calculation.
 
 ![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/me_3.png)
 

@@ -494,35 +494,6 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 		return $actions;
 	}
 
-	// Setup from which statuses the order can be cancelled.
-	/*add_filter(
-		'woocommerce_valid_order_statuses_for_cancel',
-		'filter_woocommerce_valid_order_statuses_for_cancel', 10, 1
-	);
-	function filter_woocommerce_valid_order_statuses_for_cancel( $array ) {
-		// TODO: remove the processing status (we're using only to test)
-		return array( 'processing', 'on-hold', 'pending', 'failed' ); 
-	};
-
-	// Places the cancel button/action in the admin's button list
-	add_filter( 'woocommerce_admin_order_actions', 'add_cancel_order_actions_button' , PHP_INT_MAX, 2 );
-	function add_cancel_order_actions_button( $actions, $order ) {
-		if ( $order->has_status( array( 'processing', 'on-hold', 'pending', 'failed' ) ) ) {
-			$actions['cancel'] = $actions['cancel_order'] = array(
-				'url' => wp_nonce_url( admin_url(
-					'admin-ajax.php?action=woocommerce_mark_order_status&status=cancelled&order_id=' . $order->id
-				), 'woocommerce-mark-order-status' ),
-				'name' => __( 'Cancel', 'woocommerce' ),
-				'action' => "view cancel"
-			);
-		}
-		return $actions;
-	}
-	add_action( 'admin_head', 'add_cancel_order_actions_button_css' );
-	function add_cancel_order_actions_button_css() {
-		echo '<style>.view.cancel::after { content: "\f158" !important; }</style>';
-	}*/
-
 	// Payment gateways should be created as additional plugins that hook into WooCommerce.
 	// Inside the plugin, you need to create a class after plugins are loaded.
 	add_action(
@@ -545,6 +516,9 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 		$plugin_links[] = '<a href="' . esc_url( admin_url(
 			'admin.php?page=wc-settings&tab=checkout&section=WC_WooMercadoPagoSubscription_Gateway' ) ) .
 			'">' . __( 'Subscription', 'woocommerce-mercadopago-module' ) . '</a>';
+		$plugin_links[] = '<br><a target="_blank" href="' .
+			'https://github.com/mercadopago/cart-woocommerce#installation' .
+			'">' . __( 'Tutorial', 'woocommerce-mercadopago-module' ) . '</a>';
 		$plugin_links[] = '<br><a target="_blank" href="' .
 			'https://wordpress.org/support/view/plugin-reviews/woo-mercado-pago-module?filter=5#postform' .
 			'">' . sprintf(
