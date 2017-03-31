@@ -17,14 +17,14 @@ function add_meta_boxes() {
 	add_meta_box( 
 		'woocommerce-mp-order-action-refund',
 		__( 'Mercado Pago Subscription', 'woocommerce-mercadopago-module' ),
-		'mp_order_refund',
+		'mp_subscription_order_refund_cancel_box',
 		'shop_order',
 		'side',
 		'default'
 	);
 }
 
-function mp_order_refund() {
+function mp_subscription_order_refund_cancel_box() {
 
 	global $post;
 	$order = new WC_Order( $post->ID );
@@ -32,7 +32,7 @@ function mp_order_refund() {
 
 	$payments = get_post_meta(
 		$order_id,
-		'_Mercado_Pago_Payment_IDs',
+		'_Mercado_Pago_Sub_Payment_IDs',
 		true
 	);
 
@@ -43,6 +43,10 @@ function mp_order_refund() {
 		foreach ( $payment_ids as $p_id ) {
 			$options .= '<option value="' . $p_id . '">' . $p_id . '</option>';
 		}
+	}
+
+	if ( $options == '' ) {
+		return;
 	}
 
 	$domain = get_site_url() . '/index.php' . '/woocommerce-mercadopago-module/';

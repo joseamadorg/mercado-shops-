@@ -1196,7 +1196,7 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 				);
 				$payment_ids_str = get_post_meta(
 					$order->id,
-					'_Mercado_Pago_Payment_IDs',
+					'_Mercado_Pago_Sub_Payment_IDs',
 					true
 				);
 				$payment_ids = array();
@@ -1206,7 +1206,7 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 				$payment_ids[] = $data['id'];
 				update_post_meta(
 					$order_id,
-					'_Mercado_Pago_Payment_IDs',
+					'_Mercado_Pago_Sub_Payment_IDs',
 					implode( ', ', $payment_ids )
 				);
 			}
