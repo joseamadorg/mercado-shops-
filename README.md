@@ -245,11 +245,45 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 <a name="subscription_configuration"></a>
 ## Mercado Pago Subscriptions
 
+This feature enables you to sell signatures by using Mercado Pago recurrent payments. To configure a subscription, please follow these steps:
+
+1. **Mercado Pago Credentials**: On your store administration, go to *WooCommerce > Settings > Checkout* tab. In *Checkout Options*, click in *Mercado Pago - Subscription*. You should get the following page:
+
+![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/subscriptions_0.png)
+
+	Fill the needed informations. Remember that you can obtain your *Client_id* and *Client_secret*, accordingly to your country, in the following links:
+
+	* Argentina: https://www.mercadopago.com/mla/account/credentials?type=basic
+	* Brazil: https://www.mercadopago.com/mlb/account/credentials?type=basic
+	* Chile: https://www.mercadopago.com/mlc/account/credentials?type=basic
+	* Colombia: https://www.mercadopago.com/mco/account/credentials?type=basic
+	* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=basic
+	* Peru: https://www.mercadopago.com/mpe/account/credentials?type=basic
+	* Uruguay: https://www.mercadopago.com/mlu/account/credentials?type=basic
+	* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=basic
+
+	IMPORTANT: For this solution, you need to configure the Instant Payment Notification (IPN) URL. Don't forget it!
+
+2. Now, you need to create an Assignable Product. To do this, go to **Products > Products > Add Product Button**. On the openned page, complete your product informations (name, price, images, etc), and set the **Product Data** type to **Recurrent Product**, as shown:
+
+![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/subscriptions_1.png)
+
+	*Frequency*: This is the frequency of which the charges will be made to your customer;<br />
+	*Frequency Type*: The frequency type can be in [Days] or [Months];<br />
+	*Regular Price*: The amount that will be charged periodically;<br />
+	*End Date*: The date that the signature should end;<br />
+	*Tax status*: Setup if the product is taxable or not;<br />
+	*Tax class*: The class of the tax.
+
+3. There are a few important points about Subscription:
+
+	* A subscription should be unique in the customer cart. Customers can only sign a product each time, and it can't be mixed with other non-assignable products;
+	* This solution uses a custom product type called *Recurrent Product*.
 
 <a name="me_configuration"></a>
 ## Mercado Envios Configuration
 
-1. **Mercado Envios Configuration**: On you Mercado Pago account, enable you Mercado Envios option.
+1. Firstly, you need to enable your Mercado Envios in your Mercado Pago account.
 
 	You can do it, accordingly to your country, in the following links:
 
