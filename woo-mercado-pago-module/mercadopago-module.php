@@ -519,7 +519,7 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 		$plugin_links[] = '<br><a target="_blank" href="' .
 			'https://github.com/mercadopago/cart-woocommerce#installation' .
 			'">' . __( 'Tutorial', 'woocommerce-mercadopago-module' ) . '</a>';
-		$plugin_links[] = '<br><a target="_blank" href="' .
+		$plugin_links[] = '<a target="_blank" href="' .
 			'https://wordpress.org/support/view/plugin-reviews/woo-mercado-pago-module?filter=5#postform' .
 			'">' . sprintf(
 				__( 'Rate Us', 'woocommerce-mercadopago-module' ) . ' %s',

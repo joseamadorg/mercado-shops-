@@ -258,7 +258,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	* Mexico: http://shipping.mercadopago.com.mx/optin/doOptin
 	* Other Countries: (work in progress...)
 
-	IMPORTANT: Your Mercado Pago account must be a *seller account*.
+	IMPORTANT: Your Mercado Pago account must be a **Seller Account**.
 
 2. On your store administration, go to **WooCommerce > Settings > Shipping** tab. In **Shipping Zone**, click in **Add shipping zone**. Enter the zone name, select the regions within this zone and click in **Save Changes**. You should get the following page:
 
