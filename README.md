@@ -247,11 +247,11 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 
 This feature enables you to sell signatures by using Mercado Pago recurrent payments. To configure a subscription, please follow these steps:
 
-1. **Mercado Pago Credentials**: On your store administration, go to *WooCommerce > Settings > Checkout* tab. In *Checkout Options*, click in *Mercado Pago - Subscription*. You should get the following page:
+1. **Mercado Pago Credentials**: On your store administration, go to *WooCommerce > Settings > Checkout* tab. In *Checkout Options*, click in *Mercado Pago - Subscription*. You should get a page where you can fill the needed informations:
 
 ![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/subscriptions_0.png)
 
-Fill the needed informations. Remember that you can obtain your *Client_id* and *Client_secret*, accordingly to your country, in the following links:
+	Remember that you can obtain your *Client_id* and *Client_secret*, accordingly to your country, in the following links:
 
 	* Argentina: https://www.mercadopago.com/mla/account/credentials?type=basic
 	* Brazil: https://www.mercadopago.com/mlb/account/credentials?type=basic
@@ -262,7 +262,7 @@ Fill the needed informations. Remember that you can obtain your *Client_id* and 
 	* Uruguay: https://www.mercadopago.com/mlu/account/credentials?type=basic
 	* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=basic
 
-IMPORTANT: For this solution, you need to configure the Instant Payment Notification (IPN) URL. Don't forget it!
+	IMPORTANT: For this solution, you need to configure the Instant Payment Notification (IPN) URL. Don't forget it!
 
 2. **Create a Recurrent Product**: Now, you need to create an Assignable Product. To do this, go to **Products > Products > Add Product Button**. On the openned page, complete your product informations (name, price, images, etc), and set the **Product Data** type to **Recurrent Product**, as shown:
 
