@@ -15,8 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 * @author 		Mercado Pago
 */
 
-include_once dirname( __FILE__ ) . '/../mercadopago/sdk/lib/mercadopago.php';
-
 class WC_MercadoEnvios_Shipping_Normal extends WC_MercadoEnvios_Shipping {
 
 	protected $shipments_id = array(
@@ -30,7 +28,7 @@ class WC_MercadoEnvios_Shipping_Normal extends WC_MercadoEnvios_Shipping {
 	 */
 	public function __construct( $instance_id = 0 ) {
 		$this->id = 'mercadoenvios-normal';
-		$this->method_title = __( 'Mercado Envios - Normal', 'woocommerce' );
+		$this->method_title = __( 'Mercado Envios - Normal', 'woocommerce-mercadopago-module' );
 		parent::__construct( $instance_id );
 	}
 	

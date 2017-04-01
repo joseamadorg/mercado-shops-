@@ -147,6 +147,10 @@ abstract class WC_MercadoEnvios_Shipping extends WC_Shipping_Method {
 		$this->log->add( $this->id, '[calculate_shipping] Shipments Response API: ' . json_encode( $response, JSON_PRETTY_PRINT ) );
 
 		if ( $response['status'] != 200 ) {
+			$this->log->add(
+				$this->id,
+				'[calculate_shipping] got response different of 200... returning false.'
+			);
 			return false;
 		}
 
@@ -161,9 +165,9 @@ abstract class WC_MercadoEnvios_Shipping extends WC_Shipping_Method {
 				if ( $this->get_option( 'show_delivery_time' ) == 'yes' ) {
 					$days = $shipping['estimated_delivery_time']['shipping'] / 24;
 					if ( $days <= 1 ) {
-						$label_delivery_time = '$days ' . __( 'Day', 'woocommerce-mercadopago-module' );
+						$label_delivery_time = $days . ' ' . __( 'Day', 'woocommerce-mercadopago-module' );
 					} else {
-						$label_delivery_time = '$days ' . __( 'Days', 'woocommerce-mercadopago-module' );
+						$label_delivery_time = $days . ' ' . __( 'Days', 'woocommerce-mercadopago-module' );
 					}
 				}
 				$separator = '';
@@ -172,7 +176,7 @@ abstract class WC_MercadoEnvios_Shipping extends WC_Shipping_Method {
 				}
 				$label_info = '';
 				if ( $label_free_shipping != '' || $label_delivery_time ) {
-					$label_info = ' ($label_delivery_time$separator$label_free_shipping)';
+					$label_info = ' (' . $label_delivery_time . $separator . $label_free_shipping . ')';
 				}
 				$option = array(
 					'label' => 'Mercado Envios - ' . $shipping['name'] . $label_info,
@@ -185,7 +189,8 @@ abstract class WC_MercadoEnvios_Shipping extends WC_Shipping_Method {
 					)
 				);
 				$this->log->add(
-					$this->id, '-----> Optiond added: ' . json_encode( $option, JSON_PRETTY_PRINT )
+					$this->id,
+					'-----> Optiond added: ' . json_encode( $option, JSON_PRETTY_PRINT )
 				);
 				$this->add_rate( $option );
 			}
