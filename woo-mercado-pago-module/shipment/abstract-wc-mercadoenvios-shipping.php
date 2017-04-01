@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * A simple shipping method allowing free pickup as a shipping method for Mercado Pago.
  *
  * @class 		WC_MercadoPago_Shipping_MercadoEnvios
- * @version		2.1.9
+ * @version		2.2.0
  * @package		WooCommerce/Classes/Shipping
  * @author 		Mercado Pago
  */

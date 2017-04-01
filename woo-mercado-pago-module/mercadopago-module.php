@@ -68,8 +68,8 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 					'woomercadopago_settings_link_' . plugin_basename( __FILE__ ),
 					array( $this, 'woomercadopago_settings_link' ) );
 
-				add_filter('woocommerce_shipping_methods', array( $this, 'add_shipping' ));
-				add_filter('woocommerce_available_payment_gateways', array( $this, 'filter_payment_method_by_shipping' ));
+				add_filter( 'woocommerce_shipping_methods', array( $this, 'add_shipping' ) );
+				add_filter( 'woocommerce_available_payment_gateways', array( $this, 'filter_payment_method_by_shipping' ) );
 
 			} else {
 				add_action( 'admin_notices', array( $this, 'notify_woocommerce_miss' ) );
