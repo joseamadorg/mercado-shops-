@@ -973,3 +973,6 @@ msgstr ""
 
 msgid "Shipping is pending"
 msgstr ""
+
+msgid "Tutorial"
+msgstr ""

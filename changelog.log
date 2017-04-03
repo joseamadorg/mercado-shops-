@@ -1,8 +1,13 @@
 CHANGELOG:
+
+= v2.2.0 (03/04/2017) =
+* Features
+	- Recurrent Payments. This feature allow merchants to create subscriptions and charge their customers periodically;
+
 = v2.1.9 (23/03/2017) =
 * Features
-	- Mercado Envios for Argentina, Brazil and Mexico
-
+	- Mercado Envios for Basic Checkout. Now, merchants can use Mercado Envios services to ship products to their customers. For now, only available to Argentina, Brazil, and Mexico.
+	
 = v2.1.8 (13/02/2017) =
 * Features
 	- Rollout to Uruguay. This plugin is now supporting Uruguay for Basic Checkout with its local language translations.

@@ -7,6 +7,7 @@
 * [Basic Checkout Configuration](#std_configuration)
 * [Custom Checkout Configuration](#cst_configuration)
 * [Ticket Configuration](#ticket_configuration)
+* [Mercado Pago Subscriptions](#subscription_configuration)
 * [Mercado Envios Configuration](#me_configuration)
 * [Upgrade](#upgrade)
 * [Feedback](#feedback)
@@ -28,7 +29,7 @@ Offer a checkout fully customized to your brand experience with our simple-to-us
 * Accept Mercado Pago's discount coupons.
 * Improve conversion rate.
 
-*Available for Argentina, Brazil, Colombia, Mexico, Peru and Venezuela*
+*Available for Argentina, Brazil, Chile, Colombia, Mexico, Peru and Venezuela*
 
 **Basic Checkout**
 
@@ -40,14 +41,19 @@ Great for merchants who want to get going quickly and easily.
 * Accept tickets, bank transfer and account money in addition to cards.
 * Accept Mercado Pago's discount coupons.
 
-*Available for Argentina, Brazil, Chile, Colombia, Mexico, Peru and Venezuela*
+*Available for Argentina, Brazil, Chile, Colombia, Mexico, Peru, Uruguay, and Venezuela*
 
 **Shipment integration - Beta Version**
 
-This feature allows to setup and integrate with Mercado Envios shipment method as another shipment option for customers. It includes the possibility to print the shipping label directly from the Magento Admin Panel. Free shipping is also available.
+This feature allows to setup and integrate with Mercado Envios shipment method as another shipment option for customers. It includes the possibility to print the shipping label directly from the WooCommerce Admin Panel. Free shipping is also available.
 
 *Available for Argentina, Brazil and Mexico only with Standard Checkout*
 
+**Recurring Payments - Beta Version**
+
+Plugin integrates with Mercado Pago recurring payments functionality
+
+*Available for Argentina, Brazil and Mexico only with Standard Checkout*
 
 <a name="requirements"></a>
 ## Requirements
@@ -83,7 +89,7 @@ During the sandbox mode tests, you can operate over HTTP, but for homologation y
   <thead>
   <tbody>
     <tr>
-      <td>v2.1.9</td>
+      <td>v2.2.0</td>
       <td>Stable (Current version)</td>
       <td>WooCommerce 2.1.x - 2.6.x</td>
     </tr>
@@ -107,7 +113,7 @@ You have two ways to install this module: from your WordPress Store, or by downl
 
 **Manual Download**
 
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.1.9.zip">WordPress Plugin Directory</a>);
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.2.0.zip">WordPress Plugin Directory</a>);
 
 2. Unzip the folder and find "woo-mercado-pago-module" directory;
 
@@ -136,6 +142,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	* Colombia: https://www.mercadopago.com/mco/account/credentials?type=basic
 	* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=basic
 	* Peru: https://www.mercadopago.com/mpe/account/credentials?type=basic
+	* Uruguay: https://www.mercadopago.com/mlu/account/credentials?type=basic
 	* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=basic
 
 3. **Instant Payment Notification (IPN) URL**: In this part, you can check your IPN URL, where you will get notified about payment updates;
@@ -181,6 +188,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	* Colombia: https://www.mercadopago.com/mco/account/credentials?type=custom
 	* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=custom
 	* Peru: https://www.mercadopago.com/mpe/account/credentials?type=custom
+	* Uruguay: https://www.mercadopago.com/mlu/account/credentials?type=custom
 	* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=custom
 
 3. **Instant Payment Notification (IPN) URL**: In this part, you can check your IPN URL, where you will get notified about payment updates;
@@ -220,6 +228,7 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	* Colombia: https://www.mercadopago.com/mco/account/credentials?type=custom
 	* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=custom
 	* Peru: https://www.mercadopago.com/mpe/account/credentials?type=custom
+	* Uruguay: https://www.mercadopago.com/mlu/account/credentials?type=custom
 	* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=custom
 
 3. **Instant Payment Notification (IPN) URL**: In this part, you can check your IPN URL, where you will get notified about payment updates;
@@ -239,24 +248,79 @@ On your store administration, go to *WooCommerce > Settings > Checkout* tab. In 
 	*Mercado Pago Sandbox*: Test your payments in Mercado Pago sandbox environment;<br />
 	*Debug and Log*: Enables/disables system logs.
 
+<a name="subscription_configuration"></a>
+## Mercado Pago Subscriptions
+
+This feature enables you to sell signatures by using Mercado Pago recurrent payments. On your store administration, go to *WooCommerce > Settings > Checkout* tab. In *Checkout Options*, click in *Mercado Pago - Subscription*. You should get the following page:
+
+![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/subscriptions_0.png)
+
+1. **Solution Header**: This part is the header, where you can enable/disable the solution;
+
+2. **Mercado Pago Credentials**: In this part, you should configure your credentials *Client_id* and *Client_secret*;
+
+	Remember that you can obtain your *Client_id* and *Client_secret*, accordingly to your country, in the following links:
+
+	* Argentina: https://www.mercadopago.com/mla/account/credentials?type=basic
+	* Brazil: https://www.mercadopago.com/mlb/account/credentials?type=basic
+	* Chile: https://www.mercadopago.com/mlc/account/credentials?type=basic
+	* Colombia: https://www.mercadopago.com/mco/account/credentials?type=basic
+	* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=basic
+	* Peru: https://www.mercadopago.com/mpe/account/credentials?type=basic
+	* Uruguay: https://www.mercadopago.com/mlu/account/credentials?type=basic
+	* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=basic
+
+3. **Instant Payment Notification (IPN) URL**: In this part, you can check your IPN URL, where you will get notified about payment updates. For this solution, you need to configure the Instant Payment Notification (IPN) URL. Don't forget it!
+
+4. **Subscription Options**: This part allows you to customize your general subscription fields;
+
+5. **Create a Recurrent Product**: Now, you need to create an Assignable Product. To do this, go to **Products > Products > Add Product Button**, as shown:
+
+![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/subscriptions_1.png)
+
+6. On the openned page, complete your product informations (name, price, images, etc), and set the **Product Data** type to **Recurrent Product**, 
+
+	*Frequency*: This is the frequency of which the charges will be made to your customer;<br />
+	*Frequency Type*: The frequency type can be in [Days] or [Months];<br />
+	*Regular Price*: The amount that will be charged periodically;<br />
+	*End Date*: The date that the signature should end;<br />
+	*Tax status*: Setup if the product is taxable or not;<br />
+	*Tax class*: The class of the tax.
+
+7. **Considerations**: There are a few important points about Subscription:
+
+	* A subscription should be unique in the customer cart. Customers can only sign a product each time, and it can't be mixed with other non-assignable products;
+	* This solution uses a custom product type called *Recurrent Product*.
+
 <a name="me_configuration"></a>
 ## Mercado Envios Configuration
 
-1. On your store administration, go to **WooCommerce > Settings > Shipping** tab. In **Shipping Zone**, click in **Add shipping zone**. Enter the zone name, select the regions within this zone and click in **Save Changes**. You should get the following page:
+1. Firstly, you need to enable your Mercado Envios in your Mercado Pago account.
+
+	You can do it, accordingly to your country, in the following links:
+
+	* Argentina: http://shipping.mercadopago.com.ar/optin/doOptin
+	* Brazil: http://shipping.mercadopago.com.br/optin/doOptin
+	* Mexico: http://shipping.mercadopago.com.mx/optin/doOptin
+	* Other Countries: (work in progress...)
+
+	IMPORTANT: Your Mercado Pago account must be a **Seller Account**.
+
+2. On your store administration, go to **WooCommerce > Settings > Shipping** tab. In **Shipping Zone**, click in **Add shipping zone**. Enter the zone name, select the regions within this zone and click in **Save Changes**. You should get the following page:
 
 ![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/me_0.png)
 
-2. Click in **view** of the zone created. You should get the following page:
+3. Click in **view** of the zone created. You should get the following page:
 
 ![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/me_1.png)
 
-3. Click in **Add shipping method** and selected the **Mercado Envios - Normal** or **Mercado Envios - Express**. This process has to be repeated twice, until normal and express is set.
+4. Click in **Add shipping method** and selected the **Mercado Envios - Normal** or **Mercado Envios - Express**. This process has to be repeated twice, until normal and express is set.
 
 ![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/me_2.png)
 
-4. The module is ready for use, but do not forget to enable the **Basic Checkout** for the correct operation of the **Mercado Envios**.
+5. The module is ready for use, but do not forget to enable the **Basic Checkout** for the correct operation of the **Mercado Envios**.
 
-5. Now you can also set the **Free Shipping** option and show the estimated **Delivery Time** in the freight calculation.
+6. Now you can also set the **Free Shipping** option and show the estimated **Delivery Time** in the freight calculation.
 
 ![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/me_3.png)
 
@@ -275,7 +339,7 @@ If you already had installed a previous version of Woo Mercado Pago Module, plea
 
 **Upgrade with Manual Download**
 
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.1.9.zip">WordPress Plugin Directory</a>);
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.2.0.zip">WordPress Plugin Directory</a>);
 
 2. Unzip the folder and find "woo-mercado-pago-module" directory;
 

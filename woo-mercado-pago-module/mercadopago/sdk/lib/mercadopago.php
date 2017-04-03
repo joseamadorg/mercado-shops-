@@ -12,7 +12,7 @@ $GLOBALS['LIB_LOCATION'] = dirname( __FILE__ );
 
 class MP {
 
-	private $version = '2.1.9';
+	private $version = '2.2.0';
 	private $client_id;
 	private $client_secret;
 	private $ll_access_token;
@@ -564,6 +564,30 @@ class MP {
 		 );
 
 		$response = MPRestClient::put( $request, $this->version );
+		return $response;
+
+	}
+
+	/**
+	 * Summary: Partially refund accredited payment.
+	 * Description: Partially refund accredited payment.
+	 * @param int $id
+	 * @return array( json )
+	 */
+	public function partial_refund_payment( $id, $amount, $reason, $external_reference ) {
+
+		$request = array(
+			'uri' => '/collections/' . $id . '/refunds?access_token=' . $this->get_access_token(),
+			'data' => array(
+				'amount' => $amount,
+				'metadata' => array(
+					'metadata' => $reason,
+					'external_reference' => $external_reference
+				)
+			)
+		 );
+
+		$response = MPRestClient::post( $request, $this->version );
 		return $response;
 
 	}

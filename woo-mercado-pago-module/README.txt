@@ -4,7 +4,7 @@ Donate link: https://www.mercadopago.com.br/developers/
 Tags: ecommerce, mercadopago, woocommerce
 Requires at least: WooCommerce 2.6.x
 Tested up to: WooCommerce 2.6.6
-Stable tag: 2.1.9
+Stable tag: 2.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,7 +39,7 @@ You have two ways to install this module: from your WordPress Store, or by downl
 3. You should find the module read to be installed. Click install.
 
 = Manual Download =
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.1.9.zip">WordPress Plugin Directory</a>);
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.2.0.zip">WordPress Plugin Directory</a>);
 2. Unzip the folder and find "woo-mercado-pago-module" directory;
 3. Copy "woo-mercado-pago-module" directory to **[WordPressRootDirectory]/wp-content/plugins/** directory.
 
@@ -54,6 +54,7 @@ To confirm that your module is really installed, you can click in **Plugins** it
 		* Colombia: https://www.mercadopago.com/mco/account/credentials?type=basic
 		* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=basic
 		* Peru: https://www.mercadopago.com/mpe/account/credentials?type=basic
+		* Uruguay: https://www.mercadopago.com/mlu/account/credentials?type=basic
 		* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=basic
 	* And to get your **Public Key**/**Access Token** you can go to:
 		* Argentina: https://www.mercadopago.com/mla/account/credentials?type=custom
@@ -62,6 +63,7 @@ To confirm that your module is really installed, you can click in **Plugins** it
 		* Colombia: https://www.mercadopago.com/mco/account/credentials?type=custom
 		* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=custom
 		* Peru: https://www.mercadopago.com/mpe/account/credentials?type=custom
+		* Uruguay: https://www.mercadopago.com/mlu/account/credentials?type=custom
 		* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=custom
 2. For the solutions **Mercado Pago - Basic Checkout**, **Mercado Pago - Custom Checkout**, and **Mercado Pago - Ticket**, you can:
 	* Enable/Disable you plugin (for all solutions);
@@ -108,9 +110,13 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 
 == Changelog ==
 
+= v2.2.0 (03/04/2017) =
+* Features
+	- Recurrent Payments. This feature allow merchants to create subscriptions and charge their customers periodically;
+
 = v2.1.9 (23/03/2017) =
 * Features
-	- Mercado Envios for Argentina, Brazil and Mexico
+	- Mercado Envios for Basic Checkout. Now, merchants can use Mercado Envios services to ship products to their customers. For now, only available to Argentina, Brazil, and Mexico.
 
 = v2.1.8 (13/02/2017) =
 * Features

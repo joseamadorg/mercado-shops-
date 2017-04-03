@@ -983,3 +983,6 @@ msgstr "Etiqueta:"
 
 msgid "Shipping is pending"
 msgstr "Envío pendiente"
+
+msgid "Tutorial"
+msgstr "Tutorial"

@@ -1048,3 +1048,6 @@ msgstr "Etiqueta:"
 
 msgid "Shipping is pending"
 msgstr "Envio pendente"
+
+msgid "Tutorial"
+msgstr "Tutorial"
