@@ -263,12 +263,8 @@ This feature enables you to sell signatures by using Mercado Pago recurrent paym
 
 	* Argentina: https://www.mercadopago.com/mla/account/credentials?type=basic
 	* Brazil: https://www.mercadopago.com/mlb/account/credentials?type=basic
-	* Chile: https://www.mercadopago.com/mlc/account/credentials?type=basic
-	* Colombia: https://www.mercadopago.com/mco/account/credentials?type=basic
 	* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=basic
-	* Peru: https://www.mercadopago.com/mpe/account/credentials?type=basic
-	* Uruguay: https://www.mercadopago.com/mlu/account/credentials?type=basic
-	* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=basic
+
 
 3. **Instant Payment Notification (IPN) URL**: In this part, you can check your IPN URL, where you will get notified about payment updates. For this solution, you need to configure the Instant Payment Notification (IPN) URL. Don't forget it!
 
@@ -302,7 +298,6 @@ This feature enables you to sell signatures by using Mercado Pago recurrent paym
 	* Argentina: http://shipping.mercadopago.com.ar/optin/doOptin
 	* Brazil: http://shipping.mercadopago.com.br/optin/doOptin
 	* Mexico: http://shipping.mercadopago.com.mx/optin/doOptin
-	* Other Countries: (work in progress...)
 
 	IMPORTANT: Your Mercado Pago account must be a **Seller Account**.
 
