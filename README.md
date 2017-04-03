@@ -45,7 +45,13 @@ Great for merchants who want to get going quickly and easily.
 
 **Shipment integration - Beta Version**
 
-This feature allows to setup and integrate with Mercado Envios shipment method as another shipment option for customers. It includes the possibility to print the shipping label directly from the Magento Admin Panel. Free shipping is also available.
+This feature allows to setup and integrate with Mercado Envios shipment method as another shipment option for customers. It includes the possibility to print the shipping label directly from the WooCommerce Admin Panel. Free shipping is also available.
+
+*Available for Argentina, Brazil and Mexico only with Standard Checkout*
+
+**Recurring Payments - Beta Version**
+
+Plugin integrates with Mercado Pago recurring payments functionality
 
 *Available for Argentina, Brazil and Mexico only with Standard Checkout*
 
