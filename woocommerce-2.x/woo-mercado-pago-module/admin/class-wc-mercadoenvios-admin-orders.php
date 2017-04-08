@@ -45,13 +45,21 @@ class WC_MercadoEnvios_Admin_Orders {
 	 * @param WC_Post $post Post data.
 	 */
 	public function metabox_content( $post ) {
-
-		$shipment_id = get_post_meta( $post->ID, '_mercadoenvios_shipment_id', true );
-		$status = get_post_meta( $post->ID, '_mercadoenvios_status', true );
+		$order = wc_get_order( $post->ID );
+		// WooCommerce 3.0 or later.
+		if ( method_exists( $order, 'get_meta' ) ) {
+			$shipment_id     = $order->get_meta( '_mercadoenvios_shipment_id' );
+			$status          = $order->get_meta( '_mercadoenvios_status' );
+			$tracking_number = $order->get_meta( '_mercadoenvios_tracking_number' );
+		} else {
+			$shipment_id     = get_post_meta( $post->ID, '_mercadoenvios_shipment_id', true );
+			$status          = get_post_meta( $post->ID, '_mercadoenvios_status', true );
+			$tracking_number = get_post_meta( $post->ID, '_mercadoenvios_tracking_number', true );
+		}
 
 		if(isset($status) && $status != "" && $status != "pending"){
 			echo '<label for="mercadoenvios_tracking_code">' . esc_html__( 'Tracking code:', 'woocommerce-mercadopago-module' ) . '</label><br />';
-			echo '<input type="text" id="mercadoenvios_tracking_code" name="mercadoenvios_tracking_code" value="' . esc_attr( get_post_meta( $post->ID, '_mercadoenvios_tracking_number', true ) ) . '" style="width: 100%;" />';
+			echo '<input type="text" id="mercadoenvios_tracking_code" name="mercadoenvios_tracking_code" value="' . esc_attr( $tracking_number ) . '" style="width: 100%;" />';
 
 			//check exist shipment_id
 			if(isset($shipment_id) && $shipment_id != ""){
@@ -66,7 +74,7 @@ class WC_MercadoEnvios_Admin_Orders {
 				);
 
 				echo '<label for="mercadoenvios_tracking_number">' . esc_html__( 'Tag:', 'woocommerce-mercadopago-module' ) . '</label><br />';
-				echo '<a href="https://api.mercadolibre.com/shipment_labels?shipment_ids=' . esc_attr( get_post_meta( $post->ID, '_mercadoenvios_shipment_id', true ) ) . '&savePdf=Y&access_token=' . $this->mp->get_access_token() . '" class="button-primary" target="_blank">' . esc_html__( 'Print', 'woocommerce-mercadopago-module' ) . '</a>';
+				echo '<a href="https://api.mercadolibre.com/shipment_labels?shipment_ids=' . esc_attr( $shipment_id ) . '&savePdf=Y&access_token=' . $this->mp->get_access_token() . '" class="button-primary" target="_blank">' . esc_html__( 'Print', 'woocommerce-mercadopago-module' ) . '</a>';
 			}
 		}else{
 			echo '<label for="mercadoenvios_tracking_number">' . esc_html__( 'Shipping is pending', 'woocommerce-mercadopago-module' ) . '</label><br />';

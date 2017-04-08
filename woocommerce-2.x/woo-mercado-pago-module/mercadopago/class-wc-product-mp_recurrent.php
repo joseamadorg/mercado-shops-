@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 add_action( 'add_meta_boxes', 'add_meta_boxes' );
 function add_meta_boxes() {
-	add_meta_box( 
+	add_meta_box(
 		'woocommerce-mp-order-action-refund',
 		__( 'Mercado Pago Subscription', 'woocommerce-mercadopago-module' ),
 		'mp_subscription_order_refund_cancel_box',
@@ -27,7 +27,7 @@ function add_meta_boxes() {
 function mp_subscription_order_refund_cancel_box() {
 
 	global $post;
-	$order = new WC_Order( $post->ID );
+	$order = wc_get_order( $post->ID );
 	$order_id = trim( str_replace( '#', '', $order->get_order_number() ) );
 
 	$payments = get_post_meta(
@@ -216,7 +216,13 @@ function mp_add_recurrent_product_type( $types ) {
 // Makes the recurrent product individually sold
 add_filter( 'woocommerce_is_sold_individually', 'default_no_quantities', 10, 2 );
 function default_no_quantities( $individually, $product ) {
-	$product_type = $product->post->product_type;
+	// WooCommerce 3.0 or later.
+	if ( method_exists( $product, 'get_type' ) ) {
+		$product_type = $product->get_type();
+	} else {
+		$product_type = $product->post->product_type;
+	}
+
 	if ( $product_type == 'mp_recurrent_product' ) {
 		$individually = true;
 	}
@@ -245,14 +251,20 @@ function check_recurrent_product_singularity() {
 // Validate product date availability.
 add_filter( 'woocommerce_is_purchasable', 'filter_woocommerce_is_purchasable', 10, 2 );
 function filter_woocommerce_is_purchasable( $purchasable, $product ) {
+	if ( method_exists( $product, 'get_id' ) ) {
+		$product_id = $product->get_id();
+	} else {
+		$product_id = $product->id;
+	}
+
 	// skip this check if product is not a subscription
-	$terms = get_the_terms( $product->id, 'product_type' );
+	$terms = get_the_terms( $product_id, 'product_type' );
 	$product_type = ( ! empty( $terms ) ) ? sanitize_title( current( $terms )->name ) : 'simple';
 	if ( $product_type != 'mp_recurrent_product' ) {
 		return $purchasable;
 	}
 	$today_date = date( 'Y-m-d' );
-	$end_date = get_post_meta( $product->id, 'mp_recurring_end_date', true );
+	$end_date = get_post_meta( $product_id, 'mp_recurring_end_date', true );
 	// If there is no date, we should just return the original value.
 	if ( ! isset( $end_date ) ) {
 		return $purchasable;

@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once 'mercadopago/sdk/lib/mercadopago.php';
+require_once dirname( __FILE__ ) . '/mercadopago/sdk/lib/mercadopago.php';
 
 // Load module class if it wasn't loaded yet.
 if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
@@ -50,18 +50,18 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 			// Verify if WooCommerce is already installed.
 			if ( class_exists( 'WC_Payment_Gateway' ) ) {
 
-				include_once 'mercadopago/mercadopago-gateway.php';
-				include_once 'mercadopago/mercadopago-custom-gateway.php';
-				include_once 'mercadopago/mercadopago-ticket-gateway.php';
-				include_once 'mercadopago/mercadopago-subscription-gateway.php';
+				include_once dirname( __FILE__ ) . '/mercadopago/mercadopago-gateway.php';
+				include_once dirname( __FILE__ ) . '/mercadopago/mercadopago-custom-gateway.php';
+				include_once dirname( __FILE__ ) . '/mercadopago/mercadopago-ticket-gateway.php';
+				include_once dirname( __FILE__ ) . '/mercadopago/mercadopago-subscription-gateway.php';
 
-				include_once 'mercadopago/class-wc-product-mp_recurrent.php';
+				include_once dirname( __FILE__ ) . '/mercadopago/class-wc-product-mp_recurrent.php';
 
 				// Shipping
-				include_once 'shipment/abstract-wc-mercadoenvios-shipping.php';
-				include_once 'shipment/class-wc-mercadoenvios-shipping-normal.php';
-				include_once 'shipment/class-wc-mercadoenvios-shipping-express.php';
-				include_once 'shipment/class-wc-mercadoenvios-package.php';
+				include_once dirname( __FILE__ ) . '/shipment/abstract-wc-mercadoenvios-shipping.php';
+				include_once dirname( __FILE__ ) . '/shipment/class-wc-mercadoenvios-shipping-normal.php';
+				include_once dirname( __FILE__ ) . '/shipment/class-wc-mercadoenvios-shipping-express.php';
+				include_once dirname( __FILE__ ) . '/shipment/class-wc-mercadoenvios-package.php';
 
 				add_filter( 'woocommerce_payment_gateways', array( $this, 'add_gateway' ) );
 				add_filter(
