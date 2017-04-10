@@ -65,10 +65,18 @@ class WC_MercadoEnvios_Package {
 
 			if ( $qty > 0 && $product->needs_shipping() ) {
 
-				$_height = wc_get_dimension( $this->fix_format( $product->height ), 'cm' );
-				$_width  = wc_get_dimension( $this->fix_format( $product->width ), 'cm' );
-				$_length = wc_get_dimension( $this->fix_format( $product->length ), 'cm' );
-				$_weight = wc_get_weight( $this->fix_format( $product->weight ), 'kg' );
+				// WooCommerce 3.0 or later.
+				if ( method_exists( $product, 'get_height' ) ) {
+					$_height = wc_get_dimension( $this->fix_format( $product->get_height() ), 'cm' );
+					$_width  = wc_get_dimension( $this->fix_format( $product->get_width() ), 'cm' );
+					$_length = wc_get_dimension( $this->fix_format( $product->get_length() ), 'cm' );
+					$_weight = wc_get_weight( $this->fix_format( $product->get_weight() ), 'kg' );
+				} else {
+					$_height = wc_get_dimension( $this->fix_format( $product->height ), 'cm' );
+					$_width  = wc_get_dimension( $this->fix_format( $product->width ), 'cm' );
+					$_length = wc_get_dimension( $this->fix_format( $product->length ), 'cm' );
+					$_weight = wc_get_weight( $this->fix_format( $product->weight ), 'kg' );
+				}
 
 				$height[ $count ] = $_height;
 				$width[ $count ]  = $_width;
