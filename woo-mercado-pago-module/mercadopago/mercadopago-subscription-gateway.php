@@ -142,7 +142,7 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 		$api_secret_locale = sprintf(
 			'<a href="https://www.mercadopago.com/mla/account/credentials?type=basic" target="_blank">%s</a>, ' .
 			'<a href="https://www.mercadopago.com/mlb/account/credentials?type=basic" target="_blank">%s</a> %s ' .
-			'<a href="https://www.mercadopago.com/mlm/account/credentials?type=basic" target="_blank">%s</a>, ' .
+			'<a href="https://www.mercadopago.com/mlm/account/credentials?type=basic" target="_blank">%s</a>, ',
 			__( 'Argentine', 'woocommerce-mercadopago-module' ),
 			__( 'Brazil', 'woocommerce-mercadopago-module' ),
 			__( 'or', 'woocommerce-mercadopago-module' ),
@@ -152,7 +152,7 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 		$ipn_locale = sprintf(
 			'<a href="https://www.mercadopago.com.ar/ipn-notifications" target="_blank">%s</a>, ' .
 			'<a href="https://www.mercadopago.com.br/ipn-notifications" target="_blank">%s</a> %s ' .
-			'<a href="https://www.mercadopago.com.mx/ipn-notifications" target="_blank">%s</a>, ' .
+			'<a href="https://www.mercadopago.com.mx/ipn-notifications" target="_blank">%s</a>, ',
 			__( 'Argentine', 'woocommerce-mercadopago-module' ),
 			__( 'Brazil', 'woocommerce-mercadopago-module' ),
 			__( 'or', 'woocommerce-mercadopago-module' ),
