@@ -141,42 +141,22 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 
 		$api_secret_locale = sprintf(
 			'<a href="https://www.mercadopago.com/mla/account/credentials?type=basic" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com/mlb/account/credentials?type=basic" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com/mlc/account/credentials?type=basic" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com/mco/account/credentials?type=basic" target="_blank">%s</a>, ' .
+			'<a href="https://www.mercadopago.com/mlb/account/credentials?type=basic" target="_blank">%s</a> %s ' .
 			'<a href="https://www.mercadopago.com/mlm/account/credentials?type=basic" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com/mpe/account/credentials?type=basic" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com/mlu/account/credentials?type=basic" target="_blank">%s</a> %s ' .
-			'<a href="https://www.mercadopago.com/mlv/account/credentials?type=basic" target="_blank">%s</a>',
 			__( 'Argentine', 'woocommerce-mercadopago-module' ),
 			__( 'Brazil', 'woocommerce-mercadopago-module' ),
-			__( 'Chile', 'woocommerce-mercadopago-module' ),
-			__( 'Colombia', 'woocommerce-mercadopago-module' ),
-			__( 'Mexico', 'woocommerce-mercadopago-module' ),
-			__( 'Peru', 'woocommerce-mercadopago-module' ),
-			__( 'Uruguay', 'woocommerce-mercadopago-module' ),
 			__( 'or', 'woocommerce-mercadopago-module' ),
-			__( 'Venezuela', 'woocommerce-mercadopago-module' )
+			__( 'Mexico', 'woocommerce-mercadopago-module' )
 		);
 
 		$ipn_locale = sprintf(
 			'<a href="https://www.mercadopago.com.ar/ipn-notifications" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com.br/ipn-notifications" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.cl/ipn-notifications" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com.co/ipn-notifications" target="_blank">%s</a>, ' .
+			'<a href="https://www.mercadopago.com.br/ipn-notifications" target="_blank">%s</a> %s ' .
 			'<a href="https://www.mercadopago.com.mx/ipn-notifications" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com.pe/ipn-notifications" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com.uy/ipn-notifications" target="_blank">%s</a> %s ' .
-			'<a href="https://www.mercadopago.com.ve/ipn-notifications" target="_blank">%s</a>',
 			__( 'Argentine', 'woocommerce-mercadopago-module' ),
 			__( 'Brazil', 'woocommerce-mercadopago-module' ),
-			__( 'Chile', 'woocommerce-mercadopago-module' ),
-			__( 'Colombia', 'woocommerce-mercadopago-module' ),
-			__( 'Mexico', 'woocommerce-mercadopago-module' ),
-			__( 'Peru', 'woocommerce-mercadopago-module' ),
-			__( 'Uruguay', 'woocommerce-mercadopago-module' ),
 			__( 'or', 'woocommerce-mercadopago-module' ),
-			__( 'Venezuela', 'woocommerce-mercadopago-module' )
+			__( 'Mexico', 'woocommerce-mercadopago-module' )
 		);
 
 		// Trigger API to get payment methods and site_id, also validates Client_id/Client_secret.

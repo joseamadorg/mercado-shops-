@@ -112,7 +112,7 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 
 = v2.2.0 (03/04/2017) =
 * Features
-	- Recurrent Payments. This feature allow merchants to create subscriptions and charge their customers periodically;
+	- Recurrent Payments. This feature allow merchants to create subscriptions and charge their customers periodically. For now, available only to Argentina, Brazil and Mexico.
 
 = v2.1.9 (23/03/2017) =
 * Features
