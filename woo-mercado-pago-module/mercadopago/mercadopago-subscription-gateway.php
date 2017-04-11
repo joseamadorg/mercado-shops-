@@ -802,6 +802,12 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 
 			if ( isset( $get_request['response']['site_id'] ) ) {
 
+				$s_id = $get_request['response']['site_id'];
+				if ( $s_id != 'MLA' && $s_id != 'MLB' && $s_id != 'MLM') {
+					$this->mp = null;
+					return false;
+				}
+
 				$this->is_test_user = in_array( 'test_user', $get_request['response']['tags'] );
 				$this->site_id = $get_request['response']['site_id'];
 				$this->country_configs = WC_WooMercadoPago_Module::get_country_config( $this->site_id );
