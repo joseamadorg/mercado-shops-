@@ -1365,7 +1365,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			return $title;
 		}
 
-		if ( $title != $this->title ) {
+		if ( $title != $this->title || $this->gateway_discount == 0 ) {
 			return $title;
 		}
 

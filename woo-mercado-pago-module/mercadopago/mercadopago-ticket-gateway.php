@@ -941,7 +941,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 
 			// The payment preference.
 			$preferences = array(
-				'transaction_amount' => floor( ( ( float ) $ticket_checkout['amount'] ) * 100 ) / 100,
+				'transaction_amount' => floor( ( ( float ) $ticket_checkout['amount'] ) * 100 ) / 100 - $amount_of_items,
 				'description' => implode( ', ', $list_of_items ),
 				'payment_method_id' => $ticket_checkout['paymentMethodId'],
 				'payer' => array(
@@ -991,7 +991,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 
 			// The payment preference.
 			$preferences = array(
-				'transaction_amount' => floor( ( ( float ) $ticket_checkout['amount'] ) * 100 ) / 100,
+				'transaction_amount' => floor( ( ( float ) $ticket_checkout['amount'] ) * 100 ) / 100 - $amount_of_items,
 				'description' => implode( ', ', $list_of_items ),
 				'payment_method_id' => $ticket_checkout['paymentMethodId'],
 				'payer' => array(
@@ -1196,7 +1196,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 			return $title;
 		}
 
-		if ( $title != $this->title ) {
+		if ( $title != $this->title || $this->gateway_discount == 0 ) {
 			return $title;
 		}
 

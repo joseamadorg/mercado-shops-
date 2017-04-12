@@ -1415,7 +1415,11 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			return $title;
 		}
 
-		if ( $title != $this->title ) {
+		if ( $title != $this->title || $this->gateway_discount == 0 ) {
+			return $title;
+		}
+
+		if ( WC()->session->chosen_payment_method == 'woocommerce-mercadopago-subscription-module' ) {
 			return $title;
 		}
 
