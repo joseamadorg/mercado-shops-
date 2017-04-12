@@ -1,5 +1,11 @@
 CHANGELOG:
 
+= v2.2.1 (13/04/2017) =
+* Features
+	- Discount by payment method. Merchants can give a discount to their customers if the payment is made with a given gateway.
+* Improvements
+	- Support for WooCommerce 3.0.
+
 = v2.2.0 (03/04/2017) =
 * Features
 	- Recurrent Payments. This feature allow merchants to create subscriptions and charge their customers periodically. For now, available only to Argentina, Brazil and Mexico.

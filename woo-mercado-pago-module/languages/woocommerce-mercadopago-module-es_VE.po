@@ -986,3 +986,6 @@ msgstr "Envío pendiente"
 
 msgid "Tutorial"
 msgstr "Tutorial"
+
+msgid "Discount Of "
+msgstr "Descuento De "

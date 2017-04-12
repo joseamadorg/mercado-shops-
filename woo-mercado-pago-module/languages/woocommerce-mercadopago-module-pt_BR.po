@@ -1051,3 +1051,6 @@ msgstr "Envio pendente"
 
 msgid "Tutorial"
 msgstr "Tutorial"
+
+msgid "Discount Of "
+msgstr "Desconto De "
