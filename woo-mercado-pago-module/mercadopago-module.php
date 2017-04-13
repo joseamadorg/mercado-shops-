@@ -8,7 +8,7 @@
  * Author URI: https://www.mercadopago.com.br/developers/
  * Developer: Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
  * Copyright: Copyright(c) MercadoPago [https://www.mercadopago.com]
- * Version: 2.2.0
+ * Version: 2.2.1
  * License: https://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: woocommerce-mercadopago-module
  * Domain Path: /languages/
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once 'mercadopago/sdk/lib/mercadopago.php';
+require_once dirname( __FILE__ ) . '/mercadopago/sdk/lib/mercadopago.php';
 
 // Load module class if it wasn't loaded yet.
 if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
@@ -31,7 +31,7 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 	 */
 	class WC_WooMercadoPago_Module {
 
-		const VERSION = '2.2.0';
+		const VERSION = '2.2.1';
 
 		// Singleton design pattern
 		protected static $instance = null;
@@ -50,18 +50,19 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 			// Verify if WooCommerce is already installed.
 			if ( class_exists( 'WC_Payment_Gateway' ) ) {
 
-				include_once 'mercadopago/mercadopago-gateway.php';
-				include_once 'mercadopago/mercadopago-custom-gateway.php';
-				include_once 'mercadopago/mercadopago-ticket-gateway.php';
-				include_once 'mercadopago/mercadopago-subscription-gateway.php';
+				// Gateways
+				include_once dirname( __FILE__ ) . '/mercadopago/mercadopago-gateway.php';
+ 				include_once dirname( __FILE__ ) . '/mercadopago/mercadopago-custom-gateway.php';
+				include_once dirname( __FILE__ ) . '/mercadopago/mercadopago-ticket-gateway.php';
+				include_once dirname( __FILE__ ) . '/mercadopago/mercadopago-subscription-gateway.php';
 
-				include_once 'mercadopago/class-wc-product-mp_recurrent.php';
+				include_once dirname( __FILE__ ) . '/mercadopago/class-wc-product-mp_recurrent.php';
 
-				// Shipping
-				include_once 'shipment/abstract-wc-mercadoenvios-shipping.php';
-				include_once 'shipment/class-wc-mercadoenvios-shipping-normal.php';
-				include_once 'shipment/class-wc-mercadoenvios-shipping-express.php';
-				include_once 'shipment/class-wc-mercadoenvios-package.php';
+				// Shipping.
+				include_once dirname( __FILE__ ) . '/shipment/abstract-wc-mercadoenvios-shipping.php';
+				include_once dirname( __FILE__ ) . '/shipment/class-wc-mercadoenvios-shipping-normal.php';
+				include_once dirname( __FILE__ ) . '/shipment/class-wc-mercadoenvios-shipping-express.php';
+				include_once dirname( __FILE__ ) . '/shipment/class-wc-mercadoenvios-package.php';
 
 				add_filter( 'woocommerce_payment_gateways', array( $this, 'add_gateway' ) );
 				add_filter(

@@ -9,7 +9,7 @@
  */
 
 // This include Mercado Pago library SDK
-require_once 'sdk/lib/mercadopago.php';
+require_once dirname( __FILE__ ) . '/sdk/lib/mercadopago.php';
 
 /**
  * Summary: Extending from WooCommerce Payment Gateway class.
@@ -55,6 +55,7 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 		$this->iframe_height = $this->get_option( 'iframe_height', 800 );
 		$this->success_url = $this->get_option( 'success_url', '' );
 		$this->currency_conversion = $this->get_option( 'currency_conversion', false );
+		$this->gateway_discount = 0;
 		$this->debug = $this->get_option( 'debug' );
 
 		// Logging and debug.
@@ -105,6 +106,11 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 			'woocommerce_after_checkout_form',
 			array( $this, 'add_checkout_script' )
 		);
+		// Display discount in payment method title.
+		add_filter(
+			'woocommerce_gateway_title',
+			array( $this, 'get_payment_method_title_subscription' ), 10, 2
+		);
 		// Checkout updates.
 		add_action(
 			'woocommerce_thankyou',
@@ -141,42 +147,22 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 
 		$api_secret_locale = sprintf(
 			'<a href="https://www.mercadopago.com/mla/account/credentials?type=basic" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com/mlb/account/credentials?type=basic" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com/mlc/account/credentials?type=basic" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com/mco/account/credentials?type=basic" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com/mlm/account/credentials?type=basic" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com/mpe/account/credentials?type=basic" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com/mlu/account/credentials?type=basic" target="_blank">%s</a> %s ' .
-			'<a href="https://www.mercadopago.com/mlv/account/credentials?type=basic" target="_blank">%s</a>',
+			'<a href="https://www.mercadopago.com/mlb/account/credentials?type=basic" target="_blank">%s</a> %s ' .
+			'<a href="https://www.mercadopago.com/mlm/account/credentials?type=basic" target="_blank">%s</a>, ',
 			__( 'Argentine', 'woocommerce-mercadopago-module' ),
 			__( 'Brazil', 'woocommerce-mercadopago-module' ),
-			__( 'Chile', 'woocommerce-mercadopago-module' ),
-			__( 'Colombia', 'woocommerce-mercadopago-module' ),
-			__( 'Mexico', 'woocommerce-mercadopago-module' ),
-			__( 'Peru', 'woocommerce-mercadopago-module' ),
-			__( 'Uruguay', 'woocommerce-mercadopago-module' ),
 			__( 'or', 'woocommerce-mercadopago-module' ),
-			__( 'Venezuela', 'woocommerce-mercadopago-module' )
+			__( 'Mexico', 'woocommerce-mercadopago-module' )
 		);
 
 		$ipn_locale = sprintf(
 			'<a href="https://www.mercadopago.com.ar/ipn-notifications" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com.br/ipn-notifications" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.cl/ipn-notifications" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com.co/ipn-notifications" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com.mx/ipn-notifications" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com.pe/ipn-notifications" target="_blank">%s</a>, ' .
-			'<a href="https://www.mercadopago.com.uy/ipn-notifications" target="_blank">%s</a> %s ' .
-			'<a href="https://www.mercadopago.com.ve/ipn-notifications" target="_blank">%s</a>',
+			'<a href="https://www.mercadopago.com.br/ipn-notifications" target="_blank">%s</a> %s ' .
+			'<a href="https://www.mercadopago.com.mx/ipn-notifications" target="_blank">%s</a>, ',
 			__( 'Argentine', 'woocommerce-mercadopago-module' ),
 			__( 'Brazil', 'woocommerce-mercadopago-module' ),
-			__( 'Chile', 'woocommerce-mercadopago-module' ),
-			__( 'Colombia', 'woocommerce-mercadopago-module' ),
-			__( 'Mexico', 'woocommerce-mercadopago-module' ),
-			__( 'Peru', 'woocommerce-mercadopago-module' ),
-			__( 'Uruguay', 'woocommerce-mercadopago-module' ),
 			__( 'or', 'woocommerce-mercadopago-module' ),
-			__( 'Venezuela', 'woocommerce-mercadopago-module' )
+			__( 'Mexico', 'woocommerce-mercadopago-module' )
 		);
 
 		// Trigger API to get payment methods and site_id, also validates Client_id/Client_secret.
@@ -413,15 +399,19 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 	 * Handles the manual order cancellation in server-side.
 	 */
 	public function process_cancel_order_meta_box_actions( $order ) {
+		// WooCommerce 3.0 or later.
+		if ( method_exists( $order, 'get_meta' ) ) {
+			$used_gateway = $order->get_meta( '_used_gateway' );
+			$preapproval  = $order->get_meta( 'Mercado Pago Pre-Approval' );
+		} else {
+			$used_gateway = get_post_meta( $order->id, '_used_gateway', true );
+			$preapproval  = get_post_meta( $order->id, 'Mercado Pago Pre-Approval',	true );
+		}
 
-		if ( get_post_meta( $order->id, '_used_gateway', true ) != 'WC_WooMercadoPagoSubscription_Gateway' )
+		if ( $used_gateway != 'WC_WooMercadoPagoSubscription_Gateway' ) {
 			return;
+		}
 
-		$preapproval = get_post_meta(
-			$order->id,
-			'Mercado Pago Pre-Approval',
-			true
-		);
 		$preapproval = explode( '/', $preapproval );
 		$preapproval_id = explode( ' ', substr( $preapproval[0], 1, -1 ) )[1];
 
@@ -533,10 +523,15 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 	 * @return an array containing the result of the processment and the URL to redirect.
 	 */
 	public function process_payment( $order_id ) {
+		$order = wc_get_order( $order_id );
 
-		update_post_meta( $order_id, '_used_gateway', 'WC_WooMercadoPagoSubscription_Gateway' );
-
-		$order = new WC_Order( $order_id );
+		// WooCommerce 3.0 or later.
+		if ( method_exists( $order, 'update_meta_data' ) ) {
+			$order->update_meta_data( '_used_gateway', 'WC_WooMercadoPagoSubscription_Gateway' );
+			$order->save();
+		} else {
+			update_post_meta( $order_id, '_used_gateway', 'WC_WooMercadoPagoSubscription_Gateway' );
+		}
 
 		if ( 'redirect' == $this->method ) {
 			// The checkout is made by redirecting customer to Mercado Pago.
@@ -558,25 +553,10 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 					'[process_payment] - preparing to render Mercado Pago checkout view.'
 				);
 			}
-			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
-				return array(
-					'result' => 'success',
-					'redirect' => $order->get_checkout_payment_url( true )
-				);
-			} else {
-				return array(
-					'result' => 'success',
-					'redirect' => add_query_arg(
-						'order',
-						$order->id,
-						add_query_arg(
-							'key',
-							$order->order_key,
-							get_permalink( woocommerce_get_page_id( 'pay' ) )
-						)
-					)
-				);
-			}
+			return array(
+				'result' => 'success',
+				'redirect' => $order->get_checkout_payment_url( true )
+			);
 		}
 	}
 
@@ -594,8 +574,8 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 
 	public function render_order_form( $order_id ) {
 
-		$order = new WC_Order( $order_id );
-		$url = $this->create_url( $order );
+		$order = wc_get_order( $order_id );
+		$url   = $this->create_url( $order );
 
 		if ( $url ) {
 			$html =
@@ -677,9 +657,18 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 		foreach ( $order->get_items() as $item ) {
 			if ( $item['qty'] ) {
 				$product = new WC_product( $item['product_id'] );
-				$product_title = WC_WooMercadoPago_Module::utf8_ansi(
-					$product->post->post_title
-				);
+				
+				// WooCommerce 3.0 or later.
+				if ( method_exists( $product, 'get_name' ) ) {
+					$product_title = WC_WooMercadoPago_Module::utf8_ansi(
+						$product->get_name()
+					);
+				} else {
+					$product_title = WC_WooMercadoPago_Module::utf8_ansi(
+						$product->post->post_title
+					);
+				}
+
 				// Remove decimals if MCO/MLC
 				$unit_price = floor( ( (float) $item['line_total'] + (float) $item['line_tax'] ) *
 					( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 ) * 100 ) / 100;
@@ -694,23 +683,46 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 				$frequency_type = get_post_meta( $item['product_id'], 'mp_recurring_frequency_type', true );
 				$start_date = get_post_meta( $item['product_id'], 'mp_recurring_start_date', true );
 				$end_date = get_post_meta( $item['product_id'], 'mp_recurring_end_date', true );
-				// Creates the pre-approval structure
-				$preapproval = array(
-					'payer_email' => $order->billing_email,
-					'back_url' => ( empty( $this->success_url ) ?
-						WC_WooMercadoPago_Module::workaround_ampersand_bug(
-							esc_url( $this->get_return_url( $order) )
-						) : $this->success_url
-					),
-					'reason' => $product_title,
-					'external_reference' => $this->invoice_prefix . $order->id,
-					'auto_recurring' => array(
-						'frequency' => $frequency,
-						'frequency_type' => $frequency_type,
-						'transaction_amount' => $unit_price,
-						'currency_id' => $this->country_configs['currency']
-					)
-				);
+				
+				// WooCommerce 3.0 or later.
+				if ( method_exists( $order, 'get_id' ) ) {
+					// Creates the pre-approval structure
+					$preapproval = array(
+						'payer_email' => $order->get_billing_email(),
+						'back_url' => ( empty( $this->success_url ) ?
+							WC_WooMercadoPago_Module::workaround_ampersand_bug(
+								esc_url( $this->get_return_url( $order ) )
+							) : $this->success_url
+						),
+						'reason' => $product_title,
+						'external_reference' => $this->invoice_prefix . $order->get_id(),
+						'auto_recurring' => array(
+							'frequency' => $frequency,
+							'frequency_type' => $frequency_type,
+							'transaction_amount' => $unit_price,
+							'currency_id' => $this->country_configs['currency']
+						)
+					);
+				} else {
+					// Creates the pre-approval structure
+					$preapproval = array(
+						'payer_email' => $order->billing_email,
+						'back_url' => ( empty( $this->success_url ) ?
+							WC_WooMercadoPago_Module::workaround_ampersand_bug(
+								esc_url( $this->get_return_url( $order) )
+							) : $this->success_url
+						),
+						'reason' => $product_title,
+						'external_reference' => $this->invoice_prefix . $order->id,
+						'auto_recurring' => array(
+							'frequency' => $frequency,
+							'frequency_type' => $frequency_type,
+							'transaction_amount' => $unit_price,
+							'currency_id' => $this->country_configs['currency']
+						)
+					);
+				}
+
 				if ( isset( $start_date ) && ! empty( $start_date ) )
 					$preapproval['auto_recurring']['start_date'] = $start_date . 'T16:00:00.000-03:00';
 				if ( isset( $end_date ) && ! empty( $end_date ) )
@@ -755,7 +767,7 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 					$this->log->add(
 						$this->id,
 						'[create_url] - mercado pago gave error, payment creation failed with error: ' .
-						$checkout_info['response']['message'] 
+						$checkout_info['response']['message']
 					);
 				}
 				return false;
@@ -794,6 +806,31 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 
 	}
 
+	// Display the discount in payment method title.
+	public function get_payment_method_title_subscription( $title, $id ) {
+
+		if ( ! is_checkout() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			return $title;
+		}
+
+		if ( $title != $this->title || $this->gateway_discount == 0 ) {
+			return $title;
+		}
+
+		$total = (float) WC()->cart->subtotal;
+		if ( is_numeric( $this->gateway_discount ) ) {
+			if ( $this->gateway_discount >= 0 && $this->gateway_discount < 100 ) {
+				$price_percent = $this->gateway_discount / 100;
+				if ( $price_percent > 0 ) {
+					$title .= ' (' . __( 'Discount Of ', 'woocommerce-mercadopago-module' ) .
+						strip_tags( wc_price( $total * $price_percent ) ) . ' )';
+				}
+			}
+		}
+
+		return $title;
+	}
+
 	/*
 	 * ========================================================================
 	 * AUXILIARY AND FEEDBACK METHODS (SERVER SIDE)
@@ -821,6 +858,12 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 			$get_request = $this->mp->get( '/users/me?access_token=' . $access_token );
 
 			if ( isset( $get_request['response']['site_id'] ) ) {
+
+				$s_id = $get_request['response']['site_id'];
+				if ( $s_id != 'MLA' && $s_id != 'MLB' && $s_id != 'MLM') {
+					$this->mp = null;
+					return false;
+				}
 
 				$this->is_test_user = in_array( 'test_user', $get_request['response']['tags'] );
 				$this->site_id = $get_request['response']['site_id'];
@@ -1109,7 +1152,7 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 			header( 'HTTP/1.1 200 OK' );
 
 		} else {
-			
+
 			// Reaching here means that we received an IPN call but there are no data!
 			// Just kills the processment. No IDs? No process!
 			if ( 'yes' == $this->debug ) {
@@ -1144,15 +1187,26 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 		if ( empty( $order_key ) ) {
 			return;
 		}
-		$order_id = (int) str_replace( $this->invoice_prefix, '', $order_key );
-		$order = new WC_Order( $order_id );
-		// Check if we have the correct order.
-		if ( $order->id !== $order_id ) {
+
+		$id    = (int) str_replace( $this->invoice_prefix, '', $order_key );
+		$order = wc_get_order( $id );
+
+		// Check if order exists.
+		if ( ! $order ) {
 			return;
 		}
 
-		// Updates the type of gateway.
-		update_post_meta( $order->id, '_used_gateway', 'WC_WooMercadoPagoSubscription_Gateway' );
+		// WooCommerce 3.0 or later.
+		if ( method_exists( $order, 'get_id' ) ) {
+			$order_id = $order->get_id();
+		} else {
+			$order_id = $order->id;
+		}
+
+		// Check if we have the correct order.
+		if ( $order_id !== $id ) {
+			return;
+		}
 
 		if ( 'yes' == $this->debug ) {
 			$this->log->add(
@@ -1162,72 +1216,143 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 			);
 		}
 
-		// Here, we process the status... this is the business rules!
-		// Reference: https://www.mercadopago.com.br/developers/en/api-docs/basic-checkout/ipn/payment-status/
-		$status = isset( $data['status'] ) ? $data['status'] : 'pending';
+		// WooCommerce 3.0 or later.
+		if ( method_exists( $order, 'update_meta_data' ) ) {
+			// Updates the type of gateway.
+			$order->update_meta_data( '_used_gateway', 'WC_WooMercadoPagoSubscription_Gateway' );
 
-		// Updates the order metadata.
-		if ( $data['ipn_type'] == 'payment' ) {
-			$total_paid = isset( $data['transaction_details']['total_paid_amount'] ) ? $data['transaction_details']['total_paid_amount'] : 0.00;
-			$total_refund = isset( $data['transaction_amount_refunded'] ) ? $data['transaction_amount_refunded'] : 0.00;
-			$total = $data['transaction_amount'];
-			if ( ! empty( $data['payer']['email'] ) ) {
-				update_post_meta(
-					$order_id,
-					__( 'Payer email', 'woocommerce-mercadopago-module' ),
-					$data['payer']['email']
-				);
-			}
-			if ( ! empty( $data['payment_type_id'] ) ) {
-				update_post_meta(
-					$order_id,
-					__( 'Payment type', 'woocommerce-mercadopago-module' ),
-					$data['payment_type_id']
-				);
-			}
-			if ( ! empty( $data['id'] ) ) {
-				update_post_meta(
-					$order_id,
-					'Mercado Pago - Payment ID ' . $data['id'],
-					'[Date ' . date( 'Y-m-d H:i:s', strtotime( $data['date_created'] ) ) .
-					']/[Amount ' . $total .
-					']/[Paid ' . $total_paid .
-					']/[Refund ' . $total_refund . ']'
-				);
-				$payment_ids_str = get_post_meta(
-					$order->id,
-					'_Mercado_Pago_Sub_Payment_IDs',
-					true
-				);
-				$payment_ids = array();
-				if ( ! empty( $payment_ids_str ) ) {
-					$payment_ids = explode( ', ', $payment_ids_str );
+			// Here, we process the status... this is the business rules!
+			// Reference: https://www.mercadopago.com.br/developers/en/api-docs/basic-checkout/ipn/payment-status/
+			$status = isset( $data['status'] ) ? $data['status'] : 'pending';
+
+			// Updates the order metadata.
+			if ( $data['ipn_type'] == 'payment' ) {
+				$total_paid = isset( $data['transaction_details']['total_paid_amount'] ) ? $data['transaction_details']['total_paid_amount'] : 0.00;
+				$total_refund = isset( $data['transaction_amount_refunded'] ) ? $data['transaction_amount_refunded'] : 0.00;
+				$total = $data['transaction_amount'];
+				if ( ! empty( $data['payer']['email'] ) ) {
+					$order->update_meta_data(
+						__( 'Payer email', 'woocommerce-mercadopago-module' ),
+						$data['payer']['email']
+					);
 				}
-				$payment_ids[] = $data['id'];
-				update_post_meta(
-					$order_id,
-					'_Mercado_Pago_Sub_Payment_IDs',
-					implode( ', ', $payment_ids )
-				);
+				if ( ! empty( $data['payment_type_id'] ) ) {
+					$order->update_meta_data(
+						__( 'Payment type', 'woocommerce-mercadopago-module' ),
+						$data['payment_type_id']
+					);
+				}
+				if ( ! empty( $data['id'] ) ) {
+					$order->update_meta_data(
+						'Mercado Pago - Payment ID ' . $data['id'],
+						'[Date ' . date( 'Y-m-d H:i:s', strtotime( $data['date_created'] ) ) .
+						']/[Amount ' . $total .
+						']/[Paid ' . $total_paid .
+						']/[Refund ' . $total_refund . ']'
+					);
+					$payment_ids_str = $order->get_meta( '_Mercado_Pago_Sub_Payment_IDs' );
+					$payment_ids = array();
+					if ( ! empty( $payment_ids_str ) ) {
+						$payment_ids = explode( ', ', $payment_ids_str );
+					}
+					$payment_ids[] = $data['id'];
+					$order->update_meta_data(
+						'_Mercado_Pago_Sub_Payment_IDs',
+						implode( ', ', $payment_ids )
+					);
+				}
+				$order->save();
+			} elseif ( $data['ipn_type'] == 'preapproval' ) {
+				$status = $data['status'];
+				if ( ! empty( $data['payer_email'] ) ) {
+					$order->update_meta_data(
+						__( 'Payer email', 'woocommerce-mercadopago-module' ),
+						$data['payer_email']
+					);
+				}
+				if ( ! empty( $data['id'] ) ) {
+					$order->update_meta_data(
+						'Mercado Pago Pre-Approval',
+						'[ID ' . $data['id'] .
+						']/[Date ' . date( 'Y-m-d H:i:s', strtotime( $data['date_created'] ) ) .
+						']/[Amount ' . $data['auto_recurring']['transaction_amount'] .
+						']/[End ' . date( 'Y-m-d', strtotime( $data['auto_recurring']['end_date'] ) ) . ']'
+					);
+				}
+
+				$order->save();
 			}
-		} elseif ( $data['ipn_type'] == 'preapproval' ) {
-			$status = $data['status'];
-			if ( ! empty( $data['payer_email'] ) ) {
-				update_post_meta(
-					$order_id,
-					__( 'Payer email', 'woocommerce-mercadopago-module' ),
-					$data['payer_email']
-				);
-			}
-			if ( ! empty( $data['id'] ) ) {
-				update_post_meta(
-					$order_id,
-					'Mercado Pago Pre-Approval',
-					'[ID ' . $data['id'] .
-					']/[Date ' . date( 'Y-m-d H:i:s', strtotime( $data['date_created'] ) ) .
-					']/[Amount ' . $data['auto_recurring']['transaction_amount'] .
-					']/[End ' . date( 'Y-m-d', strtotime( $data['auto_recurring']['end_date'] ) ) . ']'
-				);
+		} else {
+			// Updates the type of gateway.
+			update_post_meta( $order->id, '_used_gateway', 'WC_WooMercadoPagoSubscription_Gateway' );
+
+			// Here, we process the status... this is the business rules!
+			// Reference: https://www.mercadopago.com.br/developers/en/api-docs/basic-checkout/ipn/payment-status/
+			$status = isset( $data['status'] ) ? $data['status'] : 'pending';
+
+			// Updates the order metadata.
+			if ( $data['ipn_type'] == 'payment' ) {
+				$total_paid = isset( $data['transaction_details']['total_paid_amount'] ) ? $data['transaction_details']['total_paid_amount'] : 0.00;
+				$total_refund = isset( $data['transaction_amount_refunded'] ) ? $data['transaction_amount_refunded'] : 0.00;
+				$total = $data['transaction_amount'];
+				if ( ! empty( $data['payer']['email'] ) ) {
+					update_post_meta(
+						$order_id,
+						__( 'Payer email', 'woocommerce-mercadopago-module' ),
+						$data['payer']['email']
+					);
+				}
+				if ( ! empty( $data['payment_type_id'] ) ) {
+					update_post_meta(
+						$order_id,
+						__( 'Payment type', 'woocommerce-mercadopago-module' ),
+						$data['payment_type_id']
+					);
+				}
+				if ( ! empty( $data['id'] ) ) {
+					update_post_meta(
+						$order_id,
+						'Mercado Pago - Payment ID ' . $data['id'],
+						'[Date ' . date( 'Y-m-d H:i:s', strtotime( $data['date_created'] ) ) .
+						']/[Amount ' . $total .
+						']/[Paid ' . $total_paid .
+						']/[Refund ' . $total_refund . ']'
+					);
+					$payment_ids_str = get_post_meta(
+						$order->id,
+						'_Mercado_Pago_Sub_Payment_IDs',
+						true
+					);
+					$payment_ids = array();
+					if ( ! empty( $payment_ids_str ) ) {
+						$payment_ids = explode( ', ', $payment_ids_str );
+					}
+					$payment_ids[] = $data['id'];
+					update_post_meta(
+						$order_id,
+						'_Mercado_Pago_Sub_Payment_IDs',
+						implode( ', ', $payment_ids )
+					);
+				}
+			} elseif ( $data['ipn_type'] == 'preapproval' ) {
+				$status = $data['status'];
+				if ( ! empty( $data['payer_email'] ) ) {
+					update_post_meta(
+						$order_id,
+						__( 'Payer email', 'woocommerce-mercadopago-module' ),
+						$data['payer_email']
+					);
+				}
+				if ( ! empty( $data['id'] ) ) {
+					update_post_meta(
+						$order_id,
+						'Mercado Pago Pre-Approval',
+						'[ID ' . $data['id'] .
+						']/[Date ' . date( 'Y-m-d H:i:s', strtotime( $data['date_created'] ) ) .
+						']/[Amount ' . $data['auto_recurring']['transaction_amount'] .
+						']/[End ' . date( 'Y-m-d', strtotime( $data['auto_recurring']['end_date'] ) ) . ']'
+					);
+				}
 			}
 		}
 
