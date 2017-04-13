@@ -1,9 +1,9 @@
 === Woo Mercado Pago Module Oficial ===
-Contributors: mercadopago, mercadolivre
+Contributors: mercadopago, mercadolivre, claudiosanches
 Donate link: https://www.mercadopago.com.br/developers/
 Tags: ecommerce, mercadopago, woocommerce
 Requires at least: WooCommerce 2.6.x
-Tested up to: WooCommerce 2.6.6
+Tested up to: WooCommerce 3.0.0
 Stable tag: 2.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -114,7 +114,7 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 * Features
 	- Discount by payment method. Merchants can give a discount to their customers if the payment is made with a given gateway.
 * Improvements
-	- Support for WooCommerce 3.0.
+	- Support for WooCommerce 3.0.0.
 
 = v2.2.0 (03/04/2017) =
 * Features

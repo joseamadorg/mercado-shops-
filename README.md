@@ -1,4 +1,4 @@
-# WooCommerce - Mercado Pago Module (2.1.x - 2.6.x)
+# WooCommerce - Mercado Pago Module (2.1.x - 3.0.0)
 
 * [Features](#features)
 * [Available versions](#available_versions)
@@ -91,7 +91,7 @@ During the sandbox mode tests, you can operate over HTTP, but for homologation y
     <tr>
       <td>v2.2.1</td>
       <td>Stable (Current version)</td>
-      <td>WooCommerce 2.1.x - 2.6.x</td>
+      <td>WooCommerce 2.1.x - 3.0.0</td>
     </tr>
   </tbody>
 </table>
