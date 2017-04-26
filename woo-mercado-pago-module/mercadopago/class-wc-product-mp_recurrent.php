@@ -206,19 +206,16 @@ function mp_subscription_order_refund_cancel_box() {
 
 }
 
-// Adds the Recurring Product as an option in product type selector.
-add_filter( 'product_type_selector', 'mp_add_recurrent_product_type' );
-function mp_add_recurrent_product_type( $types ) {
-	$types[ 'mp_recurrent_product' ] = __( 'Recurrent Product', 'woocommerce-mercadopago-module' );
-	return $types;
-}
-
 // Makes the recurrent product individually sold
 add_filter( 'woocommerce_is_sold_individually', 'default_no_quantities', 10, 2 );
 function default_no_quantities( $individually, $product ) {
-	$terms = get_the_terms( $product->id , 'product_type' );
-	$product_type = ( ! empty( $terms ) ) ? sanitize_title( current( $terms )->name ) : 'simple';
-	if ( $product_type == 'mp_recurrent_product' ) {
+	if ( method_exists( $product, 'get_id' ) ) {
+		$product_id = $product->get_id();
+	} else {
+		$product_id = $product->id;
+	}
+	$is_recurrent = get_post_meta( $product_id, '_mp_recurring_is_recurrent', true );
+	if ( $is_recurrent == 'yes' ) {
 		$individually = true;
 	}
 	return $individually;
@@ -231,9 +228,8 @@ function check_recurrent_product_singularity() {
 	$items = $woocommerce->cart->get_cart();
 	if ( sizeof( $items ) > 1 ) {
 		foreach ( $items as $cart_item_key => $cart_item ) {
-			$terms = get_the_terms( $cart_item['product_id'], 'product_type' );
-			$product_type = ( ! empty( $terms ) ) ? sanitize_title( current( $terms )->name ) : 'simple';
-			if ( $product_type == 'mp_recurrent_product' ) {
+			$is_recurrent = get_post_meta( $cart_item['product_id'], '_mp_recurring_is_recurrent', true );
+			if ( $is_recurrent == 'yes' ) {
 				wc_add_notice(
 					__( 'A recurrent product is a signature that should be bought isolated in your cart. Please, create separated orders.', 'woocommerce-mercadopago-module' ),
 					'error'
@@ -252,13 +248,12 @@ function filter_woocommerce_is_purchasable( $purchasable, $product ) {
 		$product_id = $product->id;
 	}
 	// skip this check if product is not a subscription
-	$terms = get_the_terms( $product_id, 'product_type' );
-	$product_type = ( ! empty( $terms ) ) ? sanitize_title( current( $terms )->name ) : 'simple';
-	if ( $product_type != 'mp_recurrent_product' ) {
+	$is_recurrent = get_post_meta( $product_id, '_mp_recurring_is_recurrent', true );
+	if ( $is_recurrent !== 'yes' ) {
 		return $purchasable;
 	}
 	$today_date = date( 'Y-m-d' );
-	$end_date = get_post_meta( $product_id, 'mp_recurring_end_date', true );
+	$end_date = get_post_meta( $product_id, '_mp_recurring_end_date', true );
 	// If there is no date, we should just return the original value.
 	if ( ! isset( $end_date ) ) {
 		return $purchasable;
@@ -271,131 +266,59 @@ function filter_woocommerce_is_purchasable( $purchasable, $product ) {
 	return $purchasable;
 }
 
-// Creates the Mercado Pago Recurrent Product.
-add_action( 'plugins_loaded', 'mp_create_recurrent_product_type' );
-function mp_create_recurrent_product_type() {
-	class WC_Product_Recurrent_MP extends WC_Product {
-		public function __construct( $product ) {
-			$this->product_type = 'mp_recurrent_product';
-			parent::__construct( $product );
-		}
-	}
-}
-
 // Add the settings under 'general' sub-menu.
 add_action( 'woocommerce_product_options_general_product_data', 'mp_add_recurrent_settings' );
 function mp_add_recurrent_settings() {
 
-	global $woocommerce, $post, $thepostid;
+	//global $woocommerce, $post, $thepostid;
 	wp_nonce_field( 'woocommerce_save_data', 'woocommerce_meta_nonce' );
-	$thepostid = $post->ID;
+	//$thepostid = $post->ID;
 
-	echo '<div class="options_group show_if_mp_recurrent_product">';
+	echo '<div class="options_group show_if_simple">';
 
-	woocommerce_wp_text_input(
-		array(
-			'id' => 'mp_recurring_frequency',
-			'label' => __( 'Frequency', 'woocommerce-mercadopago-module' ),
-			'placeholder' => '1',
-			'desc_tip' => 'true',
-			'description' => __( 'Amount of time (in days or months) for the execution of the next payment.', 'woocommerce-mercadopago-module' ),
-			'type' => 'number'
-		)
-	);
-
-	woocommerce_wp_select(
-		array(
-			'id' => 'mp_recurring_frequency_type',
-			'label' => __( 'Frequency type', 'woocommerce-mercadopago-module' ),
-			'desc_tip' => 'true',
-			'description' => __( 'Indicates the period of time.', 'woocommerce-mercadopago-module' ),
-			'options' => array(
-				'days' => __( 'Days', 'woocommerce-mercadopago-module' ),
-				'months' => __( 'Months', 'woocommerce-mercadopago-module' )
-			)
-		)
-	);
-
-	woocommerce_wp_text_input(
-		array(
-			'id' => '_regular_price',
-			'label' => __( 'Regular price', 'woocommerce' ) .
-				' (' . get_woocommerce_currency_symbol() . ')',
-			'placeholder' => wc_format_localized_price( 0 ),
-			'desc_tip' => 'true',
-			'description' => __( 'The amount to charge the payer each period.', 'woocommerce-mercadopago-module' ),
-			'data_type' => 'price'
-		)
-	);
-
-	// --- The business rule for an order is that it should always begin in the moment of its purchase, so this field can be ignored...
-	//woocommerce_wp_text_input(
-	//	array(
-	//		'id' => 'mp_recurring_start_date',
-	//		'label' => __( 'Start date', 'woocommerce-mercadopago-module' ),
-	//		'placeholder' => _x( 'YYYY-MM-DD', 'placeholder', 'woocommerce-mercadopago-module' ),
-	//		'desc_tip' => 'true',
-	//		'description' => __( 'First payment date (effective debit). Defaults to now if blank.', 'woocommerce-mercadopago-module' ),
-	//		'class' => 'date-picker',
-	//		'custom_attributes' => array( 'pattern' => "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" )
-	//	)
-	//);
-
-	woocommerce_wp_text_input(
-		array(
-			'id' => 'mp_recurring_end_date',
-			'label' => __( 'End date', 'woocommerce-mercadopago-module' ),
-			'placeholder' => _x( 'YYYY-MM-DD', 'placeholder', 'woocommerce-mercadopago-module' ),
-			'desc_tip' => 'true',
-			'description' => __( 'Deadline to generate new charges. Defaults to never if blank.', 'woocommerce-mercadopago-module' ),
-			'class' => 'date-picker',
-			'custom_attributes' => array( 'pattern' => "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" )
-		)
-	);
-
-	if ( wc_tax_enabled() ) {
-
-		echo '<div class="options_group show_if_mp_recurrent_product">';
-
-		woocommerce_wp_select(
+		woocommerce_wp_checkbox(
 			array(
-				'id' => '_tax_status',
-				'label' => __( 'Tax status', 'woocommerce' ),
-				'options' => array(
-					'taxable' => __( 'Taxable', 'woocommerce' ),
-					'shipping' => __( 'Shipping only', 'woocommerce' ),
-					'none' => _x( 'None', 'Tax status', 'woocommerce' )
-				),
-				'desc_tip'	=> 'true',
-				'description' => __( 'Define whether or not the entire product is taxable, or just the cost of shipping it.', 'woocommerce' )
+				'id' => '_mp_recurring_is_recurrent',
+				'label' => __( 'Recurrent Product', 'woocommerce-mercadopago-module' ),
+				'description' => __( 'Make this product a subscription.', 'woocommerce-mercadopago-module' )
 			)
 		);
 
-		$tax_classes = WC_Tax::get_tax_classes();
-		$classes_options = array();
-		$classes_options[''] = __( 'Standard', 'woocommerce' );
-
-		if ( ! empty( $tax_classes ) ) {
-			foreach ( $tax_classes as $class ) {
-				$classes_options[ sanitize_title( $class ) ] = esc_html( $class );
-			}
-		}
-
-		woocommerce_wp_select(
+		woocommerce_wp_text_input(
 			array(
-				'id' => '_tax_class',
-				'label' => __( 'Tax class', 'woocommerce' ),
-				'options' => $classes_options,
+				'id' => '_mp_recurring_frequency',
+				'label' => __( 'Frequency', 'woocommerce-mercadopago-module' ),
+				'placeholder' => '1',
 				'desc_tip' => 'true',
-				'description' => __( 'Choose a tax class for this product. Tax classes are used to apply different tax rates specific to certain types of product.', 'woocommerce' )
+				'description' => __( 'Amount of time (in days or months) for the execution of the next payment.', 'woocommerce-mercadopago-module' ),
+				'type' => 'number'
 			)
 		);
 
-		do_action( 'woocommerce_product_options_tax' );
+		woocommerce_wp_select(
+			array(
+				'id' => '_mp_recurring_frequency_type',
+				'label' => __( 'Frequency type', 'woocommerce-mercadopago-module' ),
+				'desc_tip' => 'true',
+				'description' => __( 'Indicates the period of time.', 'woocommerce-mercadopago-module' ),
+				'options' => array(
+					'days' => __( 'Days', 'woocommerce-mercadopago-module' ),
+					'months' => __( 'Months', 'woocommerce-mercadopago-module' )
+				)
+			)
+		);
 
-		echo '</div>';
-
-	}
+		woocommerce_wp_text_input(
+			array(
+				'id' => '_mp_recurring_end_date',
+				'label' => __( 'End date', 'woocommerce-mercadopago-module' ),
+				'placeholder' => _x( 'YYYY-MM-DD', 'placeholder', 'woocommerce-mercadopago-module' ),
+				'desc_tip' => 'true',
+				'description' => __( 'Deadline to generate new charges. Defaults to never if blank.', 'woocommerce-mercadopago-module' ),
+				'class' => 'date-picker',
+				'custom_attributes' => array( 'pattern' => "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" )
+			)
+		);
 
 	echo '</div>';
 }
@@ -404,47 +327,32 @@ function mp_add_recurrent_settings() {
 add_action( 'woocommerce_process_product_meta', 'mp_save_recurrent_settings' );
 function mp_save_recurrent_settings( $post_id ) {
 
-	$mp_recurring_frequency = $_POST['mp_recurring_frequency'];
-	if ( ! empty( $mp_recurring_frequency ) )
-		update_post_meta( $post_id, 'mp_recurring_frequency', esc_attr( $mp_recurring_frequency ) );
-	else
-		update_post_meta( $post_id, 'mp_recurring_frequency', esc_attr( 1 ) );
+	$_mp_recurring_is_recurrent = $_POST['_mp_recurring_is_recurrent'];
+	if ( ! empty( $_mp_recurring_is_recurrent ) ) {
+		update_post_meta( $post_id, '_mp_recurring_is_recurrent', esc_attr( $_mp_recurring_is_recurrent ) );
+	} else {
+		update_post_meta( $post_id, '_mp_recurring_is_recurrent', esc_attr( null ) );
+	}
 
-	$mp_recurring_frequency_type = $_POST['mp_recurring_frequency_type'];
-	if ( ! empty( $mp_recurring_frequency_type ) )
-		update_post_meta( $post_id, 'mp_recurring_frequency_type', esc_attr( $mp_recurring_frequency_type ) );
-	else
-		update_post_meta( $post_id, 'mp_recurring_frequency_type', esc_attr( 'days' ) );
+	$_mp_recurring_frequency = $_POST['_mp_recurring_frequency'];
+	if ( ! empty( $_mp_recurring_frequency ) ) {
+		update_post_meta( $post_id, '_mp_recurring_frequency', esc_attr( $_mp_recurring_frequency ) );
+	} else {
+		update_post_meta( $post_id, '_mp_recurring_frequency', esc_attr( 1 ) );
+	}
 
-	$mp_recurring_transaction_amount = $_POST['mp_recurring_transaction_amount'];
-	if ( ! empty( $mp_recurring_transaction_amount ) )
-		update_post_meta( $post_id, 'mp_recurring_transaction_amount', esc_attr( $mp_recurring_transaction_amount ) );
-	else
-		update_post_meta( $post_id, 'mp_recurring_transaction_amount', esc_attr( 0 ) );
+	$_mp_recurring_frequency_type = $_POST['_mp_recurring_frequency_type'];
+	if ( ! empty( $_mp_recurring_frequency_type ) ) {
+		update_post_meta( $post_id, '_mp_recurring_frequency_type', esc_attr( $_mp_recurring_frequency_type ) );
+	} else {
+		update_post_meta( $post_id, '_mp_recurring_frequency_type', esc_attr( 'days' ) );
+	}
 
-	$mp_recurring_start_date = $_POST['mp_recurring_start_date'];
-	if ( ! empty( $mp_recurring_start_date ) )
-		update_post_meta( $post_id, 'mp_recurring_start_date', esc_attr( $mp_recurring_start_date ) );
-	else
-		update_post_meta( $post_id, 'mp_recurring_start_date', esc_attr( null ) );
+	$_mp_recurring_end_date = $_POST['_mp_recurring_end_date'];
+	if ( ! empty( $_mp_recurring_end_date ) ) {
+		update_post_meta( $post_id, '_mp_recurring_end_date', esc_attr( $_mp_recurring_end_date ) );
+	} else {
+		update_post_meta( $post_id, '_mp_recurring_end_date', esc_attr( null ) );
+	}
 
-	$mp_recurring_end_date = $_POST['mp_recurring_end_date'];
-	if ( ! empty( $mp_recurring_end_date ) )
-		update_post_meta( $post_id, 'mp_recurring_end_date', esc_attr( $mp_recurring_end_date ) );
-	else
-		update_post_meta( $post_id, 'mp_recurring_end_date', esc_attr( null ) );
-
-}
-
-// This shows the Virtual and Downloadable checkboxes as options for this product.
-add_action( 'product_type_options', 'wc_recurrent_product_type_options' );
-function wc_recurrent_product_type_options( $options ) {
-	$options['downloadable']['wrapper_class'] = 'show_if_simple show_if_mp_recurrent_product';
-	$options['virtual']['wrapper_class'] = 'show_if_simple show_if_mp_recurrent_product';
-	return $options;
-}
-add_action( 'woocommerce_product_data_tabs', 'woocommerce_product_data_tabs_recurrent_product' );
-function woocommerce_product_data_tabs_recurrent_product( $tabs ) {
-	$tabs['inventory']['class'] = array( 'show_if_simple', 'show_if_variable', 'show_if_grouped', 'show_if_external', 'show_if_mp_recurrent_product' );
-	return $tabs;
 }

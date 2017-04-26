@@ -679,10 +679,10 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 					$unit_price = floor( $unit_price );
 				}
 				// Get the custom fields
-				$frequency = get_post_meta( $item['product_id'], 'mp_recurring_frequency', true );
-				$frequency_type = get_post_meta( $item['product_id'], 'mp_recurring_frequency_type', true );
-				$start_date = get_post_meta( $item['product_id'], 'mp_recurring_start_date', true );
-				$end_date = get_post_meta( $item['product_id'], 'mp_recurring_end_date', true );
+				$frequency = get_post_meta( $item['product_id'], '_mp_recurring_frequency', true );
+				$frequency_type = get_post_meta( $item['product_id'], '_mp_recurring_frequency_type', true );
+				$start_date = get_post_meta( $item['product_id'], '_mp_recurring_start_date', true );
+				$end_date = get_post_meta( $item['product_id'], '_mp_recurring_end_date', true );
 				
 				// WooCommerce 3.0 or later.
 				if ( method_exists( $order, 'get_id' ) ) {

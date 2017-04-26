@@ -848,7 +848,10 @@ msgstr ""
 msgid "Indicates the period of time."
 msgstr ""
 
-msgid "The amount to charge the payer each period."
+msgid "The amount to charge the payer each period. Should be informed including taxes and discounts."
+msgstr ""
+
+msgid "Amount charged"
 msgstr ""
 
 msgid "Uruguay"
@@ -978,4 +981,31 @@ msgid "Tutorial"
 msgstr ""
 
 msgid "Discount Of "
+msgstr ""
+
+msgid "Make this product a subscription."
+msgstr ""
+
+msgid "Order"
+msgstr ""
+
+msgid "Mercado Envios Tracking ID"
+msgstr ""
+
+msgid "Hello,"
+msgstr ""
+
+msgid "The order"
+msgstr ""
+
+msgid "made in"
+msgstr ""
+
+msgid "used Mercado Envios as its shipment method."
+msgstr ""
+
+msgid "You can track it with the following Tracking ID:"
+msgstr ""
+
+msgid "Best regards."
 msgstr ""

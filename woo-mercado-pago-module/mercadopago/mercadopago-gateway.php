@@ -1651,7 +1651,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			} elseif ( in_array( 'in_mediation', $statuses ) && $total_paid >= $total && $total_refund == 0 ) {
 				// For a payment to be in mediation it is mandatory that it was totally paid in some moment.
 				$status = 'in_mediation';
-			} elseif ( ! in_array( 'pending', $statuses ) && $total_paid >= $total && $total_refund == 0 ) {
+			} elseif ( ! in_array( 'in_process', $statuses ) && ! in_array( 'pending', $statuses ) && $total_paid >= $total && $total_refund == 0 ) {
 				// For a payment to be approved it is mandatory that it was totally paid in some moment and there is no pendences.
 				$status = 'approved';
 			} else {
@@ -1919,6 +1919,17 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 						'[check_mercado_envios] - Mercado Envios - Status : ' .
 						$shipments_data['response']['status'] . ' - substatus : ' . $substatus_description
 					);
+
+					if ( isset( $order[ 'billing_address' ] ) ) {
+						wp_mail(
+							$order[ 'billing_address' ],
+							'Order' . ' ' . $order_id . ' - ' . 'Mercado Envios Tracking ID',
+							'Hello,' . "\r\n" .
+								'The order' . ' ' . $order_id . ' ' . 'made in' . ' ' . get_site_url() . ' ' . 'used Mercado Envios as its shipment method.' . "\r\n" .
+								'You can track it with the following Tracking ID:' . ' ' . $shipments_data['response']['tracking_number'] . "\r\n" .
+								'Best regards.'
+						);
+					}
 
 					// Add tracking number in meta data to use in order page.
 					update_post_meta( $order_id, '_mercadoenvios_tracking_number', $shipments_data['response']['tracking_number']);

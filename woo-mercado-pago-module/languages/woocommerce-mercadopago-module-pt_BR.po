@@ -923,8 +923,11 @@ msgstr "Meses"
 msgid "Indicates the period of time."
 msgstr "Indica o período de tempo."
 
-msgid "The amount to charge the payer each period."
-msgstr "A quantia a cobrar o pagador em cada período."
+msgid "The amount to charge the payer each period. Should be informed including taxes and discounts."
+msgstr "A quantia a cobrar o pagador em cada período. Deve ser informada incluindo impostos e descontos."
+
+msgid "Amount charged"
+msgstr "Quantia cobrada"
 
 msgid "Uruguay"
 msgstr "Uruguai"
@@ -1054,3 +1057,30 @@ msgstr "Tutorial"
 
 msgid "Discount Of "
 msgstr "Desconto De "
+
+msgid "Make this product a subscription."
+msgstr "Fazer deste produto uma assinatura."
+
+msgid "Order"
+msgstr "Pedido"
+
+msgid "Mercado Envios Tracking ID"
+msgstr "ID de rastreamento do Mercado Envios"
+
+msgid "Hello,"
+msgstr "Olá,"
+
+msgid "The order"
+msgstr "O pedido"
+
+msgid "made in"
+msgstr "feito em"
+
+msgid "used Mercado Envios as its shipment method."
+msgstr "usou o Mercado Envios como método de envio."
+
+msgid "You can track it with the following Tracking ID:"
+msgstr "Você pode rastrea-lo com o seguinte ID de rastreamento:"
+
+msgid "Best regards."
+msgstr "Atenciosamente."

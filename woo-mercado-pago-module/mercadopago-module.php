@@ -8,7 +8,7 @@
  * Author URI: https://www.mercadopago.com.br/developers/
  * Developer: Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
  * Copyright: Copyright(c) MercadoPago [https://www.mercadopago.com]
- * Version: 2.2.1
+ * Version: 2.2.2
  * License: https://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: woocommerce-mercadopago-module
  * Domain Path: /languages/
@@ -31,7 +31,7 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 	 */
 	class WC_WooMercadoPago_Module {
 
-		const VERSION = '2.2.1';
+		const VERSION = '2.2.2';
 
 		// Singleton design pattern
 		protected static $instance = null;
@@ -454,9 +454,8 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 			$is_subscription = false;
 			if ( sizeof( $items ) == 1 ) {
 				foreach ( $items as $cart_item_key => $cart_item ) {
-					$terms = get_the_terms( $cart_item['product_id'], 'product_type' );
-					$product_type = ( ! empty( $terms ) ) ? sanitize_title( current( $terms )->name ) : 'simple';
-					if ( $product_type == 'mp_recurrent_product' ) {
+					$is_recurrent = get_post_meta( $cart_item['product_id'], '_mp_recurring_is_recurrent', true );
+					if ( $is_recurrent == 'yes' ) {
 						$is_subscription = true;
 					}
 				}
