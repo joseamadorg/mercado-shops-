@@ -3,7 +3,7 @@
  * Admin orders actions.
  *
  * @package WooCommerce_MercadoEnvios/Admin/Orders
- * @version 2.2.1
+ * @version 2.2.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

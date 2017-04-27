@@ -12,7 +12,7 @@ $GLOBALS['LIB_LOCATION'] = dirname( __FILE__ );
 
 class MP {
 
-	private $version = '2.2.1';
+	private $version = '2.2.2';
 	private $client_id;
 	private $client_secret;
 	private $ll_access_token;
@@ -490,7 +490,7 @@ class MP {
 	public function get_preapproval_payment( $id ) {
 
 		$request = array(
-			'uri' => '/preapproval/{$id}',
+			'uri' => '/preapproval/' . $id,
 			'params' => array(
 				'access_token' => $this->get_access_token()
 			 )
@@ -510,7 +510,7 @@ class MP {
 	public function update_preapproval_payment( $id, $preapproval_payment ) {
 
 		$request = array(
-			'uri' => '/preapproval/{$id}',
+			'uri' => '/preapproval/' . $id,
 			'params' => array(
 				'access_token' => $this->get_access_token()
 			 ),
@@ -531,7 +531,7 @@ class MP {
 	public function cancel_preapproval_payment( $id ) {
 
 		$request = array(
-			'uri' => '/preapproval/{$id}',
+			'uri' => '/preapproval/' . $id,
 			'params' => array(
 				'access_token' => $this->get_access_token()
 			 ),

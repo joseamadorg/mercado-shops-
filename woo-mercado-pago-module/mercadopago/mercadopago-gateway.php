@@ -1651,7 +1651,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			} elseif ( in_array( 'in_mediation', $statuses ) && $total_paid >= $total && $total_refund == 0 ) {
 				// For a payment to be in mediation it is mandatory that it was totally paid in some moment.
 				$status = 'in_mediation';
-			} elseif ( ! in_array( 'pending', $statuses ) && $total_paid >= $total && $total_refund == 0 ) {
+			} elseif ( ! in_array( 'in_process', $statuses ) && ! in_array( 'pending', $statuses ) && $total_paid >= $total && $total_refund == 0 ) {
 				// For a payment to be approved it is mandatory that it was totally paid in some moment and there is no pendences.
 				$status = 'approved';
 			} else {
@@ -1805,7 +1805,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			$order_id = (int) str_replace( $this->invoice_prefix, '', $order_key );
 			$order = wc_get_order( $order_id );
 
-			if ( count( $merchant_order['shipments'] ) > 0 ){
+			if ( count( $merchant_order['shipments'] ) > 0 ) {
 				foreach ( $merchant_order['shipments'] as $shipment ) {
 
 					$shipment_id = $shipment['id'];
@@ -1860,10 +1860,10 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 
 					// Update total order.
 					$order->set_total(
-						wc_format_decimal($order->get_subtotal())
-						+ wc_format_decimal($order->get_total_shipping())
-						+ wc_format_decimal($order->get_total_tax())
-						- wc_format_decimal($order->get_total_discount())
+						wc_format_decimal( $order->get_subtotal() )
+						+ wc_format_decimal( $order->get_total_shipping() )
+						+ wc_format_decimal( $order->get_total_tax() )
+						- wc_format_decimal( $order->get_total_discount() )
 					);
 
 					// Update additional info.
@@ -1916,18 +1916,48 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 
 					$this->log->add(
 						$this->id,
-						'[check_mercado_envios] - Mercado Envios - Status : ' .
-						$shipments_data['response']['status'] . ' - substatus : ' . $substatus_description
+						'[check_mercado_envios] - Mercado Envios - shipments_data : ' .
+						json_encode( $shipments_data, JSON_PRETTY_PRINT )
 					);
 
 					// Add tracking number in meta data to use in order page.
-					update_post_meta( $order_id, '_mercadoenvios_tracking_number', $shipments_data['response']['tracking_number']);
+					update_post_meta( $order_id, '_mercadoenvios_tracking_number', $shipments_data['response']['tracking_number'] );
 					// Add shipiment_id in meta data to use in order page.
-					update_post_meta( $order_id, '_mercadoenvios_shipment_id', $shipment_id);
+					update_post_meta( $order_id, '_mercadoenvios_shipment_id', $shipment_id );
 					// Add status in meta data to use in order page.
-					update_post_meta( $order_id, '_mercadoenvios_status', $shipments_data['response']['status']);
+					update_post_meta( $order_id, '_mercadoenvios_status', $shipments_data['response']['status'] );
 					// Add  substatus in meta data to use in order page.
-					update_post_meta( $order_id, '_mercadoenvios_substatus', $shipments_data['response']['substatus']);
+					update_post_meta( $order_id, '_mercadoenvios_substatus', $shipments_data['response']['substatus'] );
+
+					// Send email to customer.
+					$tracking_id = $shipments_data['response']['tracking_number'];
+					if ( isset( $order->billing_email ) && isset( $tracking_id ) ) {
+						$list_of_items = array();
+						$items = $order->get_items();
+						foreach ( $items as $item ) {
+							$product = new WC_product( $item['product_id'] );
+							if ( method_exists( $product, 'get_description' ) ) {
+								$product_title = WC_WooMercadoPago_Module::utf8_ansi(
+									$product->get_name()
+								);
+							} else {
+								$product_title = WC_WooMercadoPago_Module::utf8_ansi(
+									$product->post->post_title
+								);
+							}
+							array_push( $list_of_items, $product_title . ' x ' . $item['qty'] );
+						}
+						wp_mail(
+							$order->billing_email,
+							__( 'Order', 'woocommerce-mercadopago-module' ) . ' ' . $order_id . ' - ' . __( 'Mercado Envios Tracking ID', 'woocommerce-mercadopago-module' ),
+							__( 'Hello,', 'woocommerce-mercadopago-module' ) . "\r\n\r\n" .
+							__( 'Your order', 'woocommerce-mercadopago-module' ) . ' ' . ' [ ' . implode( ', ', $list_of_items ) . ' ] ' .
+							__( 'made in', 'woocommerce-mercadopago-module' ) . ' ' . get_site_url() . ' ' .
+							__( 'used Mercado Envios as its shipment method.', 'woocommerce-mercadopago-module' ) . "\r\n" .
+							__( 'You can track it with the following Tracking ID:', 'woocommerce-mercadopago-module' ) . ' ' . $tracking_id . ".\r\n\r\n" .
+							__( 'Best regards.', 'woocommerce-mercadopago-module' )
+						);
+					}
 
 				}
 

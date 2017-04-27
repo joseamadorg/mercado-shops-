@@ -755,6 +755,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 		);
 
 		// Find logged user.
+		$customer_cards = array();
 		try {
 			$logged_user_email = null;
 			$parameters['customerId'] = null;
@@ -772,7 +773,6 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 				}
 				if ( isset( $customer['cards'] ) ) {
 					$customer_cards = $customer['cards'];
-					$parameters['customer_cards'] = $customer_cards;
 				}
 			} else {
 				$parameters['coupon_mode'] = 'no';
@@ -787,6 +787,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 				);
 			}
 		}
+		$parameters['customer_cards'] = $customer_cards;
 
 		wc_get_template(
 			'credit-card/payment-form.php',

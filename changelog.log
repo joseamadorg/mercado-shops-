@@ -1,5 +1,11 @@
 CHANGELOG:
 
+= v2.2.2 (27/04/2017) =
+* Features
+	- When using Mercado Envios, the plugin now sends an email with tracking ID to the merchant and customer.
+* Improvements
+	- Resolved a bug related with non-persisted data of Simple Products.
+
 = v2.2.1 (13/04/2017) =
 * Features
 	- Discount by payment method. Merchants can give a discount to their customers if the payment is made with a given gateway.
