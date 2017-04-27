@@ -995,7 +995,7 @@ msgstr ""
 msgid "Hello,"
 msgstr ""
 
-msgid "The order"
+msgid "Your order"
 msgstr ""
 
 msgid "made in"

@@ -1005,8 +1005,8 @@ msgstr "Código de rastreamiento de Mercado Envíos"
 msgid "Hello,"
 msgstr "Hola,"
 
-msgid "The order"
-msgstr "Lo pedido"
+msgid "Your order"
+msgstr "Su pedido"
 
 msgid "made in"
 msgstr "hecho en"
