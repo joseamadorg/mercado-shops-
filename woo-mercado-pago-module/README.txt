@@ -111,10 +111,11 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 == Changelog ==
 
 = v2.2.2 (27/04/2017) =
-* Features
-	- When using Mercado Envios, the plugin now sends an email with tracking ID to the merchant and customer.
 * Improvements
-	- Resolved a bug related with non-persisted data of Simple Products.
+	- When using Mercado Envios, the plugin now sends an email with tracking ID to the merchant and customer.
+* Bug fixes
+	- Resolved a bug related with non-persisted data of Simple Products;
+	- Resolved the status update for "in_procerss" in the basic checkout.
 
 = v2.2.1 (13/04/2017) =
 * Features
