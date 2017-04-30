@@ -8,7 +8,7 @@
  * Author URI: https://www.mercadopago.com.br/developers/
  * Developer: Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
  * Copyright: Copyright(c) MercadoPago [https://www.mercadopago.com]
- * Version: 2.2.2
+ * Version: 2.2.3
  * License: https://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: woocommerce-mercadopago-module
  * Domain Path: /languages/
@@ -31,7 +31,7 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 	 */
 	class WC_WooMercadoPago_Module {
 
-		const VERSION = '2.2.2';
+		const VERSION = '2.2.3';
 
 		// Singleton design pattern
 		protected static $instance = null;
@@ -66,11 +66,14 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 
 				add_filter( 'woocommerce_payment_gateways', array( $this, 'add_gateway' ) );
 				add_filter(
-					'woomercadopago_settings_link_' . plugin_basename( __FILE__ ),
+					'plugin_action_links_' . plugin_basename( __FILE__ ),
 					array( $this, 'woomercadopago_settings_link' ) );
 
 				add_filter( 'woocommerce_shipping_methods', array( $this, 'add_shipping' ) );
-				add_filter( 'woocommerce_available_payment_gateways', array( $this, 'filter_payment_method_by_shipping' ) );
+				add_filter(
+					'woocommerce_available_payment_gateways',
+					array( $this, 'filter_payment_method_by_shipping' )
+				);
 
 			} else {
 				add_action( 'admin_notices', array( $this, 'notify_woocommerce_miss' ) );
@@ -109,7 +112,12 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 		// When selected Mercado Envios the payment can be made only with Mercado Pago Basic (Standard)
 		public function filter_payment_method_by_shipping( $methods ) {
 
-			$chosen_methods = WC()->session->get( 'chosen_shipping_methods' );
+			$session = WC()->session;
+			if ( ! isset( $session ) ) {
+				return $methods;
+			}
+
+			$chosen_methods = $session->get( 'chosen_shipping_methods' );
 			$chosen_shipping = $chosen_methods[0];
 
 			// Check shipping methods is a Mercado Envios.
@@ -123,6 +131,7 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 				// Return new array shipping methods (only Mercado Pago Basic).
 				return $new_array;
 			}
+			
 			// Return all shipping methods.
 			return $methods;
 		}
@@ -154,6 +163,36 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 				false,
 				dirname( plugin_basename( __FILE__ ) ) . '/languages/'
 			);
+		}
+
+		// Add settings link on plugin page
+		public function woomercadopago_settings_link( $links ) {
+			$plugin_links = array();
+			$plugin_links[] = '<a href="' . esc_url( admin_url(
+				'admin.php?page=wc-settings&tab=checkout&section=WC_WooMercadoPago_Gateway' ) ) .
+				'">' . __( 'Basic Checkout', 'woocommerce-mercadopago-module' ) . '</a>';
+			$plugin_links[] = '<a href="' . esc_url( admin_url(
+				'admin.php?page=wc-settings&tab=checkout&section=WC_WooMercadoPagoCustom_Gateway' ) ) .
+				'">' . __( 'Custom Checkout', 'woocommerce-mercadopago-module' ) . '</a>';
+			$plugin_links[] = '<a href="' . esc_url( admin_url(
+				'admin.php?page=wc-settings&tab=checkout&section=WC_WooMercadoPagoTicket_Gateway' ) ) .
+				'">' . __( 'Ticket', 'woocommerce-mercadopago-module' ) . '</a>';
+			$plugin_links[] = '<a href="' . esc_url( admin_url(
+				'admin.php?page=wc-settings&tab=checkout&section=WC_WooMercadoPagoSubscription_Gateway' ) ) .
+				'">' . __( 'Subscription', 'woocommerce-mercadopago-module' ) . '</a>';
+			$plugin_links[] = '<br><a target="_blank" href="' .
+				'https://github.com/mercadopago/cart-woocommerce#installation' .
+				'">' . __( 'Tutorial', 'woocommerce-mercadopago-module' ) . '</a>';
+			$plugin_links[] = '<a target="_blank" href="' .
+				'https://wordpress.org/support/view/plugin-reviews/woo-mercado-pago-module?filter=5#postform' .
+				'">' . sprintf(
+					__( 'Rate Us', 'woocommerce-mercadopago-module' ) . ' %s',
+					'&#9733;&#9733;&#9733;&#9733;&#9733;'
+				) . '</a>';
+			$plugin_links[] = '<a target="_blank" href="' .
+				'https://wordpress.org/support/plugin/woo-mercado-pago-module#postform' .
+				'">' . __( 'Report Issue', 'woocommerce-mercadopago-module' ) . '</a>';
+			return array_merge($plugin_links, $links);
 		}
 
 		/**
@@ -500,37 +539,5 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 		'plugins_loaded',
 		array( 'WC_WooMercadoPago_Module', 'init_mercado_pago_gateway_class' ), 0
 	);
-
-	// Add settings link on plugin page
-	function woomercadopago_settings_link( $links ) {
-		$plugin_links = array();
-		$plugin_links[] = '<a href="' . esc_url( admin_url(
-			'admin.php?page=wc-settings&tab=checkout&section=WC_WooMercadoPago_Gateway' ) ) .
-			'">' . __( 'Basic Checkout', 'woocommerce-mercadopago-module' ) . '</a>';
-		$plugin_links[] = '<a href="' . esc_url( admin_url(
-			'admin.php?page=wc-settings&tab=checkout&section=WC_WooMercadoPagoCustom_Gateway' ) ) .
-			'">' . __( 'Custom Checkout', 'woocommerce-mercadopago-module' ) . '</a>';
-		$plugin_links[] = '<a href="' . esc_url( admin_url(
-			'admin.php?page=wc-settings&tab=checkout&section=WC_WooMercadoPagoTicket_Gateway' ) ) .
-			'">' . __( 'Ticket', 'woocommerce-mercadopago-module' ) . '</a>';
-		$plugin_links[] = '<a href="' . esc_url( admin_url(
-			'admin.php?page=wc-settings&tab=checkout&section=WC_WooMercadoPagoSubscription_Gateway' ) ) .
-			'">' . __( 'Subscription', 'woocommerce-mercadopago-module' ) . '</a>';
-		$plugin_links[] = '<br><a target="_blank" href="' .
-			'https://github.com/mercadopago/cart-woocommerce#installation' .
-			'">' . __( 'Tutorial', 'woocommerce-mercadopago-module' ) . '</a>';
-		$plugin_links[] = '<a target="_blank" href="' .
-			'https://wordpress.org/support/view/plugin-reviews/woo-mercado-pago-module?filter=5#postform' .
-			'">' . sprintf(
-				__( 'Rate Us', 'woocommerce-mercadopago-module' ) . ' %s',
-				'&#9733;&#9733;&#9733;&#9733;&#9733;'
-			) . '</a>';
-		$plugin_links[] = '<a target="_blank" href="' .
-			'https://wordpress.org/support/plugin/woo-mercado-pago-module#postform' .
-			'">' . __( 'Report Issue', 'woocommerce-mercadopago-module' ) . '</a>';
-		return array_merge($plugin_links, $links);
-	}
-	$plugin = plugin_basename( __FILE__ );
-	add_filter("plugin_action_links_$plugin", 'woomercadopago_settings_link' );
 
 endif;
