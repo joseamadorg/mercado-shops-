@@ -270,18 +270,15 @@ This feature enables you to sell signatures by using Mercado Pago recurrent paym
 
 4. **Subscription Options**: This part allows you to customize your general subscription fields;
 
-5. **Create a Recurrent Product**: Now, you need to create an Assignable Product. To do this, go to **Products > Products > Add Product Button**, as shown:
+5. **Create a Recurrent Product**: Now, you need to create an Assignable Product. To do this, go to **Products > Products > Add Product Button**. The openned page shoud contain the following fields, in **Product Data** window:
 
 ![Installation Instructions](https://raw.github.com/mercadopago/cart-woocommerce/master/README.img/subscriptions_1.png)
 
-6. On the openned page, complete your product informations (name, price, images, etc), and set the **Product Data** type to **Recurrent Product**, 
+6. Complete your product informations (name, price, images, etc), and check **Recurrent Product** checkbox. Also, you will need to fill the following fields: 
 
 	*Frequency*: This is the frequency of which the charges will be made to your customer;<br />
 	*Frequency Type*: The frequency type can be in [Days] or [Months];<br />
-	*Regular Price*: The amount that will be charged periodically;<br />
-	*End Date*: The date that the signature should end;<br />
-	*Tax status*: Setup if the product is taxable or not;<br />
-	*Tax class*: The class of the tax.
+	*End Date*: The date that the signature should end.
 
 7. **Considerations**: There are a few important points about Subscription:
 
