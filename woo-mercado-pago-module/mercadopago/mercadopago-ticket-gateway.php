@@ -1254,14 +1254,20 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 				// Get ticket payments.
 				$payments = $this->mp->get( '/v1/payment_methods/?access_token=' . $this->access_token );
 				foreach ( $payments['response'] as $payment ) {
-					if ( $payment['payment_type_id'] != 'account_money' &&
-						$payment['payment_type_id'] != 'credit_card' &&
-						$payment['payment_type_id'] != 'debit_card' &&
-						$payment['payment_type_id'] != 'prepaid_card' ) {
+					if ( isset( $payment['payment_type_id'] ) ) {
+						if ( $payment['payment_type_id'] != 'account_money' &&
+							$payment['payment_type_id'] != 'credit_card' &&
+							$payment['payment_type_id'] != 'debit_card' &&
+							$payment['payment_type_id'] != 'prepaid_card' ) {
 
-						array_push( $this->payment_methods, $payment );
-
+							array_push( $this->payment_methods, $payment );
+						}
 					}
+				}
+
+				// Check if there are available payments with ticket.
+				if ( count( $this->payment_methods ) == 0 ) {
+					return false;
 				}
 
 				// Check for auto converstion of currency.
