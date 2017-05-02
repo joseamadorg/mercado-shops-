@@ -1363,9 +1363,12 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 	// Called automatically by WooCommerce, verify if Module is available to use.
 	public function is_available() {
 		global $woocommerce;
+		$w_cart = $woocommerce->cart;
 		// Check for recurrent product checkout.
-		if ( WC_WooMercadoPago_Module::is_subscription( $woocommerce->cart->get_cart() ) ) {
-			return false;
+		if ( isset( $w_cart ) ) {
+			if ( WC_WooMercadoPago_Module::is_subscription( $w_cart->get_cart() ) ) {
+				return false;
+			}
 		}
 		// Check if this gateway is enabled and well configured.
 		$available = ( 'yes' == $this->settings['enabled'] ) &&

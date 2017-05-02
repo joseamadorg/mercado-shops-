@@ -225,7 +225,11 @@ function default_no_quantities( $individually, $product ) {
 add_action( 'woocommerce_check_cart_items', 'check_recurrent_product_singularity' );
 function check_recurrent_product_singularity() {
 	global $woocommerce;
-	$items = $woocommerce->cart->get_cart();
+	$w_cart = $woocommerce->cart;
+	if ( ! isset( $w_cart ) ) {
+		return;
+	}
+	$items = $w_cart->get_cart();
 	if ( sizeof( $items ) > 1 ) {
 		foreach ( $items as $cart_item_key => $cart_item ) {
 			$is_recurrent = get_post_meta( $cart_item['product_id'], '_mp_recurring_is_recurrent', true );
