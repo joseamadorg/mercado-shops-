@@ -1,6 +1,6 @@
 CHANGELOG:
 
-= v2.2.4 (08/05/2017) =
+= v2.2.4 (03/05/2017) =
 * Improvements
 	- Increased support to older versions of PHP;
 	- Optimized calls of WordPress/WooCommerce specific functions.
