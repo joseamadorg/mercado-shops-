@@ -8,7 +8,7 @@
  * Author URI: https://www.mercadopago.com.br/developers/
  * Developer: Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
  * Copyright: Copyright(c) MercadoPago [https://www.mercadopago.com]
- * Version: 2.2.3
+ * Version: 2.2.4
  * License: https://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: woocommerce-mercadopago-module
  * Domain Path: /languages/
@@ -31,7 +31,7 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 	 */
 	class WC_WooMercadoPago_Module {
 
-		const VERSION = '2.2.3';
+		const VERSION = '2.2.4';
 
 		// Singleton design pattern
 		protected static $instance = null;
@@ -322,12 +322,12 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 						'sponsor_id' => 208682286,
 						'country_name' => __( 'Argentine', 'woocommerce-mercadopago-module' ),
 						'checkout_banner' => plugins_url(
-							'woo-mercado-pago-module/images/MLA/standard_mla.jpg',
-							plugin_dir_path( __FILE__ )
+							'images/MLA/standard_mla.jpg',
+							__FILE__
 						),
 						'checkout_banner_custom' => plugins_url(
-							'woo-mercado-pago-module/images/MLA/credit_card.png',
-							plugin_dir_path( __FILE__ )
+							'images/MLA/credit_card.png',
+							__FILE__
 						),
 						'currency' => 'ARS'
 					);
@@ -336,12 +336,12 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 						'sponsor_id' => 208686191,
 						'country_name' => __( 'Brazil', 'woocommerce-mercadopago-module' ),
 						'checkout_banner' => plugins_url(
-							'woo-mercado-pago-module/images/MLB/standard_mlb.jpg',
-							plugin_dir_path( __FILE__ )
+							'images/MLB/standard_mlb.jpg',
+							__FILE__
 						),
 						'checkout_banner_custom' => plugins_url(
-							'woo-mercado-pago-module/images/MLB/credit_card.png',
-							plugin_dir_path( __FILE__ )
+							'images/MLB/credit_card.png',
+							__FILE__
 						),
 						'currency' => 'BRL'
 					);
@@ -350,12 +350,12 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 						'sponsor_id' => 208687643,
 						'country_name' => __( 'Colombia', 'woocommerce-mercadopago-module' ),
 						'checkout_banner' => plugins_url(
-							'woo-mercado-pago-module/images/MCO/standard_mco.jpg',
-							plugin_dir_path( __FILE__ )
+							'images/MCO/standard_mco.jpg',
+							__FILE__
 						),
 						'checkout_banner_custom' => plugins_url(
-							'woo-mercado-pago-module/images/MCO/credit_card.png',
-							plugin_dir_path( __FILE__ )
+							'images/MCO/credit_card.png',
+							__FILE__
 						),
 						'currency' => 'COP'
 					);
@@ -364,12 +364,12 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 						'sponsor_id' => 208690789,
 						'country_name' => __( 'Chile', 'woocommerce-mercadopago-module' ),
 						'checkout_banner' => plugins_url(
-							'woo-mercado-pago-module/images/MLC/standard_mlc.gif',
-							plugin_dir_path( __FILE__ )
+							'images/MLC/standard_mlc.gif',
+							__FILE__
 						),
 						'checkout_banner_custom' => plugins_url(
-							'woo-mercado-pago-module/images/MLC/credit_card.png',
-							plugin_dir_path( __FILE__ )
+							'images/MLC/credit_card.png',
+							__FILE__
 						),
 						'currency' => 'CLP'
 					);
@@ -378,12 +378,12 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 						'sponsor_id' => 208692380,
 						'country_name' => __( 'Mexico', 'woocommerce-mercadopago-module' ),
 						'checkout_banner' => plugins_url(
-							'woo-mercado-pago-module/images/MLM/standard_mlm.jpg',
-							plugin_dir_path( __FILE__ )
+							'images/MLM/standard_mlm.jpg',
+							__FILE__
 						),
 						'checkout_banner_custom' => plugins_url(
-							'woo-mercado-pago-module/images/MLM/credit_card.png',
-							plugin_dir_path( __FILE__ )
+							'images/MLM/credit_card.png',
+							__FILE__
 						),
 						'currency' => 'MXN'
 					);
@@ -392,12 +392,12 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 						'sponsor_id' => 208692735,
 						'country_name' => __( 'Venezuela', 'woocommerce-mercadopago-module' ),
 						'checkout_banner' => plugins_url(
-							'woo-mercado-pago-module/images/MLV/standard_mlv.jpg',
-							plugin_dir_path( __FILE__ )
+							'images/MLV/standard_mlv.jpg',
+							__FILE__
 						),
 						'checkout_banner_custom' => plugins_url(
-							'woo-mercado-pago-module/images/MLV/credit_card.png',
-							plugin_dir_path( __FILE__ )
+							'images/MLV/credit_card.png',
+							__FILE__
 						),
 						'currency' => 'VEF'
 					);
@@ -406,12 +406,12 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 						'sponsor_id' => 216998692,
 						'country_name' => __( 'Peru', 'woocommerce-mercadopago-module' ),
 						'checkout_banner' => plugins_url(
-							'woo-mercado-pago-module/images/MPE/standard_mpe.png',
-							plugin_dir_path( __FILE__ )
+							'images/MPE/standard_mpe.png',
+							__FILE__
 						),
 						'checkout_banner_custom' => plugins_url(
-							'woo-mercado-pago-module/images/MPE/credit_card.png',
-							plugin_dir_path( __FILE__ )
+							'images/MPE/credit_card.png',
+							__FILE__
 						),
 						'currency' => 'PEN'
 					);
@@ -420,12 +420,12 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 						'sponsor_id' => 243692679,
 						'country_name' => __( 'Uruguay', 'woocommerce-mercadopago-module' ),
 						'checkout_banner' => plugins_url(
-							'woo-mercado-pago-module/images/MLU/standard_mlu.png',
-							plugin_dir_path( __FILE__ )
+							'images/MLU/standard_mlu.png',
+							__FILE__
 						),
 						'checkout_banner_custom' => plugins_url(
-							'woo-mercado-pago-module/images/MLU/credit_card.png',
-							plugin_dir_path( __FILE__ )
+							'images/MLU/credit_card.png',
+							__FILE__
 						),
 						'currency' => 'UYU'
 					);
@@ -434,12 +434,12 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 						'sponsor_id' => 208682286,
 						'country_name' => __( 'Argentine', 'woocommerce-mercadopago-module' ),
 						'checkout_banner' => plugins_url(
-							'woo-mercado-pago-module/images/MLA/standard_mla.jpg',
-							plugin_dir_path( __FILE__ )
+							'images/MLA/standard_mla.jpg',
+							__FILE__
 						),
 						'checkout_banner_custom' => plugins_url(
-							'woo-mercado-pago-module/images/MLA/credit_card.png',
-							plugin_dir_path( __FILE__ )
+							'images/MLA/credit_card.png',
+							__FILE__
 						),
 						'currency' => 'ARS'
 					);
@@ -448,7 +448,7 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 
 		public static function build_currency_conversion_err_msg( $currency ) {
 			return '<img width="12" height="12" src="' .
-				plugins_url( 'woo-mercado-pago-module/images/error.png', plugin_dir_path( __FILE__ ) ) .
+				plugins_url( 'images/error.png', __FILE__ ) .
 				'"> ' .
 				__( 'ERROR: It was not possible to convert the unsupported currency', 'woocommerce-mercadopago-module' ) .
 				' ' . get_woocommerce_currency() . ' '	.
@@ -458,7 +458,7 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 
 		public static function build_currency_not_converted_msg( $currency, $country_name ) {
 			return '<img width="12" height="12" src="' .
-				plugins_url( 'woo-mercado-pago-module/images/warning.png', plugin_dir_path( __FILE__ ) ) .
+				plugins_url( 'images/warning.png', __FILE__ ) .
 				'"> ' .
 				__( 'ATTENTION: The currency', 'woocommerce-mercadopago-module' ) .
 				' ' . get_woocommerce_currency() . ' ' .
@@ -469,7 +469,7 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 
 		public static function build_currency_converted_msg( $currency, $currency_ratio ) {
 			return '<img width="12" height="12" src="' .
-				plugins_url( 'woo-mercado-pago-module/images/check.png', plugin_dir_path( __FILE__ ) ) .
+				plugins_url( 'images/check.png', __FILE__ ) .
 				'"> ' .
 				__( 'CURRENCY CONVERTED: The currency conversion ratio from', 'woocommerce-mercadopago-module' )  .
 				' ' . get_woocommerce_currency() . ' ' .
@@ -479,12 +479,11 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 
 		public static function build_valid_credentials_msg( $country_name, $site_id ) {
 			return '<img width="12" height="12" src="' .
-				plugins_url( 'woo-mercado-pago-module/images/check.png', plugin_dir_path( __FILE__ ) ) .
+				plugins_url( 'images/check.png', __FILE__ ) .
 				'"> ' .
 				__( 'Your credentials are <strong>valid</strong> for', 'woocommerce-mercadopago-module' ) .
 				': ' . $country_name . ' <img width="18.6" height="12" src="' . plugins_url(
-					'woo-mercado-pago-module/images/' . $site_id . '/' . $site_id . '.png',
-					plugin_dir_path( __FILE__ )
+					'images/' . $site_id . '/' . $site_id . '.png', __FILE__
 				) . '"> ';
 		}
 
@@ -504,7 +503,7 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 
 		public static function build_invalid_credentials_msg() {
 			return '<img width="12" height="12" src="' .
-				plugins_url( 'woo-mercado-pago-module/images/error.png', plugin_dir_path( __FILE__ ) ) .
+				plugins_url( 'images/error.png', __FILE__ ) .
 				'"> ' .
 				__( 'Your credentials are <strong>not valid</strong>!', 'woocommerce-mercadopago-module' );
 		}
