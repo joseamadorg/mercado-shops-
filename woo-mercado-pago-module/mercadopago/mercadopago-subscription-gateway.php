@@ -401,11 +401,9 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 	public function process_cancel_order_meta_box_actions( $order ) {
 		// WooCommerce 3.0 or later.
 		if ( method_exists( $order, 'get_meta' ) ) {
-			$used_gateway = $order->get_meta( '_used_gateway' );
-			$preapproval  = $order->get_meta( 'Mercado Pago Pre-Approval' );
+			$preapproval = $order->get_meta( 'Mercado Pago Pre-Approval' );
 		} else {
-			$used_gateway = get_post_meta( $order->id, '_used_gateway', true );
-			$preapproval  = get_post_meta( $order->id, 'Mercado Pago Pre-Approval',	true );
+			$preapproval = get_post_meta( $order->id, 'Mercado Pago Pre-Approval',	true );
 		}
 
 		if ( $used_gateway != 'WC_WooMercadoPagoSubscription_Gateway' ) {
@@ -494,8 +492,10 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 
 	public function update_checkout_status( $order_id ) {
 
-		if ( get_post_meta( $order_id, '_used_gateway', true ) != 'WC_WooMercadoPagoSubscription_Gateway' )
+		$order = wc_get_order( $order_id );
+		if ( $this->id !== $order->get_payment_method() ) {
 			return;
+		}
 
 		if ( 'yes' == $this->debug ) {
 			$this->log->add(
@@ -527,10 +527,7 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 
 		// WooCommerce 3.0 or later.
 		if ( method_exists( $order, 'update_meta_data' ) ) {
-			$order->update_meta_data( '_used_gateway', 'WC_WooMercadoPagoSubscription_Gateway' );
 			$order->save();
-		} else {
-			update_post_meta( $order_id, '_used_gateway', 'WC_WooMercadoPagoSubscription_Gateway' );
 		}
 
 		if ( 'redirect' == $this->method ) {
@@ -575,7 +572,7 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 	public function render_order_form( $order_id ) {
 
 		$order = wc_get_order( $order_id );
-		$url   = $this->create_url( $order );
+		$url = $this->create_url( $order );
 
 		if ( $url ) {
 			$html =
@@ -600,7 +597,7 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 				$html .=
 					'<a class="button cancel" href="' . esc_url( $order->get_cancel_order_url() ) . '">' .
 					__( 'Cancel order &amp; Clear cart', 'woocommerce-mercadopago-module' ) .
-					'</a><style type="text/css">#MP-Checkout-dialog #MP-Checkout-IFrame { bottom: -28px !important;  height: 590px !important; }</style>';
+					'</a><style type="text/css">#MP-Checkout-dialog #MP-Checkout-IFrame { bottom: -28px !important; height: 590px !important; }</style>';
 				// Includes the javascript of lightbox.
 				$html .=
 					'<script type="text/javascript">(function(){function $MPBR_load(){window.$MPBR_loaded !== true && (function(){var s = document.createElement("script");s.type = "text/javascript";s.async = true;s.src = ("https:"==document.location.protocol?"https://www.mercadopago.com/org-img/jsapi/mptools/buttons/":"https://mp-tools.mlstatic.com/buttons/")+"render.js";var x = document.getElementsByTagName("script")[0];x.parentNode.insertBefore(s, x);window.$MPBR_loaded = true;})();}window.$MPBR_loaded !== true ? (window.attachEvent ? window.attachEvent("onload", $MPBR_load) : window.addEventListener("load", $MPBR_load, false) ) : null;})();</script>';
@@ -1192,7 +1189,7 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 			return;
 		}
 
-		$id    = (int) str_replace( $this->invoice_prefix, '', $order_key );
+		$id = (int) str_replace( $this->invoice_prefix, '', $order_key );
 		$order = wc_get_order( $id );
 
 		// Check if order exists.
@@ -1222,8 +1219,6 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 
 		// WooCommerce 3.0 or later.
 		if ( method_exists( $order, 'update_meta_data' ) ) {
-			// Updates the type of gateway.
-			$order->update_meta_data( '_used_gateway', 'WC_WooMercadoPagoSubscription_Gateway' );
 
 			// Here, we process the status... this is the business rules!
 			// Reference: https://www.mercadopago.com.br/developers/en/api-docs/basic-checkout/ipn/payment-status/
@@ -1287,8 +1282,6 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 				$order->save();
 			}
 		} else {
-			// Updates the type of gateway.
-			update_post_meta( $order->id, '_used_gateway', 'WC_WooMercadoPagoSubscription_Gateway' );
 
 			// Here, we process the status... this is the business rules!
 			// Reference: https://www.mercadopago.com.br/developers/en/api-docs/basic-checkout/ipn/payment-status/
