@@ -435,8 +435,10 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 				true
 			);
 			$p = explode( '/', $p );
-			$paid = ((float) explode( ' ', substr( $p[2], 1, -1 ) )[1]);
-			$refund = ((float) explode( ' ', substr( $p[3], 1, -1 ) )[1]);
+			$paid_arr = explode( ' ', substr( $p[2], 1, -1 ) );
+			$paid = ( (float) $paid_arr[1] );
+			$refund_arr = explode( ' ', substr( $p[3], 1, -1 ) );
+			$refund = ( (float) $refund_arr[1] );
 			$p_struct = array(
 				'id' => $p_id,
 				'available_to_refund' => $paid - $refund
