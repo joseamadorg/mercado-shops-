@@ -500,7 +500,7 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 		if ( 'yes' == $this->debug ) {
 			$this->log->add(
 				$this->id,
-				'[update_checkout_status] - updating checkout statuses ' . $order_id
+				'[update_checkout_status] - updating order of ID ' . $order_id
 			);
 		}
 
