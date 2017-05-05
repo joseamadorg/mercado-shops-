@@ -666,15 +666,18 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 					);
 				}
 
-				// Remove decimals if MCO/MLC
 				$unit_price = floor( ( (float) $item['line_total'] + (float) $item['line_tax'] ) *
 					( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 ) * 100 ) / 100;
+				
 				// Add shipment cost
 				$unit_price += ( (float) $order->get_total_shipping() + (float) $order->get_shipping_tax() ) *
 					( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 );
+				
+				// Remove decimals if MCO/MLC
 				if ( $this->site_id == 'MCO' || $this->site_id == 'MLC' ) {
 					$unit_price = floor( $unit_price );
 				}
+				
 				// Get the custom fields
 				$frequency = get_post_meta( $item['product_id'], '_mp_recurring_frequency', true );
 				$frequency_type = get_post_meta( $item['product_id'], '_mp_recurring_frequency_type', true );
