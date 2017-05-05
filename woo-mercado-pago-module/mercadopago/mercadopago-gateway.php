@@ -928,14 +928,9 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 						);
 					}
 
-					// Remove decimals if MCO/MLC
+					// Calculate discount for payment method.
 					$unit_price = floor( ( (float) $item['line_total'] + (float) $item['line_tax'] ) *
 						( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 ) * 100 ) / 100;
-					if ( $this->site_id == 'MCO' || $this->site_id == 'MLC' ) {
-						$unit_price = floor( $unit_price );
-					}
-
-					// Calculate discount for payment method.
 					if ( is_numeric( $this->gateway_discount ) ) {
 						if ( $this->gateway_discount >= 0 && $this->gateway_discount < 100 ) {
 							$price_percent = $this->gateway_discount / 100;
@@ -944,6 +939,11 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 								$unit_price -= $discount;
 							}
 						}
+					}
+
+					// Remove decimals if MCO/MLC
+					if ( $this->site_id == 'MCO' || $this->site_id == 'MLC' ) {
+						$unit_price = floor( $unit_price );
 					}
 
 					array_push( $list_of_items, $product_title . ' x ' . $item['qty'] );

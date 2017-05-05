@@ -1,5 +1,9 @@
 CHANGELOG:
 
+= v2.2.5 (08/05/2017) =
+* Bug fixes
+	- Algorithm of Chile/Colombia when removing decimals.
+
 = v2.2.4 (03/05/2017) =
 * Improvements
 	- Increased support to older versions of PHP;
