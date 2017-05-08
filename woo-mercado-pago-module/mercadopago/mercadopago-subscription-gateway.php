@@ -920,6 +920,9 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 
 	// Called automatically by WooCommerce, verify if Module is available to use.
 	public function is_available() {
+		if ( ! did_action( 'wp_loaded' ) ) {
+			return false;
+		}
 		global $woocommerce;
 		$w_cart = $woocommerce->cart;
 		// Check for recurrent product checkout.

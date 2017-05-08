@@ -112,6 +112,7 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 
 = v2.2.5 (08/05/2017) =
 * Bug fixes
+	- Added support for WooCommerce/WordPress functions to handle warnings;
 	- Algorithm of Chile/Colombia when removing decimals.
 
 = v2.2.4 (03/05/2017) =
