@@ -641,8 +641,6 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 			$transaction_details = get_post_meta( $order->id, '_transaction_details_ticket', true );
 		}
 
-		if ( $used_gateway != 'WC_WooMercadoPagoTicket_Gateway' )
-			return;
 		$html = '<p>' .
 			__( 'Thank you for your order. Please, pay the ticket to get your order approved.', 'woocommerce-mercadopago-module' ) .
 		'</p>';

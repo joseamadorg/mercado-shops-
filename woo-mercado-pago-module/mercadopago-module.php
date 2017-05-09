@@ -8,7 +8,7 @@
  * Author URI: https://www.mercadopago.com.br/developers/
  * Developer: Marcelo Tomio Hama / marcelo.hama@mercadolivre.com
  * Copyright: Copyright(c) MercadoPago [https://www.mercadopago.com]
- * Version: 2.2.5
+ * Version: 2.2.6
  * License: https://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: woocommerce-mercadopago-module
  * Domain Path: /languages/
@@ -31,7 +31,7 @@ if ( ! class_exists( 'WC_WooMercadoPago_Module' ) ) :
 	 */
 	class WC_WooMercadoPago_Module {
 
-		const VERSION = '2.2.5';
+		const VERSION = '2.2.6';
 
 		// Singleton design pattern
 		protected static $instance = null;

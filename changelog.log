@@ -1,5 +1,9 @@
 CHANGELOG:
 
+= v2.2.6 (??/??/2017) =
+* Bug fixes
+	- Removed unused snippet from ticket solution, handling an unexpected warning.
+
 = v2.2.5 (08/05/2017) =
 * Bug fixes
 	- Added support for WooCommerce/WordPress functions to handle warnings;
