@@ -596,7 +596,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 
 	public function add_checkout_script() {
 
-		$public_key = echo $this->get_option( 'public_key' );
+		$public_key = $this->get_option( 'public_key' );
 
 		if ( ! empty( $public_key ) ) {
 
