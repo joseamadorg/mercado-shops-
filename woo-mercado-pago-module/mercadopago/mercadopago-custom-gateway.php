@@ -596,58 +596,70 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 
 	public function add_checkout_script() {
 
-		$w = WC_WooMercadoPago_Module::woocommerce_instance();
-		$logged_user_email = null;
-		$payments = array();
-		$gateways = WC()->payment_gateways->get_available_payment_gateways();
-		foreach ( $gateways as $g ) {
-			$payments[] = $g->id;
-		}
-		$payments = str_replace( '-', '_', implode( ', ', $payments ) );
+		$public_key = echo $this->get_option( 'public_key' );
 
-		if ( wp_get_current_user()->ID != 0 ) {
-			$logged_user_email = wp_get_current_user()->user_email;
-		}
+		if ( ! empty( $public_key ) ) {
 
-		?>
-		<script src="https://secure.mlstatic.com/modules/javascript/analytics.js"></script>
-		<script type="text/javascript">
-			var MA = ModuleAnalytics;
-			MA.setPublicKey( '<?php echo $this->get_option( 'public_key' ); ?>' );
-			MA.setPlatform( 'WooCommerce' );
-			MA.setPlatformVersion( '<?php echo $w->version; ?>' );
-			MA.setModuleVersion( '<?php echo WC_WooMercadoPago_Module::VERSION; ?>' );
-			MA.setPayerEmail( '<?php echo ( $logged_user_email != null ? $logged_user_email : "" ); ?>' );
-			MA.setUserLogged( <?php echo ( empty( $logged_user_email ) ? 0 : 1 ); ?> );
-			MA.setInstalledModules( '<?php echo $payments; ?>' );
-			MA.post();
-		</script>
-		<?php
+			$w = WC_WooMercadoPago_Module::woocommerce_instance();
+			$logged_user_email = null;
+			$payments = array();
+			$gateways = WC()->payment_gateways->get_available_payment_gateways();
+			foreach ( $gateways as $g ) {
+				$payments[] = $g->id;
+			}
+			$payments = str_replace( '-', '_', implode( ', ', $payments ) );
+
+			if ( wp_get_current_user()->ID != 0 ) {
+				$logged_user_email = wp_get_current_user()->user_email;
+			}
+
+			?>
+			<script src="https://secure.mlstatic.com/modules/javascript/analytics.js"></script>
+			<script type="text/javascript">
+				var MA = ModuleAnalytics;
+				MA.setPublicKey( '<?php $public_key; ?>' );
+				MA.setPlatform( 'WooCommerce' );
+				MA.setPlatformVersion( '<?php echo $w->version; ?>' );
+				MA.setModuleVersion( '<?php echo WC_WooMercadoPago_Module::VERSION; ?>' );
+				MA.setPayerEmail( '<?php echo ( $logged_user_email != null ? $logged_user_email : "" ); ?>' );
+				MA.setUserLogged( <?php echo ( empty( $logged_user_email ) ? 0 : 1 ); ?> );
+				MA.setInstalledModules( '<?php echo $payments; ?>' );
+				MA.post();
+			</script>
+			<?php
+
+		}
 
 	}
 
 	public function update_checkout_status( $order_id ) {
 
-		$order = wc_get_order( $order_id );
-		if ( $this->id !== $order->get_payment_method() ) {
-			return;
-		}
+		$public_key = $this->get_option( 'public_key' );
 
-		if ( 'yes' == $this->debug ) {
-			$this->log->add(
-				$this->id,
-				'[update_checkout_status] - updating order of ID ' . $order_id
-			);
-		}
+		if ( ! empty( $public_key ) ) {
 
-		echo '<script src="https://secure.mlstatic.com/modules/javascript/analytics.js"></script>
-		<script type="text/javascript">
-			var MA = ModuleAnalytics;
-			MA.setPublicKey( "' . $this->get_option( 'public_key' ) . '" );
-			MA.setPaymentType("credit_card");
-			MA.setCheckoutType("custom");
-			MA.put();
-		</script>';
+			$order = wc_get_order( $order_id );
+			if ( $this->id !== $order->get_payment_method() ) {
+				return;
+			}
+
+			if ( 'yes' == $this->debug ) {
+				$this->log->add(
+					$this->id,
+					'[update_checkout_status] - updating order of ID ' . $order_id
+				);
+			}
+
+			echo '<script src="https://secure.mlstatic.com/modules/javascript/analytics.js"></script>
+			<script type="text/javascript">
+				var MA = ModuleAnalytics;
+				MA.setPublicKey( "' . $public_key . '" );
+				MA.setPaymentType("credit_card");
+				MA.setCheckoutType("custom");
+				MA.put();
+			</script>';
+
+		}
 
 	}
 
