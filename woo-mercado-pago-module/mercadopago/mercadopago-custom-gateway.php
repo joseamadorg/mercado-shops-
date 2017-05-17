@@ -617,7 +617,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			<script src="https://secure.mlstatic.com/modules/javascript/analytics.js"></script>
 			<script type="text/javascript">
 				var MA = ModuleAnalytics;
-				MA.setPublicKey( '<?php $public_key; ?>' );
+				MA.setPublicKey( '<?php echo $public_key; ?>' );
 				MA.setPlatform( 'WooCommerce' );
 				MA.setPlatformVersion( '<?php echo $w->version; ?>' );
 				MA.setModuleVersion( '<?php echo WC_WooMercadoPago_Module::VERSION; ?>' );
