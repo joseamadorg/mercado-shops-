@@ -986,13 +986,13 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 					array_push( $list_of_items, $product_title . ' x ' . $item['qty'] );
 					array_push( $items, array(
 						'id' => $item['product_id'],
-						'title' => ( $product_title . ' x ' . $item['qty'] ),
-						'description' => sanitize_file_name(
+						'title' => ( html_entity_decode( $product_title ) . ' x ' . $item['qty'] ),
+						'description' => sanitize_file_name( html_entity_decode( 
 							// This handles description width limit of Mercado Pago.
 							( strlen( $product_content ) > 230 ?
 								substr( $product_content, 0, 230 ) . '...' :
 								$product_content )
-						),
+						) ),
 						'picture_url' => wp_get_attachment_url( $product->get_image_id() ),
 						'category_id' => $this->store_categories_id[$this->category_id],
 						'quantity' => 1,
@@ -1045,8 +1045,8 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 		if ( method_exists( $order, 'get_id' ) ) {
 			// Build additional information from the customer data.
 			$payer_additional_info = array(
-				'first_name' => $order->get_billing_first_name(),
-				'last_name' => $order->get_billing_last_name(),
+				'first_name' => html_entity_decode( $order->get_billing_first_name() ),
+				'last_name' => html_entity_decode( $order->get_billing_last_name() ),
 				//'registration_date' =>
 				'phone' => array(
 					//'area_code' =>
@@ -1055,10 +1055,12 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 				'address' => array(
 					'zip_code' => $order->get_billing_postcode(),
 					//'street_number' =>
-					'street_name' => $order->get_billing_address_1() . ' / ' .
+					'street_name' => html_entity_decode(
+						$order->get_billing_address_1() . ' / ' .
 						$order->get_billing_city() . ' ' .
 						$order->get_billing_state() . ' ' .
 						$order->get_billing_country()
+					)
 				)
 			);
 			// Create the shipment address information set.
@@ -1066,12 +1068,14 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 				'receiver_address' => array(
 					'zip_code' => $order->get_shipping_postcode(),
 					//'street_number' =>
-					'street_name' => $order->get_shipping_address_1() . ' ' .
+					'street_name' => html_entity_decode(
+						$order->get_shipping_address_1() . ' ' .
 						$order->get_shipping_address_2() . ' ' .
 						$order->get_shipping_city() . ' ' .
 						$order->get_shipping_state() . ' ' .
-						$order->get_shipping_country(),
-						//'floor' =>
+						$order->get_shipping_country()
+					),
+					//'floor' =>
 					'apartment' => $order->get_shipping_address_2()
 				)
 			);
@@ -1097,8 +1101,8 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 		} else {
 			// Build additional information from the customer data.
 			$payer_additional_info = array(
-				'first_name' => $order->billing_first_name,
-				'last_name' => $order->billing_last_name,
+				'first_name' => html_entity_decode( $order->billing_first_name ),
+				'last_name' => html_entity_decode( $order->billing_last_name ),
 				//'registration_date' =>
 				'phone' => array(
 					//'area_code' =>
@@ -1107,22 +1111,26 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 				'address' => array(
 					'zip_code' => $order->billing_postcode,
 					//'street_number' =>
-					'street_name' => $order->billing_address_1 . ' / ' .
+					'street_name' => html_entity_decode(
+						$order->billing_address_1 . ' / ' .
 						$order->billing_city . ' ' .
 						$order->billing_state . ' ' .
 						$order->billing_country
 					)
+				)
 			);
 			// Create the shipment address information set.
 			$shipments = array(
 				'receiver_address' => array(
 					'zip_code' => $order->shipping_postcode,
 					//'street_number' =>
-					'street_name' => $order->shipping_address_1 . ' ' .
+					'street_name' => html_entity_decode(
+						$order->shipping_address_1 . ' ' .
 						$order->shipping_address_2 . ' ' .
 						$order->shipping_city . ' ' .
 						$order->shipping_state . ' ' .
-						$order->shipping_country,
+						$order->shipping_country
+					),
 					//'floor' =>
 					'apartment' => $order->shipping_address_2
 				)

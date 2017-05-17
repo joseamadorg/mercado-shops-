@@ -111,7 +111,10 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 == Changelog ==
 
 = v2.2.6 (??/??/2017) =
+* Improvements
+	- Increased stability for internal payment process.
 * Bug fixes
+	- Not showing ticket button when payment method is not applicable;
 	- Removed unused snippet from ticket solution, handling an unexpected warning.
 
 = v2.2.5 (08/05/2017) =
