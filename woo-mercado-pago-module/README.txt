@@ -110,10 +110,11 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 
 == Changelog ==
 
-= v2.2.6 (??/??/2017) =
+= v2.2.6 (18/05/2017) =
 * Improvements
 	- Increased stability for internal payment process.
 * Bug fixes
+	- Fixed a bug related to shipping value not added to total amount;
 	- Not showing ticket button when payment method is not applicable;
 	- Removed unused snippet from ticket solution, handling an unexpected warning.
 
