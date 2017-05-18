@@ -657,7 +657,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			$payments = get_post_meta( $order->id, '_Mercado_Pago_Payment_IDs',	true );
 		}
 
-		if ( $this->id !== $order->get_payment_method() ) {
+		if ( 'woocommerce-mercadopago-module' !== $order->get_payment_method() ) {
 			return;
 		}
 
@@ -754,7 +754,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		if ( ! empty( $client_id ) ) {
 
 			$order = wc_get_order( $order_id );
-			if ( $this->id !== $order->get_payment_method() ) {
+			if ( 'woocommerce-mercadopago-module' !== $order->get_payment_method() ) {
 				return;
 			}
 

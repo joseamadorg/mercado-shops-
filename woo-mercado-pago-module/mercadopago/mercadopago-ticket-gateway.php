@@ -618,7 +618,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 		if ( ! empty( $access_token ) ) {
 
 			$order = wc_get_order( $order_id );
-			if ( $this->id !== $order->get_payment_method() ) {
+			if ( 'woocommerce-mercadopago-ticket-module' !== $order->get_payment_method() ) {
 				return;
 			}
 
@@ -648,6 +648,11 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 			$transaction_details = $order->get_meta( '_transaction_details_ticket' );
 		} else {
 			$transaction_details = get_post_meta( $order->id, '_transaction_details_ticket', true );
+		}
+
+		// Prevent showing ticket button for other payment methods.
+		if ( empty( $transaction_details ) ) {
+			return;
 		}
 
 		$html = '<p>' .

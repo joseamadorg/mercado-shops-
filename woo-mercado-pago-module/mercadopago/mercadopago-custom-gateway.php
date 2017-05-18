@@ -552,7 +552,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			$payments = get_post_meta( $order->id, '_Mercado_Pago_Payment_IDs',	true );
 		}
 
-		if ( $this->id !== $order->get_payment_method() ) {
+		if ( 'woocommerce-mercadopago-custom-module' !== $order->get_payment_method() ) {
 			return;
 		}
 
@@ -639,7 +639,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 		if ( ! empty( $public_key ) ) {
 
 			$order = wc_get_order( $order_id );
-			if ( $this->id !== $order->get_payment_method() ) {
+			if ( 'woocommerce-mercadopago-custom-module' !== $order->get_payment_method() ) {
 				return;
 			}
 
@@ -853,7 +853,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 
 			$response = self::create_url( $order, $custom_checkout );
 
-			if (array_key_exists( 'status', $response ) ) {
+			if ( array_key_exists( 'status', $response ) ) {
 				switch ( $response['status'] ) {
 					case 'approved':
 						WC()->cart->empty_cart();
