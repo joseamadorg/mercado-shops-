@@ -999,7 +999,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 						'description' => implode( ', ', $list_of_items ),
 						'category_id' => $this->store_categories_id[$this->category_id],
 						'quantity' => 1,
-						'unit_price' => $ship_cost,
+						'unit_price' => floor( $ship_cost * 100 ) / 100,
 						'currency_id' => $this->country_configs['currency']
 					) );
 				}

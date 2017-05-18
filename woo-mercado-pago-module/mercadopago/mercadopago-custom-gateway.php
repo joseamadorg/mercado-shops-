@@ -950,7 +950,8 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 
 		// A string to register items (workaround to deal with API problem that shows only first item).
 		$list_of_items = array();
-		$amount_of_items = 0;
+		$order_total = 0;
+		$discount_amount_of_items = 0;
 
 		// Here we build the array that contains ordered items, from customer cart.
 		$items = array();
@@ -984,7 +985,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 							$price_percent = $this->gateway_discount / 100;
 							$discount = $unit_price * $price_percent;
 							if ( $discount > 0 ) {
-								$amount_of_items += $discount;
+								$discount_amount_of_items += $discount;
 							}
 						}
 					}
@@ -992,8 +993,10 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 					// Remove decimals if MCO/MLC
 					if ( $this->site_id == 'MCO' || $this->site_id == 'MLC' ) {
 						$unit_price = floor( $unit_price );
-						$amount_of_items = floor( $amount_of_items );
+						$discount_amount_of_items = floor( $discount_amount_of_items );
 					}
+
+					$order_total += $unit_price;
 
 					array_push( $list_of_items, $product_title . ' x ' . $item['qty'] );
 					array_push( $items, array(
@@ -1017,16 +1020,20 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 		// Creates the shipment cost structure.
 		$ship_cost = ( (float) $order->get_total_shipping() + (float) $order->get_shipping_tax() ) *
 			( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 );
+
 		// Remove decimals if MCO/MLC
 		if ( $this->site_id == 'MCO' || $this->site_id == 'MLC' ) {
 			$ship_cost = floor( $ship_cost );
 		}
+
 		if ( $ship_cost > 0 ) {
+			$order_total += $ship_cost;
 			$item = array(
+				'id' => 2147483647,
 				'title' => sanitize_file_name( $order->get_shipping_to_display() ),
 				'description' => __( 'Shipping service used by store', 'woocommerce-mercadopago-module' ),
-				'quantity' => 1,
 				'category_id' => $this->store_categories_id[$this->category_id],
+				'quantity' => 1,
 				'unit_price' => floor( $ship_cost * 100 ) / 100
 			);
 			$items[] = $item;
@@ -1044,6 +1051,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			}
 
 			$item = array(
+				'id' => 2147483646,
 				'title' => __( 'Discount', 'woocommerce-mercadopago-module' ),
 				'description' => __( 'Discount provided by store', 'woocommerce-mercadopago-module' ),
 				'quantity' => 1,
@@ -1093,7 +1101,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			);
 			// The payment preference.
 			$preferences = array(
-				'transaction_amount' => floor( ( (float) $custom_checkout['amount'] ) * 100 ) / 100 - $amount_of_items,
+				'transaction_amount' => floor( ( (float) $order_total ) * 100 ) / 100 - $discount_amount_of_items,
 				'token' => $custom_checkout['token'],
 				'description' => implode( ', ', $list_of_items ),
 				'installments' => (int) $custom_checkout['installments'],
@@ -1149,7 +1157,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			);
 			// The payment preference.
 			$preferences = array(
-				'transaction_amount' => floor( ( (float) $custom_checkout['amount'] ) * 100 ) / 100 - $amount_of_items,
+				'transaction_amount' => floor( ( (float) $order_total ) * 100 ) / 100 - $discount_amount_of_items,
 				'token' => $custom_checkout['token'],
 				'description' => implode( ', ', $list_of_items ),
 				'installments' => (int) $custom_checkout['installments'],
