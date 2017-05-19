@@ -507,7 +507,6 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		if ( $this->mp != null ) {
 			$infra_data = WC_WooMercadoPago_Module::get_common_settings();
 			$infra_data['checkout_basic'] = ( $this->settings['enabled'] == 'yes' ? 'true' : 'false' );
-			//$infra_data['mercado_envios'] = 'false';
 			$infra_data['two_cards'] = ( $this->payment_split_mode == 'active' ? 'true' : 'false' );
 			$response = $this->mp->analytics_save_settings( $infra_data );
 			if ( 'yes' == $this->debug) {
@@ -658,7 +657,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 			$payments = get_post_meta( $order->id, '_Mercado_Pago_Payment_IDs',	true );
 		}
 
-		if ( $this->id !== $order->get_payment_method() ) {
+		if ( 'woocommerce-mercadopago-module' !== $order->get_payment_method() ) {
 			return;
 		}
 
@@ -712,58 +711,70 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 
 	public function add_checkout_script() {
 
-		$w = WC_WooMercadoPago_Module::woocommerce_instance();
-		$logged_user_email = null;
-		$payments = array();
-		$gateways = WC()->payment_gateways->get_available_payment_gateways();
-		foreach ( $gateways as $g ) {
-			$payments[] = $g->id;
-		}
-		$payments = str_replace( '-', '_', implode( ', ', $payments ) );
+		$client_id = $this->get_option( 'client_id' );
 
-		if ( wp_get_current_user()->ID != 0 ) {
-			$logged_user_email = wp_get_current_user()->user_email;
-		}
+		if ( ! empty( $client_id ) ) {
 
-		?>
-		<script src="https://secure.mlstatic.com/modules/javascript/analytics.js"></script>
-		<script type="text/javascript">
-			var MA = ModuleAnalytics;
-			MA.setToken( '<?php echo $this->get_option( 'client_id' ); ?>' );
-			MA.setPlatform( 'WooCommerce' );
-			MA.setPlatformVersion( '<?php echo $w->version; ?>' );
-			MA.setModuleVersion( '<?php echo WC_WooMercadoPago_Module::VERSION; ?>' );
-			MA.setPayerEmail( '<?php echo ( $logged_user_email != null ? $logged_user_email : "" ); ?>' );
-			MA.setUserLogged( <?php echo ( empty( $logged_user_email ) ? 0 : 1 ); ?> );
-			MA.setInstalledModules( '<?php echo $payments; ?>' );
-			MA.post();
-		</script>
-		<?php
+			$w = WC_WooMercadoPago_Module::woocommerce_instance();
+			$logged_user_email = null;
+			$payments = array();
+			$gateways = WC()->payment_gateways->get_available_payment_gateways();
+			foreach ( $gateways as $g ) {
+				$payments[] = $g->id;
+			}
+			$payments = str_replace( '-', '_', implode( ', ', $payments ) );
+
+			if ( wp_get_current_user()->ID != 0 ) {
+				$logged_user_email = wp_get_current_user()->user_email;
+			}
+
+			?>
+			<script src="https://secure.mlstatic.com/modules/javascript/analytics.js"></script>
+			<script type="text/javascript">
+				var MA = ModuleAnalytics;
+				MA.setToken( '<?php echo $client_id; ?>' );
+				MA.setPlatform( 'WooCommerce' );
+				MA.setPlatformVersion( '<?php echo $w->version; ?>' );
+				MA.setModuleVersion( '<?php echo WC_WooMercadoPago_Module::VERSION; ?>' );
+				MA.setPayerEmail( '<?php echo ( $logged_user_email != null ? $logged_user_email : "" ); ?>' );
+				MA.setUserLogged( <?php echo ( empty( $logged_user_email ) ? 0 : 1 ); ?> );
+				MA.setInstalledModules( '<?php echo $payments; ?>' );
+				MA.post();
+			</script>
+			<?php
+
+		}
 
 	}
 
 	public function update_checkout_status( $order_id ) {
 
-		$order = wc_get_order( $order_id );
-		if ( $this->id !== $order->get_payment_method() ) {
-			return;
-		}
+		$client_id = $this->get_option( 'client_id' );
 
-		if ( 'yes' == $this->debug ) {
-			$this->log->add(
-				$this->id,
-				'[update_checkout_status] - updating order of ID ' . $order_id
-			);
-		}
+		if ( ! empty( $client_id ) ) {
 
-		echo '<script src="https://secure.mlstatic.com/modules/javascript/analytics.js"></script>
-		<script type="text/javascript">
-			var MA = ModuleAnalytics;
-			MA.setToken( ' . $this->get_option( 'client_id' ) . ' );
-			MA.setPaymentType("basic");
-			MA.setCheckoutType("basic");
-			MA.put();
-		</script>';
+			$order = wc_get_order( $order_id );
+			if ( 'woocommerce-mercadopago-module' !== $order->get_payment_method() ) {
+				return;
+			}
+
+			if ( 'yes' == $this->debug ) {
+				$this->log->add(
+					$this->id,
+					'[update_checkout_status] - updating order of ID ' . $order_id
+				);
+			}
+
+			echo '<script src="https://secure.mlstatic.com/modules/javascript/analytics.js"></script>
+			<script type="text/javascript">
+				var MA = ModuleAnalytics;
+				MA.setToken( ' . $client_id . ' );
+				MA.setPaymentType("basic");
+				MA.setCheckoutType("basic");
+				MA.put();
+			</script>';
+
+		}
 
 	}
 
@@ -949,13 +960,13 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 					array_push( $list_of_items, $product_title . ' x ' . $item['qty'] );
 					array_push( $items, array(
 						'id' => $item['product_id'],
-						'title' => ( $product_title . ' x ' . $item['qty'] ),
-						'description' => sanitize_file_name(
+						'title' => ( html_entity_decode( $product_title ) . ' x ' . $item['qty'] ),
+						'description' => sanitize_file_name( html_entity_decode(
 							// This handles description width limit of Mercado Pago.
 							( strlen( $product_content ) > 230 ?
 								substr( $product_content, 0, 230 ) . '...' :
 								$product_content )
-						),
+						) ),
 						'picture_url' => ( sizeof( $order->get_items() ) > 1 ?
 							plugins_url( 'images/cart.png', plugin_dir_path( __FILE__ ) ) :
 							wp_get_attachment_url( $product->get_image_id() )
@@ -988,7 +999,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 						'description' => implode( ', ', $list_of_items ),
 						'category_id' => $this->store_categories_id[$this->category_id],
 						'quantity' => 1,
-						'unit_price' => $ship_cost,
+						'unit_price' => floor( $ship_cost * 100 ) / 100,
 						'currency_id' => $this->country_configs['currency']
 					) );
 				}
@@ -1026,17 +1037,19 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'items' => $items,
 				// Payer should be filled with billing info as orders can be made with non-logged users.
 				'payer' => array(
-					'name' => $order->get_billing_first_name(),
-					'surname' => $order->get_billing_last_name(),
+					'name' => html_entity_decode( $order->get_billing_first_name() ),
+					'surname' => html_entity_decode( $order->get_billing_last_name() ),
 					'email' => $order->get_billing_email(),
 					'phone'	=> array(
 						'number' => $order->get_billing_phone()
 					),
 					'address' => array(
-						'street_name' => $order->get_billing_address_1() . ' / ' .
+						'street_name' => html_entity_decode(
+							$order->get_billing_address_1() . ' / ' .
 							$order->get_billing_city() . ' ' .
 							$order->get_billing_state() . ' ' .
-							$order->get_billing_country(),
+							$order->get_billing_country()
+						),
 						'zip_code' => $order->get_billing_postcode()
 					)
 				),
@@ -1065,10 +1078,12 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 					'receiver_address' => array(
 						'zip_code' => $order->get_shipping_postcode(),
 						//'street_number' =>
-						'street_name' => $order->get_shipping_address_1() . ' ' .
+						'street_name' => html_entity_decode(
+							$order->get_shipping_address_1() . ' ' .
 							$order->get_shipping_city() . ' ' .
 							$order->get_shipping_state() . ' ' .
-							$order->get_shipping_country(),
+							$order->get_shipping_country()
+						),
 						//'floor' =>
 						'apartment' => $order->get_shipping_address_2()
 					)
@@ -1087,17 +1102,19 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 				'items' => $items,
 				// Payer should be filled with billing info as orders can be made with non-logged users.
 				'payer' => array(
-					'name' => $order->billing_first_name,
-					'surname' => $order->billing_last_name,
+					'name' => html_entity_decode( $order->billing_first_name ),
+					'surname' => html_entity_decode( $order->billing_last_name ),
 					'email' => $order->billing_email,
 					'phone'	=> array(
 						'number' => $order->billing_phone
 					),
 					'address' => array(
-						'street_name' => $order->billing_address_1 . ' / ' .
+						'street_name' => html_entity_decode(
+							$order->billing_address_1 . ' / ' .
 							$order->billing_city . ' ' .
 							$order->billing_state . ' ' .
-							$order->billing_country,
+							$order->billing_country
+						),
 						'zip_code' => $order->billing_postcode
 					)
 				),
@@ -1126,10 +1143,12 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 					'receiver_address' => array(
 						'zip_code' => $order->shipping_postcode,
 						//'street_number' =>
-						'street_name' => $order->shipping_address_1 . ' ' .
+						'street_name' => html_entity_decode(
+							$order->shipping_address_1 . ' ' .
 							$order->shipping_city . ' ' .
 							$order->shipping_state . ' ' .
-							$order->shipping_country,
+							$order->shipping_country
+						),
 						//'floor' =>
 						'apartment' => $order->shipping_address_2
 					)
