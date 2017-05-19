@@ -889,7 +889,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 		}
 
 		if ( $ship_cost > 0 ) {
-			$order_total += $unit_price;
+			$order_total += $ship_cost;
 	 		$item = array(
 	 			'id' => 2147483647,
 				'title' => sanitize_file_name( $order->get_shipping_to_display() ),

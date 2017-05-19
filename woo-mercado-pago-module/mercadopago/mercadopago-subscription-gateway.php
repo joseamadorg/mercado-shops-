@@ -460,58 +460,70 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 
 	public function add_checkout_script() {
 
-		$w = WC_WooMercadoPago_Module::woocommerce_instance();
-		$logged_user_email = null;
-		$payments = array();
-		$gateways = WC()->payment_gateways->get_available_payment_gateways();
-		foreach ( $gateways as $g ) {
-			$payments[] = $g->id;
-		}
-		$payments = str_replace( '-', '_', implode( ', ', $payments ) );
+		$client_id = $this->get_option( 'client_id' );
 
-		if ( wp_get_current_user()->ID != 0 ) {
-			$logged_user_email = wp_get_current_user()->user_email;
-		}
+		if ( ! empty( $client_id ) ) {
 
-		?>
-		<script src="https://secure.mlstatic.com/modules/javascript/analytics.js"></script>
-		<script type="text/javascript">
-			var MA = ModuleAnalytics;
-			MA.setToken( '<?php echo $this->get_option( 'client_id' ); ?>' );
-			MA.setPlatform( 'WooCommerce' );
-			MA.setPlatformVersion( '<?php echo $w->version; ?>' );
-			MA.setModuleVersion( '<?php echo WC_WooMercadoPago_Module::VERSION; ?>' );
-			MA.setPayerEmail( '<?php echo ( $logged_user_email != null ? $logged_user_email : "" ); ?>' );
-			MA.setUserLogged( <?php echo ( empty( $logged_user_email ) ? 0 : 1 ); ?> );
-			MA.setInstalledModules( '<?php echo $payments; ?>' );
-			MA.post();
-		</script>
-		<?php
+			$w = WC_WooMercadoPago_Module::woocommerce_instance();
+			$logged_user_email = null;
+			$payments = array();
+			$gateways = WC()->payment_gateways->get_available_payment_gateways();
+			foreach ( $gateways as $g ) {
+				$payments[] = $g->id;
+			}
+			$payments = str_replace( '-', '_', implode( ', ', $payments ) );
+
+			if ( wp_get_current_user()->ID != 0 ) {
+				$logged_user_email = wp_get_current_user()->user_email;
+			}
+
+			?>
+			<script src="https://secure.mlstatic.com/modules/javascript/analytics.js"></script>
+			<script type="text/javascript">
+				var MA = ModuleAnalytics;
+				MA.setToken( '<?php echo $client_id; ?>' );
+				MA.setPlatform( 'WooCommerce' );
+				MA.setPlatformVersion( '<?php echo $w->version; ?>' );
+				MA.setModuleVersion( '<?php echo WC_WooMercadoPago_Module::VERSION; ?>' );
+				MA.setPayerEmail( '<?php echo ( $logged_user_email != null ? $logged_user_email : "" ); ?>' );
+				MA.setUserLogged( <?php echo ( empty( $logged_user_email ) ? 0 : 1 ); ?> );
+				MA.setInstalledModules( '<?php echo $payments; ?>' );
+				MA.post();
+			</script>
+			<?php
+
+		}
 
 	}
 
 	public function update_checkout_status( $order_id ) {
 
-		$order = wc_get_order( $order_id );
-		if ( $this->id !== $order->get_payment_method() ) {
-			return;
-		}
+		$client_id = $this->get_option( 'client_id' );
 
-		if ( 'yes' == $this->debug ) {
-			$this->log->add(
-				$this->id,
-				'[update_checkout_status] - updating order of ID ' . $order_id
-			);
-		}
+		if ( ! empty( $client_id ) ) {
 
-		echo '<script src="https://secure.mlstatic.com/modules/javascript/analytics.js"></script>
-		<script type="text/javascript">
-			var MA = ModuleAnalytics;
-			MA.setToken( ' . $this->get_option( 'client_id' ) . ' );
-			MA.setPaymentType("subscription");
-			MA.setCheckoutType("subscription");
-			MA.put();
-		</script>';
+			$order = wc_get_order( $order_id );
+			if ( 'woocommerce-mercadopago-subscription-module' !== $order->get_payment_method() ) {
+				return;
+			}
+
+			if ( 'yes' == $this->debug ) {
+				$this->log->add(
+					$this->id,
+					'[update_checkout_status] - updating order of ID ' . $order_id
+				);
+			}
+
+			echo '<script src="https://secure.mlstatic.com/modules/javascript/analytics.js"></script>
+			<script type="text/javascript">
+				var MA = ModuleAnalytics;
+				MA.setToken( ' . $client_id . ' );
+				MA.setPaymentType("subscription");
+				MA.setCheckoutType("subscription");
+				MA.put();
+			</script>';
+
+		}
 
 	}
 
