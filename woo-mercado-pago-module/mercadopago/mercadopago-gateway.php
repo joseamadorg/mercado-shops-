@@ -1641,48 +1641,33 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		// Here, we process the status... this is the business rules!
 		// Reference: https://www.mercadopago.com.br/developers/en/api-docs/basic-checkout/ipn/payment-status/
 		$status = 'pending';
-		$statuses = array();
-		$total_paid = 0.00;
-		$total_refund = 0.00;
-		$total = $data['shipping_cost'] + $data['total_amount'];
+		$payments = $data['payments'];
 
-		if ( sizeof( $data['payments'] ) >= 1 ) {
-
-			// Check each payment.
+		if ( sizeof( $payments ) == 1 ) {
+			// If we have only one payment, just set status as its status
+			$status = $payments[0]['status'];
+		} elseif ( sizeof( $payments ) > 1 ) {
+			// However, if we have multiple payments, the overall payment have some rules...
+			$total_paid = 0.00;
+			$total_refund = 0.00;
+			$total = $data['shipping_cost'] + $data['total_amount'];
+			// Grab some information...
 			foreach ( $data['payments'] as $payment ) {
-				// Get the statuses of the payments.
-				$statuses[] = $payment['status'];
-				// Get the total paid amount.
-				$total_paid += (float) $payment['total_paid_amount'];
-				// Get the total refounded amount.
-				$total_refund += (float) $payment['amount_refunded'];
+				if ( $payment['status'] === 'approved' ) {
+					// Get the total paid amount, considering only approved incomings.
+					$total_paid += (float) $payment['total_paid_amount'];
+				} elseif ( $payment['status'] === 'refunded' ) {
+					// Get the total refounded amount.
+					$total_refund += (float) $payment['amount_refunded'];
+				}
 			}
-
-			if ( in_array( 'refunded', $statuses ) && $total_paid >= $total && $total_refund > 0 ) {
-				// For a payment to be refounded it is mandatory that it was totally paid in some moment.
-				$status = 'refunded';
-			} elseif ( in_array( 'charged_back', $statuses ) && $total_paid >= $total && $total_refund == 0 ) {
-				// For a payment to be charged-back it is mandatory that it was totally paid in some moment.
-				$status = 'charged_back';
-			} elseif ( in_array( 'cancelled', $statuses ) && $total_refund == 0 ) {
-				// For a payment to be cancelled it is mandatory that it wasn't totally paid yet.
-				$status = 'cancelled';
-
-			// Check statuses by priority: Rejected -> In Mediation -> In Process.
-			} elseif ( in_array( 'rejected', $statuses ) && $total_refund == 0 ) {
-				// For a payment to be rejected it is mandatory that it wasn't totally paid yet.
-				$status = 'rejected';
-			} elseif ( in_array( 'in_mediation', $statuses ) && $total_paid >= $total && $total_refund == 0 ) {
-				// For a payment to be in mediation it is mandatory that it was totally paid in some moment.
-				$status = 'in_mediation';
-			} elseif ( ! in_array( 'in_process', $statuses ) && ! in_array( 'pending', $statuses ) && $total_paid >= $total && $total_refund == 0 ) {
-				// For a payment to be approved it is mandatory that it was totally paid in some moment and there is no pendences.
+			if ( $total_paid >= $total ) {
 				$status = 'approved';
+			} elseif ( $total_refund >= $total ) {
+				$status = 'refunded';
 			} else {
-				// Any other cases means that the payment is still pending.
 				$status = 'pending';
 			}
-
 		}
 
 		// WooCommerce 3.0 or later.
