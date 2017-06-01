@@ -688,6 +688,9 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 				// Add shipment cost
 				$unit_price += ( (float) $order->get_total_shipping() + (float) $order->get_shipping_tax() ) *
 					( (float) $this->currency_ratio > 0 ? (float) $this->currency_ratio : 1 );
+
+				// Round to two decimals.
+				$unit_price = floor( $unit_price * 100 ) / 100;
 				
 				// Remove decimals if MCO/MLC
 				if ( $this->site_id == 'MCO' || $this->site_id == 'MLC' ) {

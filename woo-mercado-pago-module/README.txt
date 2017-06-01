@@ -111,6 +111,9 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 == Changelog ==
 
 = v2.2.7 (01/06/2017) =
+* Improvements
+	- Optimizations in checkout JavaScript;
+	- Additional checking for test users within checkout process.
 * Bug fixes
 	- Properly changing order status when paying with Basic Checkout using two cards.
 
