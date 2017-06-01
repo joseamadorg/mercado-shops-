@@ -413,7 +413,8 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 		}
 
 		$preapproval = explode( '/', $preapproval );
-		$preapproval_id = explode( ' ', substr( $preapproval[0], 1, -1 ) )[1];
+		$preapproval = explode( ' ', substr( $preapproval[0], 1, -1 ) );
+		$preapproval_id = $preapproval[1];
 
 		if ( 'yes' == $this->debug ) {
 			$this->log->add(
