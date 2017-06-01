@@ -404,10 +404,10 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 		}
 
 		// analytics
-		$infra_data = WC_WooMercadoPago_Module::get_common_settings();
-		$infra_data['checkout_custom_credit_card'] = ( $this->settings['enabled'] == 'yes' ? 'true' : 'false' );
-		$infra_data['checkout_custom_credit_card_coupon'] = ( $this->settings['coupon_mode'] == 'yes' ? 'true' : 'false' );
-		if ( $this->mp != null ) {
+		if ( $this->mp != null && ! $this->is_test_user ) {
+			$infra_data = WC_WooMercadoPago_Module::get_common_settings();
+			$infra_data['checkout_custom_credit_card'] = ( $this->settings['enabled'] == 'yes' ? 'true' : 'false' );
+			$infra_data['checkout_custom_credit_card_coupon'] = ( $this->settings['coupon_mode'] == 'yes' ? 'true' : 'false' );
 			$response = $this->mp->analytics_save_settings( $infra_data );
 			if ( 'yes' == $this->debug) {
 				$this->log->add(
@@ -547,12 +547,14 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 
 		// WooCommerce 3.0 or later.
 		if ( method_exists( $order, 'get_meta' ) ) {
+			$used_gateway = $order->get_meta( '_used_gateway' );
 			$payments = $order->get_meta( '_Mercado_Pago_Payment_IDs' );
 		} else {
+			$used_gateway = get_post_meta( $order->id, '_used_gateway', true );
 			$payments = get_post_meta( $order->id, '_Mercado_Pago_Payment_IDs',	true );
 		}
 
-		if ( 'woocommerce-mercadopago-custom-module' !== $order->get_payment_method() ) {
+		if ( $used_gateway != 'WC_WooMercadoPagoCustom_Gateway' ) {
 			return;
 		}
 
@@ -598,7 +600,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 
 		$public_key = $this->get_option( 'public_key' );
 
-		if ( ! empty( $public_key ) ) {
+		if ( ! empty( $public_key ) && ! $this->is_test_user ) {
 
 			$w = WC_WooMercadoPago_Module::woocommerce_instance();
 			$logged_user_email = null;
@@ -636,10 +638,9 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 
 		$public_key = $this->get_option( 'public_key' );
 
-		if ( ! empty( $public_key ) ) {
+		if ( ! empty( $public_key ) && ! $this->is_test_user ) {
 
-			$order = wc_get_order( $order_id );
-			if ( 'woocommerce-mercadopago-custom-module' !== $order->get_payment_method() ) {
+			if ( get_post_meta( $order_id, '_used_gateway', true ) != 'WC_WooMercadoPagoCustom_Gateway' ) {
 				return;
 			}
 
@@ -828,7 +829,10 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 
 		// WooCommerce 3.0 or later.
 		if ( method_exists( $order, 'update_meta_data' ) ) {
+			$order->update_meta_data( '_used_gateway', 'WC_WooMercadoPagoCustom_Gateway' );
 			$order->save();
+		} else {
+			update_post_meta( $order_id, '_used_gateway', 'WC_WooMercadoPagoCustom_Gateway' );
 		}
 
 		// We have got parameters from checkout page, now its time to charge the card.
@@ -1783,6 +1787,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 		$total = $data['transaction_amount'];
 
 		if ( method_exists( $order, 'update_meta_data' ) ) {
+			$order->update_meta_data( '_used_gateway', 'WC_WooMercadoPagoCustom_Gateway' );
 
 			if ( ! empty( $data['payer']['email'] ) ) {
 				$order->update_meta_data( __( 'Payer email', 'woocommerce-mercadopago-module' ), $data['payer']['email'] );
@@ -1806,6 +1811,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			$order->save();
 
 		} else {
+			update_post_meta( $order_id, '_used_gateway', 'WC_WooMercadoPagoCustom_Gateway' );
 
 			if ( ! empty( $data['payer']['email'] ) ) {
 				update_post_meta(

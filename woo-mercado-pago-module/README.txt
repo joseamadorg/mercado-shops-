@@ -4,7 +4,7 @@ Donate link: https://www.mercadopago.com.br/developers/
 Tags: ecommerce, mercadopago, woocommerce
 Requires at least: WooCommerce 2.6.x
 Tested up to: WooCommerce 3.0.0
-Stable tag: 2.2.6
+Stable tag: 2.2.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,7 +39,7 @@ You have two ways to install this module: from your WordPress Store, or by downl
 3. You should find the module read to be installed. Click install.
 
 = Manual Download =
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.2.6.zip">WordPress Plugin Directory</a>);
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-woocommerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/woo-mercado-pago-module.2.2.7.zip">WordPress Plugin Directory</a>);
 2. Unzip the folder and find "woo-mercado-pago-module" directory;
 3. Copy "woo-mercado-pago-module" directory to **[WordPressRootDirectory]/wp-content/plugins/** directory.
 
@@ -109,6 +109,13 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 5. `Configuration of Basic Checkout`
 
 == Changelog ==
+
+= v2.2.7 (01/06/2017) =
+* Improvements
+	- Optimizations in checkout JavaScript;
+	- Additional checking for test users within checkout process.
+* Bug fixes
+	- Properly changing order status when paying with Basic Checkout using two cards.
 
 = v2.2.6 (18/05/2017) =
 * Improvements

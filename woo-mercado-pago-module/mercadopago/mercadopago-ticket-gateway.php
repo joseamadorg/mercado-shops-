@@ -383,10 +383,10 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 		}
 
 		// analytics
-		$infra_data = WC_WooMercadoPago_Module::get_common_settings();
-		$infra_data['checkout_custom_ticket'] = ( $this->settings['enabled'] == 'yes' ? 'true' : 'false' );
-		$infra_data['checkout_custom_ticket_coupon'] = ( $this->settings['coupon_mode'] == 'yes' ? 'true' : 'false' );
-		if ( $this->mp != null ) {
+		if ( $this->mp != null && ! $this->is_test_user ) {
+			$infra_data = WC_WooMercadoPago_Module::get_common_settings();
+			$infra_data['checkout_custom_ticket'] = ( $this->settings['enabled'] == 'yes' ? 'true' : 'false' );
+			$infra_data['checkout_custom_ticket_coupon'] = ( $this->settings['coupon_mode'] == 'yes' ? 'true' : 'false' );
 			$response = $this->mp->analytics_save_settings( $infra_data );
 			if ( 'yes' == $this->debug) {
 				$this->log->add(
@@ -526,8 +526,10 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 
 		// WooCommerce 3.0 or later.
 		if ( method_exists( $order, 'get_meta' ) ) {
+			$used_gateway = $order->get_meta( '_used_gateway' );
 			$payments = $order->get_meta( '_Mercado_Pago_Payment_IDs' );
 		} else {
+			$used_gateway = get_post_meta( $order->id, '_used_gateway', true );
 			$payments = get_post_meta( $order->id, '_Mercado_Pago_Payment_IDs',	true );
 		}
 
@@ -577,7 +579,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 
 		$client_id = WC_WooMercadoPago_Module::get_client_id( $this->get_option( 'access_token' ) );
 
-		if ( ! empty( $client_id ) ) {
+		if ( ! empty( $client_id ) && ! $this->is_test_user ) {
 
 			$w = WC_WooMercadoPago_Module::woocommerce_instance();
 			$logged_user_email = null;
@@ -615,10 +617,9 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 
 		$access_token = WC_WooMercadoPago_Module::get_client_id( $this->get_option( 'access_token' ) );
 
-		if ( ! empty( $access_token ) ) {
+		if ( ! empty( $access_token ) && ! $this->is_test_user ) {
 
-			$order = wc_get_order( $order_id );
-			if ( 'woocommerce-mercadopago-ticket-module' !== $order->get_payment_method() ) {
+			if ( get_post_meta( $order_id, '_used_gateway', true ) != 'WC_WooMercadoPagoTicket_Gateway' ) {
 				return;
 			}
 
@@ -645,13 +646,15 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 	public function show_ticket_button( $thankyoutext, $order ) {
 		// WooCommerce 3.0 or later.
 		if ( method_exists( $order, 'get_meta' ) ) {
+			$used_gateway = $order->get_meta( '_used_gateway' );
 			$transaction_details = $order->get_meta( '_transaction_details_ticket' );
 		} else {
+			$used_gateway = get_post_meta( $order->id, '_used_gateway', true );
 			$transaction_details = get_post_meta( $order->id, '_transaction_details_ticket', true );
 		}
 
 		// Prevent showing ticket button for other payment methods.
-		if ( empty( $transaction_details ) ) {
+		if ( empty( $transaction_details ) || $used_gateway != 'WC_WooMercadoPagoTicket_Gateway' ) {
 			return;
 		}
 
@@ -768,6 +771,8 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 		if ( ! isset( $_POST['mercadopago_ticket'] ) ) {
 			return;
 		}
+
+		update_post_meta( $order_id, '_used_gateway', 'WC_WooMercadoPagoTicket_Gateway' );
 
 		$order = wc_get_order( $order_id );
 		$mercadopago_ticket = $_POST['mercadopago_ticket'];
@@ -1578,6 +1583,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 
 		// WooCommerce 3.0 or later.
 		if ( method_exists( $order, 'update_meta_data' ) ) {
+			$order->update_meta_data(  '_used_gateway', 'WC_WooMercadoPagoTicket_Gateway' );
 
 			if ( ! empty( $data['payer']['email'] ) ) {
 				$order->update_meta_data( __( 'Payer email', 'woocommerce-mercadopago-module' ), $data['payer']['email'] );
@@ -1597,6 +1603,7 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 
 			$order->save();
 		} else {
+			update_post_meta( $order->id, '_used_gateway', 'WC_WooMercadoPagoTicket_Gateway' );
 
 			if ( ! empty( $data['payer']['email'] ) ) {
 				update_post_meta(
