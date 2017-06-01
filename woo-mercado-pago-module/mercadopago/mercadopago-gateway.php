@@ -504,7 +504,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		}
 
 		// analytics
-		if ( $this->mp != null ) {
+		if ( $this->mp != null && ! $this->is_test_user ) {
 			$infra_data = WC_WooMercadoPago_Module::get_common_settings();
 			$infra_data['checkout_basic'] = ( $this->settings['enabled'] == 'yes' ? 'true' : 'false' );
 			$infra_data['two_cards'] = ( $this->payment_split_mode == 'active' ? 'true' : 'false' );
@@ -652,12 +652,14 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 
 		// WooCommerce 3.0 or later.
 		if ( method_exists( $order, 'get_meta' ) ) {
+			$used_gateway = $order->get_meta( '_used_gateway' );
 			$payments = $order->get_meta( '_Mercado_Pago_Payment_IDs' );
 		} else {
+			$used_gateway = get_post_meta( $order->id, '_used_gateway', true );
 			$payments = get_post_meta( $order->id, '_Mercado_Pago_Payment_IDs',	true );
 		}
 
-		if ( 'woocommerce-mercadopago-module' !== $order->get_payment_method() ) {
+		if ( $used_gateway != 'WC_WooMercadoPago_Gateway' ) {
 			return;
 		}
 
@@ -713,7 +715,7 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 
 		$client_id = $this->get_option( 'client_id' );
 
-		if ( ! empty( $client_id ) ) {
+		if ( ! empty( $client_id ) && ! $this->is_test_user ) {
 
 			$w = WC_WooMercadoPago_Module::woocommerce_instance();
 			$logged_user_email = null;
@@ -751,10 +753,9 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 
 		$client_id = $this->get_option( 'client_id' );
 
-		if ( ! empty( $client_id ) ) {
+		if ( ! empty( $client_id ) && ! $this->is_test_user ) {
 
-			$order = wc_get_order( $order_id );
-			if ( 'woocommerce-mercadopago-module' !== $order->get_payment_method() ) {
+			if ( get_post_meta( $order_id, '_used_gateway', true ) != 'WC_WooMercadoPago_Gateway' ) {
 				return;
 			}
 
@@ -789,8 +790,11 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 		$order = wc_get_order( $order_id );
 
 		if ( method_exists( $order, 'update_meta_data' ) ) {
+			$order->update_meta_data( '_used_gateway', 'WC_WooMercadoPago_Gateway' );
 			$order->save();
-		}
+		} else {
+ 			update_post_meta( $order_id, '_used_gateway', 'WC_WooMercadoPago_Gateway' );
+ 		}
 
 		if ( 'redirect' == $this->method ) {
 			// The checkout is made by redirecting customer to Mercado Pago.
@@ -847,22 +851,26 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 						'[render_order_form] - rendering Mercado Pago lightbox (modal window).'
 					);
 				}
-				$html .= '<p></p><p>' . wordwrap(
-					__( 'Thank you for your order. Please, proceed with your payment clicking in the bellow button.', 'woocommerce-mercadopago-module' ),
-					60, '<br>'
-				) . '</p>';
 				$html .=
-					'<a id="submit-payment" href="' . $url .
-					'" name="MP-Checkout" class="button alt" mp-mode="modal">' .
-					__( 'Pay with Mercado Pago', 'woocommerce-mercadopago-module' ) .
-					'</a> ';
+					'<p></p><p>' . wordwrap(
+						__( 'Thank you for your order. Please, proceed with your payment clicking in the bellow button.', 'woocommerce-mercadopago-module' ),
+						60, '<br>'
+					) . '</p>';
+				// === Buttons.
 				$html .=
-					'<a class="button cancel" href="' . esc_url( $order->get_cancel_order_url() ) . '">' .
-					__( 'Cancel order &amp; Clear cart', 'woocommerce-mercadopago-module' ) .
-					'</a><style type="text/css">#MP-Checkout-dialog #MP-Checkout-IFrame { bottom: -28px !important; height: 590px !important; }</style>';
-				// Includes the javascript of lightbox.
-				$html .=
-					'<script type="text/javascript">(function(){function $MPBR_load(){window.$MPBR_loaded !== true && (function(){var s = document.createElement("script");s.type = "text/javascript";s.async = true;s.src = ("https:"==document.location.protocol?"https://www.mercadopago.com/org-img/jsapi/mptools/buttons/":"https://mp-tools.mlstatic.com/buttons/")+"render.js";var x = document.getElementsByTagName("script")[0];x.parentNode.insertBefore(s, x);window.$MPBR_loaded = true;})();}window.$MPBR_loaded !== true ? (window.attachEvent ? window.attachEvent("onload", $MPBR_load) : window.addEventListener("load", $MPBR_load, false) ) : null;})();</script>';
+					'<a id="submit-payment" href="' . esc_url( $url ) . '" name="MP-Checkout" class="button alt" mp-mode="modal">' .
+						__( 'Pay with Mercado Pago', 'woocommerce-mercadopago-module' ) .
+					'</a> <a class="button cancel" href="' . esc_url( $order->get_cancel_order_url() ) . '">' .
+						__( 'Cancel order &amp; Clear cart', 'woocommerce-mercadopago-module' ) .
+					'</a>';
+
+				// === Style.
+				$html .= '<style type="text/css">';
+				$html .= 	'#MP-Checkout-dialog #MP-Checkout-IFrame { bottom: -28px !important; height: 590px !important; }';
+				$html .= '</style>';
+				// === Includes the javascript of lightbox.
+				$html .= '<script type="text/javascript" src="//secure.mlstatic.com/mptools/render.js"></script>';
+				$html .= '<script type="text/javascript">(function() { $MPC.openCheckout({ url: "' . esc_url( $url ) . '", mode: "modal" }); })();</script>';
 			} else {
 				// The checkout is made by rendering Mercado Pago form within a iframe.
 				if ( 'yes' == $this->debug ) {
@@ -871,15 +879,15 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 						'[render_order_form] - embedding Mercado Pago iframe.'
 					);
 				}
-				$html .= '<p></p><p>' . wordwrap(
-					__( 'Thank you for your order. Proceed with your payment completing the following information.', 'woocommerce-mercadopago-module' ),
-					60, '<br>'
-				) . '</p>';
-				$html .= '<iframe src="' . $url . '" name="MP-Checkout" ' .
-					'width="' . ( is_numeric( (int) $this->iframe_width ) ? $this->iframe_width : 640 ) .
-					'" ' .
-					'height="' . ( is_numeric( (int) $this->iframe_height ) ? $this->iframe_height : 800 ) .
-					'" ' .
+				$html .=
+					'<p></p><p>' . wordwrap(
+						__( 'Thank you for your order. Proceed with your payment completing the following information.', 'woocommerce-mercadopago-module' ),
+						60, '<br>'
+					) . '</p>';
+				$html .=
+					'<iframe src="' . esc_url( $url ) . '" name="MP-Checkout" ' .
+					'width="' . ( is_numeric( (int) $this->iframe_width ) ? $this->iframe_width : 640 ) . '" ' .
+					'height="' . ( is_numeric( (int) $this->iframe_height ) ? $this->iframe_height : 800 ) . '" ' .
 					'frameborder="0" scrolling="no" id="checkout_mercadopago"></iframe>';
 			}
 			return $html;
@@ -891,11 +899,14 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 					'[render_order_form] - unable to build Mercado Pago checkout URL.'
 				);
 			}
-			$html = '<p>' .
-				__( 'An error occurred when proccessing your payment. Please try again or contact us for assistence.', 'woocommerce-mercadopago-module' ) .
+			$html = '<script type="text/javascript" src="//secure.mlstatic.com/mptools/render.js"></script>';
+			$html .=
+				'<p>' .
+					__( 'An error occurred when proccessing your payment. Please try again or contact us for assistence.', 'woocommerce-mercadopago-module' ) .
 				'</p>';
-			$html .= '<a class="button" href="' . esc_url( $order->get_checkout_payment_url() ) . '">' .
-				__( 'Click to try again', 'woocommerce-mercadopago-module' ) .
+			$html .=
+				'<a class="button" href="' . esc_url( $order->get_checkout_payment_url() ) . '">' .
+					__( 'Click to try again', 'woocommerce-mercadopago-module' ) .
 				'</a>';
 			return $html;
 		}
@@ -1672,6 +1683,8 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 
 		// WooCommerce 3.0 or later.
 		if ( method_exists( $order, 'update_meta_data' ) ) {
+			// Updates the type of gateway.
+			$order->update_meta_data( '_used_gateway', 'WC_WooMercadoPago_Gateway' );
 
 			if ( ! empty( $data['payer']['email'] ) ) {
 				$order->update_meta_data( __( 'Payer email', 'woocommerce-mercadopago-module' ), $data['payer']['email'] );
@@ -1697,6 +1710,8 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 
 			$order->save();
 		} else {
+			// Updates the type of gateway.
+ 			update_post_meta( $order->id, '_used_gateway', 'WC_WooMercadoPago_Gateway' );
 
 			if ( ! empty( $data['payer']['email'] ) ) {
 				update_post_meta(

@@ -376,7 +376,7 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 		}
 
 		// analytics
-		if ( $this->mp != null ) {
+		if ( $this->mp != null && ! $this->is_test_user ) {
 			$infra_data = WC_WooMercadoPago_Module::get_common_settings();
 			$infra_data['checkout_subscription'] = ( $this->settings['enabled'] == 'yes' ? 'true' : 'false' );
 			$response = $this->mp->analytics_save_settings( $infra_data );
@@ -401,8 +401,10 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 	public function process_cancel_order_meta_box_actions( $order ) {
 		// WooCommerce 3.0 or later.
 		if ( method_exists( $order, 'get_meta' ) ) {
+			$used_gateway = $order->get_meta( '_used_gateway' );
 			$preapproval = $order->get_meta( 'Mercado Pago Pre-Approval' );
 		} else {
+			$used_gateway = get_post_meta( $order->id, '_used_gateway', true );
 			$preapproval = get_post_meta( $order->id, 'Mercado Pago Pre-Approval',	true );
 		}
 
@@ -462,7 +464,7 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 
 		$client_id = $this->get_option( 'client_id' );
 
-		if ( ! empty( $client_id ) ) {
+		if ( ! empty( $client_id ) && ! $this->is_test_user ) {
 
 			$w = WC_WooMercadoPago_Module::woocommerce_instance();
 			$logged_user_email = null;
@@ -500,10 +502,9 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 
 		$client_id = $this->get_option( 'client_id' );
 
-		if ( ! empty( $client_id ) ) {
+		if ( ! empty( $client_id ) && ! $this->is_test_user ) {
 
-			$order = wc_get_order( $order_id );
-			if ( 'woocommerce-mercadopago-subscription-module' !== $order->get_payment_method() ) {
+			if ( get_post_meta( $order_id, '_used_gateway', true ) != 'WC_WooMercadoPagoSubscription_Gateway' ) {
 				return;
 			}
 
@@ -539,7 +540,10 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 
 		// WooCommerce 3.0 or later.
 		if ( method_exists( $order, 'update_meta_data' ) ) {
+			$order->update_meta_data( '_used_gateway', 'WC_WooMercadoPagoSubscription_Gateway' );
 			$order->save();
+		} else {
+			update_post_meta( $order_id, '_used_gateway', 'WC_WooMercadoPagoSubscription_Gateway' );
 		}
 
 		if ( 'redirect' == $this->method ) {
@@ -1237,6 +1241,7 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 
 		// WooCommerce 3.0 or later.
 		if ( method_exists( $order, 'update_meta_data' ) ) {
+			$order->update_meta_data( '_used_gateway', 'WC_WooMercadoPagoSubscription_Gateway' );
 
 			// Here, we process the status... this is the business rules!
 			// Reference: https://www.mercadopago.com.br/developers/en/api-docs/basic-checkout/ipn/payment-status/
@@ -1300,6 +1305,7 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 				$order->save();
 			}
 		} else {
+			update_post_meta( $order->id, '_used_gateway', 'WC_WooMercadoPagoSubscription_Gateway' );
 
 			// Here, we process the status... this is the business rules!
 			// Reference: https://www.mercadopago.com.br/developers/en/api-docs/basic-checkout/ipn/payment-status/
