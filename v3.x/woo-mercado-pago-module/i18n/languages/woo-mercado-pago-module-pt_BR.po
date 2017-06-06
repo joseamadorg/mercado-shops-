@@ -91,8 +91,8 @@ msgstr "Você não possui o WooCommerce instalado e habilitado."
 msgid "Your PHP version is OK."
 msgstr "Sua versão do PHP está OK."
 
-msgid "Your PHP version do not support this module."
-msgstr "Sua versão do PHP não suporta este módulo."
+msgid "Your PHP version do not support this module. You have %s, minimal required is %s."
+msgstr "Sua versão do PHP não suporta este módulo. Sua versão é %s, a mínima requerida é %s."
 
 msgid "cURL is installed."
 msgstr "cURL está instalado."
@@ -151,8 +151,11 @@ msgstr "Este módulo habilita o WooCommerce a usar o Mercado Pago como meio de p
 msgid "Payment Gateways"
 msgstr "Gateways de Pagamento"
 
-msgid "Basic Checkout, Subscriptions"
-msgstr "Checkout Básico, Assinaturas"
+msgid "Basic Checkout & Subscriptions"
+msgstr "Checkout Básico & Assinaturas"
+
+msgid "Custom Checkout & Tickets"
+msgstr "Checkout Transparente & Boletos"
 
 msgid "Insert your Mercado Pago Client_id."
 msgstr "Insira seu Client_id do Mercado Pago."
@@ -316,8 +319,8 @@ msgstr "Habilitar/Desabilitar"
 msgid "Enable Basic Checkout"
 msgstr "Habilitar o Checkout Básico"
 
-msgid "--- Checkout Interface: How checkout is shown ---"
-msgstr "--- Interface do Checkout: Como o checkout é mostrado ---"
+msgid "Checkout Interface: How checkout is shown"
+msgstr "Interface do Checkout: Como o checkout é mostrado"
 
 msgid "Title"
 msgstr "Título"
@@ -364,8 +367,8 @@ msgstr "Altura do iFrame"
 msgid "If your integration method is iFrame, please inform the payment iFrame height."
 msgstr "Se o seu método de integração é por iFrame, por favor informe a altura do layout."
 
-msgid "---  Checkout Navigation: How checkout redirections will behave ---"
-msgstr "--- Navegação do Checkout: Como os redirecionamentos do checkout irão comportar-se ---"
+msgid "Checkout Navigation: How checkout redirections will behave"
+msgstr "Navegação do Checkout: Como os redirecionamentos do checkout irão comportar-se"
 
 msgid "Auto Return"
 msgstr "Auto Retorno"
@@ -385,8 +388,8 @@ msgstr "URL de Falha"
 msgid "Pending URL"
 msgstr "URL de Pendência"
 
-msgid "--- Payment Options: How payment options behaves ---"
-msgstr "--- Opções de Pagamento: Como as opções de pagamento irão comportar-se ---"
+msgid "Payment Options: How payment options behaves"
+msgstr "Opções de Pagamento: Como as opções de pagamento irão comportar-se"
 
 msgid "Max installments"
 msgstr "Número Máximo de Parcelamentos"
@@ -556,8 +559,8 @@ msgstr "EM CONSTRUÇÃO..."
 msgid "Enable Ticket Payment Method"
 msgstr "Habilitar o Método de Pagamento por Boleto"
 
-msgid "--- Ticket Interface: How checkout is shown ---"
-msgstr "--- Interface do Boleto: Como o checkout é mostrado ---"
+msgid "Ticket Interface: How checkout is shown"
+msgstr "Interface do Boleto: Como o checkout é mostrado"
 
 msgid "Title shown to the client in the ticket."
 msgstr "Título mostrado ao cliente no boleto."

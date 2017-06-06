@@ -670,7 +670,10 @@ if ( ! class_exists( 'WC_Woo_Mercado_Pago_Module' ) ) :
 					'<img width="14" height="14" src="' . plugins_url( 'assets/images/check.png', __FILE__ ) . '"> ' .
 					__( 'Your PHP version is OK.', 'woo-mercado-pago-module' ) :
 					'<img width="14" height="14" src="' . plugins_url( 'assets/images/error.png', __FILE__ ) . '"> ' .
-					__( 'Your PHP version do not support this module.', 'woo-mercado-pago-module' );
+					sprintf(
+						__( 'Your PHP version do not support this module. You have %s, minimal required is %s.', 'woo-mercado-pago-module' ),
+						phpversion(), WC_Woo_Mercado_Pago_Module::MIN_PHP
+					);
 				// Check cURL.
 				$curl_message = in_array( 'curl', get_loaded_extensions() ) ?
 					'<img width="14" height="14" src="' . plugins_url( 'assets/images/check.png', __FILE__ ) . '"> ' .
@@ -805,7 +808,7 @@ if ( ! class_exists( 'WC_Woo_Mercado_Pago_Module' ) ) :
 						__( 'Your <strong>public_key</strong> and <strong>access_token</strong> are <strong>not valid</strong>!', 'woo-mercado-pago-module' );
 				} else {
 					$v1_credentials_message = '<img width="14" height="14" src="' . plugins_url( 'assets/images/error.png', __FILE__ ) . '"> ' .
-						__( 'Your <strong>Public_key</strong> and <strong>Access_token</strong> are <strong>not valid</strong>!', 'woo-mercado-pago-module' );
+						__( 'Your <strong>public_key</strong> and <strong>access_token</strong> are <strong>not valid</strong>!', 'woo-mercado-pago-module' );
 				}
 				$v1_credential_locales = sprintf(
 					'%s <a href="https://www.mercadopago.com/mla/account/credentials?type=custom" target="_blank">%s</a>, ' .

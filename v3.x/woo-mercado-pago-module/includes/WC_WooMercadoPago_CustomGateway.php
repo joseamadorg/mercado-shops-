@@ -117,7 +117,7 @@ class WC_WooMercadoPago_CustomGateway extends WC_Payment_Gateway {
 				'default' => 'no'
 			),
 			'checkout_options_title' => array(
-				'title' => __( '--- Checkout Interface: How checkout is shown ---', 'woo-mercado-pago-module' ),
+				'title' => __( 'Checkout Interface: How checkout is shown', 'woo-mercado-pago-module' ),
 				'type' => 'title'
 			),
 			'title' => array(
@@ -135,7 +135,7 @@ class WC_WooMercadoPago_CustomGateway extends WC_Payment_Gateway {
 				'default' => __( 'Pay with Mercado Pago', 'woo-mercado-pago-module' )
 			),
 			'payment_title' => array(
-				'title' => __( '--- Payment Options: How payment options behaves ---', 'woo-mercado-pago-module' ),
+				'title' => __( 'Payment Options: How payment options behaves', 'woo-mercado-pago-module' ),
 				'type' => 'title'
 			),
 			'coupon_mode' => array(

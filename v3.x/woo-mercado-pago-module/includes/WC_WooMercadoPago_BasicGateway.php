@@ -189,7 +189,7 @@ class WC_WooMercadoPago_BasicGateway extends WC_Payment_Gateway {
 				'default' => 'no'
 			),
 			'checkout_options_title' => array(
-				'title' => __( '--- Checkout Interface: How checkout is shown ---', 'woo-mercado-pago-module' ),
+				'title' => __( 'Checkout Interface: How checkout is shown', 'woo-mercado-pago-module' ),
 				'type' => 'title'
 			),
 			'title' => array(
@@ -230,7 +230,7 @@ class WC_WooMercadoPago_BasicGateway extends WC_Payment_Gateway {
 				'default' => '800'
 			),
 			'checkout_navigation_title' => array(
-				'title' => __( '---  Checkout Navigation: How checkout redirections will behave ---', 'woo-mercado-pago-module' ),
+				'title' => __( 'Checkout Navigation: How checkout redirections will behave', 'woo-mercado-pago-module' ),
 				'type' => 'title'
 			),
 			'auto_return' => array(
@@ -260,7 +260,7 @@ class WC_WooMercadoPago_BasicGateway extends WC_Payment_Gateway {
 				'default' => ''
 			),
 			'payment_title' => array(
-				'title' => __( '--- Payment Options: How payment options behaves ---', 'woo-mercado-pago-module' ),
+				'title' => __( 'Payment Options: How payment options behaves', 'woo-mercado-pago-module' ),
 				'type' => 'title'
 			),
 			'installments' => array(

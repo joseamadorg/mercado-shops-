@@ -91,7 +91,7 @@ msgstr ""
 msgid "Your PHP version is OK."
 msgstr ""
 
-msgid "Your PHP version do not support this module."
+msgid "Your PHP version do not support this module. You have %s, minimal required is %s."
 msgstr ""
 
 msgid "cURL is installed."
@@ -151,7 +151,10 @@ msgstr ""
 msgid "Payment Gateways"
 msgstr ""
 
-msgid "Basic Checkout, Subscriptions"
+msgid "Basic Checkout & Subscriptions"
+msgstr ""
+
+msgid "Custom Checkout & Tickets"
 msgstr ""
 
 msgid "Insert your Mercado Pago Client_id."
@@ -316,7 +319,7 @@ msgstr ""
 msgid "Enable Basic Checkout"
 msgstr ""
 
-msgid "--- Checkout Interface: How checkout is shown ---"
+msgid "Checkout Interface: How checkout is shown"
 msgstr ""
 
 msgid "Title"
@@ -364,7 +367,7 @@ msgstr ""
 msgid "If your integration method is iFrame, please inform the payment iFrame height."
 msgstr ""
 
-msgid "---  Checkout Navigation: How checkout redirections will behave ---"
+msgid "Checkout Navigation: How checkout redirections will behave"
 msgstr ""
 
 msgid "Auto Return"
@@ -385,7 +388,7 @@ msgstr ""
 msgid "Pending URL"
 msgstr ""
 
-msgid "--- Payment Options: How payment options behaves ---"
+msgid "Payment Options: How payment options behaves"
 msgstr ""
 
 msgid "Max installments"
@@ -556,7 +559,7 @@ msgstr ""
 msgid "Enable Ticket Payment Method"
 msgstr ""
 
-msgid "--- Ticket Interface: How checkout is shown ---"
+msgid "Ticket Interface: How checkout is shown"
 msgstr ""
 
 msgid "Title shown to the client in the ticket."

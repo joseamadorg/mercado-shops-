@@ -41,7 +41,7 @@
 		<table class="form-table" border="0.5" frame="above" rules="void">
 			<tr>
 				<th scope="row"><label><h3>
-					<?php echo esc_html( __( 'Basic Checkout, Subscriptions', 'woo-mercado-pago-module' ) ); ?>
+					<?php echo esc_html( __( 'Basic Checkout & Subscriptions', 'woo-mercado-pago-module' ) ); ?>
 				</h3></label></th>
 				<td><label class="description" id="tagline-description">
 					<?php echo $v0_credential_locales; ?>
@@ -84,7 +84,7 @@
 		<table class="form-table" border="0.5" frame="above" rules="void">
 			<tr>
 				<th scope="row"><label><h3>
-					<?php echo esc_html( __( 'Custom Checkout, Tickets', 'woo-mercado-pago-module' ) ); ?>
+					<?php echo esc_html( __( 'Custom Checkout & Tickets', 'woo-mercado-pago-module' ) ); ?>
 				</h3></label></th>
 				<td><label class="description" id="tagline-description">
 					<?php echo $v1_credential_locales; ?>
