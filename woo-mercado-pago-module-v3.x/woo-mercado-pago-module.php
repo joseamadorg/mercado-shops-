@@ -47,6 +47,7 @@ if ( ! class_exists( 'WC_Woo_Mercado_Pago_Module' ) ) :
 	 * - build_currency_converted_msg( $currency )
 	 * - get_country_name( $site_id )
 	 * - build_log_path_string( $gateway_id, $gateway_name )
+	 * - get_wc_status_for_mp_status( $mp_status )
 	 * - get_map( $selector_id )
 
 	 * @since 1.0.0

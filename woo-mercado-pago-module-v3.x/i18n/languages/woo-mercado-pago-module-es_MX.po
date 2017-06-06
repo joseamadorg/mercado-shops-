@@ -77,7 +77,7 @@ msgid "Peru"
 msgstr "Perú"
 
 msgid "Update WooCommerce order to "
-msgstr "Actualizar la orden de WooCommerce a"
+msgstr "Actualizar la orden de WooCommerce a "
 
 msgid "You do not have sufficient permissions to access this page."
 msgstr "No tiene suficientes permisos para acceder a esta página."
