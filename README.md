@@ -94,6 +94,13 @@ During the sandbox mode tests, you can operate over HTTP, but for homologation y
       <td>WooCommerce 2.1.x - 3.0.0</td>
     </tr>
   </tbody>
+  <tbody>
+    <tr>
+      <td>v3.0.0</td>
+      <td>Experimental (Beta version)</td>
+      <td>WooCommerce 2.1.x - 3.0.0</td>
+    </tr>
+  </tbody>
 </table>
 
 <a name="installation"></a>

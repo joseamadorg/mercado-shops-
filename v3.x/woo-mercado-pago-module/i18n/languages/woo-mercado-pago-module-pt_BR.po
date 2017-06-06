@@ -1,0 +1,578 @@
+# WordPress Blank Pot
+# Copyright (C) 2014 ...
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: WordPress Blank Pot v1.0.0\n"
+"POT-Creation-Date: 2016-05-23 14:52-0300\n"
+"PO-Revision-Date: \n"
+"Language-Team: Product Development <translations@example.com>\n"
+"Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Textdomain-Support: yesX-Generator: Poedit 1.6.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_x:1,2c;_n:1,2;"
+"_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
+"X-Poedit-Basepath: ../Documents/woocommerce (MAMP)/wp-content/plugins/woo-mercado-pago-module\n"
+"X-Generator: Poedit 1.8.7\n"
+"Last-Translator: \n"
+"Language: es_MX\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid "Mercado Pago Settings"
+msgstr "Configurações do Mercado Pago"
+
+msgid "Rate Us"
+msgstr "Qualifique-nos"
+
+msgid "Tutorial"
+msgstr "Tutorial"
+
+msgid "Report Issue"
+msgstr "Reportar Problema"
+
+msgid "ERROR: It was not possible to convert the unsupported currency"
+msgstr "ERRO: Não foi possível converter a moeda não suportada"
+
+msgid "to"
+msgstr "para"
+
+msgid "Currency conversions should be made outside this module."
+msgstr "Conversões de moedas devem ser feitas fora deste módulo."
+
+msgid "ATTENTION: The currency"
+msgstr "ATENÇÃO: A moeda"
+
+msgid "defined in WooCommerce is different from the one used in your credentials country.<br>The currency for transactions in this payment method will be"
+msgstr "definida no WooCommerce é diferente da usada no país de suas credenciais.<br>A moeda para transações feitas por este meio de pagamento será"
+
+msgid "CURRENCY CONVERTED: Your store is converting currency from"
+msgstr "MOEDA CONVERTIDA: Sua loja está convertendo moeda de"
+
+msgid "Colombia"
+msgstr "Colômbia"
+
+msgid "Argentine"
+msgstr "Argentina"
+
+msgid "Brazil"
+msgstr "Brasil"
+
+msgid "Chile"
+msgstr "Chile"
+
+msgid "Mexico"
+msgstr "México"
+
+msgid "Uruguay"
+msgstr "Uruguai"
+
+msgid "Venezuela"
+msgstr "Venezuela"
+
+msgid "Peru"
+msgstr "Peru"
+
+msgid "Update WooCommerce order to "
+msgstr "Atualizar pedido no WooCommerce para "
+
+msgid "You do not have sufficient permissions to access this page."
+msgstr "Você não possui permissões suficientes para acessar esta página."
+
+msgid "WooCommerce is installed and enabled."
+msgstr "WooCommerce está instalado e habilitado."
+
+msgid "You don\'t have WooCommerce installed and enabled."
+msgstr "Você não possui o WooCommerce instalado e habilitado."
+
+msgid "Your PHP version is OK."
+msgstr "Sua versão do PHP está OK."
+
+msgid "Your PHP version do not support this module. You have %s, minimal required is %s."
+msgstr "Sua versão do PHP não suporta este módulo. Sua versão é %s, a mínima requerida é %s."
+
+msgid "cURL is installed."
+msgstr "cURL está instalado."
+
+msgid "cURL is not installed."
+msgstr "cURL não está instalado."
+
+msgid "SSL is missing in your site."
+msgstr "Está faltando SSL em seu site."
+
+msgid "Your site has SSL enabled."
+msgstr "Seu site possui SSL habilitado."
+
+msgid "Basic Checkout"
+msgstr "Checkout Básico"
+
+msgid "Custom Checkout"
+msgstr "Checkout Transparente"
+
+msgid "Ticket"
+msgstr "Boletos"
+
+msgid "Subscription"
+msgstr "Assinaturas"
+
+msgid "Configure your Client_id and Client_secret to have access to more options."
+msgstr "Configure seu Client_id e Client_secret para ter acesso a mais opções."
+
+msgid "Define which type of products your store sells."
+msgstr "Defina qual o tipo dos produtos que sua loja vende."
+
+msgid "Your <strong>client_id</strong> and <strong>client_secret</strong> are <strong>valid</strong> for"
+msgstr "Sua <strong>client_id</strong> e <strong>client_secret</strong> são <strong>válidas</strong> para"
+
+msgid "Your <strong>client_id</strong> and <strong>client_secret</strong> are <strong>not valid</strong>!"
+msgstr "Sua <strong>client_id</strong> e <strong>client_secret</strong> são <strong>inválidas</strong>!"
+
+msgid "These credentials are used in <strong>Basic Checkout</strong> and <strong>Subscriptions</strong>. Access it for your country:<br>"
+msgstr "Estas credenciais são usadas no <strong>Checkout Básico</strong> e <strong>Assinaturas</strong>. Acesse elas para seu país:<br>"
+
+msgid "or"
+msgstr "ou"
+
+msgid "Your <strong>public_key</strong> and <strong>access_token</strong> are <strong>valid</strong> for"
+msgstr "Sua <strong>public_key</strong> e <strong>access_token</strong> são <strong>válidas</strong> para"
+
+msgid "Your <strong>public_key</strong> and <strong>access_token</strong> are <strong>not valid</strong>!"
+msgstr "Sua <strong>public_key</strong> e <strong>access_token</strong> são <strong>inválidas</strong>!"
+
+msgid "These credentials are used in <strong>Custom Checkout</strong> and <strong>Tickets</strong>. Access it for your country:<br>"
+msgstr "Estas credenciais são usadas no <strong>Checkout Transparente</strong> e <strong>Boletos</strong>. Acesse elas para seu país:<br>"
+
+msgid "This module enables WooCommerce to use Mercado Pago as payment method for purchases made in your virtual store."
+msgstr "Este módulo habilita o WooCommerce a usar o Mercado Pago como meio de pagamento para compras realizadas em sua loja virtual."
+
+msgid "Payment Gateways"
+msgstr "Gateways de Pagamento"
+
+msgid "Basic Checkout & Subscriptions"
+msgstr "Checkout Básico & Assinaturas"
+
+msgid "Custom Checkout & Tickets"
+msgstr "Checkout Transparente & Boletos"
+
+msgid "Insert your Mercado Pago Client_id."
+msgstr "Insira seu Client_id do Mercado Pago."
+
+msgid "Insert your Mercado Pago Client_secret."
+msgstr "Insira seu Client_secret do Mercado Pago."
+
+msgid "Currency Conversion"
+msgstr "Conversão de Moeda"
+
+msgid "If the used currency in WooCommerce is different or not supported by Mercado Pago, convert values of your transactions using Mercado Pago currency ratio. This service may slow down your server as each conversion is made in the checkout moment."
+msgstr "Se a moeda utilizada pelo WooCommerce for diferente ou não suportada pelo Mercado Pago, converte os valores de suas transações usando a taxa de conversão do Mercado Pago. Este serviço pode deixar seu servidor mais lento pois cada conversão é feita no momento do checkout."
+
+msgid "Insert your Mercado Pago Public key."
+msgstr "Insira sua Public Key do Mercado Pago."
+
+msgid "Insert your Mercado Pago Access token."
+msgstr "Insira seu Access Token do Mercado Pago."
+
+msgid "Status Mapping of Payment x Order"
+msgstr "Mapeamento de Estados de Pagamento x Pedido"
+
+msgid "Here you can configure details about Mercado Pago payments and WooCommerce order statuses."
+msgstr "Aqui você pode configurar detalhes sobre os estados dos pagamentos do Mercado Pago e os pedidos do WooCommerce."
+
+msgid "For status mappings between payment/order you can use the defaults, or check references of %s and %s"
+msgstr "Para mapeamentos de estados entre pagamento/pedido você pode utilizar os padrões, ou checar referências do %s e %s"
+
+msgid "Status for PENDING"
+msgstr "Estado para PENDING"
+
+msgid "when Mercado Pago updates a payment status to PENDING."
+msgstr "quando o Mercado Pago atualiza o estado de um pagamento para PENDING."
+
+msgid "Status for APPROVED"
+msgstr "Estado para APPROVED"
+
+msgid "When Mercado Pago updates a payment status to APPROVED."
+msgstr "quando o Mercado Pago atualiza o estado de um pagamento para APPROVED."
+
+msgid "Status for IN_PROCESS"
+msgstr "Estado para IN_PROCESS"
+
+msgid "When Mercado Pago updates a payment status to IN_PROCESS."
+msgstr "quando o Mercado Pago atualiza o estado de um pagamento para IN_PROCESS."
+
+msgid "Status for IN_MEDIATION"
+msgstr "Estado para IN_MEDIATION"
+
+msgid "When Mercado Pago updates a payment status to IN_MEDIATION."
+msgstr "quando o Mercado Pago atualiza o estado de um pagamento para IN_MEDIATION."
+
+msgid "Status for REJECTED"
+msgstr "Estado para REJECTED"
+
+msgid "When Mercado Pago updates a payment status to REJECTED."
+msgstr "quando o Mercado Pago atualiza o estado de um pagamento para REJECTED."
+
+msgid "Status for CANCELLED"
+msgstr "Estado para CANCELLED"
+
+msgid "When Mercado Pago updates a payment status to CANCELLED."
+msgstr "quando o Mercado Pago atualiza o estado de um pagamento para CANCELLED."
+
+msgid "Status for REFUNDED"
+msgstr "Estado para REFUNDED"
+
+msgid "When Mercado Pago updates a payment status to REFUNDED."
+msgstr "quando o Mercado Pago atualiza o estado de um pagamento para REFUNDED."
+
+msgid "Status for CHARGED_BACK"
+msgstr "Estado para CHARGED_BACK"
+
+msgid "When Mercado Pago updates a payment status to CHARGED_BACK."
+msgstr "quando o Mercado Pago atualiza o estado de um pagamento para CHARGED_BACK."
+
+msgid "Store Settings"
+msgstr "Configurações da Loja"
+
+msgid "Here you can place details about your store."
+msgstr "Aqui você pode configurar detalhes da sua loja."
+
+msgid "Statement Descriptor"
+msgstr "Descritor da Nota Fiscal"
+
+msgid "The description that will be shown in your customer\'s invoice."
+msgstr "A descrição que será mostrada na nota fiscal de seu cliente."
+
+msgid "Store Category"
+msgstr "Categoria da loja"
+
+msgid "Store Identificator"
+msgstr "Identificador da Loja"
+
+msgid "Please, inform a prefix to your store."
+msgstr "Por favor, informe um prefixo para sua loja."
+
+msgid "If you use your Mercado Pago account on multiple stores you should make sure that this prefix is unique as Mercado Pago will not allow orders with same identificators."
+msgstr "Se estiver usando sua conta Mercado Pago para múltiplas lojas então você deverá assegurar-se que este prefixo seja único pois o Mercado Pago não permitirá pedidos com um mesmo identificador."
+
+msgid "Test and Debug Options"
+msgstr "Opções de Teste e Debug"
+
+msgid "Tools for debug and testing your integration."
+msgstr "Ferramentas para debug e testes de sua integração."
+
+msgid "Debug and Log"
+msgstr "Debug e Log"
+
+msgid "Enable log (Keep this disabled if you’re in production)."
+msgstr "Habilitar log (mantenha isto desabilitado se você estiver em produção)."
+
+msgid "Register event logs of Mercado Pago, such as API requests, for"
+msgstr "Registrar eventos de logs do Mercado Pago, como requisições de API, para"
+
+msgid "Tickets"
+msgstr "Boletos"
+
+msgid "You can access your logs in "
+msgstr "Você pode acessar seus logs em"
+
+msgid "WooCommerce &gt; System Status &gt; Logs"
+msgstr "WooCommerce &gt; Estados do Sistema &gt; Logs"
+
+msgid "Files are located in: "
+msgstr "Arquivos estão localizados em: "
+
+msgid "Mercado Pago Sandbox"
+msgstr "Sandbox Mercado Pago"
+
+msgid "Enable Mercado Pago Sandbox."
+msgstr "Habilitar o sandbox do Mercado Pago"
+
+msgid "This option allows you to test payments inside a sandbox environment."
+msgstr "Esta opção permite a você testar pagamentos em um ambiente sandbox."
+
+msgid "Mercado Pago - Basic Checkout"
+msgstr "Mercado Pago - Checkout Básico"
+
+msgid "Receive payments in a matter of minutes. We make it easy for you: just tell us what you want to collect and we’ll take care of the rest."
+msgstr "Receba pagamentos em questões de minutos. Nós deixamos fácil pra você: apenas diga o que você quer coletar e nós cuidaremos do resto."
+
+msgid "It appears that your credentials are not properly configured.<br/>Please, go to %s and configure it."
+msgstr "Parece que suas credenciais não estão configuradas apropriadamente.<br/>Por favor, vá para %s e configure-as."
+
+msgid "This appears to be an invalid URL."
+msgstr "Esta parece ser uma URL inválida."
+
+msgid "Where customers should be redirected after a successful purchase. Let blank to redirect to the default store order resume page."
+msgstr "Onde os clientes deverão ser redirecionados após uma compra bem-sucedida. Deixe em branco para redirecionar para a página padrão de resumo de pedido da loja."
+
+msgid "Where customers should be redirected after a failed purchase. Let blank to redirect to the default store order resume page."
+msgstr "Onde os clientes deverão ser redirecionados após uma compra ter falhado. Deixe em branco para redirecionar para a página padrão de resumo de pedido da loja."
+
+msgid "Where customers should be redirected after a pending purchase. Let blank to redirect to the default store order resume page."
+msgstr "Onde os clientes deverão ser redirecionados após uma compra entrar em análise. Deixe em branco para redirecionar para a página padrão de resumo de pedido da loja."
+
+msgid "Enable/Disable"
+msgstr "Habilitar/Desabilitar"
+
+msgid "Enable Basic Checkout"
+msgstr "Habilitar o Checkout Básico"
+
+msgid "Checkout Interface: How checkout is shown"
+msgstr "Interface do Checkout: Como o checkout é mostrado"
+
+msgid "Title"
+msgstr "Título"
+
+msgid "Title shown to the client in the checkout."
+msgstr "Título mostrado ao cliente durante o checkout."
+
+msgid "Mercado Pago"
+msgstr "Mercado Pago"
+
+msgid "Description"
+msgstr "Descrição"
+
+msgid "Description shown to the client in the checkout."
+msgstr "Descrição mostrada ao cliente durante o checkout."
+
+msgid "Pay with Mercado Pago"
+msgstr "Pagar com Mercado Pago"
+
+msgid "Integration Method"
+msgstr "Método de Integração"
+
+msgid "Select how your clients should interact with Mercado Pago. Modal Window (inside your store), Redirect (Client is redirected to Mercado Pago), or iFrame (an internal window is embedded to the page layout)."
+msgstr "Selecione como seus clientes irão interagir com o Mercado Pago. Janela Modal (Dentro de sua loja), Redirecionamento (O cliente é redirecionado ao Mercado Pago), ou iFrame (Uma janela de pagamento é incorporada ao layout da página)."
+
+msgid "iFrame"
+msgstr "iFrame"
+
+msgid "Modal Window"
+msgstr "Janela Modal"
+
+msgid "Redirect"
+msgstr "Redirecionamento"
+
+msgid "iFrame Width"
+msgstr "Largura do iFrame"
+
+msgid "If your integration method is iFrame, please inform the payment iFrame width."
+msgstr "Se o seu método de integração é por iFrame, por favor informe a largura do layout."
+
+msgid "iFrame Height"
+msgstr "Altura do iFrame"
+
+msgid "If your integration method is iFrame, please inform the payment iFrame height."
+msgstr "Se o seu método de integração é por iFrame, por favor informe a altura do layout."
+
+msgid "Checkout Navigation: How checkout redirections will behave"
+msgstr "Navegação do Checkout: Como os redirecionamentos do checkout irão comportar-se"
+
+msgid "Auto Return"
+msgstr "Auto Retorno"
+
+msgid "Automatic Return After Payment"
+msgstr "Retorno com Redirecionamento Automático"
+
+msgid "After the payment, client is automatically redirected."
+msgstr "Após a compra, o cliente é redirecionado automaticamente."
+
+msgid "Sucess URL"
+msgstr "URL de Sucesso"
+
+msgid "Failure URL"
+msgstr "URL de Falha"
+
+msgid "Pending URL"
+msgstr "URL de Pendência"
+
+msgid "Payment Options: How payment options behaves"
+msgstr "Opções de Pagamento: Como as opções de pagamento irão comportar-se"
+
+msgid "Max installments"
+msgstr "Número Máximo de Parcelamentos"
+
+msgid "Select the max number of installments for your customers."
+msgstr "Selecione o número máximo de parcelas que sua loja oferece a seus clientes."
+
+msgid "1x installment"
+msgstr "1x parcela"
+
+msgid "2x installmens"
+msgstr "2x parcelas"
+
+msgid "3x installmens"
+msgstr "3x parcelas"
+
+msgid "4x installmens"
+msgstr "4x parcelas"
+
+msgid "5x installmens"
+msgstr "5x parcelas"
+
+msgid "6x installmens"
+msgstr "6x parcelas"
+
+msgid "10x installmens"
+msgstr "10x parcelas"
+
+msgid "12x installmens"
+msgstr "12x parcelas"
+
+msgid "15x installmens"
+msgstr "15x parcelas"
+
+msgid "18x installmens"
+msgstr "18x parcelas"
+
+msgid "24x installmens"
+msgstr "24x parcelas"
+
+msgid "Exclude Payment Methods"
+msgstr "Excluir Métodos de Pagamento"
+
+msgid "Select the payment methods that you <strong>don\'t</strong> want to receive with Mercado Pago."
+msgstr "Selecione os meios de pagamento que <strong>não</strong> gostaria de receber com o Mercado Pago."
+
+msgid "Discount by Gateway"
+msgstr "Desconto por Gateway"
+
+msgid "Give a percentual (0 to 100) discount for your customers if they use this payment gateway."
+msgstr "Dê um desconto porcentual (0 a 100) para seus clientes caso eles usem este método de pagamento."
+
+msgid "Two Cards Mode"
+msgstr "Modo Dois Cartões"
+
+msgid "Payments with Two Cards"
+msgstr "Pagamento com Dois Cartões"
+
+msgid "Your customer will be able to use two different cards to pay the order."
+msgstr "Seus clientes poderão utilizar dois diferentes cartões para pagar pedidos."
+
+msgid "Thank you for your order. Please, proceed with your payment clicking in the bellow button."
+msgstr "Obrigado pela sua compra. Por favor, prossiga para a página de pagamento clicando no botão abaixo."
+
+msgid "Cancel order &amp; Clear cart"
+msgstr "Cancelar &amp; Limpar carrinho"
+
+msgid "Thank you for your order. Proceed with your payment completing the following information."
+msgstr "Obrigado pela sua compra. Prossiga com seu pagamento completando as informações abaixo."
+
+msgid "An error occurred when proccessing your payment. Please try again or contact us for assistence.""
+msgstr "Um erro ocorreu ao processar seu pagamento. Por favor tente novamente ou nos contacte para assistência."
+
+msgid "Click to try again"
+msgstr "Clique para tentar novamente"
+
+msgid "Shipping service used by store"
+msgstr "Serviço de envio usado pela loja"
+
+msgid "Discount of"
+msgstr "Desconto de"
+
+msgid "Mercado Pago Request Failure"
+msgstr "Falha na Requisição do Mercado Pago"
+
+msgid "Payer email"
+msgstr "Email do pagador"
+
+msgid "Payment type"
+msgstr "Tipo de pagamento"
+
+msgid "Payment approved."
+msgstr "Pagamento aprovado."
+
+msgid "Customer haven\'t paid yet."
+msgstr "O cliente ainda não realizou o pagamento."
+
+msgid "Payment under review."
+msgstr "O pagamento está em revisão."
+
+msgid "The payment was refused. The customer can try again."
+msgstr "O pagamento foi recusado. O cliente pode tentar novamente."
+
+msgid "The payment was refunded to the customer."
+msgstr "O pagamento foi estornado ao cliente."
+
+msgid "The payment was cancelled."
+msgstr "O pagamento foi cancelado."
+
+msgid "The payment is under mediation or it was charged-back."
+msgstr "O pagamento está em mediação ou a compra não foi reconhecida pelo cliente."
+
+msgid "Mercado Pago - Custom Checkout"
+msgstr "Mercado Pago - Checkout Transparente"
+
+msgid "We give you the possibility to adapt the payment experience you want to offer 100% in your website, mobile app or anywhere you want. You can build the design that best fits your business model, aiming to maximize conversion."
+msgstr "Nós damos a você a possibilidade de adaptar 100% da experiência de pagamento que você gostaria de oferecer em seu website, aplicativo mobile ou onde quer que você queira. Você pode construir o design que melhor atenda ao seu modelo de negócio, com o objetivo de maximizar a conversão."
+
+msgid "Enable Custom Checkout"
+msgstr "Habilitar o Checkout Transparente"
+
+msgid "Coupons"
+msgstr "Cupons"
+
+msgid "Enable coupons of discounts"
+msgstr "Habilitar cupons de desconto"
+
+msgid "If there is a Mercado Pago campaign, allow your store to give discounts to customers."
+msgstr "Caso haja uma campanha do Mercado Pago, permite que sua loja disponibilize descontos aos clientes."
+
+msgid "Binary Mode"
+msgstr "Modo Binário"
+
+msgid "Enable binary mode for checkout status"
+msgstr "Habilita o modo binário para o status do checkout"
+
+msgid "When charging a credit card, only [approved] or [reject] status will be taken."
+msgstr "Ao realizar a cobrança no cartão, apenas os status [aprovado] ou [rejeitado] serão considerados."
+
+msgid "Mercado Pago - Subscription"
+msgstr "Mercado Pago - Assinaturas"
+
+msgid "This service allows you to subscribe customers to subscription plans."
+msgstr "Este serviço permite a você inscrever clientes em planos de assinaturas."
+
+msgid "It appears that your country is not supported for this solution.<br/>Please, use another payment method or go to %s to use another credential."
+msgstr "Parece que seu país não é suportado para esta solução.<br/>Por favor, use outro meio de pagamento ou vá para %s e use outra credencial."
+
+msgid "Enable Subscription"
+msgstr "Habilitar Assinaturas"
+
+msgid "Instant Payment Notification (IPN) URL"
+msgstr "URL de Notificações Instantâneas de Pagamento (IPN)"
+
+msgid "For this solution, you need to configure your IPN URL. You can access it in your account for your specific country in:"
+msgstr "Para esta solução, você precisa configurar sua URL de IPN. Você pode acessa-la em sua conta específica para seu país em:"
+
+msgid "Your IPN URL to receive instant payment notifications is"
+msgstr "Sua URL de IPN para receber notificações instantâneas de pagamentos é"
+
+msgid "Mercado Pago - Ticket"
+msgstr "Mercado Pago - Boleto"
+
+msgid "UNDER BUILDING..."
+msgstr "EM CONSTRUÇÃO..."
+
+msgid "Enable Ticket Payment Method"
+msgstr "Habilitar o Método de Pagamento por Boleto"
+
+msgid "Ticket Interface: How checkout is shown"
+msgstr "Interface do Boleto: Como o checkout é mostrado"
+
+msgid "Title shown to the client in the ticket."
+msgstr "Título mostrado ao cliente no boleto."
+
+msgid "Description shown to the client in the ticket."
+msgstr "Descrição mostrada ao cliente no boleto."
+
+msgid "Stock Reduce"
+msgstr "Redução de Estoque"
+
+msgid "Reduce Stock in Order Generation"
+msgstr "Reduzir Estoque ao Gerar Pedido"
+
+msgid "Enable this to reduce the stock on order creation. Disable this to reduce <strong>after</strong> the payment approval."
+msgstr "Habilite esta opção para reduzir o estoque ao se criar um pedido. Desabilite para reduzir somente <strong>depois</strong> da aprovação do pagamento."
