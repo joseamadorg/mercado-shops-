@@ -240,7 +240,7 @@ if ( ! class_exists( 'WC_Woo_Mercado_Pago_Module' ) ) :
 			} catch ( MercadoPagoException $e ) {
 				// TODO: should we handle an exception here?
 			}
-			update_option( '_access_token_v0', '', true, true );
+			update_option( '_access_token_v0', '', true );
 			update_option( '_test_user_v0', '', true );
 			update_option( '_site_id_v0', '', true );
 			update_option( '_collector_id_v0', '', true );

@@ -391,6 +391,83 @@ class WC_WooMercadoPago_BasicGateway extends WC_Payment_Gateway {
 	 */
 
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
+
+		$payments = get_post_meta( $order_id, '_Mercado_Pago_Payment_IDs', true );
+
+		// Validate.
+		if ( $this->mp == null || empty( $payments ) ) {
+			$this->write_log( __FUNCTION__, 'no payments or credentials invalid' );
+			return false;
+		}
+
+		// Processing data about this refund.
+		$total_available = 0;
+		$payment_structs = array();
+		$payment_ids = explode( ', ', $payments );
+		foreach ( $payment_ids as $p_id ) {
+			$p = get_post_meta( $order_id, 'Mercado Pago - Payment ' . $p_id, true );
+			$p = explode( '/', $p );
+			$paid_arr = explode( ' ', substr( $p[2], 1, -1 ) );
+			$paid = ( (float) $paid_arr[1] );
+			$refund_arr = explode( ' ', substr( $p[3], 1, -1 ) );
+			$refund = ( (float) $refund_arr[1] );
+			$p_struct = array( 'id' => $p_id, 'available_to_refund' => $paid - $refund );
+			$total_available += $paid - $refund;
+			$payment_structs[] = $p_struct;
+		}
+		$this->write_log( __FUNCTION__,
+			'refunding ' . $amount . ' because of ' . $reason . ' and payments ' .
+			json_encode( $payment_structs, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE )
+		);
+
+		// Do not allow refund more than available or invalid amounts.
+		if ( $amount > $total_available || $amount <= 0 ) {
+			return false;
+		}
+
+		// Iteratively refunfind amount, taking in consideration multiple payments.
+		$remaining_to_refund = $amount;
+		foreach ( $payment_structs as $to_refund ) {
+			if ( $remaining_to_refund <= $to_refund['available_to_refund'] ) {
+				// We want to refund an amount that is less than the available for this payment, so we
+				// can just refund and return.
+				$response = $this->mp->partial_refund_payment(
+					$to_refund['id'], $remaining_to_refund,
+					$reason, $this->invoice_prefix . $order_id
+				);
+				$message = $response['response']['message'];
+				$status = $response['status'];
+				$this->write_log( __FUNCTION__,
+					'refund payment of id ' . $p_id . ' => ' .
+					( $status >= 200 && $status < 300 ? 'SUCCESS' : 'FAIL - ' . $message )
+				);
+				if ( $status >= 200 && $status < 300 ) {
+					return true;
+				} else {
+					return false;
+				}
+			} elseif ( $to_refund['available_to_refund'] > 0 ) {
+				// We want to refund an amount that exceeds the available for this payment, so we
+				// totally refund this payment, and try to complete refund in other/next payments.
+				$response = $this->mp->partial_refund_payment(
+					$to_refund['id'], $to_refund['available_to_refund'],
+					$reason, $this->invoice_prefix . $order_id
+				);
+				$message = $response['response']['message'];
+				$status = $response['status'];
+				$this->write_log( __FUNCTION__,
+					'refund payment of id ' . $p_id . ' => ' .
+					( $status >= 200 && $status < 300 ? 'SUCCESS' : 'FAIL - ' . $message )
+				);
+				if ( $status < 200 || $status >= 300 ) {
+					return false;
+				}
+				$remaining_to_refund -= $to_refund['available_to_refund'];
+			}
+			if ( $remaining_to_refund == 0 ) {
+				return true;
+			}
+		}
 		// Reaching here means that there we run out of payments, and there is an amount
 		// remaining to be refund, which is impossible as it implies refunding more than
 		// available on paid amounts.
@@ -401,12 +478,42 @@ class WC_WooMercadoPago_BasicGateway extends WC_Payment_Gateway {
 	 * Handles the manual order cancellation in server-side.
 	 */
 	public function process_cancel_order_meta_box_actions( $order ) {
+		
+		$used_gateway = ( method_exists( $order, 'get_meta' ) ) ?
+			$order->get_meta( '_used_gateway' ) :
+			get_post_meta( $order->id, '_used_gateway', true );
+		$payments = ( method_exists( $order, 'get_meta' ) ) ?
+			$order->get_meta( '_Mercado_Pago_Payment_IDs' ) :
+			get_post_meta( $order->id, '_Mercado_Pago_Payment_IDs',	true );
+		
+		// A watchdog to prevent operations from other gateways.
+		if ( $used_gateway != 'WC_WooMercadoPago_Gateway' ) {
+			return;
+		}
+
+		$this->write_log( __FUNCTION__, 'cancelling payments for ' . $payments );
+
+		// Canceling the order and all of its payments.
+		if ( $this->mp != null && ! empty( $payments ) ) {
+			$payment_ids = explode( ', ', $payments );
+			foreach ( $payment_ids as $p_id ) {
+				$response = $this->mp->cancel_payment( $p_id );
+				$message = $response['response']['message'];
+				$status = $response['status'];
+				$this->write_log( __FUNCTION__,
+					'cancel payment of id ' . $p_id . ' => ' .
+					( $status >= 200 && $status < 300 ? 'SUCCESS' : 'FAIL - ' . $message )
+				);
+			}
+		} else {
+			$this->write_log( __FUNCTION__, 'no payments or credentials invalid' );
+		}
 	}
 
 	public function payment_fields() {
 		// basic checkout
 		if ( $description = $this->get_description() ) {
-			echo wpautop(wptexturize( $description ) );
+			echo wpautop( wptexturize( $description ) );
 		}
 		if ( $this->supports( 'default_credit_card_form' ) ) {
 			$this->credit_card_form();
