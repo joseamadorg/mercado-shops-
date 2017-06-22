@@ -1,5 +1,10 @@
 CHANGELOG:
 
+= v2.2.8 (23/06/2017) =
+* Improvements
+	- Integrated error log API. This can help to debug any cURL requests;
+	- Increased stability.
+
 = v2.2.7 (01/06/2017) =
 * Improvements
 	- Optimizations in checkout JavaScript;
