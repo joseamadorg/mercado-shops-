@@ -110,7 +110,7 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 
 == Changelog ==
 
-= v2.2.8 (23/06/2017) =
+= v2.2.8 (26/06/2017) =
 * Improvements
 	- Integrated error log API. This can help to debug any cURL requests;
 	- Increased stability.
