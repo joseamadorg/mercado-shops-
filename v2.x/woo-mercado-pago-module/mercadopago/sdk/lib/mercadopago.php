@@ -904,11 +904,15 @@ class MPRestClient {
 					}
 				}
 				if ( $request != null ) {
-					if ( $request['data'] != null ) {
-						$payloads = json_encode( $request['data'] );
+					if ( isset( $request['data'] ) ) {
+						if ( $request['data'] != null ) {
+							$payloads = json_encode( $request['data'] );
+						}
 					}
-					if ( $request['uri'] != null ) {
-						$endpoint = $request['uri'];
+					if ( isset( $request['uri'] ) ) {
+						if ( $request['uri'] != null ) {
+							$endpoint = $request['uri'];
+						}
 					}
 				}
 				// Send error.
@@ -1131,11 +1135,15 @@ class MeliRestClient {
 					}
 				}
 				if ( $request != null ) {
-					if ( $request['data'] != null ) {
-						$payloads = json_encode( $request['data'] );
+					if ( isset( $request['data'] ) ) {
+						if ( $request['data'] != null ) {
+							$payloads = json_encode( $request['data'] );
+						}
 					}
-					if ( $request['uri'] != null ) {
-						$endpoint = $request['uri'];
+					if ( isset( $request['uri'] ) ) {
+						if ( $request['uri'] != null ) {
+							$endpoint = $request['uri'];
+						}
 					}
 				}
 				// Send error.
