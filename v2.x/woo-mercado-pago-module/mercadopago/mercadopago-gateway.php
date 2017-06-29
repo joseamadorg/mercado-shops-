@@ -1854,15 +1854,15 @@ class WC_WooMercadoPago_Gateway extends WC_Payment_Gateway {
 					// WooCommerce 3.0 or later.
 					if ( method_exists( $order, 'get_id' ) ) {
 						$shipping_item = $order->get_item( $order_item_shipping_id );
-						$item->set_order_id( $order->get_id() );
+						$shipping_item->set_order_id( $order->get_id() );
 
 						// Update shipping cost and method title.
-						$item->set_props( array(
+						$shipping_item->set_props( array(
 							'method_title' => 'Mercado Envios - ' . $shipment_name . $free_shipping_text,
 							'method_id' => $method_id,
 							'total' => wc_format_decimal( $shipment_cost ),
 						) );
-						$item->save();
+						$shipping_item->save();
 						$this->calculate_shipping();
 					} else {
 						// Update shipping cost and method title.
