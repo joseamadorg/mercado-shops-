@@ -1,5 +1,9 @@
 CHANGELOG:
 
+= v2.2.9 (29/06/2017) =
+* Bug fixes
+	- Fixed a bug in Mercado Envios for WooCommerce 3.x, involving use of undeclared variable.
+
 = v2.2.8 (23/06/2017) =
 * Improvements
 	- Integrated error log API. This can help to debug any cURL requests;
