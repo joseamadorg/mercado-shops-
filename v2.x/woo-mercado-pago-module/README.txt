@@ -112,7 +112,7 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 
 = v2.2.10 (04/07/2017) =
 * Bug fixes
-	- Fixed a bug in subscriptions, where a recurrent product wasn't possible to be buyed if its end-date is blank.
+	- Fixed a bug in subscriptions, where a recurrent product wasn't possible to be bought if its end-date is blank.
 
 = v2.2.9 (29/06/2017) =
 * Bug fixes
