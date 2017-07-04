@@ -259,7 +259,7 @@ function filter_woocommerce_is_purchasable( $purchasable, $product ) {
 	$today_date = date( 'Y-m-d' );
 	$end_date = get_post_meta( $product_id, '_mp_recurring_end_date', true );
 	// If there is no date, we should just return the original value.
-	if ( ! isset( $end_date ) ) {
+	if ( ! isset( $end_date ) || empty( $end_date ) ) {
 		return $purchasable;
 	}
 	// If end date had passed, this product is no longer available.
