@@ -1009,3 +1009,54 @@ msgstr ""
 
 msgid "Best regards."
 msgstr ""
+
+msgid "SELECT..."
+msgstr ""
+
+msgid "NAME"
+msgstr ""
+
+msgid "SURNAME"
+msgstr ""
+
+msgid "DOCUMENT"
+msgstr ""
+
+msgid "ADDRESS"
+msgstr ""
+
+msgid "NUMBER"
+msgstr ""
+
+msgid "CITY"
+msgstr ""
+
+msgid "STATE"
+msgstr ""
+
+msgid "ZIP"
+msgstr ""
+
+msgid "You must inform you NAME"
+msgstr ""
+
+msgid "You must inform your SURNAME"
+msgstr ""
+
+msgid "You must inform your DOCUMENT"
+msgstr ""
+
+msgid "You must inform your ADDRESS"
+msgstr ""
+
+msgid "You must inform your ADDRESS NUMBER"
+msgstr ""
+
+msgid "You must inform your CITY"
+msgstr ""
+
+msgid "You must inform your STATE"
+msgstr ""
+
+msgid "You must inform your ZIP"
+msgstr ""

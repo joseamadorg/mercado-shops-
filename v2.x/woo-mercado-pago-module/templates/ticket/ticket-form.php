@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <fieldset id="mercadopago-form" style="background:white;">
 	<div class="mp-box-inputs mp-line" id="mercadopago-form-coupon-ticket"
-	style="padding:0px 36px 16px 36px;">
+		style="padding-right: 5px; padding-left: 5px;" >
 		<label for="couponCodeLabel">
 			<?php echo $form_labels['form']['coupon_of_discounts']; ?>
 		</label>
@@ -50,73 +50,166 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	</div>
 
-	<div style="padding:0px 36px 0px 36px;">
-		<p>
-			<?php
-				if ( count( $payment_methods ) > 1 ) :
-					echo $form_labels['form']['issuer_selection'];
-				endif;
-				echo $form_labels['form']['payment_instructions'];
-			?> <br /> <?php
-				echo $form_labels['form']['ticket_note'];
-				if ( $is_currency_conversion > 0 ) :
-  					echo " (" . $form_labels['form']['payment_converted'] . " " .
-					$woocommerce_currency . " " . $form_labels['form']['to'] . " " .
-					$account_currency . ")";
-				endif;
-			?>
-		</p>
-		<?php if ( count( $payment_methods ) > 1 ) : ?>
-			<div class="mp-box-inputs mp-col-100">
-				<?php $atFirst = true; ?>
-				<?php foreach ( $payment_methods as $payment ) : ?>
-					<div class="mp-box-inputs mp-line">
-						<div id="paymentMethodId" class="mp-box-inputs mp-col-5">
-							<input type="radio" class="input-radio"
-							name="mercadopago_ticket[paymentMethodId]"
-							style="height:16px; width:16px;" value="<?php echo $payment['id']; ?>"
-							<?php if ( $atFirst ) : ?> checked="checked" <?php endif; ?> />
-						</div>
-						<div class="mp-box-inputs mp-col-45">
-							<label>
-								<img src="<?php echo $payment['secure_thumbnail']; ?>"
-								alt="<?php echo $payment['name']; ?>" />
-								&nbsp;&nbsp;<?php echo $payment['name']; ?>
-							</label>
-						</div>
-					</div>
-					<?php $atFirst = false; ?>
-				<?php endforeach; ?>
-			</div>
-		<?php else : ?>
-			<div class="mp-box-inputs mp-col-100" style="display:none;">
-				<select id="paymentMethodId" name="mercadopago_ticket[paymentMethodId]">
-					<?php foreach ( $payment_methods as $payment ) : ?>
-						<option value="<?php echo $payment['id']; ?>" style="padding: 8px;
-						background: url('https://img.mlstatic.com/org-img/MP3/API/logos/bapropagos.gif')
-						98% 50% no-repeat;"> <?php echo $payment['name']; ?>
-						</option>
-					<?php endforeach; ?>
-				</select>
-			</div>
-		<?php endif; ?>
-
-		<div class="mp-box-inputs mp-line">
-			<div class="mp-box-inputs mp-col-25">
-				<div id="mp-box-loading">
+	<div id="mercadopago-form-ticket" class="mp-box-inputs mp-line">
+		<div id="form-ticket">
+			<div class="form-row">
+				<div class="form-col-4">
+					<label  for="firstname"><?php echo $form_labels["form"]["name"]; ?><em class="obrigatorio"> *</em></label>
+					<input type="text" value="<?php echo $form_labels['febraban']['firstname']; ?>" data-checkout="firstname" placeholder="<?php echo $form_labels['form']['name']; ?>" id="firstname" class="form-control-mine" name="mercadopago_ticket[firstname]">
+				</div>
+				<div class="form-col-4">
+					<label  for="lastname"><?php echo $form_labels["form"]["surname"]; ?><em class="obrigatorio"> *</em></label>
+					<input type="text" value="<?php echo $form_labels['febraban']['lastname']; ?>" data-checkout="lastname" placeholder="<?php echo $form_labels['form']['surname']; ?>" id="lastname" class="form-control-mine" name="mercadopago_ticket[lastname]">
+				</div>
+				<div class="form-col-4">
+					<label for="docNumber"><?php echo $form_labels["form"]["docNumber"]; ?><em class="obrigatorio"> *</em></label>
+					<input type="text" placeholder="<?php echo $form_labels['form']['docNumber']; ?>" class="form-control-mine" maxlength="11" id="docNumber"
+						onkeydown="return (event.which >= 48 && event.which <= 57) || event.which == 8 || event.which == 46"
+						data-checkout="docNumber" value="<?php echo $form_labels['febraban']['docNumber']; ?>" name="mercadopago_ticket[docNumber]">
 				</div>
 			</div>
+			<span class="erro_febraban" data-main="#firstname" id="error_firstname"><?php echo $form_labels["error"]["FEB001"]; ?></span>
+			<span class="erro_febraban" data-main="#lastname" id="error_lastname"><?php echo $form_labels["error"]["FEB002"]; ?></span>
+			<span class="erro_febraban" data-main="#docNumber" id="error_docNumber"><?php echo $form_labels["error"]["FEB003"]; ?></span>
+			<div class="form-row">
+				<div class="form-col-9">
+					<label for="address"><?php echo $form_labels["form"]["address"]; ?><em class="obrigatorio"> *</em></label>
+					<input type="text" value="<?php echo $form_labels['febraban']['address']; ?>" data-checkout="address" placeholder="<?php echo $form_labels['form']['address']; ?>" id="address" class="form-control-mine" name="mercadopago_ticket[address]">
+				</div>
+				<div class="form-col-3">
+					<label for="number"><?php echo $form_labels["form"]["number"]; ?><em class="obrigatorio"> *</em></label>
+					<input type="text" value="<?php echo $form_labels['febraban']['number']; ?>" data-checkout="number" placeholder="<?php echo $form_labels['form']['number']; ?>" id="number"
+						onkeydown="return (event.which >= 48 && event.which <= 57) || event.which == 8 || event.which == 46"
+						class="form-control-mine" name="mercadopago_ticket[number]">
+				</div>
+			</div>
+			<span class="erro_febraban" data-main="#address" id="error_address"><?php echo $form_labels["error"]["FEB004"]; ?></span>
+			<span class="erro_febraban" data-main="#number" id="error_number"><?php echo $form_labels["error"]["FEB005"]; ?></span>
+			<div class="form-row">
+				<div class="form-col-4">
+					<label for="city"><?php echo $form_labels["form"]["city"]; ?><em class="obrigatorio"> *</em></label>
+					<input type="text" value="<?php echo $form_labels['febraban']['city']; ?>" data-checkout="city" placeholder="<?php echo $form_labels['form']['city']; ?>" id="city" class="form-control-mine" name="mercadopago_ticket[city]">
+				</div>
+				<div class="form-col-4">
+					<label for="state"><?php echo $form_labels["form"]["state"]; ?><em class="obrigatorio"> *</em></label>
+					<select name="mercadopago_ticket[state]" id="state" data-checkout="state" class="form-control-mine">
+						<option value="" <?php if ($form_labels["febraban"]["state"] == "") {echo 'selected="selected"';} ?>><?php echo $form_labels["form"]["select"]; ?></option>
+						<option value="AC" <?php if ($form_labels["febraban"]['state'] == "AC") {echo 'selected="selected"';} ?>>Acre</option>
+						<option value="AL" <?php if ($form_labels["febraban"]["state"] == "AL") {echo 'selected="selected"';} ?>>Alagoas</option>
+						<option value="AP" <?php if ($form_labels["febraban"]["state"] == "AP") {echo 'selected="selected"';} ?>>Amapá</option>
+						<option value="AM" <?php if ($form_labels["febraban"]["state"] == "AM") {echo 'selected="selected"';} ?>>Amazonas</option>
+						<option value="BA" <?php if ($form_labels["febraban"]["state"] == "BA") {echo 'selected="selected"';} ?>>Bahia</option>
+						<option value="CE" <?php if ($form_labels["febraban"]["state"] == "CE") {echo 'selected="selected"';} ?>>Ceará</option>
+						<option value="DF" <?php if ($form_labels["febraban"]["state"] == "DF") {echo 'selected="selected"';} ?>>Distrito Federal</option>
+						<option value="ES" <?php if ($form_labels["febraban"]["state"] == "ES") {echo 'selected="selected"';} ?>>Espírito Santo</option>
+						<option value="GO" <?php if ($form_labels["febraban"]["state"] == "GO") {echo 'selected="selected"';} ?>>Goiás</option>
+						<option value="MA" <?php if ($form_labels["febraban"]["state"] == "MA") {echo 'selected="selected"';} ?>>Maranhão</option>
+						<option value="MT" <?php if ($form_labels["febraban"]["state"] == "MT") {echo 'selected="selected"';} ?>>Mato Grosso</option>
+						<option value="MS" <?php if ($form_labels["febraban"]["state"] == "MS") {echo 'selected="selected"';} ?>>Mato Grosso do Sul</option>
+						<option value="MG" <?php if ($form_labels["febraban"]["state"] == "MG") {echo 'selected="selected"';} ?>>Minas Gerais</option>
+						<option value="PA" <?php if ($form_labels["febraban"]["state"] == "PA") {echo 'selected="selected"';} ?>>Pará</option>
+						<option value="PB" <?php if ($form_labels["febraban"]["state"] == "PB") {echo 'selected="selected"';} ?>>Paraíba</option>
+						<option value="PR" <?php if ($form_labels["febraban"]["state"] == "PR") {echo 'selected="selected"';} ?>>Paraná</option>
+						<option value="PE" <?php if ($form_labels["febraban"]["state"] == "PE") {echo 'selected="selected"';} ?>>Pernambuco</option>
+						<option value="PI" <?php if ($form_labels["febraban"]["state"] == "PI") {echo 'selected="selected"';} ?>>Piauí</option>
+						<option value="RJ" <?php if ($form_labels["febraban"]["state"] == "RJ") {echo 'selected="selected"';} ?>>Rio de Janeiro</option>
+						<option value="RN" <?php if ($form_labels["febraban"]["state"] == "RN") {echo 'selected="selected"';} ?>>Rio Grande do Norte</option>
+						<option value="RS" <?php if ($form_labels["febraban"]["state"] == "RS") {echo 'selected="selected"';} ?>>Rio Grande do Sul</option>
+						<option value="RO" <?php if ($form_labels["febraban"]["state"] == "RO") {echo 'selected="selected"';} ?>>Rondônia</option>
+						<option value="RA" <?php if ($form_labels["febraban"]["state"] == "RA") {echo 'selected="selected"';} ?>>Roraima</option>
+						<option value="SC" <?php if ($form_labels["febraban"]["state"] == "SC") {echo 'selected="selected"';} ?>>Santa Catarina</option>
+						<option value="SP" <?php if ($form_labels["febraban"]["state"] == "SP") {echo 'selected="selected"';} ?>>São Paulo</option>
+						<option value="SE" <?php if ($form_labels["febraban"]["state"] == "SE") {echo 'selected="selected"';} ?>>Sergipe</option>
+						<option value="TO" <?php if ($form_labels["febraban"]["state"] == "TO") {echo 'selected="selected"';} ?>>Tocantins</option>
+					</select>
+				</div>
+				<div class="form-col-4">
+					<label for="zipcode"><?php echo $form_labels["form"]["zipcode"]; ?><em class="obrigatorio"> *</em></label>
+					<input type="text" value="<?php echo $form_labels['febraban']['zipcode']; ?>" data-checkout="zipcode"
+						placeholder="<?php echo $form_labels['form']['zipcode']; ?>" id="zipcode"
+						onkeydown="return (event.which >= 48 && event.which <= 57) || event.which == 8 || event.which == 46"
+						class="form-control-mine" name="mercadopago_ticket[zipcode]">
+				</div>
+			</div>
+			<span class="erro_febraban" data-main="#city" id="error_city"><?php echo $form_labels["error"]["FEB006"]; ?></span>
+			<span class="erro_febraban" data-main="#state" id="error_state"><?php echo $form_labels["error"]["FEB007"]; ?></span>
+			<span class="erro_febraban" data-main="#zipcode" id="error_zipcode"><?php echo $form_labels["error"]["FEB008"]; ?></span>
+			<div class="form-col-12">
+				<label>
+					<span class="mensagem-febraban"><em class="obrigatorio">* </em><?php echo $form_labels["form"]["febraban_rules"]; ?></span>
+				</label>
+			</div>
 		</div>
 
-		<!-- utilities -->
-		<div class="mp-box-inputs mp-col-100" id="mercadopago-utilities">
-			<input type="hidden" id="site_id" value="<?php echo $site_id; ?>" name="mercadopago_ticket[site_id]"/>
-			<input type="hidden" id="amountTicket" value="<?php echo $amount; ?>" name="mercadopago_ticket[amount]"/>
-			<input type="hidden" id="campaign_idTicket" name="mercadopago_ticket[campaign_id]"/>
-			<input type="hidden" id="campaignTicket" name="mercadopago_ticket[campaign]"/>
-			<input type="hidden" id="discountTicket" name="mercadopago_ticket[discount]"/>
-		</div>
+		<div style="padding:0px 36px 0px 36px; margin-left: -32px; margin-right: -32px;">
+			<p>
+				<?php
+					if ( count( $payment_methods ) > 1 ) :
+						echo $form_labels['form']['issuer_selection'];
+					endif;
+					echo $form_labels['form']['payment_instructions'];
+				?>&nbsp;<?php
+					echo $form_labels['form']['ticket_note'];
+					if ( $is_currency_conversion > 0 ) :
+	  					echo " (" . $form_labels['form']['payment_converted'] . " " .
+						$woocommerce_currency . " " . $form_labels['form']['to'] . " " .
+						$account_currency . ")";
+					endif;
+				?>
+			</p>
+			<?php if ( count( $payment_methods ) > 1 ) : ?>
+				<div class="mp-box-inputs mp-col-100" >
+					<?php $atFirst = true; ?>
+					<?php foreach ( $payment_methods as $payment ) : ?>
+						<div class="mp-box-inputs mp-line">
+							<div id="paymentMethodId" class="mp-box-inputs mp-col-5">
+								<input type="radio" class="input-radio" name="mercadopago_ticket[paymentMethodId]"
+									style="display: block; height:16px; width:16px;" value="<?php echo $payment['id']; ?>"
+								<?php if ( $atFirst ) : ?> checked="checked" <?php endif; ?> />
+							</div>
+							<div class="mp-box-inputs mp-col-75">
+								<label>
+									&nbsp;
+									<img src="<?php echo $payment['secure_thumbnail']; ?>"
+									alt="<?php echo $payment['name']; ?>" />
+									&nbsp;
+									<?php echo $payment['name']; ?>
+								</label>
+							</div>
+						</div>
+						<?php $atFirst = false; ?>
+					<?php endforeach; ?>
+				</div>
+			<?php else : ?>
+				<div class="mp-box-inputs mp-col-100" style="display:none;">
+					<select id="paymentMethodId" name="mercadopago_ticket[paymentMethodId]">
+						<?php foreach ( $payment_methods as $payment ) : ?>
+							<option value="<?php echo $payment['id']; ?>" style="padding: 8px;
+							background: url('https://img.mlstatic.com/org-img/MP3/API/logos/bapropagos.gif')
+							98% 50% no-repeat;"> <?php echo $payment['name']; ?>
+							</option>
+						<?php endforeach; ?>
+					</select>
+				</div>
+			<?php endif; ?>
 
+			<div class="mp-box-inputs mp-line">
+				<div class="mp-box-inputs mp-col-25">
+					<div id="mp-box-loading">
+					</div>
+				</div>
+			</div>
+
+			<!-- utilities -->
+			<div class="mp-box-inputs mp-col-100" id="mercadopago-utilities">
+				<input type="hidden" id="site_id" value="<?php echo $site_id; ?>" name="mercadopago_ticket[site_id]"/>
+				<input type="hidden" id="amountTicket" value="<?php echo $amount; ?>" name="mercadopago_ticket[amount]"/>
+				<input type="hidden" id="campaign_idTicket" name="mercadopago_ticket[campaign_id]"/>
+				<input type="hidden" id="campaignTicket" name="mercadopago_ticket[campaign]"/>
+				<input type="hidden" id="discountTicket" name="mercadopago_ticket[discount]"/>
+			</div>
+
+		</div>
 	</div>
 </fieldset>
 
@@ -136,6 +229,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 				"couponCodeTicket",
 				"applyCouponTicket"
 			],
+			inputs_to_validate_ticket: [
+				"firstname",
+				"lastname",
+				"docNumber",
+				"address",
+				"number",
+				"city",
+				"state",
+				"zipcode"
+			],
 			selectors: {
 				// coupom
 				couponCode: "#couponCodeTicket",
@@ -148,8 +251,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 				// payment method and checkout
 				paymentMethodId: "#paymentMethodId",
 				amount: "#amountTicket",
+				// febraban
+				firstname: "#febrabanFirstname",
+				lastname: "#febrabanLastname",
+				docNumber: "#febrabanDocNumber",
+				address: "#febrabanAddress",
+				number: "#febrabanNumber",
+				city: "#febrabanCity",
+				state: "#febrabanState",
+				zipcode: "#febrabanZipcode",
 				// form
-				formCoupon: '#mercadopago-form-coupon-ticket'
+				formCoupon: '#mercadopago-form-coupon-ticket',
+				formTicket: '#form-ticket',
+				box_loading: "#mp-box-loading",
+				submit: "#btnSubmit",
+				form: "#mercadopago-form-ticket"
 			},
 			text: {
 				discount_info1: "You will save",
@@ -389,6 +505,87 @@ if ( ! defined( 'ABSPATH' ) ) {
 			}
 		}
 
+		// Form validation
+
+		var doSubmitTicket = false;
+
+		MPv1Ticket.doPay = function(febraban) {
+			if(!doSubmitTicket){
+				doSubmitTicket=true;
+				document.querySelector(MPv1Ticket.selectors.box_loading).style.background = "url("+MPv1Ticket.paths.loading+") 0 50% no-repeat #fff";
+				btn = document.querySelector(MPv1Ticket.selectors.form);
+				btn.submit();
+			}
+		}
+
+		MPv1Ticket.validateInputsTicket = function(event) {
+			event.preventDefault();
+			MPv1Ticket.hideErrors();
+			var valid_to_ticket = true;
+			var $inputs = MPv1Ticket.getForm().querySelectorAll("[data-checkout]");
+			var $inputs_to_validate_ticket = MPv1Ticket.inputs_to_validate_ticket;
+			var febraban = [];
+			var arr = [];
+			for (var x = 0; x < $inputs.length; x++) {
+				var element = $inputs[x];
+				if($inputs_to_validate_ticket.indexOf(element.getAttribute("data-checkout")) > -1){
+					if (element.value == -1 || element.value == "") {
+						arr.push(element.id);
+						valid_to_ticket = false;
+					} else {
+						febraban[element.id] = element.value;
+					}
+				}
+			}
+			if (!valid_to_ticket) {
+				MPv1Ticket.showErrors(arr);
+			} else {
+				MPv1Ticket.doPay(febraban);
+			}
+		}
+
+		MPv1Ticket.getForm = function(){
+			return document.querySelector(MPv1Ticket.selectors.form);
+		}
+
+		MPv1Ticket.addListenerEvent = function(el, eventName, handler){
+			if (el.addEventListener) {
+				el.addEventListener(eventName, handler);
+			} else {
+				el.attachEvent("on" + eventName, function(){
+					handler.call(el);
+				});
+			}
+		};
+
+		// Show/hide errors.
+
+		MPv1Ticket.showErrors = function(fields){
+			var $form = MPv1Ticket.getForm();
+			for(var x = 0; x < fields.length; x++){
+				var f = fields[x];
+				var $span = $form.querySelector("#error_" + f);
+				var $input = $form.querySelector($span.getAttribute("data-main"));
+				$span.style.display = "inline-block";
+				$input.classList.add("mp-error-input");
+			}
+			return;
+		}
+
+		MPv1Ticket.hideErrors = function(){
+			for(var x = 0; x < document.querySelectorAll("[data-checkout]").length; x++){
+				var $field = document.querySelectorAll("[data-checkout]")[x];
+				$field.classList.remove("mp-error-input");
+			} //end for
+			for(var x = 0; x < document.querySelectorAll(".erro_febraban").length; x++){
+				var $span = document.querySelectorAll(".erro_febraban")[x];
+				$span.style.display = "none";
+			}
+			return;
+		}
+
+		// ===
+
 		MPv1Ticket.Initialize = function( site_id, coupon_mode, discount_action_url, payer_email ) {
 
 			// Sets.
@@ -406,6 +603,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 				);
 			} else {
 				document.querySelector( MPv1Ticket.selectors.formCoupon ).style.display = "none";
+			}
+
+			// flow: MLB
+			if (MPv1Ticket.site_id != "MLB") {
+				document.querySelector(MPv1Ticket.selectors.formTicket).style.display = "none";
+			} else {
+				MPv1Ticket.addListenerEvent(
+					document.querySelector(MPv1Ticket.selectors.form),
+					"submit",
+					MPv1Ticket.validateInputsTicket
+				);
 			}
 
 			return;

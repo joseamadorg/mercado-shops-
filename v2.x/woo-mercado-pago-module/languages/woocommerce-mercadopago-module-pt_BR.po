@@ -738,7 +738,7 @@ msgid "Please, select the ticket issuer of your preference."
 msgstr "Por favor, selecione o emissor de sua preferência."
 
 msgid "Click \"Place order\" button. The ticket will be generated and you will be redirected to print it."
-msgstr "Clique no botão \"FINALIZAR COMPRA\". O boleto será gerado e você será redirecionado para imprimí-lo."
+msgstr "Clique no botão \"Finalizar compra\". O boleto será gerado e você será redirecionado para imprimí-lo."
 
 msgid "Important: The order will be confirmed only after the payment approval."
 msgstr "Importante: O pedido só será confirmado após a aprovação do pagamento."
@@ -1084,3 +1084,54 @@ msgstr "Você pode rastrea-lo com o seguinte ID de rastreamento:"
 
 msgid "Best regards."
 msgstr "Atenciosamente."
+
+msgid "SELECT..."
+msgstr "SELECIONE..."
+
+msgid "NAME"
+msgstr "NOME"
+
+msgid "SURNAME"
+msgstr "SOBRENOME"
+
+msgid "DOCUMENT"
+msgstr "CPF"
+
+msgid "ADDRESS"
+msgstr "ENDEREÇO"
+
+msgid "NUMBER"
+msgstr "NÚMERO"
+
+msgid "CITY"
+msgstr "CIDADE"
+
+msgid "STATE"
+msgstr "ESTADO"
+
+msgid "ZIP"
+msgstr "CEP"
+
+msgid "You must inform you NAME"
+msgstr "Obrigatório o preenchimento do Nome"
+
+msgid "You must inform your SURNAME"
+msgstr "Obrigatório o preenchimento do Sobrenome"
+
+msgid "You must inform your DOCUMENT"
+msgstr "Obrigatório o preenchimento do CPF"
+
+msgid "You must inform your ADDRESS"
+msgstr "Obrigatório o preenchimento do Endereço"
+
+msgid "You must inform your ADDRESS NUMBER"
+msgstr "Obrigatório o preenchimento do número residencial"
+
+msgid "You must inform your CITY"
+msgstr "Obrigatório informar a cidade"
+
+msgid "You must inform your STATE"
+msgstr "Obrigatório informar o estado"
+
+msgid "You must inform your ZIP"
+msgstr "Obrigatório informar o CEP"

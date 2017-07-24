@@ -1105,7 +1105,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			);
 			// The payment preference.
 			$preferences = array(
-				'transaction_amount' => floor( ( (float) $order_total ) * 100 ) / 100 - $discount_amount_of_items,
+				'transaction_amount' => floor( ( (float) ( $order_total - $discount_amount_of_items ) ) * 100 ) / 100,
 				'token' => $custom_checkout['token'],
 				'description' => implode( ', ', $list_of_items ),
 				'installments' => (int) $custom_checkout['installments'],
@@ -1161,7 +1161,7 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 			);
 			// The payment preference.
 			$preferences = array(
-				'transaction_amount' => floor( ( (float) $order_total ) * 100 ) / 100 - $discount_amount_of_items,
+				'transaction_amount' => floor( ( (float) ( $order_total - $discount_amount_of_items ) ) * 100 ) / 100,
 				'token' => $custom_checkout['token'],
 				'description' => implode( ', ', $list_of_items ),
 				'installments' => (int) $custom_checkout['installments'],
@@ -1429,8 +1429,17 @@ class WC_WooMercadoPagoCustom_Gateway extends WC_Payment_Gateway {
 	 */
 	public function validate_credentials() {
 
-		if ( empty( $this->public_key ) || empty( $this->access_token ) )
+		if ( empty( $this->public_key ) || empty( $this->access_token ) ) {
 			return false;
+		}
+
+		if ( strpos( $this->public_key, 'APP_USR' ) === false && strpos( $this->public_key, 'TEST' ) === false ) {
+			return false;
+		}
+
+		if ( strpos( $this->access_token, 'APP_USR' ) === false && strpos( $this->access_token, 'TEST' ) === false ) {
+			return false;
+		}
 
 		try {
 
