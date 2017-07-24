@@ -113,7 +113,7 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 = v2.2.11 (24/07/2017) =
 * Improvements
 	- Improved credential validation algorithm;
-	- Added FEBRABAN rules for Brazillian tickets.
+	- Added FEBRABAN rules for brazilian tickets.
 * Bug fixes
 	- Resolved a bug when converting currency.
 
