@@ -1003,39 +1003,37 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 		if ( method_exists( $order, 'get_id' ) ) {
 			// Build additional information from the customer data.
 			$payer_additional_info = array(
-				'first_name' => ( $this->site_id == 'MLB' ? $ticket_checkout['firstname'] : html_entity_decode( $order->get_billing_first_name() ) ),
-				'last_name' => ( $this->site_id == 'MLB' ? $ticket_checkout['lastname'] : html_entity_decode( $order->get_billing_last_name() ) ),
+				'first_name' => html_entity_decode( $order->get_billing_first_name() ),
+				'last_name' => html_entity_decode( $order->get_billing_last_name() ),
 				//'registration_date' =>
 				'phone' => array(
 					//'area_code' =>
 					'number' => $order->get_billing_phone()
 				),
 				'address' => array(
-					'zip_code' => ( $this->site_id == 'MLB' ? $ticket_checkout['zipcode'] : $order->get_billing_postcode() ),
-					'street_name' => ( $this->site_id == 'MLB' ? $ticket_checkout['address'] : html_entity_decode(
-							$order->get_billing_address_1() . ' ' .
-							$order->get_billing_address_2() . ' ' .
-							$order->get_billing_city() . ' ' .
-							$order->get_billing_state() . ' ' .
-							$order->get_billing_country()
-						)
-					),
-					'street_number' => ( $this->site_id == 'MLB' ? (int) $ticket_checkout['number'] : '' )
+					'zip_code' => $order->get_billing_postcode(),
+					'street_name' => html_entity_decode(
+						$order->get_billing_address_1() . ' ' .
+						$order->get_billing_address_2() . ' ' .
+						$order->get_billing_city() . ' ' .
+						$order->get_billing_state() . ' ' .
+						$order->get_billing_country()
+					)
+					//'street_number' =>
 				)
 			);
 			// Create the shipment address information set.
 			$shipments = array(
 				'receiver_address' => array(
-					'zip_code' => ( $this->site_id == 'MLB' ? $ticket_checkout['zipcode'] : $order->get_shipping_postcode() ),
-					'street_name' => ( $this->site_id == 'MLB' ? $ticket_checkout['address'] : html_entity_decode(
-							$order->get_shipping_address_1() . ' ' .
-							$order->get_shipping_address_2() . ' ' .
-							$order->get_shipping_city() . ' ' .
-							$order->get_shipping_state() . ' ' .
-							$order->get_shipping_country()
-						)
-					),
-					'street_number' => ( $this->site_id == 'MLB' ? (int) $ticket_checkout['number'] : '' )
+					'zip_code' => $order->get_shipping_postcode(),
+					'street_name' => html_entity_decode(
+						$order->get_shipping_address_1() . ' ' .
+						$order->get_shipping_address_2() . ' ' .
+						$order->get_shipping_city() . ' ' .
+						$order->get_shipping_state() . ' ' .
+						$order->get_shipping_country()
+					)
+					//'street_number' =>
 					//'floor' =>
 					//'apartment' =>
 				)
@@ -1058,40 +1056,37 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 		} else {
 			// Build additional information from the customer data.
 			$payer_additional_info = array(
-				'first_name' => ( $this->site_id == 'MLB' ? $ticket_checkout['firstname'] : html_entity_decode( $order->billing_first_name ) ),
-				'last_name' => ( $this->site_id == 'MLB' ? $ticket_checkout['lastname'] : html_entity_decode( $order->billing_last_name ) ),
+				'first_name' => html_entity_decode( $order->billing_first_name ),
+				'last_name' => html_entity_decode( $order->billing_last_name ),
 				//'registration_date' =>
 				'phone' => array(
 					//'area_code' =>
 					'number' => $order->billing_phone
 				),
 				'address' => array(
-					'zip_code' => ( $this->site_id == 'MLB' ? $ticket_checkout['zipcode'] : $order->billing_postcode ),
-					'street_name' => ( $this->site_id == 'MLB' ? $ticket_checkout['address'] : html_entity_decode(
-							$order->billing_address_1 . ' ' .
-							$order->billing_address_2 . ' ' .
-							$order->billing_city . ' ' .
-							$order->billing_state . ' ' .
-							$order->billing_country
-						)
-					),
-					'street_number' => ( $this->site_id == 'MLB' ? (int) $ticket_checkout['number'] : '' )
+					'zip_code' => $order->billing_postcode,
+					'street_name' => html_entity_decode(
+						$order->billing_address_1 . ' ' .
+						$order->billing_address_2 . ' ' .
+						$order->billing_city . ' ' .
+						$order->billing_state . ' ' .
+						$order->billing_country
+					)
+					//'street_number' =>
 				)
 			);
 			// Create the shipment address information set.
 			$shipments = array(
 				'receiver_address' => array(
-					'zip_code' => ( $this->site_id == 'MLB' ? $ticket_checkout['zipcode'] : $order->shipping_postcode ),
+					'zip_code' => $order->shipping_postcode,
+					'street_name' => html_entity_decode(
+						$order->shipping_address_1 . ' ' .
+						$order->shipping_address_2 . ' ' .
+						$order->shipping_city . ' ' .
+						$order->shipping_state . ' ' .
+						$order->shipping_country
+					)
 					//'street_number' =>
-					'street_name' => ( $this->site_id == 'MLB' ? $ticket_checkout['address'] : html_entity_decode(
-							$order->shipping_address_1 . ' ' .
-							$order->shipping_address_2 . ' ' .
-							$order->shipping_city . ' ' .
-							$order->shipping_state . ' ' .
-							$order->shipping_country
-						)
-					),
-					'street_number' => ( $this->site_id == 'MLB' ? (int) $ticket_checkout['number'] : '' )
 					//'floor' =>
 					//'apartment' =>
 				)
@@ -1115,8 +1110,15 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 
 		// FEBRABAN rules.
 		if ( $this->site_id == 'MLB' ) {
+			$preferences['payer']['first_name'] = $ticket_checkout['firstname'];
+			$preferences['payer']['last_name'] = $ticket_checkout['lastname'];	
 			$preferences['payer']['identification']['type'] = 'CPF';
 			$preferences['payer']['identification']['number'] = $ticket_checkout['docNumber'];
+			$preferences['payer']['address']['street_name'] = $ticket_checkout['address'];
+			$preferences['payer']['address']['street_number'] = $ticket_checkout['number'];
+			$preferences['payer']['address']['neighborhood'] = $ticket_checkout['city'];
+			$preferences['payer']['address']['city'] = $ticket_checkout['city'];
+			$preferences['payer']['address']['federal_unit'] = $ticket_checkout['state'];
 		}
 
 		// Do not set IPN url if it is a localhost.
