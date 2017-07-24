@@ -1114,8 +1114,8 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 			$preferences['payer']['last_name'] = $ticket_checkout['lastname'];	
 			$preferences['payer']['identification']['type'] = 'CPF';
 			$preferences['payer']['identification']['number'] = $ticket_checkout['docNumber'];
-			$preferences['payer']['address']['street_name'] = $ticket_checkout['city'];
-			$preferences['payer']['address']['street_number'] = $ticket_checkout['city'];
+			$preferences['payer']['address']['street_name'] = $ticket_checkout['addresss'];
+			$preferences['payer']['address']['street_number'] = $ticket_checkout['number'];
 			$preferences['payer']['address']['neighborhood'] = $ticket_checkout['city'];
 			$preferences['payer']['address']['city'] = $ticket_checkout['city'];
 			$preferences['payer']['address']['federal_unit'] = $ticket_checkout['state'];
