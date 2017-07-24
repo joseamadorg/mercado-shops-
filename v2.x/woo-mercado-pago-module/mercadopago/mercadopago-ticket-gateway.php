@@ -699,6 +699,16 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 			'discount_action_url' => $this->domain .
 				'/woocommerce-mercadopago-module/?wc-api=WC_WooMercadoPagoTicket_Gateway',
 			'form_labels' => array(
+				'febraban' => array(
+					'firstname' => '',
+					'lastname' => '',
+					'docNumber' => '',
+					'address' => '',
+					'number' => '',
+					'city' => '',
+					'state' => '',
+					'zipcode' => ''
+				),
 				'form' => array(
 					'payment_converted' =>
 						__( 'Payment converted from', 'woocommerce-mercadopago-module' ),
@@ -722,7 +732,25 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 					'payment_instructions' =>
 						__( 'Click "Place order" button. The ticket will be generated and you will be redirected to print it.', 'woocommerce-mercadopago-module' ),
 					'ticket_note' =>
-						__( 'Important: The order will be confirmed only after the payment approval.', 'woocommerce-mercadopago-module' )
+						__( 'Important: The order will be confirmed only after the payment approval.', 'woocommerce-mercadopago-module' ),
+					'febraban_rules' => __( 'Informações solicitadas em conformidade com as normas das circulares Nro. 3.461/09, 3.598/12 e 3.656/13 do Banco Central do Brasil.', 'woocommerce-mercadopago-module' ),
+					'select' => __( 'SELECT...', 'woocommerce-mercadopago-module' ),
+					'name' => __( 'NAME', 'woocommerce-mercadopago-module' ),
+					'surname' => __( 'SURNAME', 'woocommerce-mercadopago-module' ),
+					'docNumber' => __( 'DOCUMENT', 'woocommerce-mercadopago-module' ),
+					'address' => __( 'ADDRESS', 'woocommerce-mercadopago-module' ),
+					'number' => __( 'NUMBER', 'woocommerce-mercadopago-module' ),
+					'city' => __( 'CITY', 'woocommerce-mercadopago-module' ),
+					'state' => __( 'STATE', 'woocommerce-mercadopago-module' ),
+					'zipcode' => __( 'ZIP', 'woocommerce-mercadopago-module' ),
+					'FEB001' => __( 'You must inform you NAME', 'woocommerce-mercadopago-module' ),
+					'FEB002' => __( 'You must inform your SURNAME', 'woocommerce-mercadopago-module' ),
+					'FEB003' => __( 'You must inform your DOCUMENT', 'woocommerce-mercadopago-module' ),
+					'FEB004' => __( 'You must inform your ADDRESS', 'woocommerce-mercadopago-module' ),
+					'FEB005' => __( 'You must inform your ADDRESS NUMBER', 'woocommerce-mercadopago-module' ),
+					'FEB006' => __( 'You must inform your CITY', 'woocommerce-mercadopago-module' ),
+					'FEB007' => __( 'You must inform your STATE', 'woocommerce-mercadopago-module' ),
+					'FEB008' => __( 'You must inform your ZIP', 'woocommerce-mercadopago-module' )
 	 			)
 			)
 		);
@@ -733,6 +761,21 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 			$parameters['payer_email'] = null;
 			if ( wp_get_current_user()->ID != 0 ) {
 				$logged_user_email = wp_get_current_user()->user_email;
+				$address = get_user_meta( wp_get_current_user()->ID, 'shipping_address_1', true );
+				$address_2 = get_user_meta( wp_get_current_user()->ID, 'shipping_address_2', true );
+				$address .= ( ! empty( $address_2 ) ? ' - ' . $address_2 : '' );
+				$country = get_user_meta( wp_get_current_user()->ID, 'shipping_country', true );
+				$address .= ( ! empty( $country ) ? ' - ' . $country : '' );
+				$parameters['form_labels']['febraban'] = array(
+					'firstname' => wp_get_current_user()->user_firstname,
+					'lastname' => wp_get_current_user()->user_lastname,
+					'docNumber' => '',
+					'address' => $address,
+					'number' => '',
+					'city' => get_user_meta( wp_get_current_user()->ID, 'shipping_city', true ),
+					'state' => get_user_meta( wp_get_current_user()->ID, 'shipping_state', true ),
+					'zipcode' => get_user_meta( wp_get_current_user()->ID, 'shipping_postcode', true )
+				);
 			}
 			if ( isset( $logged_user_email ) ) {
 				if ( isset( $logged_user_email ) ) {
@@ -772,10 +815,16 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 			return;
 		}
 
-		update_post_meta( $order_id, '_used_gateway', 'WC_WooMercadoPagoTicket_Gateway' );
-
 		$order = wc_get_order( $order_id );
 		$mercadopago_ticket = $_POST['mercadopago_ticket'];
+
+		// WooCommerce 3.0 or later.
+		if ( method_exists( $order, 'update_meta_data' ) ) {
+			$order->update_meta_data( '_used_gateway', 'WC_WooMercadoPagoTicket_Gateway' );
+			$order->save();
+		} else {
+			update_post_meta( $order_id, '_used_gateway', 'WC_WooMercadoPagoTicket_Gateway' );
+		}
 
 		// We have got parameters from checkout page, now its time to charge the card.
 		if ( 'yes' == $this->debug ) {
@@ -788,9 +837,32 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 
 		if ( isset( $mercadopago_ticket['amount'] ) && ! empty( $mercadopago_ticket['amount'] ) &&
 			isset( $mercadopago_ticket['paymentMethodId'] ) && ! empty( $mercadopago_ticket['paymentMethodId'] ) ) {
+			if ( $this->site_id == 'MLB' ) {
+				if ( isset( $mercadopago_ticket['firstname'] ) && ! empty( $mercadopago_ticket['firstname'] ) &&
+					isset( $mercadopago_ticket['lastname'] ) && ! empty( $mercadopago_ticket['lastname'] ) &&
+					isset( $mercadopago_ticket['docNumber'] ) && ! empty( $mercadopago_ticket['docNumber'] ) &&
+					isset( $mercadopago_ticket['address'] ) && ! empty( $mercadopago_ticket['address'] ) &&
+					isset( $mercadopago_ticket['number'] ) && ! empty( $mercadopago_ticket['number'] ) &&
+					isset( $mercadopago_ticket['city'] ) && ! empty( $mercadopago_ticket['city'] ) &&
+					isset( $mercadopago_ticket['state'] ) && ! empty( $mercadopago_ticket['state'] ) &&
+					isset( $mercadopago_ticket['zipcode'] ) && ! empty( $mercadopago_ticket['zipcode'] ) ) {
 
+					return self::create_url( $order, $mercadopago_ticket );
+
+				} else {
+					wc_add_notice(
+						'<p>' .
+							__( 'A problem was occurred when processing your payment. Are you sure you have correctly filled all information in the checkout form?', 'woocommerce-mercadopago-module' ) .
+						'</p>',
+						'error'
+					);
+					return array(
+						'result' => 'fail',
+						'redirect' => '',
+					);
+				}
+			}
 			return self::create_url( $order, $mercadopago_ticket );
-
 		} else {
 			// process when fields are imcomplete.
 			wc_add_notice(
@@ -931,45 +1003,46 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 		if ( method_exists( $order, 'get_id' ) ) {
 			// Build additional information from the customer data.
 			$payer_additional_info = array(
-				'first_name' => html_entity_decode( $order->get_billing_first_name() ),
-				'last_name' => html_entity_decode( $order->get_billing_last_name() ),
+				'first_name' => ( $this->site_id == 'MLB' ? $ticket_checkout['firstname'] : html_entity_decode( $order->get_billing_first_name() ) ),
+				'last_name' => ( $this->site_id == 'MLB' ? $ticket_checkout['lastname'] : html_entity_decode( $order->get_billing_last_name() ) ),
 				//'registration_date' =>
 				'phone' => array(
 					//'area_code' =>
 					'number' => $order->get_billing_phone()
 				),
 				'address' => array(
-					'zip_code' => $order->get_billing_postcode(),
-					//'street_number' =>
-					'street_name' => html_entity_decode(
-						$order->get_billing_address_1() . ' / ' .
-						$order->get_billing_city() . ' ' .
-						$order->get_billing_state() . ' ' .
-						$order->get_billing_country()
-					)
+					'zip_code' => ( $this->site_id == 'MLB' ? $ticket_checkout['zipcode'] : $order->get_billing_postcode() ),
+					'street_name' => ( $this->site_id == 'MLB' ? $ticket_checkout['address'] : html_entity_decode(
+							$order->get_billing_address_1() . ' ' .
+							$order->get_billing_address_2() . ' ' .
+							$order->get_billing_city() . ' ' .
+							$order->get_billing_state() . ' ' .
+							$order->get_billing_country()
+						)
+					),
+					'street_number' => ( $this->site_id == 'MLB' ? (int) $ticket_checkout['number'] : '' )
 				)
 			);
-
 			// Create the shipment address information set.
 			$shipments = array(
 				'receiver_address' => array(
-					'zip_code' => $order->get_shipping_postcode(),
-					//'street_number' =>
-					'street_name' => html_entity_decode(
-						$order->get_shipping_address_1() . ' ' .
-						$order->get_shipping_address_2() . ' ' .
-						$order->get_shipping_city() . ' ' .
-						$order->get_shipping_state() . ' ' .
-						$order->get_shipping_country()
+					'zip_code' => ( $this->site_id == 'MLB' ? $ticket_checkout['zipcode'] : $order->get_shipping_postcode() ),
+					'street_name' => ( $this->site_id == 'MLB' ? $ticket_checkout['address'] : html_entity_decode(
+							$order->get_shipping_address_1() . ' ' .
+							$order->get_shipping_address_2() . ' ' .
+							$order->get_shipping_city() . ' ' .
+							$order->get_shipping_state() . ' ' .
+							$order->get_shipping_country()
+						)
 					),
+					'street_number' => ( $this->site_id == 'MLB' ? (int) $ticket_checkout['number'] : '' )
 					//'floor' =>
-					'apartment' => $order->get_shipping_address_2()
+					//'apartment' =>
 				)
 			);
-
 			// The payment preference.
 			$preferences = array(
-				'transaction_amount' => floor( ( ( float ) $order_total ) * 100 ) / 100 - $discount_amount_of_items,
+				'transaction_amount' => floor( ( ( float ) ( $order_total - $discount_amount_of_items ) ) * 100 ) / 100,
 				'description' => implode( ', ', $list_of_items ),
 				'payment_method_id' => $ticket_checkout['paymentMethodId'],
 				'payer' => array(
@@ -985,45 +1058,47 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 		} else {
 			// Build additional information from the customer data.
 			$payer_additional_info = array(
-				'first_name' => html_entity_decode( $order->billing_first_name ),
-				'last_name' => html_entity_decode( $order->billing_last_name ),
+				'first_name' => ( $this->site_id == 'MLB' ? $ticket_checkout['firstname'] : html_entity_decode( $order->billing_first_name ) ),
+				'last_name' => ( $this->site_id == 'MLB' ? $ticket_checkout['lastname'] : html_entity_decode( $order->billing_last_name ) ),
 				//'registration_date' =>
 				'phone' => array(
 					//'area_code' =>
 					'number' => $order->billing_phone
 				),
 				'address' => array(
-					'zip_code' => $order->billing_postcode,
-					//'street_number' =>
-					'street_name' => html_entity_decode(
-						$order->billing_address_1 . ' / ' .
-						$order->billing_city . ' ' .
-						$order->billing_state . ' ' .
-						$order->billing_country
-					)
+					'zip_code' => ( $this->site_id == 'MLB' ? $ticket_checkout['zipcode'] : $order->billing_postcode ),
+					'street_name' => ( $this->site_id == 'MLB' ? $ticket_checkout['address'] : html_entity_decode(
+							$order->billing_address_1 . ' ' .
+							$order->billing_address_2 . ' ' .
+							$order->billing_city . ' ' .
+							$order->billing_state . ' ' .
+							$order->billing_country
+						)
+					),
+					'street_number' => ( $this->site_id == 'MLB' ? (int) $ticket_checkout['number'] : '' )
 				)
 			);
-
 			// Create the shipment address information set.
 			$shipments = array(
 				'receiver_address' => array(
-					'zip_code' => $order->shipping_postcode,
+					'zip_code' => ( $this->site_id == 'MLB' ? $ticket_checkout['zipcode'] : $order->shipping_postcode ),
 					//'street_number' =>
-					'street_name' => html_entity_decode(
-						$order->shipping_address_1 . ' ' .
-						$order->shipping_address_2 . ' ' .
-						$order->shipping_city . ' ' .
-						$order->shipping_state . ' ' .
-						$order->shipping_country
+					'street_name' => ( $this->site_id == 'MLB' ? $ticket_checkout['address'] : html_entity_decode(
+							$order->shipping_address_1 . ' ' .
+							$order->shipping_address_2 . ' ' .
+							$order->shipping_city . ' ' .
+							$order->shipping_state . ' ' .
+							$order->shipping_country
+						)
 					),
+					'street_number' => ( $this->site_id == 'MLB' ? (int) $ticket_checkout['number'] : '' )
 					//'floor' =>
-					'apartment' => $order->shipping_address_2
+					//'apartment' =>
 				)
 			);
-
 			// The payment preference.
 			$preferences = array(
-				'transaction_amount' => floor( ( ( float ) $order_total ) * 100 ) / 100 - $discount_amount_of_items,
+				'transaction_amount' => floor( ( ( float ) ( $order_total - $discount_amount_of_items ) ) * 100 ) / 100,
 				'description' => implode( ', ', $list_of_items ),
 				'payment_method_id' => $ticket_checkout['paymentMethodId'],
 				'payer' => array(
@@ -1036,6 +1111,12 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 					'shipments' => $shipments
 				)
 			);
+		}
+
+		// FEBRABAN rules.
+		if ( $this->site_id == 'MLB' ) {
+			$preferences['payer']['identification']['type'] = 'CPF';
+			$preferences['payer']['identification']['number'] = $ticket_checkout['docNumber'];
 		}
 
 		// Do not set IPN url if it is a localhost.
@@ -1259,8 +1340,13 @@ class WC_WooMercadoPagoTicket_Gateway extends WC_Payment_Gateway {
 	*/
 	public function validate_credentials() {
 
-		if ( empty( $this->access_token ) )
+		if ( empty( $this->access_token ) ) {
 			return false;
+		}
+
+		if ( strpos( $this->access_token, 'APP_USR' ) === false && strpos( $this->access_token, 'TEST' ) === false ) {
+			return false;
+		}
 
 		try {
 

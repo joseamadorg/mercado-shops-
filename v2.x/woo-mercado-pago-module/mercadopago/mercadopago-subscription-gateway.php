@@ -864,8 +864,13 @@ class WC_WooMercadoPagoSubscription_Gateway extends WC_Payment_Gateway {
 	 */
 	public function validate_credentials() {
 
-		if ( empty( $this->client_id ) || empty( $this->client_secret ) )
+		if ( empty( $this->client_id ) || empty( $this->client_secret ) ) {
 			return false;
+		}
+
+		if ( ! is_numeric( $this->client_id ) ) {
+			return false;
+		}
 
 		try {
 

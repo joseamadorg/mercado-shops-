@@ -1,5 +1,10 @@
 CHANGELOG:
 
+= v2.2.11 (24/07/2017) =
+* Improvements
+	- Improved credential validation algorithm;
+	- Added FEBRABAN rules for Brazillian tickets.
+
 = v2.2.10 (04/07/2017) =
 * Bug fixes
 	- Fixed a bug in subscriptions, where a recurrent product wasn't possible to be bought if its end-date is blank.
